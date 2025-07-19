@@ -47,12 +47,15 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(74, 56);
+            label1.BackColor = SystemColors.MenuHighlight;
+            label1.BorderStyle = BorderStyle.Fixed3D;
+            label1.Font = new Font("Times New Roman", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(44, 56);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(59, 25);
+            label1.Size = new Size(57, 22);
             label1.TabIndex = 2;
-            label1.Text = "label1";
+            label1.Text = "Login";
             // 
             // label2
             // 
