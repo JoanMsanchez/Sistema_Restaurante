@@ -13,10 +13,5 @@ namespace Proyecto_Restaurante
         {
 
         }
-
-        private void Login_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
