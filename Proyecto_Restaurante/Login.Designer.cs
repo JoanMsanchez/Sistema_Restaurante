@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             button1 = new Button();
-            button2 = new Button();
+            label1 = new Label();
+            label2 = new Label();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(237, 113);
+            button1.Location = new Point(219, 212);
             button1.Margin = new Padding(2, 2, 2, 2);
             button1.Name = "button1";
             button1.Size = new Size(90, 27);
@@ -42,31 +43,43 @@
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // label1
             // 
-            button2.Location = new Point(145, 198);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 1;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
+            label1.AutoSize = true;
+            label1.Location = new Point(152, 58);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 20);
+            label1.TabIndex = 2;
+            label1.Text = "label1";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(152, 121);
+            label2.Name = "label2";
+            label2.Size = new Size(50, 20);
+            label2.TabIndex = 3;
+            label2.Text = "label2";
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(640, 360);
-            Controls.Add(button2);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(button1);
             Margin = new Padding(2, 2, 2, 2);
             Name = "Login";
             Text = "Form1";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button button1;
-        private Button button2;
+        private Label label1;
+        private Label label2;
     }
 }
