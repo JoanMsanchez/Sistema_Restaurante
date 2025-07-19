@@ -6,5 +6,10 @@ namespace Proyecto_Restaurante
         {
             InitializeComponent();
         }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
