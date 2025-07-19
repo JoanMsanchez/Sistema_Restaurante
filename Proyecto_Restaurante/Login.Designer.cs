@@ -36,7 +36,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(274, 265);
+            button1.Location = new Point(41, 442);
             button1.Margin = new Padding(2);
             button1.Name = "button1";
             button1.Size = new Size(112, 34);
@@ -47,7 +47,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(190, 72);
+            label1.Location = new Point(41, 56);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(59, 25);
@@ -57,7 +57,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(190, 151);
+            label2.Location = new Point(205, 56);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(59, 25);
@@ -67,7 +67,7 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(313, 135);
+            checkBox1.Location = new Point(205, 442);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(121, 29);
             checkBox1.TabIndex = 4;
@@ -78,7 +78,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1009, 530);
             Controls.Add(checkBox1);
             Controls.Add(label2);
             Controls.Add(label1);
