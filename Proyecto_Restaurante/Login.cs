@@ -5,6 +5,13 @@ namespace Proyecto_Restaurante
         public Login()
         {
             InitializeComponent();
+            //Hola mundo
+            //Prueba 1
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void Login_Load(object sender, EventArgs e)
