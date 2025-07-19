@@ -29,66 +29,97 @@
         private void InitializeComponent()
         {
             Acceder = new Button();
-            Usuario = new Label();
-            contasena = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            label1 = new Label();
+            label2 = new Label();
+            usuario = new TextBox();
+            contasena = new TextBox();
+            panel2 = new Panel();
+            panel3 = new Panel();
             SuspendLayout();
             // 
             // Acceder
             // 
+            Acceder.FlatAppearance.BorderSize = 0;
+            Acceder.FlatStyle = FlatStyle.Flat;
             Acceder.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Acceder.Location = new Point(109, 337);
+            Acceder.Location = new Point(74, 336);
             Acceder.Margin = new Padding(2);
             Acceder.Name = "Acceder";
-            Acceder.Size = new Size(136, 58);
+            Acceder.Size = new Size(220, 58);
             Acceder.TabIndex = 0;
             Acceder.Text = "Acceder";
             Acceder.UseVisualStyleBackColor = true;
             // 
-            // Usuario
+            // label1
             // 
-            Usuario.AutoSize = true;
-            Usuario.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Usuario.Location = new Point(42, 41);
-            Usuario.Name = "Usuario";
-            Usuario.Size = new Size(90, 25);
-            Usuario.TabIndex = 2;
-            Usuario.Text = "Usuario";
+            label1.AutoSize = true;
+            label1.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(137, 69);
+            label1.Name = "label1";
+            label1.Size = new Size(90, 25);
+            label1.TabIndex = 2;
+            label1.Text = "Usuario";
+            label1.Click += label1_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(124, 210);
+            label2.Name = "label2";
+            label2.Size = new Size(119, 25);
+            label2.TabIndex = 3;
+            label2.Text = "Contaseña";
+            // 
+            // usuario
+            // 
+            usuario.BackColor = SystemColors.Window;
+            usuario.BorderStyle = BorderStyle.None;
+            usuario.Location = new Point(77, 110);
+            usuario.Name = "usuario";
+            usuario.Size = new Size(217, 20);
+            usuario.TabIndex = 4;
             // 
             // contasena
             // 
-            contasena.AutoSize = true;
-            contasena.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            contasena.Location = new Point(42, 176);
+            contasena.BackColor = SystemColors.Window;
+            contasena.BorderStyle = BorderStyle.None;
+            contasena.Location = new Point(77, 250);
             contasena.Name = "contasena";
-            contasena.Size = new Size(119, 25);
-            contasena.TabIndex = 3;
-            contasena.Text = "Contaseña";
+            contasena.Size = new Size(217, 20);
+            contasena.TabIndex = 5;
+            contasena.UseSystemPasswordChar = true;
+            contasena.TextChanged += contasena_TextChanged;
             // 
-            // textBox1
+            // panel2
             // 
-            textBox1.Location = new Point(141, 73);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
-            textBox1.TabIndex = 4;
+            panel2.BackColor = SystemColors.ActiveCaptionText;
+            panel2.Location = new Point(74, 271);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(220, 2);
+            panel2.TabIndex = 7;
+            panel2.Paint += panel2_Paint;
             // 
-            // textBox2
+            // panel3
             // 
-            textBox2.Location = new Point(141, 222);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 27);
-            textBox2.TabIndex = 5;
+            panel3.BackColor = SystemColors.ActiveCaptionText;
+            panel3.Location = new Point(74, 131);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(220, 2);
+            panel3.TabIndex = 7;
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(400, 498);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            BackColor = SystemColors.Window;
+            ClientSize = new Size(374, 453);
+            Controls.Add(panel2);
+            Controls.Add(panel3);
             Controls.Add(contasena);
-            Controls.Add(Usuario);
+            Controls.Add(usuario);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(Acceder);
             Margin = new Padding(2);
             Name = "Login";
@@ -101,9 +132,11 @@
         #endregion
 
         private Button Acceder;
-        private Label Usuario;
-        private Label contasena;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private Label label1;
+        private Label label2;
+        private TextBox usuario;
+        private TextBox contasena;
+        private Panel panel2;
+        private Panel panel3;
     }
 }
