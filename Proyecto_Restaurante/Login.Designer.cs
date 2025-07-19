@@ -28,62 +28,68 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            label1 = new Label();
-            label2 = new Label();
-            checkBox1 = new CheckBox();
+            Acceder = new Button();
+            Usuario = new Label();
+            contasena = new Label();
+            textBox1 = new TextBox();
+            textBox2 = new TextBox();
             SuspendLayout();
             // 
-            // button1
+            // Acceder
             // 
-            button1.Location = new Point(53, 517);
-            button1.Margin = new Padding(2);
-            button1.Name = "button1";
-            button1.Size = new Size(112, 34);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            Acceder.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Acceder.Location = new Point(109, 337);
+            Acceder.Margin = new Padding(2);
+            Acceder.Name = "Acceder";
+            Acceder.Size = new Size(136, 58);
+            Acceder.TabIndex = 0;
+            Acceder.Text = "Acceder";
+            Acceder.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // Usuario
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(74, 56);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(59, 25);
-            label1.TabIndex = 2;
-            label1.Text = "label1";
+            Usuario.AutoSize = true;
+            Usuario.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Usuario.Location = new Point(42, 41);
+            Usuario.Name = "Usuario";
+            Usuario.Size = new Size(90, 25);
+            Usuario.TabIndex = 2;
+            Usuario.Text = "Usuario";
             // 
-            // label2
+            // contasena
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(355, 56);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(59, 25);
-            label2.TabIndex = 3;
-            label2.Text = "label2";
+            contasena.AutoSize = true;
+            contasena.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            contasena.Location = new Point(42, 176);
+            contasena.Name = "contasena";
+            contasena.Size = new Size(119, 25);
+            contasena.TabIndex = 3;
+            contasena.Text = "Contaseña";
             // 
-            // checkBox1
+            // textBox1
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(44, 469);
-            checkBox1.Margin = new Padding(2);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(121, 29);
-            checkBox1.TabIndex = 4;
-            checkBox1.Text = "checkBox1";
-            checkBox1.UseVisualStyleBackColor = true;
+            textBox1.Location = new Point(141, 73);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(125, 27);
+            textBox1.TabIndex = 4;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(141, 222);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(125, 27);
+            textBox2.TabIndex = 5;
             // 
             // Login
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(500, 623);
-            Controls.Add(checkBox1);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(button1);
+            ClientSize = new Size(400, 498);
+            Controls.Add(textBox2);
+            Controls.Add(textBox1);
+            Controls.Add(contasena);
+            Controls.Add(Usuario);
+            Controls.Add(Acceder);
             Margin = new Padding(2);
             Name = "Login";
             Text = "Form1";
@@ -94,9 +100,10 @@
 
         #endregion
 
-        private Button button1;
-        private Label label1;
-        private Label label2;
-        private CheckBox checkBox1;
+        private Button Acceder;
+        private Label Usuario;
+        private Label contasena;
+        private TextBox textBox1;
+        private TextBox textBox2;
     }
 }
