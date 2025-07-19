@@ -32,6 +32,9 @@
             label1 = new Label();
             barra_menu = new MenuStrip();
             pes_restaurante = new ToolStripMenuItem();
+            manteniemtoToolStripMenuItem = new ToolStripMenuItem();
+            usuarioToolStripMenuItem = new ToolStripMenuItem();
+            clienteToolStripMenuItem = new ToolStripMenuItem();
             pes_inventario = new ToolStripMenuItem();
             pes_cxc = new ToolStripMenuItem();
             barra_menu.SuspendLayout();
@@ -50,12 +53,29 @@
             barra_menu.ImageScalingSize = new Size(24, 24);
             barra_menu.Items.AddRange(new ToolStripItem[] { pes_restaurante, pes_inventario, pes_cxc });
             barra_menu.Name = "barra_menu";
-            barra_menu.RenderMode = ToolStripRenderMode.System;
+            barra_menu.RenderMode = ToolStripRenderMode.Professional;
             // 
             // pes_restaurante
             // 
+            pes_restaurante.DropDownItems.AddRange(new ToolStripItem[] { manteniemtoToolStripMenuItem });
             resources.ApplyResources(pes_restaurante, "pes_restaurante");
             pes_restaurante.Name = "pes_restaurante";
+            // 
+            // manteniemtoToolStripMenuItem
+            // 
+            manteniemtoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usuarioToolStripMenuItem, clienteToolStripMenuItem });
+            manteniemtoToolStripMenuItem.Name = "manteniemtoToolStripMenuItem";
+            resources.ApplyResources(manteniemtoToolStripMenuItem, "manteniemtoToolStripMenuItem");
+            // 
+            // usuarioToolStripMenuItem
+            // 
+            usuarioToolStripMenuItem.Name = "usuarioToolStripMenuItem";
+            resources.ApplyResources(usuarioToolStripMenuItem, "usuarioToolStripMenuItem");
+            // 
+            // clienteToolStripMenuItem
+            // 
+            clienteToolStripMenuItem.Name = "clienteToolStripMenuItem";
+            resources.ApplyResources(clienteToolStripMenuItem, "clienteToolStripMenuItem");
             // 
             // pes_inventario
             // 
@@ -76,7 +96,6 @@
             Controls.Add(barra_menu);
             MainMenuStrip = barra_menu;
             Name = "menuprincipal";
-            //Load += this.menu_Load;
             barra_menu.ResumeLayout(false);
             barra_menu.PerformLayout();
             ResumeLayout(false);
@@ -90,5 +109,8 @@
         private ToolStripMenuItem pes_restaurante;
         private ToolStripMenuItem pes_inventario;
         private ToolStripMenuItem pes_cxc;
+        private ToolStripMenuItem manteniemtoToolStripMenuItem;
+        private ToolStripMenuItem usuarioToolStripMenuItem;
+        private ToolStripMenuItem clienteToolStripMenuItem;
     }
 }
