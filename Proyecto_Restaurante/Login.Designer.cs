@@ -36,10 +36,10 @@
             // 
             // button1
             // 
-            button1.Location = new Point(59, 237);
+            button1.Location = new Point(53, 517);
             button1.Margin = new Padding(2);
             button1.Name = "button1";
-            button1.Size = new Size(90, 27);
+            button1.Size = new Size(112, 34);
             button1.TabIndex = 0;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
@@ -47,37 +47,39 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(33, 45);
+            label1.Location = new Point(74, 56);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(50, 20);
+            label1.Size = new Size(59, 25);
             label1.TabIndex = 2;
             label1.Text = "label1";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(164, 45);
+            label2.Location = new Point(355, 56);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(50, 20);
+            label2.Size = new Size(59, 25);
             label2.TabIndex = 3;
             label2.Text = "label2";
             // 
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(211, 237);
+            checkBox1.Location = new Point(44, 469);
             checkBox1.Margin = new Padding(2);
             checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(101, 24);
+            checkBox1.Size = new Size(121, 29);
             checkBox1.TabIndex = 4;
             checkBox1.Text = "checkBox1";
             checkBox1.UseVisualStyleBackColor = true;
             // 
             // Login
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(843, 424);
+            ClientSize = new Size(500, 623);
             Controls.Add(checkBox1);
             Controls.Add(label2);
             Controls.Add(label1);
