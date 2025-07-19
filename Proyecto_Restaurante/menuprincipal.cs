@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Proyecto_Restaurante
 {
-    public partial class menu : Form
+    public partial class menuprincipal : Form
     {
-        public menu()
+        public menuprincipal()
         {
             InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

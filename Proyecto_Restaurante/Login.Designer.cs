@@ -42,13 +42,14 @@
             Acceder.FlatAppearance.BorderSize = 0;
             Acceder.FlatStyle = FlatStyle.Flat;
             Acceder.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Acceder.Location = new Point(74, 336);
+            Acceder.Location = new Point(74, 337);
             Acceder.Margin = new Padding(2);
             Acceder.Name = "Acceder";
             Acceder.Size = new Size(220, 58);
             Acceder.TabIndex = 0;
             Acceder.Text = "Acceder";
             Acceder.UseVisualStyleBackColor = true;
+            Acceder.Click += Acceder_Click;
             // 
             // label1
             // 

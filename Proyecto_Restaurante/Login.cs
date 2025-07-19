@@ -1,3 +1,5 @@
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 namespace Proyecto_Restaurante
 {
     public partial class Login : Form
@@ -27,6 +29,14 @@ namespace Proyecto_Restaurante
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Acceder_Click(object sender, EventArgs e)
+        {
+            menuprincipal menu = new menuprincipal();
+            menu.Show();
+
+            this.Hide();
         }
     }
 }

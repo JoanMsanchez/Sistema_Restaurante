@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_Restaurante
 {
-    partial class menu
+    partial class menuprincipal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(menuprincipal));
             label1 = new Label();
             barra_menu = new MenuStrip();
             pes_restaurante = new ToolStripMenuItem();
@@ -38,57 +39,44 @@
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(362, 66);
+            resources.ApplyResources(label1, "label1");
             label1.Name = "label1";
-            label1.Size = new Size(375, 45);
-            label1.TabIndex = 0;
-            label1.Text = "MENU PRINCIPAL";
+            label1.Click += label1_Click;
             // 
             // barra_menu
             // 
+            resources.ApplyResources(barra_menu, "barra_menu");
+            barra_menu.BackColor = SystemColors.ActiveCaption;
             barra_menu.ImageScalingSize = new Size(24, 24);
             barra_menu.Items.AddRange(new ToolStripItem[] { pes_restaurante, pes_inventario, pes_cxc });
-            barra_menu.Location = new Point(0, 0);
             barra_menu.Name = "barra_menu";
             barra_menu.RenderMode = ToolStripRenderMode.System;
-            barra_menu.Size = new Size(1044, 34);
-            barra_menu.TabIndex = 1;
-            barra_menu.Text = "MENU PRINCIPAL";
             // 
             // pes_restaurante
             // 
-            pes_restaurante.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            resources.ApplyResources(pes_restaurante, "pes_restaurante");
             pes_restaurante.Name = "pes_restaurante";
-            pes_restaurante.Size = new Size(203, 30);
-            pes_restaurante.Text = "RESTAURANTE";
             // 
             // pes_inventario
             // 
-            pes_inventario.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
+            resources.ApplyResources(pes_inventario, "pes_inventario");
             pes_inventario.Name = "pes_inventario";
-            pes_inventario.Size = new Size(179, 30);
-            pes_inventario.Text = "INVENTARIO";
             // 
             // pes_cxc
             // 
-            pes_cxc.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
+            resources.ApplyResources(pes_cxc, "pes_cxc");
             pes_cxc.Name = "pes_cxc";
-            pes_cxc.Size = new Size(269, 30);
-            pes_cxc.Text = "CUENTAS X COBRAR";
             // 
-            // menu
+            // menuprincipal
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(1044, 523);
             Controls.Add(label1);
             Controls.Add(barra_menu);
             MainMenuStrip = barra_menu;
-            Name = "menu";
-            Text = "Form1";
+            Name = "menuprincipal";
+            //Load += this.menu_Load;
             barra_menu.ResumeLayout(false);
             barra_menu.PerformLayout();
             ResumeLayout(false);
