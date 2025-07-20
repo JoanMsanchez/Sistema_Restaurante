@@ -47,7 +47,6 @@ namespace Proyecto_Restaurante
             // 
             resources.ApplyResources(label1, "label1");
             label1.Name = "label1";
-            //label1.Click += label1_Click;
             // 
             // barra_menu
             // 
@@ -74,7 +73,7 @@ namespace Proyecto_Restaurante
             // 
             usuarioToolStripMenuItem.Name = "usuarioToolStripMenuItem";
             resources.ApplyResources(usuarioToolStripMenuItem, "usuarioToolStripMenuItem");
-            usuarioToolStripMenuItem.Click += this.usuarioToolStripMenuItem_Click_1;
+            usuarioToolStripMenuItem.Click += usuarioToolStripMenuItem_Click_1;
             // 
             // clienteToolStripMenuItem
             // 
