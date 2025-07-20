@@ -1,5 +1,6 @@
 ﻿
 
+
 namespace Proyecto_Restaurante
 {
     partial class menuprincipal
@@ -46,7 +47,7 @@ namespace Proyecto_Restaurante
             // 
             resources.ApplyResources(label1, "label1");
             label1.Name = "label1";
-            label1.Click += label1_Click;
+            //label1.Click += label1_Click;
             // 
             // barra_menu
             // 
@@ -73,7 +74,7 @@ namespace Proyecto_Restaurante
             // 
             usuarioToolStripMenuItem.Name = "usuarioToolStripMenuItem";
             resources.ApplyResources(usuarioToolStripMenuItem, "usuarioToolStripMenuItem");
-            usuarioToolStripMenuItem.Click += this.usuarioToolStripMenuItem_Click_2;
+            usuarioToolStripMenuItem.Click += this.usuarioToolStripMenuItem_Click_1;
             // 
             // clienteToolStripMenuItem
             // 
@@ -103,11 +104,6 @@ namespace Proyecto_Restaurante
             barra_menu.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
-        }
-
-        private void usuarioToolStripMenuItem_Click_2(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

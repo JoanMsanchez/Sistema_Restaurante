@@ -17,12 +17,12 @@ namespace Proyecto_Restaurante
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void usuarioToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Usuario u = new Usuario();
             u.Show();
 
-            this.Hide();
+            //this.Hide();
         }
     }
 }

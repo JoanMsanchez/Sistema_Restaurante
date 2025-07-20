@@ -34,10 +34,10 @@
             label5 = new Label();
             label6 = new Label();
             label7 = new Label();
-            this.login = new TextBox();
-            this.contrasena = new TextBox();
-            this.nombre = new TextBox();
-            this.apellido = new TextBox();
+            login = new TextBox();
+            contrasena = new TextBox();
+            nombre = new TextBox();
+            apellido = new TextBox();
             mail = new TextBox();
             button1 = new Button();
             button2 = new Button();
@@ -113,31 +113,32 @@
             // 
             // login
             // 
-            this.login.Location = new Point(219, 79);
-            this.login.Name = "login";
-            this.login.Size = new Size(125, 27);
-            this.login.TabIndex = 8;
+            login.Location = new Point(219, 79);
+            login.Name = "login";
+            login.Size = new Size(125, 27);
+            login.TabIndex = 8;
             // 
             // contrasena
             // 
-            this.contrasena.Location = new Point(219, 132);
-            this.contrasena.Name = "contrasena";
-            this.contrasena.Size = new Size(125, 27);
-            this.contrasena.TabIndex = 9;
+            contrasena.Location = new Point(219, 132);
+            contrasena.Name = "contrasena";
+            contrasena.Size = new Size(125, 27);
+            contrasena.TabIndex = 9;
+            contrasena.UseSystemPasswordChar = true;
             // 
             // nombre
             // 
-            this.nombre.Location = new Point(219, 240);
-            this.nombre.Name = "nombre";
-            this.nombre.Size = new Size(125, 27);
-            this.nombre.TabIndex = 10;
+            nombre.Location = new Point(219, 240);
+            nombre.Name = "nombre";
+            nombre.Size = new Size(125, 27);
+            nombre.TabIndex = 10;
             // 
             // apellido
             // 
-            this.apellido.Location = new Point(219, 292);
-            this.apellido.Name = "apellido";
-            this.apellido.Size = new Size(125, 27);
-            this.apellido.TabIndex = 11;
+            apellido.Location = new Point(219, 292);
+            apellido.Name = "apellido";
+            apellido.Size = new Size(125, 27);
+            apellido.TabIndex = 11;
             // 
             // mail
             // 
@@ -243,10 +244,10 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(mail);
-            Controls.Add(this.apellido);
-            Controls.Add(this.nombre);
-            Controls.Add(this.contrasena);
-            Controls.Add(this.login);
+            Controls.Add(apellido);
+            Controls.Add(nombre);
+            Controls.Add(contrasena);
+            Controls.Add(login);
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -272,6 +273,10 @@
         private Label label5;
         private Label label6;
         private Label label7;
+        private TextBox login;
+        private TextBox contrasena;
+        private TextBox nombre;
+        private TextBox apellido;
         private TextBox textBox1;
         private TextBox textBox2;
         private TextBox textBox3;
