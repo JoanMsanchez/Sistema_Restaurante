@@ -266,29 +266,29 @@
 
         #endregion
 
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private TextBox login;
-        private TextBox contrasena;
-        private TextBox nombre;
-        private TextBox apellido;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
-        private TextBox mail;
-        private Button button1;
-        private Button button2;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
-        private RadioButton radioButton3;
-        private RadioButton radioButton4;
-        private GroupBox Estado;
-        private GroupBox Rol;
+        protected Label label1;
+        protected Label label2;
+        protected Label label3;
+        protected Label label4;
+        protected Label label5;
+        protected Label label6;
+        protected Label label7;
+        protected TextBox login;
+        protected TextBox contrasena;
+        protected TextBox nombre;
+        protected TextBox apellido;
+        protected TextBox textBox1;
+        protected TextBox textBox2;
+        protected TextBox textBox3;
+        protected TextBox textBox4;
+        protected TextBox mail;
+        protected Button button1;
+        protected Button button2;
+        protected RadioButton radioButton1;
+        protected RadioButton radioButton2;
+        protected RadioButton radioButton3;
+        protected RadioButton radioButton4;
+        protected GroupBox Estado;
+        protected GroupBox Rol;
     }
 }
