@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Proyecto_Restaurante.Mantenimiento;
 
 namespace Proyecto_Restaurante
 {
@@ -15,6 +16,12 @@ namespace Proyecto_Restaurante
         public Usuario()
         {
             InitializeComponent();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
