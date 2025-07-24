@@ -30,6 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             panelMenu = new Panel();
+            iconButton6 = new FontAwesome.Sharp.IconButton();
+            iconButton1 = new FontAwesome.Sharp.IconButton();
             iconButton5 = new FontAwesome.Sharp.IconButton();
             iconButton4 = new FontAwesome.Sharp.IconButton();
             iconButton3 = new FontAwesome.Sharp.IconButton();
@@ -53,6 +55,8 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(255, 161, 43);
+            panelMenu.Controls.Add(iconButton6);
+            panelMenu.Controls.Add(iconButton1);
             panelMenu.Controls.Add(iconButton5);
             panelMenu.Controls.Add(iconButton4);
             panelMenu.Controls.Add(iconButton3);
@@ -63,8 +67,46 @@
             panelMenu.Location = new Point(0, 0);
             panelMenu.Margin = new Padding(2);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(254, 628);
+            panelMenu.Size = new Size(263, 628);
             panelMenu.TabIndex = 0;
+            // 
+            // iconButton6
+            // 
+            iconButton6.Dock = DockStyle.Top;
+            iconButton6.FlatAppearance.BorderSize = 0;
+            iconButton6.FlatStyle = FlatStyle.Flat;
+            iconButton6.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            iconButton6.ForeColor = Color.OldLace;
+            iconButton6.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
+            iconButton6.IconColor = Color.OldLace;
+            iconButton6.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButton6.Location = new Point(0, 424);
+            iconButton6.Name = "iconButton6";
+            iconButton6.Size = new Size(263, 60);
+            iconButton6.TabIndex = 7;
+            iconButton6.Text = "iconButton6";
+            iconButton6.TextAlign = ContentAlignment.MiddleLeft;
+            iconButton6.TextImageRelation = TextImageRelation.ImageBeforeText;
+            iconButton6.UseVisualStyleBackColor = true;
+            // 
+            // iconButton1
+            // 
+            iconButton1.Dock = DockStyle.Top;
+            iconButton1.FlatAppearance.BorderSize = 0;
+            iconButton1.FlatStyle = FlatStyle.Flat;
+            iconButton1.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            iconButton1.ForeColor = Color.OldLace;
+            iconButton1.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
+            iconButton1.IconColor = Color.OldLace;
+            iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButton1.Location = new Point(0, 364);
+            iconButton1.Name = "iconButton1";
+            iconButton1.Size = new Size(263, 60);
+            iconButton1.TabIndex = 6;
+            iconButton1.Text = "iconButton1";
+            iconButton1.TextAlign = ContentAlignment.MiddleLeft;
+            iconButton1.TextImageRelation = TextImageRelation.ImageBeforeText;
+            iconButton1.UseVisualStyleBackColor = true;
             // 
             // iconButton5
             // 
@@ -79,7 +121,7 @@
             iconButton5.IconSize = 46;
             iconButton5.Location = new Point(0, 554);
             iconButton5.Name = "iconButton5";
-            iconButton5.Size = new Size(254, 74);
+            iconButton5.Size = new Size(263, 74);
             iconButton5.TabIndex = 5;
             iconButton5.Text = "iconButton5";
             iconButton5.TextAlign = ContentAlignment.MiddleLeft;
@@ -96,10 +138,9 @@
             iconButton4.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
             iconButton4.IconColor = Color.OldLace;
             iconButton4.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconButton4.IconSize = 46;
-            iconButton4.Location = new Point(0, 328);
+            iconButton4.Location = new Point(0, 304);
             iconButton4.Name = "iconButton4";
-            iconButton4.Size = new Size(254, 74);
+            iconButton4.Size = new Size(263, 60);
             iconButton4.TabIndex = 4;
             iconButton4.Text = "iconButton4";
             iconButton4.TextAlign = ContentAlignment.MiddleLeft;
@@ -116,10 +157,9 @@
             iconButton3.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
             iconButton3.IconColor = Color.OldLace;
             iconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconButton3.IconSize = 46;
-            iconButton3.Location = new Point(0, 254);
+            iconButton3.Location = new Point(0, 244);
             iconButton3.Name = "iconButton3";
-            iconButton3.Size = new Size(254, 74);
+            iconButton3.Size = new Size(263, 60);
             iconButton3.TabIndex = 3;
             iconButton3.Text = "iconButton3";
             iconButton3.TextAlign = ContentAlignment.MiddleLeft;
@@ -136,10 +176,9 @@
             iconButton2.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
             iconButton2.IconColor = Color.OldLace;
             iconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconButton2.IconSize = 46;
-            iconButton2.Location = new Point(0, 180);
+            iconButton2.Location = new Point(0, 184);
             iconButton2.Name = "iconButton2";
-            iconButton2.Size = new Size(254, 74);
+            iconButton2.Size = new Size(263, 60);
             iconButton2.TabIndex = 2;
             iconButton2.Text = "iconButton2";
             iconButton2.TextAlign = ContentAlignment.MiddleLeft;
@@ -156,10 +195,9 @@
             btnAccesoEmpleado.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
             btnAccesoEmpleado.IconColor = Color.OldLace;
             btnAccesoEmpleado.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnAccesoEmpleado.IconSize = 46;
-            btnAccesoEmpleado.Location = new Point(0, 106);
+            btnAccesoEmpleado.Location = new Point(0, 124);
             btnAccesoEmpleado.Name = "btnAccesoEmpleado";
-            btnAccesoEmpleado.Size = new Size(254, 74);
+            btnAccesoEmpleado.Size = new Size(263, 60);
             btnAccesoEmpleado.TabIndex = 1;
             btnAccesoEmpleado.Text = "   Empleado";
             btnAccesoEmpleado.TextAlign = ContentAlignment.MiddleLeft;
@@ -176,7 +214,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(254, 106);
+            panel1.Size = new Size(263, 124);
             panel1.TabIndex = 0;
             // 
             // btnBarraMenu
@@ -212,10 +250,10 @@
             panelTitulo.BackColor = Color.White;
             panelTitulo.Controls.Add(label1);
             panelTitulo.Dock = DockStyle.Top;
-            panelTitulo.Location = new Point(254, 0);
+            panelTitulo.Location = new Point(263, 0);
             panelTitulo.Margin = new Padding(2);
             panelTitulo.Name = "panelTitulo";
-            panelTitulo.Size = new Size(951, 70);
+            panelTitulo.Size = new Size(942, 70);
             panelTitulo.TabIndex = 0;
             // 
             // label1
@@ -234,10 +272,10 @@
             // 
             panelEscritorio.BackColor = Color.OldLace;
             panelEscritorio.Dock = DockStyle.Fill;
-            panelEscritorio.Location = new Point(254, 70);
+            panelEscritorio.Location = new Point(263, 70);
             panelEscritorio.Margin = new Padding(2);
             panelEscritorio.Name = "panelEscritorio";
-            panelEscritorio.Size = new Size(951, 558);
+            panelEscritorio.Size = new Size(942, 558);
             panelEscritorio.TabIndex = 1;
             panelEscritorio.Paint += panelEscritorio_Paint;
             // 
@@ -293,5 +331,7 @@
         private FontAwesome.Sharp.IconButton iconButton4;
         private FontAwesome.Sharp.IconButton iconButton3;
         private FontAwesome.Sharp.IconButton iconButton2;
+        private FontAwesome.Sharp.IconButton iconButton6;
+        private FontAwesome.Sharp.IconButton iconButton1;
     }
 }
