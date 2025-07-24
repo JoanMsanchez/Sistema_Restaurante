@@ -35,7 +35,7 @@ namespace Proyecto_Restaurante
                 if (resultado > 0)
                 {
                     this.Hide();
-                    FormPadre frm = new FormPadre();
+                    MenuPrincipal frm = new MenuPrincipal();
                     frm.Show();
                 }
                 else

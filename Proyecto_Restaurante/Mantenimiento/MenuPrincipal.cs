@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
-    public partial class FormPadre : Form
+    public partial class MenuPrincipal : Form
     {
-        public FormPadre()
+        public MenuPrincipal()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            btnMenuBarAdd.Show(btnMenuBar, new Point(0, btnMenuBar.Height));
+
         }
 
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -31,6 +31,23 @@ namespace Proyecto_Restaurante.Mantenimiento
         }
 
         private void button4_Click(object sender, EventArgs e)
+        {
+            Empleado u = new Empleado();
+            u.Show();
+        }
+
+        private void btnAcceso_Empleado(object sender, EventArgs e)
+        {
+            Empleado u = new Empleado();
+            u.Show();
+        }
+       
+        private void panelEscritorio_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void iconButton1_Click(object sender, EventArgs e)
         {
             Empleado u = new Empleado();
             u.Show();
