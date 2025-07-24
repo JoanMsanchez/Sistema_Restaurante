@@ -1,23 +1,57 @@
+using System;
+using System.Data.SqlClient;
+using Microsoft.VisualBasic.Logging;
 using Proyecto_Restaurante.Mantenimiento;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Proyecto_Restaurante
 {
     public partial class Login : Form
     {
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB; integrated security=true");
+
         public Login()
         {
             InitializeComponent();
         }
+
         private void Acceder_Click(object sender, EventArgs e)
         {
-            //menuprincipal menu = new menuprincipal();
-            //menu.Show();
+            try
+            {
+                conexion.Open();
 
-            FormPadre formP = new FormPadre();
-            formP.Show();
+                string Usuario = usuario.Text.Trim();
+                string Clave = contasena.Text.Trim();
 
-            this.Hide();
+                string consulta = "SELECT COUNT(*) FROM empleado WHERE usuario = @usuario AND clave = @clave";
+                SqlCommand cmd = new SqlCommand(consulta, conexion);
+                cmd.Parameters.AddWithValue("@usuario", Usuario);
+                cmd.Parameters.AddWithValue("@clave", Clave);
+
+                int resultado = (int)cmd.ExecuteScalar();
+
+                if (resultado > 0)
+                {
+                    this.Hide();
+                    FormPadre frm = new FormPadre();
+                    frm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o clave incorrectos", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                conexion.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar acceder: " + ex.Message);
+                conexion.Close();
+            }
+
         }
+    
     }
 }
