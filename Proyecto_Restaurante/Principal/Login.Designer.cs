@@ -60,7 +60,6 @@
             label1.Size = new Size(90, 25);
             label1.TabIndex = 2;
             label1.Text = "Usuario";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -90,7 +89,6 @@
             contasena.Size = new Size(217, 20);
             contasena.TabIndex = 5;
             contasena.UseSystemPasswordChar = true;
-            contasena.TextChanged += contasena_TextChanged;
             // 
             // panel2
             // 
@@ -99,7 +97,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(220, 2);
             panel2.TabIndex = 7;
-            panel2.Paint += panel2_Paint;
             // 
             // panel3
             // 
@@ -124,8 +121,8 @@
             Controls.Add(Acceder);
             Margin = new Padding(2);
             Name = "Login";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
-            Load += Login_Load;
             ResumeLayout(false);
             PerformLayout();
         }

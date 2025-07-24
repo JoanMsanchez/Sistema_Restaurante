@@ -54,8 +54,9 @@
             panelMenu.Controls.Add(panel1);
             panelMenu.Dock = DockStyle.Left;
             panelMenu.Location = new Point(0, 0);
+            panelMenu.Margin = new Padding(2, 2, 2, 2);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(254, 627);
+            panelMenu.Size = new Size(203, 502);
             panelMenu.TabIndex = 0;
             // 
             // button4
@@ -63,11 +64,14 @@
             button4.FlatAppearance.BorderSize = 0;
             button4.FlatStyle = FlatStyle.Flat;
             button4.ImageAlign = ContentAlignment.MiddleLeft;
-            button4.Location = new Point(21, 148);
+            button4.Location = new Point(17, 118);
+            button4.Margin = new Padding(2, 2, 2, 2);
             button4.Name = "button4";
-            button4.Size = new Size(216, 74);
+            button4.Size = new Size(173, 59);
             button4.TabIndex = 5;
+            button4.Text = "Empleado";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // panel1
             // 
@@ -75,8 +79,9 @@
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(2, 2, 2, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(254, 122);
+            panel1.Size = new Size(203, 98);
             panel1.TabIndex = 0;
             // 
             // btnMenuBar
@@ -84,9 +89,10 @@
             btnMenuBar.FlatAppearance.BorderSize = 0;
             btnMenuBar.FlatStyle = FlatStyle.Flat;
             btnMenuBar.Image = (Image)resources.GetObject("btnMenuBar.Image");
-            btnMenuBar.Location = new Point(181, 0);
+            btnMenuBar.Location = new Point(145, 0);
+            btnMenuBar.Margin = new Padding(2, 2, 2, 2);
             btnMenuBar.Name = "btnMenuBar";
-            btnMenuBar.Size = new Size(73, 84);
+            btnMenuBar.Size = new Size(58, 67);
             btnMenuBar.TabIndex = 1;
             btnMenuBar.UseVisualStyleBackColor = true;
             btnMenuBar.Click += button1_Click;
@@ -95,8 +101,9 @@
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Margin = new Padding(2, 2, 2, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(184, 84);
+            pictureBox1.Size = new Size(147, 67);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -105,18 +112,20 @@
             panelTitulo.BackColor = Color.White;
             panelTitulo.Controls.Add(label1);
             panelTitulo.Dock = DockStyle.Top;
-            panelTitulo.Location = new Point(254, 0);
+            panelTitulo.Location = new Point(203, 0);
+            panelTitulo.Margin = new Padding(2, 2, 2, 2);
             panelTitulo.Name = "panelTitulo";
-            panelTitulo.Size = new Size(951, 84);
+            panelTitulo.Size = new Size(761, 67);
             panelTitulo.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 22F, FontStyle.Bold);
-            label1.Location = new Point(252, 19);
+            label1.Location = new Point(202, 15);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(429, 51);
+            label1.Size = new Size(364, 42);
             label1.TabIndex = 0;
             label1.Text = "NOMBRE SISTEMA";
             // 
@@ -124,9 +133,10 @@
             // 
             panelEscritorio.BackColor = Color.FromArgb(233, 233, 233);
             panelEscritorio.Dock = DockStyle.Fill;
-            panelEscritorio.Location = new Point(254, 84);
+            panelEscritorio.Location = new Point(203, 67);
+            panelEscritorio.Margin = new Padding(2, 2, 2, 2);
             panelEscritorio.Name = "panelEscritorio";
-            panelEscritorio.Size = new Size(951, 543);
+            panelEscritorio.Size = new Size(761, 435);
             panelEscritorio.TabIndex = 1;
             // 
             // btnMenuBarAdd
@@ -135,24 +145,25 @@
             btnMenuBarAdd.ImageScalingSize = new Size(27, 27);
             btnMenuBarAdd.Items.AddRange(new ToolStripItem[] { cerrarSesionToolStripMenuItem });
             btnMenuBarAdd.Name = "contextMenuStrip1";
-            btnMenuBarAdd.Size = new Size(241, 67);
+            btnMenuBarAdd.Size = new Size(183, 28);
             // 
             // cerrarSesionToolStripMenuItem
             // 
             cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
-            cerrarSesionToolStripMenuItem.Size = new Size(240, 30);
+            cerrarSesionToolStripMenuItem.Size = new Size(182, 24);
             cerrarSesionToolStripMenuItem.Text = "Cerrar Sesion";
             cerrarSesionToolStripMenuItem.Click += cerrarSesionToolStripMenuItem_Click;
             // 
             // FormPadre
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(233, 233, 233);
-            ClientSize = new Size(1205, 627);
+            ClientSize = new Size(964, 502);
             Controls.Add(panelEscritorio);
             Controls.Add(panelTitulo);
             Controls.Add(panelMenu);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "FormPadre";
             Text = "FormularioPadre";
             panelMenu.ResumeLayout(false);

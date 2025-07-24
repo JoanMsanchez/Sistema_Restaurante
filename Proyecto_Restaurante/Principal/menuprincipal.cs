@@ -19,7 +19,7 @@ namespace Proyecto_Restaurante
 
         private void usuarioToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            Usuario u = new Usuario();
+            Empleado u = new Empleado();
             u.Show();
 
             //this.Hide();

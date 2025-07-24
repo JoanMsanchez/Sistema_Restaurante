@@ -29,5 +29,11 @@ namespace Proyecto_Restaurante.Mantenimiento
 
             this.Hide();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Empleado u = new Empleado();
+            u.Show();
+        }
     }
 }
