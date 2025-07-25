@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Empleado));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -38,108 +39,125 @@
             apellido = new TextBox();
             activo = new RadioButton();
             desactivo = new RadioButton();
-            Estado = new GroupBox();
             login = new TextBox();
-            datosempleado = new Panel();
-            Guardar = new FontAwesome.Sharp.IconButton();
+            guardar = new FontAwesome.Sharp.IconButton();
             Limpiar = new FontAwesome.Sharp.IconButton();
+            label7 = new Label();
             label4 = new Label();
-            textBox1 = new TextBox();
+            busca = new TextBox();
             panel1 = new Panel();
+            panel6 = new Panel();
+            panel5 = new Panel();
+            panel4 = new Panel();
+            panel3 = new Panel();
+            panel2 = new Panel();
+            pictureBox1 = new PictureBox();
+            buscanombre = new RadioButton();
+            buscausuario = new RadioButton();
             dataGridView1 = new DataGridView();
-            Estado.SuspendLayout();
-            datosempleado.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Times New Roman", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(362, 28);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Font = new Font("Verdana", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(187, 51);
             label1.Name = "label1";
-            label1.Size = new Size(188, 35);
+            label1.Size = new Size(188, 34);
             label1.TabIndex = 0;
             label1.Text = "EMPLEADO";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            label2.Location = new Point(24, 110);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(11, 134);
             label2.Name = "label2";
-            label2.Size = new Size(93, 26);
+            label2.Size = new Size(98, 25);
             label2.TabIndex = 1;
             label2.Text = "Usuario";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            label3.Location = new Point(24, 151);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(11, 177);
             label3.Name = "label3";
-            label3.Size = new Size(130, 26);
+            label3.Size = new Size(138, 25);
             label3.TabIndex = 2;
             label3.Text = "Contraseña";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            label5.Location = new Point(26, 192);
-            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label5.ForeColor = Color.White;
+            label5.Location = new Point(274, 138);
             label5.Name = "label5";
-            label5.Size = new Size(95, 26);
+            label5.Size = new Size(101, 25);
             label5.TabIndex = 4;
             label5.Text = "Nombre";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
-            label6.Location = new Point(26, 234);
-            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.White;
+            label6.Location = new Point(540, 140);
             label6.Name = "label6";
-            label6.Size = new Size(99, 26);
+            label6.Size = new Size(104, 25);
             label6.TabIndex = 5;
             label6.Text = "Apellido";
             // 
             // contrasena
             // 
-            contrasena.Location = new Point(166, 146);
-            contrasena.Margin = new Padding(4, 4, 4, 4);
+            contrasena.BackColor = Color.FromArgb(255, 161, 43);
+            contrasena.BorderStyle = BorderStyle.None;
+            contrasena.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            contrasena.ForeColor = Color.White;
+            contrasena.Location = new Point(155, 183);
             contrasena.Name = "contrasena";
-            contrasena.Size = new Size(190, 31);
+            contrasena.Size = new Size(153, 19);
             contrasena.TabIndex = 9;
             contrasena.UseSystemPasswordChar = true;
             // 
             // nombre
             // 
-            nombre.Location = new Point(166, 188);
-            nombre.Margin = new Padding(4, 4, 4, 4);
+            nombre.BackColor = Color.FromArgb(255, 161, 43);
+            nombre.BorderStyle = BorderStyle.None;
+            nombre.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nombre.ForeColor = Color.White;
+            nombre.Location = new Point(381, 143);
             nombre.Name = "nombre";
-            nombre.Size = new Size(190, 31);
+            nombre.Size = new Size(153, 19);
             nombre.TabIndex = 10;
+            nombre.KeyPress += nombre_KeyPress;
             // 
             // apellido
             // 
-            apellido.Location = new Point(166, 229);
-            apellido.Margin = new Padding(4, 4, 4, 4);
+            apellido.BackColor = Color.FromArgb(255, 161, 43);
+            apellido.BorderStyle = BorderStyle.None;
+            apellido.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            apellido.ForeColor = Color.White;
+            apellido.Location = new Point(650, 144);
             apellido.Name = "apellido";
-            apellido.Size = new Size(190, 31);
+            apellido.Size = new Size(153, 19);
             apellido.TabIndex = 11;
+            apellido.KeyPress += apellido_KeyPress;
             // 
             // activo
             // 
             activo.AutoSize = true;
-            activo.Location = new Point(216, 0);
-            activo.Margin = new Padding(4, 4, 4, 4);
+            activo.Font = new Font("Verdana", 10.2F);
+            activo.Location = new Point(419, 183);
             activo.Name = "activo";
-            activo.Size = new Size(103, 30);
+            activo.Size = new Size(83, 24);
             activo.TabIndex = 17;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -148,145 +166,241 @@
             // desactivo
             // 
             desactivo.AutoSize = true;
-            desactivo.Location = new Point(331, 0);
-            desactivo.Margin = new Padding(4, 4, 4, 4);
+            desactivo.Font = new Font("Verdana", 10.2F);
+            desactivo.Location = new Point(419, 213);
             desactivo.Name = "desactivo";
-            desactivo.Size = new Size(120, 30);
+            desactivo.Size = new Size(100, 24);
             desactivo.TabIndex = 18;
             desactivo.TabStop = true;
             desactivo.Text = "Inactivo";
             desactivo.UseVisualStyleBackColor = true;
             // 
-            // Estado
-            // 
-            Estado.Controls.Add(desactivo);
-            Estado.Controls.Add(activo);
-            Estado.FlatStyle = FlatStyle.Flat;
-            Estado.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Estado.Location = new Point(418, 110);
-            Estado.Margin = new Padding(4, 4, 4, 4);
-            Estado.Name = "Estado";
-            Estado.Padding = new Padding(4, 4, 4, 4);
-            Estado.Size = new Size(472, 40);
-            Estado.TabIndex = 19;
-            Estado.TabStop = false;
-            Estado.Text = "Estado";
-            // 
             // login
             // 
-            login.Location = new Point(166, 105);
-            login.Margin = new Padding(4, 4, 4, 4);
+            login.BackColor = Color.FromArgb(255, 161, 43);
+            login.BorderStyle = BorderStyle.None;
+            login.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            login.ForeColor = Color.White;
+            login.Location = new Point(115, 143);
             login.Name = "login";
-            login.Size = new Size(190, 31);
+            login.Size = new Size(153, 19);
             login.TabIndex = 8;
             // 
-            // datosempleado
+            // guardar
             // 
-            datosempleado.BackColor = Color.FromArgb(255, 161, 43);
-            datosempleado.Controls.Add(Guardar);
-            datosempleado.Controls.Add(Limpiar);
-            datosempleado.Controls.Add(label2);
-            datosempleado.Controls.Add(Estado);
-            datosempleado.Controls.Add(label1);
-            datosempleado.Controls.Add(login);
-            datosempleado.Controls.Add(label3);
-            datosempleado.Controls.Add(apellido);
-            datosempleado.Controls.Add(contrasena);
-            datosempleado.Controls.Add(label6);
-            datosempleado.Controls.Add(nombre);
-            datosempleado.Controls.Add(label5);
-            datosempleado.Location = new Point(15, 15);
-            datosempleado.Margin = new Padding(4, 4, 4, 4);
-            datosempleado.Name = "datosempleado";
-            datosempleado.Size = new Size(1039, 329);
-            datosempleado.TabIndex = 20;
-            // 
-            // Guardar
-            // 
-            Guardar.IconChar = FontAwesome.Sharp.IconChar.None;
-            Guardar.IconColor = Color.Black;
-            Guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            Guardar.Location = new Point(444, 208);
-            Guardar.Margin = new Padding(4, 4, 4, 4);
-            Guardar.Name = "Guardar";
-            Guardar.Size = new Size(118, 36);
-            Guardar.TabIndex = 21;
-            Guardar.Text = "GUARDAR";
-            Guardar.UseVisualStyleBackColor = true;
-            Guardar.Click += Guardar_Click;
+            guardar.FlatAppearance.BorderSize = 0;
+            guardar.FlatStyle = FlatStyle.Flat;
+            guardar.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold);
+            guardar.ForeColor = Color.White;
+            guardar.IconChar = FontAwesome.Sharp.IconChar.FileUpload;
+            guardar.IconColor = Color.White;
+            guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            guardar.IconSize = 30;
+            guardar.ImageAlign = ContentAlignment.MiddleLeft;
+            guardar.Location = new Point(551, 229);
+            guardar.Name = "guardar";
+            guardar.Size = new Size(136, 52);
+            guardar.TabIndex = 25;
+            guardar.Text = "    Guardar";
+            guardar.UseVisualStyleBackColor = true;
+            guardar.Click += guardar_Click_1;
             // 
             // Limpiar
             // 
-            Limpiar.IconChar = FontAwesome.Sharp.IconChar.None;
-            Limpiar.IconColor = Color.Black;
+            Limpiar.FlatAppearance.BorderSize = 0;
+            Limpiar.FlatStyle = FlatStyle.Flat;
+            Limpiar.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold);
+            Limpiar.ForeColor = Color.White;
+            Limpiar.IconChar = FontAwesome.Sharp.IconChar.Broom;
+            Limpiar.IconColor = Color.White;
             Limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            Limpiar.Location = new Point(584, 208);
-            Limpiar.Margin = new Padding(4, 4, 4, 4);
+            Limpiar.IconSize = 30;
+            Limpiar.ImageAlign = ContentAlignment.MiddleLeft;
+            Limpiar.Location = new Point(693, 229);
             Limpiar.Name = "Limpiar";
-            Limpiar.Size = new Size(118, 36);
-            Limpiar.TabIndex = 20;
-            Limpiar.Text = "LIMPIAR";
+            Limpiar.Size = new Size(135, 52);
+            Limpiar.TabIndex = 24;
+            Limpiar.Text = "   Limpiar";
             Limpiar.UseVisualStyleBackColor = true;
-            Limpiar.Click += Limpiar_Click;
+            Limpiar.Click += Limpiar_Click_1;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.ForeColor = Color.White;
+            label7.Location = new Point(325, 181);
+            label7.Name = "label7";
+            label7.Size = new Size(88, 25);
+            label7.TabIndex = 22;
+            label7.Text = "Estado";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(56, 20);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.ForeColor = Color.White;
+            label4.Location = new Point(49, 324);
             label4.Name = "label4";
-            label4.Size = new Size(84, 26);
+            label4.Size = new Size(88, 25);
             label4.TabIndex = 22;
             label4.Text = "Buscar";
             // 
-            // textBox1
+            // busca
             // 
-            textBox1.Location = new Point(24, 80);
-            textBox1.Margin = new Padding(4, 4, 4, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(155, 31);
-            textBox1.TabIndex = 23;
+            busca.BackColor = Color.FromArgb(255, 161, 43);
+            busca.BorderStyle = BorderStyle.None;
+            busca.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            busca.ForeColor = Color.White;
+            busca.Location = new Point(26, 360);
+            busca.Name = "busca";
+            busca.Size = new Size(130, 19);
+            busca.TabIndex = 23;
+            busca.TextChanged += busca_TextChanged;
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 161, 43);
+            panel1.Controls.Add(panel6);
+            panel1.Controls.Add(panel5);
+            panel1.Controls.Add(panel4);
+            panel1.Controls.Add(panel3);
+            panel1.Controls.Add(panel2);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(login);
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(guardar);
+            panel1.Controls.Add(activo);
+            panel1.Controls.Add(contrasena);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(desactivo);
+            panel1.Controls.Add(apellido);
+            panel1.Controls.Add(nombre);
+            panel1.Controls.Add(buscanombre);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(Limpiar);
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(buscausuario);
             panel1.Controls.Add(dataGridView1);
             panel1.Controls.Add(label4);
-            panel1.Controls.Add(textBox1);
-            panel1.Location = new Point(15, 351);
-            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Controls.Add(busca);
+            panel1.Dock = DockStyle.Fill;
+            panel1.ForeColor = Color.White;
+            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1039, 374);
+            panel1.Size = new Size(896, 616);
             panel1.TabIndex = 21;
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.White;
+            panel6.ForeColor = Color.White;
+            panel6.Location = new Point(21, 380);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(135, 2);
+            panel6.TabIndex = 21;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.White;
+            panel5.ForeColor = Color.White;
+            panel5.Location = new Point(150, 205);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(158, 2);
+            panel5.TabIndex = 21;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.White;
+            panel4.ForeColor = Color.White;
+            panel4.Location = new Point(645, 165);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(158, 2);
+            panel4.TabIndex = 21;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.ForeColor = Color.White;
+            panel3.Location = new Point(376, 165);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(158, 2);
+            panel3.TabIndex = 21;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.White;
+            panel2.ForeColor = Color.White;
+            panel2.Location = new Point(110, 163);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(158, 2);
+            panel2.TabIndex = 20;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(686, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(210, 134);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 26;
+            pictureBox1.TabStop = false;
+            // 
+            // buscanombre
+            // 
+            buscanombre.AutoSize = true;
+            buscanombre.Font = new Font("Verdana", 10.8F, FontStyle.Bold);
+            buscanombre.Location = new Point(40, 420);
+            buscanombre.Name = "buscanombre";
+            buscanombre.Size = new Size(111, 26);
+            buscanombre.TabIndex = 1;
+            buscanombre.TabStop = true;
+            buscanombre.Text = "Nombre";
+            buscanombre.UseVisualStyleBackColor = true;
+            // 
+            // buscausuario
+            // 
+            buscausuario.AutoSize = true;
+            buscausuario.Font = new Font("Verdana", 10.8F, FontStyle.Bold);
+            buscausuario.Location = new Point(40, 388);
+            buscausuario.Name = "buscausuario";
+            buscausuario.Size = new Size(109, 26);
+            buscausuario.TabIndex = 0;
+            buscausuario.TabStop = true;
+            buscausuario.Text = "Usuario";
+            buscausuario.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.BackgroundColor = Color.FromArgb(255, 161, 43);
+            dataGridView1.BorderStyle = BorderStyle.Fixed3D;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(188, 20);
-            dataGridView1.Margin = new Padding(4, 4, 4, 4);
+            dataGridView1.GridColor = SystemColors.InfoText;
+            dataGridView1.Location = new Point(174, 290);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(848, 336);
+            dataGridView1.Size = new Size(710, 314);
             dataGridView1.TabIndex = 24;
+            dataGridView1.CellMouseDoubleClick += dataGridView1_CellMouseDoubleClick;
             // 
             // Empleado
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1069, 758);
+            BackColor = Color.FromArgb(255, 161, 43);
+            ClientSize = new Size(896, 616);
             Controls.Add(panel1);
-            Controls.Add(datosempleado);
-            Margin = new Padding(4, 4, 4, 4);
             Name = "Empleado";
             Text = "Empleado";
-            Estado.ResumeLayout(false);
-            Estado.PerformLayout();
-            datosempleado.ResumeLayout(false);
-            datosempleado.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
@@ -301,19 +415,28 @@
         protected TextBox contrasena;
         protected TextBox nombre;
         protected TextBox apellido;
-        protected TextBox textBox2;
         protected TextBox textBox3;
         protected TextBox textBox4;
         protected RadioButton activo;
         protected RadioButton desactivo;
-        protected GroupBox Estado;
         protected TextBox login;
-        private Panel datosempleado;
-        private FontAwesome.Sharp.IconButton Guardar;
+        //private FontAwesome.Sharp.IconButton Guardar;
         private FontAwesome.Sharp.IconButton Limpiar;
         private Label label4;
-        private TextBox textBox1;
+        private TextBox busca;
         private Panel panel1;
         private DataGridView dataGridView1;
+        private GroupBox groupBox1;
+        private RadioButton buscanombre;
+        private RadioButton buscausuario;
+        private Label label7;
+        private FontAwesome.Sharp.IconButton iconButton2;
+        private FontAwesome.Sharp.IconButton guardar;
+        private PictureBox pictureBox1;
+        private Panel panel2;
+        private Panel panel6;
+        private Panel panel5;
+        private Panel panel4;
+        private Panel panel3;
     }
 }
