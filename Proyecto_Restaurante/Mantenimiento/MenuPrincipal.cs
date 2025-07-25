@@ -133,27 +133,31 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void CollapseMenu()
         {
-            if (this.panelMenu.Width > 200) //Colapsar menu
+            if (this.panelMenu.Width > 200) // Colapsar menú
             {
                 this.panelMenu.Width = 100;
                 pictureBox1.Visible = false;
                 btnBarraMenu.Dock = DockStyle.Top;
+
                 foreach (Button btn in panelMenu.Controls.OfType<Button>())
                 {
                     btn.Text = "";
                     btn.ImageAlign = ContentAlignment.MiddleCenter;
+                    btn.TextAlign = ContentAlignment.MiddleCenter;
                     btn.Padding = new Padding(0);
                 }
             }
-            else //Expandir menu
+            else // Expandir menú
             {
-                this.panelMenu.Width = 263;
+                this.panelMenu.Width = 265;
                 pictureBox1.Visible = true;
                 btnBarraMenu.Dock = DockStyle.None;
+
                 foreach (Button btn in panelMenu.Controls.OfType<Button>())
                 {
-                    btn.Text = "   " + btn.Tag?.ToString();
-                    btn.ImageAlign = ContentAlignment.MiddleCenter;
+                    btn.Text = "   " + btn.Tag?.ToString(); // Asegúrate de que el texto esté en btn.Tag
+                    btn.ImageAlign = ContentAlignment.MiddleLeft;
+                    btn.TextAlign = ContentAlignment.MiddleLeft;
                     btn.Padding = new Padding(10, 0, 0, 0);
                 }
             }
