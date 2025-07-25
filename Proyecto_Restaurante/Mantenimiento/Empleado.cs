@@ -15,13 +15,14 @@ namespace Proyecto_Restaurante
 
     public partial class Empleado : Form
     {
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB; integrated security=true");
         public Empleado()
         {
             InitializeComponent();
-            limpiar();
             llenar_tabla_datagridview();
+
+
 
         }
 
@@ -39,6 +40,9 @@ namespace Proyecto_Restaurante
                 {
                     dataGridView1.Columns[0].Visible = false; // Índice 0 = primera columna (ID)
                 }
+                dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
+                //dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(255, 161, 43);
+                dataGridView1.DefaultCellStyle.BackColor = Color.White;
             }
             catch (Exception ex)
             {
@@ -139,23 +143,6 @@ namespace Proyecto_Restaurante
             limpiar();
         }
 
-        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
-                login.Text = fila.Cells["usuario"].Value.ToString();
-                contrasena.Text = fila.Cells["clave"].Value.ToString();
-                nombre.Text = fila.Cells["nombre"].Value.ToString();
-                apellido.Text = fila.Cells["apellidos"].Value.ToString();
-
-                int estado = Convert.ToInt32(fila.Cells["estado"].Value);
-                if (estado == 1)
-                    activo.Checked = true;
-                else
-                    desactivo.Checked = true;
-            }
-        }
         private void busca_TextChanged(object sender, EventArgs e)
         {
             try
@@ -264,10 +251,16 @@ namespace Proyecto_Restaurante
 
         private void nombre_KeyPress(object sender, KeyPressEventArgs e)
         {
+
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
             {
                 e.Handled = true; // Bloquea la tecla
                 MessageBox.Show("Solo se permiten letras en el nombre.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                apellido.Focus();
             }
         }
 
@@ -280,6 +273,38 @@ namespace Proyecto_Restaurante
             }
         }
 
-        
+        private void login_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                contrasena.Focus();
+            }
+        }
+
+        private void contrasena_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                nombre.Focus();
+            }
+        }
+
+        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
+                login.Text = fila.Cells["usuario"].Value.ToString();
+                contrasena.Text = fila.Cells["clave"].Value.ToString();
+                nombre.Text = fila.Cells["nombre"].Value.ToString();
+                apellido.Text = fila.Cells["apellidos"].Value.ToString();
+
+                int estado = Convert.ToInt32(fila.Cells["estado"].Value);
+                if (estado == 1)
+                    activo.Checked = true;
+                else
+                    desactivo.Checked = true;
+            }
+        }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Empleado));
             label1 = new Label();
             label2 = new Label();
@@ -46,6 +47,7 @@
             label4 = new Label();
             busca = new TextBox();
             panel1 = new Panel();
+            dataGridView1 = new DataGridView();
             panel6 = new Panel();
             panel5 = new Panel();
             panel4 = new Panel();
@@ -54,10 +56,9 @@
             pictureBox1 = new PictureBox();
             buscanombre = new RadioButton();
             buscausuario = new RadioButton();
-            dataGridView1 = new DataGridView();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -126,6 +127,7 @@
             contrasena.Size = new Size(153, 19);
             contrasena.TabIndex = 9;
             contrasena.UseSystemPasswordChar = true;
+            contrasena.KeyPress += contrasena_KeyPress;
             // 
             // nombre
             // 
@@ -159,7 +161,6 @@
             activo.Name = "activo";
             activo.Size = new Size(83, 24);
             activo.TabIndex = 17;
-            activo.TabStop = true;
             activo.Text = "Activo";
             activo.UseVisualStyleBackColor = true;
             // 
@@ -171,7 +172,6 @@
             desactivo.Name = "desactivo";
             desactivo.Size = new Size(100, 24);
             desactivo.TabIndex = 18;
-            desactivo.TabStop = true;
             desactivo.Text = "Inactivo";
             desactivo.UseVisualStyleBackColor = true;
             // 
@@ -185,6 +185,7 @@
             login.Name = "login";
             login.Size = new Size(153, 19);
             login.TabIndex = 8;
+            login.KeyPress += login_KeyPress;
             // 
             // guardar
             // 
@@ -261,6 +262,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 161, 43);
+            panel1.Controls.Add(dataGridView1);
             panel1.Controls.Add(panel6);
             panel1.Controls.Add(panel5);
             panel1.Controls.Add(panel4);
@@ -283,7 +285,6 @@
             panel1.Controls.Add(Limpiar);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(buscausuario);
-            panel1.Controls.Add(dataGridView1);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(busca);
             panel1.Dock = DockStyle.Fill;
@@ -292,6 +293,30 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(896, 616);
             panel1.TabIndex = 21;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.FromArgb(255, 161, 43);
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.White;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(177, 286);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(707, 318);
+            dataGridView1.TabIndex = 27;
+            dataGridView1.CellMouseDoubleClick += dataGridView1_CellMouseDoubleClick;
             // 
             // panel6
             // 
@@ -356,7 +381,6 @@
             buscanombre.Name = "buscanombre";
             buscanombre.Size = new Size(111, 26);
             buscanombre.TabIndex = 1;
-            buscanombre.TabStop = true;
             buscanombre.Text = "Nombre";
             buscanombre.UseVisualStyleBackColor = true;
             // 
@@ -368,26 +392,8 @@
             buscausuario.Name = "buscausuario";
             buscausuario.Size = new Size(109, 26);
             buscausuario.TabIndex = 0;
-            buscausuario.TabStop = true;
             buscausuario.Text = "Usuario";
             buscausuario.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridView1.BackgroundColor = Color.FromArgb(255, 161, 43);
-            dataGridView1.BorderStyle = BorderStyle.Fixed3D;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.GridColor = SystemColors.InfoText;
-            dataGridView1.Location = new Point(174, 290);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(710, 314);
-            dataGridView1.TabIndex = 24;
-            dataGridView1.CellMouseDoubleClick += dataGridView1_CellMouseDoubleClick;
             // 
             // Empleado
             // 
@@ -397,11 +403,12 @@
             ClientSize = new Size(896, 616);
             Controls.Add(panel1);
             Name = "Empleado";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Empleado";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -425,7 +432,6 @@
         private Label label4;
         private TextBox busca;
         private Panel panel1;
-        private DataGridView dataGridView1;
         private GroupBox groupBox1;
         private RadioButton buscanombre;
         private RadioButton buscausuario;
@@ -438,5 +444,6 @@
         private Panel panel5;
         private Panel panel4;
         private Panel panel3;
+        private DataGridView dataGridView1;
     }
 }
