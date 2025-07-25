@@ -178,5 +178,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         {
             DropMenu_inventario.Show(btnInventario, new Point(btnInventario.Width, 0));
         }
+
+        
     }
 }
