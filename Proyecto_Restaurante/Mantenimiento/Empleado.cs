@@ -40,9 +40,9 @@ namespace Proyecto_Restaurante
                 {
                     dataGridView1.Columns[0].Visible = false; // Índice 0 = primera columna (ID)
                 }
-                dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
+                //dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
                 //dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(255, 161, 43);
-                dataGridView1.DefaultCellStyle.BackColor = Color.White;
+                //dataGridView1.DefaultCellStyle.BackColor = Color.White;
             }
             catch (Exception ex)
             {
