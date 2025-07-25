@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FontAwesome.Sharp;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
@@ -158,13 +159,24 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        
+
 
 
 
         private void iconButton3_Click(object sender, EventArgs e)
         {
-            
+            DropMenu_restaurante.Show(btnRestaurante, new Point(btnRestaurante.Width, 0));
+        }
+
+        private void MantenimientoEmpleados_Click(object sender, EventArgs e)
+        {
+            Empleado u = new Empleado();
+            u.Show();
+        }
+
+        private void btnInventario_Click(object sender, EventArgs e)
+        {
+            DropMenu_inventario.Show(btnInventario, new Point(btnInventario.Width, 0));
         }
     }
 }

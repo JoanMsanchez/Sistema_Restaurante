@@ -37,21 +37,31 @@
             panel1 = new Panel();
             pictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             btnBarraMenu = new FontAwesome.Sharp.IconButton();
-            btnAccesoEmpleado = new FontAwesome.Sharp.IconButton();
             panelTitulo = new Panel();
             btnMaximizar = new FontAwesome.Sharp.IconButton();
             btnCerrar = new FontAwesome.Sharp.IconButton();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
             panelEscritorio = new Panel();
-            btnMenuBarAdd = new ContextMenuStrip(components);
-            cerrarSesionToolStripMenuItem = new ToolStripMenuItem();
+            DropMenu_restaurante = new ContextMenuStrip(components);
+            procesosRestaurante = new FontAwesome.Sharp.IconMenuItem();
+            FacturacionRestaurante = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoRestaurante = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoMesas = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoEmpleados = new FontAwesome.Sharp.IconMenuItem();
+            DropMenu_inventario = new ContextMenuStrip(components);
+            MantenimientoInventario = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoProductos = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoCategoria = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoUnidades = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoProveedores = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoMovimiento = new FontAwesome.Sharp.IconMenuItem();
             panelMenu.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelTitulo.SuspendLayout();
-            panelEscritorio.SuspendLayout();
-            btnMenuBarAdd.SuspendLayout();
+            DropMenu_restaurante.SuspendLayout();
+            DropMenu_inventario.SuspendLayout();
             SuspendLayout();
             // 
             // panelMenu
@@ -108,6 +118,7 @@
             btnInventario.TextAlign = ContentAlignment.MiddleLeft;
             btnInventario.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnInventario.UseVisualStyleBackColor = true;
+            btnInventario.Click += btnInventario_Click;
             // 
             // iconButton5
             // 
@@ -194,26 +205,6 @@
             btnBarraMenu.UseVisualStyleBackColor = true;
             btnBarraMenu.Click += btnBarraMenu_Click;
             // 
-            // btnAccesoEmpleado
-            // 
-            btnAccesoEmpleado.BackColor = Color.DarkOrange;
-            btnAccesoEmpleado.FlatAppearance.BorderSize = 0;
-            btnAccesoEmpleado.FlatStyle = FlatStyle.Flat;
-            btnAccesoEmpleado.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAccesoEmpleado.ForeColor = Color.OldLace;
-            btnAccesoEmpleado.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
-            btnAccesoEmpleado.IconColor = Color.OldLace;
-            btnAccesoEmpleado.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnAccesoEmpleado.Location = new Point(273, 282);
-            btnAccesoEmpleado.Name = "btnAccesoEmpleado";
-            btnAccesoEmpleado.Size = new Size(263, 99);
-            btnAccesoEmpleado.TabIndex = 1;
-            btnAccesoEmpleado.Text = "   Empleado";
-            btnAccesoEmpleado.TextAlign = ContentAlignment.MiddleLeft;
-            btnAccesoEmpleado.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnAccesoEmpleado.UseVisualStyleBackColor = false;
-            btnAccesoEmpleado.Click += iconButton1_Click;
-            // 
             // panelTitulo
             // 
             panelTitulo.BackColor = Color.White;
@@ -288,14 +279,13 @@
             label1.Location = new Point(42, 9);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(429, 48);
+            label1.Size = new Size(347, 48);
             label1.TabIndex = 0;
-            label1.Text = "NOMBRE SISTEMA";
+            label1.Text = "LA ESQUINITA";
             // 
             // panelEscritorio
             // 
             panelEscritorio.BackColor = Color.OldLace;
-            panelEscritorio.Controls.Add(btnAccesoEmpleado);
             panelEscritorio.Dock = DockStyle.Fill;
             panelEscritorio.Location = new Point(263, 66);
             panelEscritorio.Margin = new Padding(2);
@@ -304,20 +294,147 @@
             panelEscritorio.TabIndex = 1;
             panelEscritorio.Paint += panelEscritorio_Paint;
             // 
-            // btnMenuBarAdd
+            // DropMenu_restaurante
             // 
-            btnMenuBarAdd.Font = new Font("Times New Roman", 10F, FontStyle.Bold);
-            btnMenuBarAdd.ImageScalingSize = new Size(27, 27);
-            btnMenuBarAdd.Items.AddRange(new ToolStripItem[] { cerrarSesionToolStripMenuItem });
-            btnMenuBarAdd.Name = "contextMenuStrip1";
-            btnMenuBarAdd.Size = new Size(198, 34);
+            DropMenu_restaurante.ImageScalingSize = new Size(24, 24);
+            DropMenu_restaurante.Items.AddRange(new ToolStripItem[] { procesosRestaurante, MantenimientoRestaurante });
+            DropMenu_restaurante.Name = "DropMenu_restaurante";
+            DropMenu_restaurante.Size = new Size(272, 68);
             // 
-            // cerrarSesionToolStripMenuItem
+            // procesosRestaurante
             // 
-            cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
-            cerrarSesionToolStripMenuItem.Size = new Size(197, 30);
-            cerrarSesionToolStripMenuItem.Text = "Cerrar Sesion";
-            cerrarSesionToolStripMenuItem.Click += cerrarSesionToolStripMenuItem_Click;
+            procesosRestaurante.BackColor = Color.Orange;
+            procesosRestaurante.DropDownItems.AddRange(new ToolStripItem[] { FacturacionRestaurante });
+            procesosRestaurante.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            procesosRestaurante.ForeColor = SystemColors.ButtonHighlight;
+            procesosRestaurante.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
+            procesosRestaurante.IconColor = Color.White;
+            procesosRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            procesosRestaurante.Name = "procesosRestaurante";
+            procesosRestaurante.Size = new Size(271, 32);
+            procesosRestaurante.Text = "Procesos";
+            // 
+            // FacturacionRestaurante
+            // 
+            FacturacionRestaurante.BackColor = Color.DarkOrange;
+            FacturacionRestaurante.ForeColor = SystemColors.ButtonHighlight;
+            FacturacionRestaurante.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
+            FacturacionRestaurante.IconColor = Color.White;
+            FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            FacturacionRestaurante.Name = "FacturacionRestaurante";
+            FacturacionRestaurante.Size = new Size(245, 34);
+            FacturacionRestaurante.Text = "Facturacion";
+            // 
+            // MantenimientoRestaurante
+            // 
+            MantenimientoRestaurante.BackColor = Color.Orange;
+            MantenimientoRestaurante.DropDownItems.AddRange(new ToolStripItem[] { MantenimientoMesas, MantenimientoEmpleados });
+            MantenimientoRestaurante.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            MantenimientoRestaurante.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoRestaurante.IconChar = FontAwesome.Sharp.IconChar.Pen;
+            MantenimientoRestaurante.IconColor = Color.White;
+            MantenimientoRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoRestaurante.Name = "MantenimientoRestaurante";
+            MantenimientoRestaurante.Size = new Size(271, 32);
+            MantenimientoRestaurante.Text = "Mantenimientos";
+            // 
+            // MantenimientoMesas
+            // 
+            MantenimientoMesas.BackColor = Color.DarkOrange;
+            MantenimientoMesas.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoMesas.IconChar = FontAwesome.Sharp.IconChar.Chair;
+            MantenimientoMesas.IconColor = Color.White;
+            MantenimientoMesas.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoMesas.Name = "MantenimientoMesas";
+            MantenimientoMesas.Size = new Size(236, 34);
+            MantenimientoMesas.Text = "Mesas";
+            // 
+            // MantenimientoEmpleados
+            // 
+            MantenimientoEmpleados.BackColor = Color.DarkOrange;
+            MantenimientoEmpleados.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoEmpleados.IconChar = FontAwesome.Sharp.IconChar.UserFriends;
+            MantenimientoEmpleados.IconColor = Color.White;
+            MantenimientoEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoEmpleados.Name = "MantenimientoEmpleados";
+            MantenimientoEmpleados.Size = new Size(236, 34);
+            MantenimientoEmpleados.Text = "Empleados";
+            MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
+            // 
+            // DropMenu_inventario
+            // 
+            DropMenu_inventario.ImageScalingSize = new Size(24, 24);
+            DropMenu_inventario.Items.AddRange(new ToolStripItem[] { MantenimientoInventario });
+            DropMenu_inventario.Name = "DropMenu_inventario";
+            DropMenu_inventario.Size = new Size(272, 36);
+            // 
+            // MantenimientoInventario
+            // 
+            MantenimientoInventario.BackColor = Color.Orange;
+            MantenimientoInventario.DropDownItems.AddRange(new ToolStripItem[] { MantenimientoProductos, MantenimientoCategoria, MantenimientoUnidades, MantenimientoProveedores, MantenimientoMovimiento });
+            MantenimientoInventario.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            MantenimientoInventario.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoInventario.IconChar = FontAwesome.Sharp.IconChar.Pen;
+            MantenimientoInventario.IconColor = Color.White;
+            MantenimientoInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoInventario.Name = "MantenimientoInventario";
+            MantenimientoInventario.Size = new Size(271, 32);
+            MantenimientoInventario.Text = "Mantenimientos";
+            // 
+            // MantenimientoProductos
+            // 
+            MantenimientoProductos.BackColor = Color.DarkOrange;
+            MantenimientoProductos.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoProductos.IconChar = FontAwesome.Sharp.IconChar.Burger;
+            MantenimientoProductos.IconColor = Color.White;
+            MantenimientoProductos.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoProductos.Name = "MantenimientoProductos";
+            MantenimientoProductos.Size = new Size(338, 34);
+            MantenimientoProductos.Text = "Productos";
+            // 
+            // MantenimientoCategoria
+            // 
+            MantenimientoCategoria.BackColor = Color.DarkOrange;
+            MantenimientoCategoria.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoCategoria.IconChar = FontAwesome.Sharp.IconChar.LayerGroup;
+            MantenimientoCategoria.IconColor = Color.White;
+            MantenimientoCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoCategoria.Name = "MantenimientoCategoria";
+            MantenimientoCategoria.Size = new Size(338, 34);
+            MantenimientoCategoria.Text = "Categorias";
+            // 
+            // MantenimientoUnidades
+            // 
+            MantenimientoUnidades.BackColor = Color.DarkOrange;
+            MantenimientoUnidades.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoUnidades.IconChar = FontAwesome.Sharp.IconChar.ScaleBalanced;
+            MantenimientoUnidades.IconColor = Color.White;
+            MantenimientoUnidades.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoUnidades.Name = "MantenimientoUnidades";
+            MantenimientoUnidades.Size = new Size(338, 34);
+            MantenimientoUnidades.Text = "Unidades de Medida";
+            // 
+            // MantenimientoProveedores
+            // 
+            MantenimientoProveedores.BackColor = Color.DarkOrange;
+            MantenimientoProveedores.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoProveedores.IconChar = FontAwesome.Sharp.IconChar.TruckMoving;
+            MantenimientoProveedores.IconColor = Color.White;
+            MantenimientoProveedores.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoProveedores.Name = "MantenimientoProveedores";
+            MantenimientoProveedores.Size = new Size(338, 34);
+            MantenimientoProveedores.Text = "Proveedores";
+            // 
+            // MantenimientoMovimiento
+            // 
+            MantenimientoMovimiento.BackColor = Color.DarkOrange;
+            MantenimientoMovimiento.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoMovimiento.IconChar = FontAwesome.Sharp.IconChar.ArrowRightArrowLeft;
+            MantenimientoMovimiento.IconColor = Color.White;
+            MantenimientoMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoMovimiento.Name = "MantenimientoMovimiento";
+            MantenimientoMovimiento.Size = new Size(338, 34);
+            MantenimientoMovimiento.Text = "Tipo de Movimiento";
             // 
             // MenuPrincipal
             // 
@@ -337,8 +454,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelTitulo.ResumeLayout(false);
             panelTitulo.PerformLayout();
-            panelEscritorio.ResumeLayout(false);
-            btnMenuBarAdd.ResumeLayout(false);
+            DropMenu_restaurante.ResumeLayout(false);
+            DropMenu_inventario.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -348,12 +465,9 @@
         private Panel panelTitulo;
         private Panel panelEscritorio;
         private Panel panel1;
-        private ContextMenuStrip btnMenuBarAdd;
-        private ToolStripMenuItem cerrarSesionToolStripMenuItem;
         private Label label1;
         private FontAwesome.Sharp.IconButton btnBarraMenu;
         private FontAwesome.Sharp.IconPictureBox pictureBox1;
-        private FontAwesome.Sharp.IconButton btnAccesoEmpleado;
         private FontAwesome.Sharp.IconButton iconButton5;
         private FontAwesome.Sharp.IconButton btnRestaurante;
         private FontAwesome.Sharp.IconButton btnCxc;
@@ -361,5 +475,18 @@
         private FontAwesome.Sharp.IconButton btnCerrar;
         private FontAwesome.Sharp.IconButton btnMaximizar;
         private FontAwesome.Sharp.IconButton btnInventario;
+        private ContextMenuStrip DropMenu_restaurante;
+        private FontAwesome.Sharp.IconMenuItem procesosRestaurante;
+        private FontAwesome.Sharp.IconMenuItem FacturacionRestaurante;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoRestaurante;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoMesas;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoEmpleados;
+        private ContextMenuStrip DropMenu_inventario;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoInventario;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoProductos;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoCategoria;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoUnidades;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoProveedores;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoMovimiento;
     }
 }
