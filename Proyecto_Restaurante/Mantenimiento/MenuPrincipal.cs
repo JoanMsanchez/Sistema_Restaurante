@@ -201,5 +201,11 @@ namespace Proyecto_Restaurante.Mantenimiento
             UnidadMedida unidadMedida = new UnidadMedida();
             unidadMedida.Show();
         }
+
+        private void MantenimientoProductos_Click(object sender, EventArgs e)
+        {
+            Producto producto = new Producto();
+            producto.Show();
+        }
     }
 }

@@ -56,7 +56,14 @@
             MantenimientoCategoria = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoUnidades = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoProveedores = new FontAwesome.Sharp.IconMenuItem();
-            MantenimientoMovimiento = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoTipoDeMovimiento = new FontAwesome.Sharp.IconMenuItem();
+            ProcesosInventario = new FontAwesome.Sharp.IconMenuItem();
+            RegistroDeMovimientoInventario = new FontAwesome.Sharp.IconMenuItem();
+            ConsultasInventario = new FontAwesome.Sharp.IconMenuItem();
+            ConsultaProducto = new FontAwesome.Sharp.IconMenuItem();
+            ResportesInventario = new FontAwesome.Sharp.IconMenuItem();
+            StockAnualInventario = new FontAwesome.Sharp.IconMenuItem();
+            EntradasSalidasInventario = new FontAwesome.Sharp.IconMenuItem();
             panelMenu.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -302,7 +309,7 @@
             // DropMenu_restaurante
             // 
             DropMenu_restaurante.ImageScalingSize = new Size(24, 24);
-            DropMenu_restaurante.Items.AddRange(new ToolStripItem[] { procesosRestaurante, MantenimientoRestaurante });
+            DropMenu_restaurante.Items.AddRange(new ToolStripItem[] { MantenimientoRestaurante, procesosRestaurante });
             DropMenu_restaurante.Name = "DropMenu_restaurante";
             DropMenu_restaurante.Size = new Size(272, 68);
             // 
@@ -327,7 +334,7 @@
             FacturacionRestaurante.IconColor = Color.White;
             FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             FacturacionRestaurante.Name = "FacturacionRestaurante";
-            FacturacionRestaurante.Size = new Size(245, 34);
+            FacturacionRestaurante.Size = new Size(270, 34);
             FacturacionRestaurante.Text = "Facturacion";
             // 
             // MantenimientoRestaurante
@@ -336,7 +343,7 @@
             MantenimientoRestaurante.DropDownItems.AddRange(new ToolStripItem[] { MantenimientoMesas, MantenimientoEmpleados });
             MantenimientoRestaurante.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             MantenimientoRestaurante.ForeColor = SystemColors.ControlLightLight;
-            MantenimientoRestaurante.IconChar = FontAwesome.Sharp.IconChar.Pen;
+            MantenimientoRestaurante.IconChar = FontAwesome.Sharp.IconChar.Wrench;
             MantenimientoRestaurante.IconColor = Color.White;
             MantenimientoRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoRestaurante.Name = "MantenimientoRestaurante";
@@ -351,7 +358,7 @@
             MantenimientoMesas.IconColor = Color.White;
             MantenimientoMesas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoMesas.Name = "MantenimientoMesas";
-            MantenimientoMesas.Size = new Size(236, 34);
+            MantenimientoMesas.Size = new Size(270, 34);
             MantenimientoMesas.Text = "Mesas";
             // 
             // MantenimientoEmpleados
@@ -362,24 +369,24 @@
             MantenimientoEmpleados.IconColor = Color.White;
             MantenimientoEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoEmpleados.Name = "MantenimientoEmpleados";
-            MantenimientoEmpleados.Size = new Size(236, 34);
+            MantenimientoEmpleados.Size = new Size(270, 34);
             MantenimientoEmpleados.Text = "Empleados";
             MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
             // 
             // DropMenu_inventario
             // 
             DropMenu_inventario.ImageScalingSize = new Size(24, 24);
-            DropMenu_inventario.Items.AddRange(new ToolStripItem[] { MantenimientoInventario });
+            DropMenu_inventario.Items.AddRange(new ToolStripItem[] { MantenimientoInventario, ProcesosInventario, ConsultasInventario, ResportesInventario });
             DropMenu_inventario.Name = "DropMenu_inventario";
-            DropMenu_inventario.Size = new Size(272, 36);
+            DropMenu_inventario.Size = new Size(272, 132);
             // 
             // MantenimientoInventario
             // 
             MantenimientoInventario.BackColor = Color.Orange;
-            MantenimientoInventario.DropDownItems.AddRange(new ToolStripItem[] { MantenimientoProductos, MantenimientoCategoria, MantenimientoUnidades, MantenimientoProveedores, MantenimientoMovimiento });
+            MantenimientoInventario.DropDownItems.AddRange(new ToolStripItem[] { MantenimientoProductos, MantenimientoCategoria, MantenimientoUnidades, MantenimientoProveedores, MantenimientoTipoDeMovimiento });
             MantenimientoInventario.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             MantenimientoInventario.ForeColor = SystemColors.ControlLightLight;
-            MantenimientoInventario.IconChar = FontAwesome.Sharp.IconChar.Pen;
+            MantenimientoInventario.IconChar = FontAwesome.Sharp.IconChar.Wrench;
             MantenimientoInventario.IconColor = Color.White;
             MantenimientoInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoInventario.Name = "MantenimientoInventario";
@@ -396,6 +403,7 @@
             MantenimientoProductos.Name = "MantenimientoProductos";
             MantenimientoProductos.Size = new Size(338, 34);
             MantenimientoProductos.Text = "Productos";
+            MantenimientoProductos.Click += MantenimientoProductos_Click;
             // 
             // MantenimientoCategoria
             // 
@@ -432,16 +440,99 @@
             MantenimientoProveedores.Size = new Size(338, 34);
             MantenimientoProveedores.Text = "Proveedores";
             // 
-            // MantenimientoMovimiento
+            // MantenimientoTipoDeMovimiento
             // 
-            MantenimientoMovimiento.BackColor = Color.DarkOrange;
-            MantenimientoMovimiento.ForeColor = SystemColors.ControlLightLight;
-            MantenimientoMovimiento.IconChar = FontAwesome.Sharp.IconChar.ArrowRightArrowLeft;
-            MantenimientoMovimiento.IconColor = Color.White;
-            MantenimientoMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            MantenimientoMovimiento.Name = "MantenimientoMovimiento";
-            MantenimientoMovimiento.Size = new Size(338, 34);
-            MantenimientoMovimiento.Text = "Tipo de Movimiento";
+            MantenimientoTipoDeMovimiento.BackColor = Color.DarkOrange;
+            MantenimientoTipoDeMovimiento.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoTipoDeMovimiento.IconChar = FontAwesome.Sharp.IconChar.ArrowsSpin;
+            MantenimientoTipoDeMovimiento.IconColor = Color.White;
+            MantenimientoTipoDeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoTipoDeMovimiento.Name = "MantenimientoTipoDeMovimiento";
+            MantenimientoTipoDeMovimiento.Size = new Size(338, 34);
+            MantenimientoTipoDeMovimiento.Text = "Tipo de Movimiento";
+            // 
+            // ProcesosInventario
+            // 
+            ProcesosInventario.BackColor = Color.FromArgb(255, 161, 43);
+            ProcesosInventario.DropDownItems.AddRange(new ToolStripItem[] { RegistroDeMovimientoInventario });
+            ProcesosInventario.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ProcesosInventario.ForeColor = SystemColors.ControlLightLight;
+            ProcesosInventario.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
+            ProcesosInventario.IconColor = Color.White;
+            ProcesosInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ProcesosInventario.Name = "ProcesosInventario";
+            ProcesosInventario.Size = new Size(271, 32);
+            ProcesosInventario.Text = "Procesos";
+            // 
+            // RegistroDeMovimientoInventario
+            // 
+            RegistroDeMovimientoInventario.BackColor = Color.DarkOrange;
+            RegistroDeMovimientoInventario.ForeColor = SystemColors.ControlLightLight;
+            RegistroDeMovimientoInventario.IconChar = FontAwesome.Sharp.IconChar.Pen;
+            RegistroDeMovimientoInventario.IconColor = Color.White;
+            RegistroDeMovimientoInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            RegistroDeMovimientoInventario.Name = "RegistroDeMovimientoInventario";
+            RegistroDeMovimientoInventario.Size = new Size(381, 34);
+            RegistroDeMovimientoInventario.Text = "Registro de Movimiento";
+            // 
+            // ConsultasInventario
+            // 
+            ConsultasInventario.BackColor = Color.FromArgb(255, 161, 43);
+            ConsultasInventario.DropDownItems.AddRange(new ToolStripItem[] { ConsultaProducto });
+            ConsultasInventario.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ConsultasInventario.ForeColor = SystemColors.ControlLightLight;
+            ConsultasInventario.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlassChart;
+            ConsultasInventario.IconColor = Color.White;
+            ConsultasInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ConsultasInventario.Name = "ConsultasInventario";
+            ConsultasInventario.Size = new Size(271, 32);
+            ConsultasInventario.Text = "Consultas";
+            // 
+            // ConsultaProducto
+            // 
+            ConsultaProducto.BackColor = Color.DarkOrange;
+            ConsultaProducto.ForeColor = SystemColors.ControlLightLight;
+            ConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.Burger;
+            ConsultaProducto.IconColor = Color.White;
+            ConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ConsultaProducto.Name = "ConsultaProducto";
+            ConsultaProducto.Size = new Size(270, 34);
+            ConsultaProducto.Text = "Productos";
+            // 
+            // ResportesInventario
+            // 
+            ResportesInventario.BackColor = Color.FromArgb(255, 161, 43);
+            ResportesInventario.DropDownItems.AddRange(new ToolStripItem[] { StockAnualInventario, EntradasSalidasInventario });
+            ResportesInventario.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ResportesInventario.ForeColor = SystemColors.ControlLightLight;
+            ResportesInventario.IconChar = FontAwesome.Sharp.IconChar.Scroll;
+            ResportesInventario.IconColor = Color.White;
+            ResportesInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ResportesInventario.Name = "ResportesInventario";
+            ResportesInventario.Size = new Size(271, 32);
+            ResportesInventario.Text = "Reportes";
+            // 
+            // StockAnualInventario
+            // 
+            StockAnualInventario.BackColor = Color.DarkOrange;
+            StockAnualInventario.ForeColor = SystemColors.ControlLightLight;
+            StockAnualInventario.IconChar = FontAwesome.Sharp.IconChar.CubesStacked;
+            StockAnualInventario.IconColor = Color.White;
+            StockAnualInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            StockAnualInventario.Name = "StockAnualInventario";
+            StockAnualInventario.Size = new Size(320, 34);
+            StockAnualInventario.Text = "Stock Anual";
+            // 
+            // EntradasSalidasInventario
+            // 
+            EntradasSalidasInventario.BackColor = Color.DarkOrange;
+            EntradasSalidasInventario.ForeColor = SystemColors.ControlLightLight;
+            EntradasSalidasInventario.IconChar = FontAwesome.Sharp.IconChar.ArrowRightArrowLeft;
+            EntradasSalidasInventario.IconColor = Color.White;
+            EntradasSalidasInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            EntradasSalidasInventario.Name = "EntradasSalidasInventario";
+            EntradasSalidasInventario.Size = new Size(320, 34);
+            EntradasSalidasInventario.Text = "Entradas y Salidas";
             // 
             // MenuPrincipal
             // 
@@ -494,7 +585,14 @@
         private FontAwesome.Sharp.IconMenuItem MantenimientoCategoria;
         private FontAwesome.Sharp.IconMenuItem MantenimientoUnidades;
         private FontAwesome.Sharp.IconMenuItem MantenimientoProveedores;
-        private FontAwesome.Sharp.IconMenuItem MantenimientoMovimiento;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoTipoDeMovimiento;
         private PictureBox pictureBox1;
+        private FontAwesome.Sharp.IconMenuItem ProcesosInventario;
+        private FontAwesome.Sharp.IconMenuItem RegistroDeMovimientoInventario;
+        private FontAwesome.Sharp.IconMenuItem ConsultasInventario;
+        private FontAwesome.Sharp.IconMenuItem ConsultaProducto;
+        private FontAwesome.Sharp.IconMenuItem ResportesInventario;
+        private FontAwesome.Sharp.IconMenuItem StockAnualInventario;
+        private FontAwesome.Sharp.IconMenuItem EntradasSalidasInventario;
     }
 }
