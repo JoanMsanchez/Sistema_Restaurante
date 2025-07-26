@@ -33,7 +33,6 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Empleado));
-            label1 = new Label();
             label2 = new Label();
             label3 = new Label();
             label5 = new Label();
@@ -59,30 +58,29 @@
             pictureBox1 = new PictureBox();
             buscanombre = new RadioButton();
             buscausuario = new RadioButton();
+            panelEmpleado = new Panel();
+            btnMaximizarEmpleado = new FontAwesome.Sharp.IconButton();
+            btnCerrarEmpleado = new FontAwesome.Sharp.IconButton();
+            btnMinimizarEmpleado = new FontAwesome.Sharp.IconButton();
+            btnMaximizarCategoria = new FontAwesome.Sharp.IconButton();
+            btnCerrarCategoria = new FontAwesome.Sharp.IconButton();
+            btnMinimizarCategoria = new FontAwesome.Sharp.IconButton();
+            label8 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelEmpleado.SuspendLayout();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Verdana", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(187, 51);
-            label1.Name = "label1";
-            label1.Size = new Size(188, 34);
-            label1.TabIndex = 0;
-            label1.Text = "EMPLEADO";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(11, 134);
+            label2.Location = new Point(13, 166);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(98, 25);
+            label2.Size = new Size(115, 29);
             label2.TabIndex = 1;
             label2.Text = "Usuario";
             // 
@@ -91,9 +89,10 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(11, 177);
+            label3.Location = new Point(13, 219);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(138, 25);
+            label3.Size = new Size(165, 29);
             label3.TabIndex = 2;
             label3.Text = "Contraseña";
             // 
@@ -102,9 +101,10 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(274, 138);
+            label5.Location = new Point(341, 170);
+            label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(101, 25);
+            label5.Size = new Size(119, 29);
             label5.TabIndex = 4;
             label5.Text = "Nombre";
             // 
@@ -113,9 +113,10 @@
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.White;
-            label6.Location = new Point(540, 140);
+            label6.Location = new Point(674, 173);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(104, 25);
+            label6.Size = new Size(122, 29);
             label6.TabIndex = 5;
             label6.Text = "Apellido";
             // 
@@ -125,9 +126,10 @@
             contrasena.BorderStyle = BorderStyle.None;
             contrasena.Font = new Font("Verdana", 9F, FontStyle.Bold);
             contrasena.ForeColor = Color.White;
-            contrasena.Location = new Point(155, 183);
+            contrasena.Location = new Point(193, 227);
+            contrasena.Margin = new Padding(4);
             contrasena.Name = "contrasena";
-            contrasena.Size = new Size(153, 19);
+            contrasena.Size = new Size(191, 22);
             contrasena.TabIndex = 9;
             contrasena.UseSystemPasswordChar = true;
             contrasena.KeyPress += contrasena_KeyPress;
@@ -138,9 +140,10 @@
             nombre.BorderStyle = BorderStyle.None;
             nombre.Font = new Font("Verdana", 9F, FontStyle.Bold);
             nombre.ForeColor = Color.White;
-            nombre.Location = new Point(381, 143);
+            nombre.Location = new Point(475, 177);
+            nombre.Margin = new Padding(4);
             nombre.Name = "nombre";
-            nombre.Size = new Size(153, 19);
+            nombre.Size = new Size(191, 22);
             nombre.TabIndex = 10;
             nombre.KeyPress += nombre_KeyPress;
             // 
@@ -150,9 +153,10 @@
             apellido.BorderStyle = BorderStyle.None;
             apellido.Font = new Font("Verdana", 9F, FontStyle.Bold);
             apellido.ForeColor = Color.White;
-            apellido.Location = new Point(650, 144);
+            apellido.Location = new Point(811, 178);
+            apellido.Margin = new Padding(4);
             apellido.Name = "apellido";
-            apellido.Size = new Size(153, 19);
+            apellido.Size = new Size(191, 22);
             apellido.TabIndex = 11;
             apellido.KeyPress += apellido_KeyPress;
             // 
@@ -160,9 +164,10 @@
             // 
             activo.AutoSize = true;
             activo.Font = new Font("Verdana", 10.2F);
-            activo.Location = new Point(419, 183);
+            activo.Location = new Point(523, 227);
+            activo.Margin = new Padding(4);
             activo.Name = "activo";
-            activo.Size = new Size(83, 24);
+            activo.Size = new Size(101, 29);
             activo.TabIndex = 17;
             activo.Text = "Activo";
             activo.UseVisualStyleBackColor = true;
@@ -171,9 +176,10 @@
             // 
             desactivo.AutoSize = true;
             desactivo.Font = new Font("Verdana", 10.2F);
-            desactivo.Location = new Point(419, 213);
+            desactivo.Location = new Point(523, 264);
+            desactivo.Margin = new Padding(4);
             desactivo.Name = "desactivo";
-            desactivo.Size = new Size(100, 24);
+            desactivo.Size = new Size(121, 29);
             desactivo.TabIndex = 18;
             desactivo.Text = "Inactivo";
             desactivo.UseVisualStyleBackColor = true;
@@ -184,9 +190,10 @@
             login.BorderStyle = BorderStyle.None;
             login.Font = new Font("Verdana", 9F, FontStyle.Bold);
             login.ForeColor = Color.White;
-            login.Location = new Point(115, 143);
+            login.Location = new Point(143, 177);
+            login.Margin = new Padding(4);
             login.Name = "login";
-            login.Size = new Size(153, 19);
+            login.Size = new Size(191, 22);
             login.TabIndex = 8;
             login.KeyPress += login_KeyPress;
             // 
@@ -201,9 +208,10 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(544, 228);
+            guardar.Location = new Point(744, 293);
+            guardar.Margin = new Padding(4);
             guardar.Name = "guardar";
-            guardar.Size = new Size(148, 52);
+            guardar.Size = new Size(185, 65);
             guardar.TabIndex = 25;
             guardar.Text = "    Guardar";
             guardar.UseVisualStyleBackColor = true;
@@ -220,9 +228,10 @@
             Limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             Limpiar.IconSize = 35;
             Limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            Limpiar.Location = new Point(686, 228);
+            Limpiar.Location = new Point(937, 293);
+            Limpiar.Margin = new Padding(4);
             Limpiar.Name = "Limpiar";
-            Limpiar.Size = new Size(143, 52);
+            Limpiar.Size = new Size(179, 65);
             Limpiar.TabIndex = 24;
             Limpiar.Text = "    Limpiar";
             Limpiar.UseVisualStyleBackColor = true;
@@ -233,9 +242,10 @@
             label7.AutoSize = true;
             label7.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(325, 193);
+            label7.Location = new Point(405, 239);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(88, 25);
+            label7.Size = new Size(103, 29);
             label7.TabIndex = 22;
             label7.Text = "Estado";
             // 
@@ -244,9 +254,10 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(42, 297);
+            label4.Location = new Point(43, 386);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(88, 25);
+            label4.Size = new Size(104, 29);
             label4.TabIndex = 22;
             label4.Text = "Buscar";
             // 
@@ -256,9 +267,10 @@
             busca.BorderStyle = BorderStyle.None;
             busca.Font = new Font("Verdana", 9F, FontStyle.Bold);
             busca.ForeColor = Color.White;
-            busca.Location = new Point(19, 333);
+            busca.Location = new Point(15, 431);
+            busca.Margin = new Padding(4);
             busca.Name = "busca";
-            busca.Size = new Size(130, 19);
+            busca.Size = new Size(162, 22);
             busca.TabIndex = 23;
             busca.TextChanged += busca_TextChanged;
             // 
@@ -272,7 +284,6 @@
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(label1);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(login);
             panel1.Controls.Add(label7);
@@ -293,8 +304,9 @@
             panel1.Dock = DockStyle.Fill;
             panel1.ForeColor = Color.White;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(896, 616);
+            panel1.Size = new Size(1120, 824);
             panel1.TabIndex = 21;
             panel1.Paint += panel1_Paint;
             // 
@@ -330,7 +342,8 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.Location = new Point(177, 297);
+            dataGridView1.Location = new Point(236, 386);
+            dataGridView1.Margin = new Padding(4);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -344,7 +357,7 @@
             dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(707, 307);
+            dataGridView1.Size = new Size(884, 384);
             dataGridView1.TabIndex = 27;
             dataGridView1.CellMouseDoubleClick += dataGridView1_CellMouseDoubleClick;
             // 
@@ -352,53 +365,59 @@
             // 
             panel6.BackColor = Color.White;
             panel6.ForeColor = Color.White;
-            panel6.Location = new Point(14, 353);
+            panel6.Location = new Point(9, 456);
+            panel6.Margin = new Padding(4);
             panel6.Name = "panel6";
-            panel6.Size = new Size(135, 2);
+            panel6.Size = new Size(169, 2);
             panel6.TabIndex = 21;
             // 
             // panel5
             // 
             panel5.BackColor = Color.White;
             panel5.ForeColor = Color.White;
-            panel5.Location = new Point(150, 205);
+            panel5.Location = new Point(187, 254);
+            panel5.Margin = new Padding(4);
             panel5.Name = "panel5";
-            panel5.Size = new Size(158, 2);
+            panel5.Size = new Size(198, 2);
             panel5.TabIndex = 21;
             // 
             // panel4
             // 
             panel4.BackColor = Color.White;
             panel4.ForeColor = Color.White;
-            panel4.Location = new Point(645, 165);
+            panel4.Location = new Point(805, 204);
+            panel4.Margin = new Padding(4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(158, 2);
+            panel4.Size = new Size(198, 2);
             panel4.TabIndex = 21;
             // 
             // panel3
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(376, 165);
+            panel3.Location = new Point(469, 204);
+            panel3.Margin = new Padding(4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(158, 2);
+            panel3.Size = new Size(198, 2);
             panel3.TabIndex = 21;
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(110, 163);
+            panel2.Location = new Point(137, 202);
+            panel2.Margin = new Padding(4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(158, 2);
+            panel2.Size = new Size(198, 2);
             panel2.TabIndex = 20;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(686, 0);
+            pictureBox1.Location = new Point(976, 71);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(210, 134);
+            pictureBox1.Size = new Size(144, 99);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 26;
             pictureBox1.TabStop = false;
@@ -407,9 +426,10 @@
             // 
             buscanombre.AutoSize = true;
             buscanombre.Font = new Font("Verdana", 10.8F, FontStyle.Bold);
-            buscanombre.Location = new Point(33, 393);
+            buscanombre.Location = new Point(32, 506);
+            buscanombre.Margin = new Padding(4);
             buscanombre.Name = "buscanombre";
-            buscanombre.Size = new Size(111, 26);
+            buscanombre.Size = new Size(135, 30);
             buscanombre.TabIndex = 1;
             buscanombre.Text = "Nombre";
             buscanombre.UseVisualStyleBackColor = true;
@@ -418,20 +438,160 @@
             // 
             buscausuario.AutoSize = true;
             buscausuario.Font = new Font("Verdana", 10.8F, FontStyle.Bold);
-            buscausuario.Location = new Point(33, 361);
+            buscausuario.Location = new Point(32, 466);
+            buscausuario.Margin = new Padding(4);
             buscausuario.Name = "buscausuario";
-            buscausuario.Size = new Size(109, 26);
+            buscausuario.Size = new Size(133, 30);
             buscausuario.TabIndex = 0;
             buscausuario.Text = "Usuario";
             buscausuario.UseVisualStyleBackColor = true;
             // 
+            // panelEmpleado
+            // 
+            panelEmpleado.BackColor = Color.FromArgb(233, 233, 233);
+            panelEmpleado.Controls.Add(btnMaximizarEmpleado);
+            panelEmpleado.Controls.Add(btnCerrarEmpleado);
+            panelEmpleado.Controls.Add(btnMinimizarEmpleado);
+            panelEmpleado.Controls.Add(btnMaximizarCategoria);
+            panelEmpleado.Controls.Add(btnCerrarCategoria);
+            panelEmpleado.Controls.Add(btnMinimizarCategoria);
+            panelEmpleado.Controls.Add(label8);
+            panelEmpleado.Dock = DockStyle.Top;
+            panelEmpleado.Location = new Point(0, 0);
+            panelEmpleado.Name = "panelEmpleado";
+            panelEmpleado.Size = new Size(1120, 72);
+            panelEmpleado.TabIndex = 22;
+            panelEmpleado.MouseDown += panelEmpleado_MouseDown;
+            // 
+            // btnMaximizarEmpleado
+            // 
+            btnMaximizarEmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximizarEmpleado.BackColor = Color.CornflowerBlue;
+            btnMaximizarEmpleado.FlatAppearance.BorderSize = 0;
+            btnMaximizarEmpleado.FlatStyle = FlatStyle.Flat;
+            btnMaximizarEmpleado.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+            btnMaximizarEmpleado.IconColor = Color.OldLace;
+            btnMaximizarEmpleado.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMaximizarEmpleado.IconSize = 20;
+            btnMaximizarEmpleado.Location = new Point(1035, 0);
+            btnMaximizarEmpleado.Margin = new Padding(2);
+            btnMaximizarEmpleado.Name = "btnMaximizarEmpleado";
+            btnMaximizarEmpleado.Size = new Size(45, 25);
+            btnMaximizarEmpleado.TabIndex = 9;
+            btnMaximizarEmpleado.UseVisualStyleBackColor = false;
+            btnMaximizarEmpleado.Click += btnMaximizarEmpleado_Click;
+            // 
+            // btnCerrarEmpleado
+            // 
+            btnCerrarEmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCerrarEmpleado.BackColor = Color.Tomato;
+            btnCerrarEmpleado.FlatAppearance.BorderSize = 0;
+            btnCerrarEmpleado.FlatStyle = FlatStyle.Flat;
+            btnCerrarEmpleado.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnCerrarEmpleado.IconColor = Color.OldLace;
+            btnCerrarEmpleado.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            btnCerrarEmpleado.IconSize = 20;
+            btnCerrarEmpleado.Location = new Point(1075, 0);
+            btnCerrarEmpleado.Margin = new Padding(2);
+            btnCerrarEmpleado.Name = "btnCerrarEmpleado";
+            btnCerrarEmpleado.Size = new Size(45, 25);
+            btnCerrarEmpleado.TabIndex = 10;
+            btnCerrarEmpleado.UseVisualStyleBackColor = false;
+            btnCerrarEmpleado.Click += btnCerrarEmpleado_Click;
+            // 
+            // btnMinimizarEmpleado
+            // 
+            btnMinimizarEmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimizarEmpleado.BackColor = Color.Turquoise;
+            btnMinimizarEmpleado.FlatAppearance.BorderSize = 0;
+            btnMinimizarEmpleado.FlatStyle = FlatStyle.Flat;
+            btnMinimizarEmpleado.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            btnMinimizarEmpleado.IconColor = Color.OldLace;
+            btnMinimizarEmpleado.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMinimizarEmpleado.IconSize = 20;
+            btnMinimizarEmpleado.Location = new Point(992, 0);
+            btnMinimizarEmpleado.Margin = new Padding(2);
+            btnMinimizarEmpleado.Name = "btnMinimizarEmpleado";
+            btnMinimizarEmpleado.Size = new Size(45, 25);
+            btnMinimizarEmpleado.TabIndex = 8;
+            btnMinimizarEmpleado.UseVisualStyleBackColor = false;
+            btnMinimizarEmpleado.Click += btnMinimizarEmpleado_Click;
+            // 
+            // btnMaximizarCategoria
+            // 
+            btnMaximizarCategoria.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximizarCategoria.BackColor = Color.CornflowerBlue;
+            btnMaximizarCategoria.FlatAppearance.BorderSize = 0;
+            btnMaximizarCategoria.FlatStyle = FlatStyle.Flat;
+            btnMaximizarCategoria.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+            btnMaximizarCategoria.IconColor = Color.OldLace;
+            btnMaximizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMaximizarCategoria.IconSize = 20;
+            btnMaximizarCategoria.Location = new Point(1697, 0);
+            btnMaximizarCategoria.Margin = new Padding(2);
+            btnMaximizarCategoria.Name = "btnMaximizarCategoria";
+            btnMaximizarCategoria.Size = new Size(45, 25);
+            btnMaximizarCategoria.TabIndex = 6;
+            btnMaximizarCategoria.UseVisualStyleBackColor = false;
+            btnMaximizarCategoria.Visible = false;
+            // 
+            // btnCerrarCategoria
+            // 
+            btnCerrarCategoria.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCerrarCategoria.BackColor = Color.Tomato;
+            btnCerrarCategoria.FlatAppearance.BorderSize = 0;
+            btnCerrarCategoria.FlatStyle = FlatStyle.Flat;
+            btnCerrarCategoria.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnCerrarCategoria.IconColor = Color.OldLace;
+            btnCerrarCategoria.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            btnCerrarCategoria.IconSize = 20;
+            btnCerrarCategoria.Location = new Point(1737, 0);
+            btnCerrarCategoria.Margin = new Padding(2);
+            btnCerrarCategoria.Name = "btnCerrarCategoria";
+            btnCerrarCategoria.Size = new Size(45, 25);
+            btnCerrarCategoria.TabIndex = 7;
+            btnCerrarCategoria.UseVisualStyleBackColor = false;
+            btnCerrarCategoria.Visible = false;
+            // 
+            // btnMinimizarCategoria
+            // 
+            btnMinimizarCategoria.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimizarCategoria.BackColor = Color.Turquoise;
+            btnMinimizarCategoria.FlatAppearance.BorderSize = 0;
+            btnMinimizarCategoria.FlatStyle = FlatStyle.Flat;
+            btnMinimizarCategoria.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            btnMinimizarCategoria.IconColor = Color.OldLace;
+            btnMinimizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMinimizarCategoria.IconSize = 20;
+            btnMinimizarCategoria.Location = new Point(1654, 0);
+            btnMinimizarCategoria.Margin = new Padding(2);
+            btnMinimizarCategoria.Name = "btnMinimizarCategoria";
+            btnMinimizarCategoria.Size = new Size(45, 25);
+            btnMinimizarCategoria.TabIndex = 5;
+            btnMinimizarCategoria.UseVisualStyleBackColor = false;
+            btnMinimizarCategoria.Visible = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.ForeColor = Color.FromArgb(255, 161, 43);
+            label8.Location = new Point(32, 18);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(241, 44);
+            label8.TabIndex = 0;
+            label8.Text = "EMPLEADO";
+            // 
             // Empleado
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(896, 616);
+            ClientSize = new Size(1120, 824);
+            Controls.Add(panelEmpleado);
             Controls.Add(panel1);
+            Margin = new Padding(4);
             Name = "Empleado";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Empleado";
@@ -439,12 +599,12 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panelEmpleado.ResumeLayout(false);
+            panelEmpleado.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        protected Label label1;
         protected Label label2;
         protected Label label3;
         protected Label label5;
@@ -466,7 +626,7 @@
         private RadioButton buscanombre;
         private RadioButton buscausuario;
         private Label label7;
-        private FontAwesome.Sharp.IconButton iconButton2;
+        private FontAwesome.Sharp.IconButton btnCerrarEmpleado;
         private FontAwesome.Sharp.IconButton guardar;
         private PictureBox pictureBox1;
         private Panel panel2;
@@ -475,5 +635,12 @@
         private Panel panel4;
         private Panel panel3;
         private DataGridView dataGridView1;
+        private Panel panelEmpleado;
+        private FontAwesome.Sharp.IconButton btnMaximizarCategoria;
+        private FontAwesome.Sharp.IconButton btnCerrarCategoria;
+        private FontAwesome.Sharp.IconButton btnMinimizarCategoria;
+        private Label label8;
+        private FontAwesome.Sharp.IconButton btnMaximizarEmpleado;
+        private FontAwesome.Sharp.IconButton btnMinimizarEmpleado;
     }
 }

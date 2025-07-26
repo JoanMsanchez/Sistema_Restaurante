@@ -37,7 +37,15 @@
             panel3 = new Panel();
             pictureBox1 = new PictureBox();
             btnAccederLogin = new FontAwesome.Sharp.IconButton();
+            panelLogin = new Panel();
+            btnMaximizarLogin = new FontAwesome.Sharp.IconButton();
+            btnCerrarLogin = new FontAwesome.Sharp.IconButton();
+            btnMinimizarLogin = new FontAwesome.Sharp.IconButton();
+            label3 = new Label();
+            panel4 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelLogin.SuspendLayout();
+            panel4.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -45,9 +53,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(137, 114);
+            label1.Location = new Point(126, 74);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(90, 25);
+            label1.Size = new Size(109, 32);
             label1.TabIndex = 2;
             label1.Text = "Usuario";
             // 
@@ -56,9 +65,10 @@
             label2.AutoSize = true;
             label2.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(127, 195);
+            label2.Location = new Point(114, 176);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(119, 25);
+            label2.Size = new Size(140, 32);
             label2.TabIndex = 3;
             label2.Text = "Contaseña";
             // 
@@ -68,9 +78,10 @@
             usuario.BorderStyle = BorderStyle.None;
             usuario.Font = new Font("Verdana", 9F, FontStyle.Bold);
             usuario.ForeColor = Color.White;
-            usuario.Location = new Point(77, 142);
+            usuario.Location = new Point(51, 110);
+            usuario.Margin = new Padding(4);
             usuario.Name = "usuario";
-            usuario.Size = new Size(217, 19);
+            usuario.Size = new Size(271, 22);
             usuario.TabIndex = 4;
             usuario.KeyPress += usuario_KeyPress;
             // 
@@ -80,9 +91,10 @@
             contasena.BorderStyle = BorderStyle.None;
             contasena.Font = new Font("Verdana", 9F, FontStyle.Bold);
             contasena.ForeColor = Color.White;
-            contasena.Location = new Point(77, 223);
+            contasena.Location = new Point(51, 211);
+            contasena.Margin = new Padding(4);
             contasena.Name = "contasena";
-            contasena.Size = new Size(217, 19);
+            contasena.Size = new Size(271, 22);
             contasena.TabIndex = 5;
             contasena.UseSystemPasswordChar = true;
             contasena.KeyPress += contasena_KeyPress;
@@ -91,27 +103,30 @@
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(74, 244);
+            panel2.Location = new Point(47, 237);
+            panel2.Margin = new Padding(4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(220, 2);
+            panel2.Size = new Size(275, 2);
             panel2.TabIndex = 7;
             // 
             // panel3
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(74, 163);
+            panel3.Location = new Point(47, 136);
+            panel3.Margin = new Padding(4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(220, 2);
+            panel3.Size = new Size(275, 2);
             panel3.TabIndex = 7;
             // 
             // pictureBox1
             // 
             pictureBox1.BackgroundImageLayout = ImageLayout.None;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(312, 12);
+            pictureBox1.Location = new Point(390, 32);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(486, 385);
+            pictureBox1.Size = new Size(529, 364);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 8;
             pictureBox1.TabStop = false;
@@ -125,35 +140,129 @@
             btnAccederLogin.IconChar = FontAwesome.Sharp.IconChar.None;
             btnAccederLogin.IconColor = Color.FromArgb(255, 161, 43);
             btnAccederLogin.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnAccederLogin.Location = new Point(110, 271);
+            btnAccederLogin.Location = new Point(93, 271);
+            btnAccederLogin.Margin = new Padding(4);
             btnAccederLogin.Name = "btnAccederLogin";
-            btnAccederLogin.Size = new Size(161, 75);
+            btnAccederLogin.Size = new Size(201, 94);
             btnAccederLogin.TabIndex = 9;
             btnAccederLogin.Text = "Acceder ";
             btnAccederLogin.UseVisualStyleBackColor = true;
             btnAccederLogin.Click += btnAccederLogin_Click;
             // 
+            // panelLogin
+            // 
+            panelLogin.BackColor = Color.FromArgb(233, 233, 233);
+            panelLogin.Controls.Add(btnMaximizarLogin);
+            panelLogin.Controls.Add(btnCerrarLogin);
+            panelLogin.Controls.Add(btnMinimizarLogin);
+            panelLogin.Controls.Add(label3);
+            panelLogin.Dock = DockStyle.Top;
+            panelLogin.Location = new Point(0, 0);
+            panelLogin.Name = "panelLogin";
+            panelLogin.Size = new Size(947, 68);
+            panelLogin.TabIndex = 10;
+            panelLogin.MouseDown += panelLogin_MouseDown;
+            // 
+            // btnMaximizarLogin
+            // 
+            btnMaximizarLogin.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximizarLogin.BackColor = Color.CornflowerBlue;
+            btnMaximizarLogin.FlatAppearance.BorderSize = 0;
+            btnMaximizarLogin.FlatStyle = FlatStyle.Flat;
+            btnMaximizarLogin.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+            btnMaximizarLogin.IconColor = Color.OldLace;
+            btnMaximizarLogin.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMaximizarLogin.IconSize = 20;
+            btnMaximizarLogin.Location = new Point(861, 0);
+            btnMaximizarLogin.Margin = new Padding(2);
+            btnMaximizarLogin.Name = "btnMaximizarLogin";
+            btnMaximizarLogin.Size = new Size(45, 25);
+            btnMaximizarLogin.TabIndex = 9;
+            btnMaximizarLogin.UseVisualStyleBackColor = false;
+            btnMaximizarLogin.Click += btnMaximizarLogin_Click;
+            // 
+            // btnCerrarLogin
+            // 
+            btnCerrarLogin.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCerrarLogin.BackColor = Color.Tomato;
+            btnCerrarLogin.FlatAppearance.BorderSize = 0;
+            btnCerrarLogin.FlatStyle = FlatStyle.Flat;
+            btnCerrarLogin.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnCerrarLogin.IconColor = Color.OldLace;
+            btnCerrarLogin.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            btnCerrarLogin.IconSize = 20;
+            btnCerrarLogin.Location = new Point(901, 0);
+            btnCerrarLogin.Margin = new Padding(2);
+            btnCerrarLogin.Name = "btnCerrarLogin";
+            btnCerrarLogin.Size = new Size(45, 25);
+            btnCerrarLogin.TabIndex = 10;
+            btnCerrarLogin.UseVisualStyleBackColor = false;
+            btnCerrarLogin.Click += btnCerrarLogin_Click;
+            // 
+            // btnMinimizarLogin
+            // 
+            btnMinimizarLogin.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimizarLogin.BackColor = Color.Turquoise;
+            btnMinimizarLogin.FlatAppearance.BorderSize = 0;
+            btnMinimizarLogin.FlatStyle = FlatStyle.Flat;
+            btnMinimizarLogin.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            btnMinimizarLogin.IconColor = Color.OldLace;
+            btnMinimizarLogin.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMinimizarLogin.IconSize = 20;
+            btnMinimizarLogin.Location = new Point(818, 0);
+            btnMinimizarLogin.Margin = new Padding(2);
+            btnMinimizarLogin.Name = "btnMinimizarLogin";
+            btnMinimizarLogin.Size = new Size(45, 25);
+            btnMinimizarLogin.TabIndex = 8;
+            btnMinimizarLogin.UseVisualStyleBackColor = false;
+            btnMinimizarLogin.Click += btnMinimizarLogin_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.FromArgb(255, 161, 43);
+            label3.Location = new Point(13, 9);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(403, 44);
+            label3.TabIndex = 1;
+            label3.Text = "INICIO DE SESION";
+            // 
+            // panel4
+            // 
+            panel4.Controls.Add(btnAccederLogin);
+            panel4.Controls.Add(panel2);
+            panel4.Controls.Add(pictureBox1);
+            panel4.Controls.Add(panel3);
+            panel4.Controls.Add(contasena);
+            panel4.Controls.Add(usuario);
+            panel4.Controls.Add(label2);
+            panel4.Controls.Add(label1);
+            panel4.Dock = DockStyle.Fill;
+            panel4.Location = new Point(0, 68);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(947, 443);
+            panel4.TabIndex = 11;
+            // 
             // Login
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(810, 409);
-            Controls.Add(btnAccederLogin);
-            Controls.Add(pictureBox1);
-            Controls.Add(panel2);
-            Controls.Add(panel3);
-            Controls.Add(contasena);
-            Controls.Add(usuario);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            ClientSize = new Size(947, 511);
+            Controls.Add(panel4);
+            Controls.Add(panelLogin);
             Margin = new Padding(2);
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panelLogin.ResumeLayout(false);
+            panelLogin.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -165,5 +274,11 @@
         private Panel panel3;
         private PictureBox pictureBox1;
         private FontAwesome.Sharp.IconButton btnAccederLogin;
+        private Panel panelLogin;
+        private Panel panel4;
+        private Label label3;
+        private FontAwesome.Sharp.IconButton btnMaximizarLogin;
+        private FontAwesome.Sharp.IconButton btnCerrarLogin;
+        private FontAwesome.Sharp.IconButton btnMinimizarLogin;
     }
 }
