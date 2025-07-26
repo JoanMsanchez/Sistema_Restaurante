@@ -174,8 +174,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void MantenimientoEmpleados_Click(object sender, EventArgs e)
         {
-            Empleado u = new Empleado();
-            u.Show();
+            Empleado en = new Empleado();
+            en.Show();
         }
 
         private void btnInventario_Click(object sender, EventArgs e)
@@ -183,6 +183,10 @@ namespace Proyecto_Restaurante.Mantenimiento
             DropMenu_inventario.Show(btnInventario, new Point(btnInventario.Width, 0));
         }
 
-        
+        private void MantenimientoCategoria_Click(object sender, EventArgs e)
+        {
+            Categoria ca = new Categoria();
+            ca.Show();
+        }
     }
 }

@@ -66,10 +66,11 @@
             // 
             usuario.BackColor = Color.FromArgb(255, 161, 43);
             usuario.BorderStyle = BorderStyle.None;
+            usuario.Font = new Font("Verdana", 9F, FontStyle.Bold);
             usuario.ForeColor = Color.White;
             usuario.Location = new Point(77, 142);
             usuario.Name = "usuario";
-            usuario.Size = new Size(217, 20);
+            usuario.Size = new Size(217, 19);
             usuario.TabIndex = 4;
             usuario.KeyPress += usuario_KeyPress;
             // 
@@ -77,10 +78,11 @@
             // 
             contasena.BackColor = Color.FromArgb(255, 161, 43);
             contasena.BorderStyle = BorderStyle.None;
+            contasena.Font = new Font("Verdana", 9F, FontStyle.Bold);
             contasena.ForeColor = Color.White;
             contasena.Location = new Point(77, 223);
             contasena.Name = "contasena";
-            contasena.Size = new Size(217, 20);
+            contasena.Size = new Size(217, 19);
             contasena.TabIndex = 5;
             contasena.UseSystemPasswordChar = true;
             contasena.KeyPress += contasena_KeyPress;

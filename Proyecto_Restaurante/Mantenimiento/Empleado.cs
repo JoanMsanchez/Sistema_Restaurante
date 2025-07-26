@@ -15,8 +15,8 @@ namespace Proyecto_Restaurante
 
     public partial class Empleado : Form
     {
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
         public Empleado()
         {
             InitializeComponent();
@@ -34,15 +34,31 @@ namespace Proyecto_Restaurante
                 SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
                 DataTable dt = new DataTable();
                 adaptador.Fill(dt);
+
+                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
+                dt.Columns.Add(columnaSecuencia);
+
+                // Llenar con la secuencia
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["No"] = i + 1;
+                }
+
+                // Mover la columna "No" a la posición 0 (primera)
+                dt.Columns["No"].SetOrdinal(0);
+
                 dataGridView1.DataSource = dt;
 
-                if (dataGridView1.Columns.Count > 0)
+                if (dataGridView1.Columns.Contains("id_empleado"))
                 {
-                    dataGridView1.Columns[0].Visible = false; // Índice 0 = primera columna (ID)
+                    dataGridView1.Columns["id_empleado"].Visible = false;
                 }
-                //dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
-                //dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(255, 161, 43);
-                //dataGridView1.DefaultCellStyle.BackColor = Color.White;
+                dataGridView1.Columns["No"].HeaderText = "#";
+                dataGridView1.Columns["usuario"].HeaderText = "Usuario";
+                dataGridView1.Columns["clave"].HeaderText = "Clave";
+                dataGridView1.Columns["nombre"].HeaderText = "Nombre";
+                dataGridView1.Columns["apellidos"].HeaderText = "Apellidos";
+                dataGridView1.Columns["estado"].HeaderText = "Estado";
             }
             catch (Exception ex)
             {
@@ -305,6 +321,11 @@ namespace Proyecto_Restaurante
                 else
                     desactivo.Checked = true;
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -349,7 +349,7 @@
             MantenimientoMesas.IconColor = Color.White;
             MantenimientoMesas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoMesas.Name = "MantenimientoMesas";
-            MantenimientoMesas.Size = new Size(196, 26);
+            MantenimientoMesas.Size = new Size(228, 30);
             MantenimientoMesas.Text = "Mesas";
             // 
             // MantenimientoEmpleados
@@ -360,7 +360,7 @@
             MantenimientoEmpleados.IconColor = Color.White;
             MantenimientoEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoEmpleados.Name = "MantenimientoEmpleados";
-            MantenimientoEmpleados.Size = new Size(196, 26);
+            MantenimientoEmpleados.Size = new Size(228, 30);
             MantenimientoEmpleados.Text = "Empleados";
             MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
             // 
@@ -392,7 +392,7 @@
             MantenimientoProductos.IconColor = Color.White;
             MantenimientoProductos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoProductos.Name = "MantenimientoProductos";
-            MantenimientoProductos.Size = new Size(283, 26);
+            MantenimientoProductos.Size = new Size(287, 30);
             MantenimientoProductos.Text = "Productos";
             // 
             // MantenimientoCategoria
@@ -403,8 +403,9 @@
             MantenimientoCategoria.IconColor = Color.White;
             MantenimientoCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoCategoria.Name = "MantenimientoCategoria";
-            MantenimientoCategoria.Size = new Size(283, 26);
+            MantenimientoCategoria.Size = new Size(287, 30);
             MantenimientoCategoria.Text = "Categorias";
+            MantenimientoCategoria.Click += MantenimientoCategoria_Click;
             // 
             // MantenimientoUnidades
             // 
@@ -414,7 +415,7 @@
             MantenimientoUnidades.IconColor = Color.White;
             MantenimientoUnidades.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoUnidades.Name = "MantenimientoUnidades";
-            MantenimientoUnidades.Size = new Size(283, 26);
+            MantenimientoUnidades.Size = new Size(287, 30);
             MantenimientoUnidades.Text = "Unidades de Medida";
             // 
             // MantenimientoProveedores
@@ -425,7 +426,7 @@
             MantenimientoProveedores.IconColor = Color.White;
             MantenimientoProveedores.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoProveedores.Name = "MantenimientoProveedores";
-            MantenimientoProveedores.Size = new Size(283, 26);
+            MantenimientoProveedores.Size = new Size(287, 30);
             MantenimientoProveedores.Text = "Proveedores";
             // 
             // MantenimientoMovimiento
@@ -436,7 +437,7 @@
             MantenimientoMovimiento.IconColor = Color.White;
             MantenimientoMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoMovimiento.Name = "MantenimientoMovimiento";
-            MantenimientoMovimiento.Size = new Size(283, 26);
+            MantenimientoMovimiento.Size = new Size(287, 30);
             MantenimientoMovimiento.Text = "Tipo de Movimiento";
             // 
             // MenuPrincipal

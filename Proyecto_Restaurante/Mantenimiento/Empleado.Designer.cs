@@ -123,7 +123,7 @@
             // 
             contrasena.BackColor = Color.FromArgb(255, 161, 43);
             contrasena.BorderStyle = BorderStyle.None;
-            contrasena.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            contrasena.Font = new Font("Verdana", 9F, FontStyle.Bold);
             contrasena.ForeColor = Color.White;
             contrasena.Location = new Point(155, 183);
             contrasena.Name = "contrasena";
@@ -136,7 +136,7 @@
             // 
             nombre.BackColor = Color.FromArgb(255, 161, 43);
             nombre.BorderStyle = BorderStyle.None;
-            nombre.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nombre.Font = new Font("Verdana", 9F, FontStyle.Bold);
             nombre.ForeColor = Color.White;
             nombre.Location = new Point(381, 143);
             nombre.Name = "nombre";
@@ -148,7 +148,7 @@
             // 
             apellido.BackColor = Color.FromArgb(255, 161, 43);
             apellido.BorderStyle = BorderStyle.None;
-            apellido.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            apellido.Font = new Font("Verdana", 9F, FontStyle.Bold);
             apellido.ForeColor = Color.White;
             apellido.Location = new Point(650, 144);
             apellido.Name = "apellido";
@@ -182,7 +182,7 @@
             // 
             login.BackColor = Color.FromArgb(255, 161, 43);
             login.BorderStyle = BorderStyle.None;
-            login.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            login.Font = new Font("Verdana", 9F, FontStyle.Bold);
             login.ForeColor = Color.White;
             login.Location = new Point(115, 143);
             login.Name = "login";
@@ -194,16 +194,16 @@
             // 
             guardar.FlatAppearance.BorderSize = 0;
             guardar.FlatStyle = FlatStyle.Flat;
-            guardar.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold);
+            guardar.Font = new Font("Verdana", 12F, FontStyle.Bold);
             guardar.ForeColor = Color.White;
             guardar.IconChar = FontAwesome.Sharp.IconChar.FileUpload;
             guardar.IconColor = Color.White;
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            guardar.IconSize = 30;
+            guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(551, 229);
+            guardar.Location = new Point(544, 228);
             guardar.Name = "guardar";
-            guardar.Size = new Size(136, 52);
+            guardar.Size = new Size(148, 52);
             guardar.TabIndex = 25;
             guardar.Text = "    Guardar";
             guardar.UseVisualStyleBackColor = true;
@@ -213,18 +213,18 @@
             // 
             Limpiar.FlatAppearance.BorderSize = 0;
             Limpiar.FlatStyle = FlatStyle.Flat;
-            Limpiar.Font = new Font("Times New Roman", 13.8F, FontStyle.Bold);
+            Limpiar.Font = new Font("Verdana", 12F, FontStyle.Bold);
             Limpiar.ForeColor = Color.White;
             Limpiar.IconChar = FontAwesome.Sharp.IconChar.Broom;
             Limpiar.IconColor = Color.White;
             Limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            Limpiar.IconSize = 30;
+            Limpiar.IconSize = 35;
             Limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            Limpiar.Location = new Point(693, 229);
+            Limpiar.Location = new Point(686, 228);
             Limpiar.Name = "Limpiar";
-            Limpiar.Size = new Size(135, 52);
+            Limpiar.Size = new Size(143, 52);
             Limpiar.TabIndex = 24;
-            Limpiar.Text = "   Limpiar";
+            Limpiar.Text = "    Limpiar";
             Limpiar.UseVisualStyleBackColor = true;
             Limpiar.Click += Limpiar_Click_1;
             // 
@@ -233,7 +233,7 @@
             label7.AutoSize = true;
             label7.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(325, 181);
+            label7.Location = new Point(325, 193);
             label7.Name = "label7";
             label7.Size = new Size(88, 25);
             label7.TabIndex = 22;
@@ -244,7 +244,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(49, 324);
+            label4.Location = new Point(42, 297);
             label4.Name = "label4";
             label4.Size = new Size(88, 25);
             label4.TabIndex = 22;
@@ -254,9 +254,9 @@
             // 
             busca.BackColor = Color.FromArgb(255, 161, 43);
             busca.BorderStyle = BorderStyle.None;
-            busca.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            busca.Font = new Font("Verdana", 9F, FontStyle.Bold);
             busca.ForeColor = Color.White;
-            busca.Location = new Point(26, 360);
+            busca.Location = new Point(19, 333);
             busca.Name = "busca";
             busca.Size = new Size(130, 19);
             busca.TabIndex = 23;
@@ -296,6 +296,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(896, 616);
             panel1.TabIndex = 21;
+            panel1.Paint += panel1_Paint;
             // 
             // dataGridView1
             // 
@@ -303,8 +304,8 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(253, 105, 1);
-            dataGridViewCellStyle1.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
             dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.FromArgb(255, 161, 43);
@@ -314,8 +315,8 @@
             dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
             dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(253, 105, 1);
-            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.ColumnHeadersHeight = 25;
@@ -324,13 +325,12 @@
             dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
             dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(253, 105, 1);
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.GridColor = Color.DimGray;
-            dataGridView1.Location = new Point(177, 286);
+            dataGridView1.Location = new Point(177, 297);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -338,13 +338,13 @@
             dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
             dataGridViewCellStyle4.ForeColor = Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = Color.DeepSkyBlue;
-            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
             dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(707, 318);
+            dataGridView1.Size = new Size(707, 307);
             dataGridView1.TabIndex = 27;
             dataGridView1.CellMouseDoubleClick += dataGridView1_CellMouseDoubleClick;
             // 
@@ -352,7 +352,7 @@
             // 
             panel6.BackColor = Color.White;
             panel6.ForeColor = Color.White;
-            panel6.Location = new Point(21, 380);
+            panel6.Location = new Point(14, 353);
             panel6.Name = "panel6";
             panel6.Size = new Size(135, 2);
             panel6.TabIndex = 21;
@@ -407,7 +407,7 @@
             // 
             buscanombre.AutoSize = true;
             buscanombre.Font = new Font("Verdana", 10.8F, FontStyle.Bold);
-            buscanombre.Location = new Point(40, 420);
+            buscanombre.Location = new Point(33, 393);
             buscanombre.Name = "buscanombre";
             buscanombre.Size = new Size(111, 26);
             buscanombre.TabIndex = 1;
@@ -418,7 +418,7 @@
             // 
             buscausuario.AutoSize = true;
             buscausuario.Font = new Font("Verdana", 10.8F, FontStyle.Bold);
-            buscausuario.Location = new Point(40, 388);
+            buscausuario.Location = new Point(33, 361);
             buscausuario.Name = "buscausuario";
             buscausuario.Size = new Size(109, 26);
             buscausuario.TabIndex = 0;
