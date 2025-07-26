@@ -419,6 +419,7 @@
             MantenimientoUnidades.Name = "MantenimientoUnidades";
             MantenimientoUnidades.Size = new Size(338, 34);
             MantenimientoUnidades.Text = "Unidades de Medida";
+            MantenimientoUnidades.Click += MantenimientoUnidades_Click;
             // 
             // MantenimientoProveedores
             // 

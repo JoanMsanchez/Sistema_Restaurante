@@ -61,18 +61,18 @@ namespace Proyecto_Restaurante
                 // Mover la columna "No" a la posición 0 (primera)
                 dt.Columns["No"].SetOrdinal(0);
 
-                dataGridView1.DataSource = dt;
+                DGVEmpleado.DataSource = dt;
 
-                if (dataGridView1.Columns.Contains("id_empleado"))
+                if (DGVEmpleado.Columns.Contains("id_empleado"))
                 {
-                    dataGridView1.Columns["id_empleado"].Visible = false;
+                    DGVEmpleado.Columns["id_empleado"].Visible = false;
                 }
-                dataGridView1.Columns["No"].HeaderText = "#";
-                dataGridView1.Columns["usuario"].HeaderText = "Usuario";
-                dataGridView1.Columns["clave"].HeaderText = "Clave";
-                dataGridView1.Columns["nombre"].HeaderText = "Nombre";
-                dataGridView1.Columns["apellidos"].HeaderText = "Apellidos";
-                dataGridView1.Columns["estado"].HeaderText = "Estado";
+                DGVEmpleado.Columns["No"].HeaderText = "#";
+                DGVEmpleado.Columns["usuario"].HeaderText = "Usuario";
+                DGVEmpleado.Columns["clave"].HeaderText = "Clave";
+                DGVEmpleado.Columns["nombre"].HeaderText = "Nombre";
+                DGVEmpleado.Columns["apellidos"].HeaderText = "Apellidos";
+                DGVEmpleado.Columns["estado"].HeaderText = "Estado";
             }
             catch (Exception ex)
             {
@@ -152,12 +152,12 @@ namespace Proyecto_Restaurante
         {
             try
             {
-                login.Text = dataGridView1.SelectedCells[1].Value.ToString();
-                contrasena.Text = dataGridView1.SelectedCells[2].Value.ToString();
-                nombre.Text = dataGridView1.SelectedCells[3].Value.ToString();
-                apellido.Text = dataGridView1.SelectedCells[4].Value.ToString();
+                login.Text = DGVEmpleado.SelectedCells[1].Value.ToString();
+                contrasena.Text = DGVEmpleado.SelectedCells[2].Value.ToString();
+                nombre.Text = DGVEmpleado.SelectedCells[3].Value.ToString();
+                apellido.Text = DGVEmpleado.SelectedCells[4].Value.ToString();
 
-                int estado = Convert.ToInt32(dataGridView1.SelectedCells[5].Value);
+                int estado = Convert.ToInt32(DGVEmpleado.SelectedCells[5].Value);
                 if (estado == 1)
                     activo.Checked = true;
                 else if (estado == 0)
@@ -214,21 +214,21 @@ namespace Proyecto_Restaurante
 
                 dt.Columns["No"].SetOrdinal(0); // Mover la columna "No" al inicio
 
-                dataGridView1.DataSource = dt;
+                DGVEmpleado.DataSource = dt;
 
                 // Ocultar id_empleado si está
-                if (dataGridView1.Columns.Contains("id_empleado"))
+                if (DGVEmpleado.Columns.Contains("id_empleado"))
                 {
-                    dataGridView1.Columns["id_empleado"].Visible = false;
+                    DGVEmpleado.Columns["id_empleado"].Visible = false;
                 }
 
                 // Encabezados personalizados
-                dataGridView1.Columns["No"].HeaderText = "#";
-                dataGridView1.Columns["usuario"].HeaderText = "Usuario";
-                dataGridView1.Columns["clave"].HeaderText = "Clave";
-                dataGridView1.Columns["nombre"].HeaderText = "Nombre";
-                dataGridView1.Columns["apellidos"].HeaderText = "Apellidos";
-                dataGridView1.Columns["estado"].HeaderText = "Estado";
+                DGVEmpleado.Columns["No"].HeaderText = "#";
+                DGVEmpleado.Columns["usuario"].HeaderText = "Usuario";
+                DGVEmpleado.Columns["clave"].HeaderText = "Clave";
+                DGVEmpleado.Columns["nombre"].HeaderText = "Nombre";
+                DGVEmpleado.Columns["apellidos"].HeaderText = "Apellidos";
+                DGVEmpleado.Columns["estado"].HeaderText = "Estado";
             }
             catch (Exception ex)
             {
@@ -352,7 +352,7 @@ namespace Proyecto_Restaurante
         {
             if (e.RowIndex >= 0)
             {
-                DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
+                DataGridViewRow fila = DGVEmpleado.Rows[e.RowIndex];
                 login.Text = fila.Cells["usuario"].Value.ToString();
                 contrasena.Text = fila.Cells["clave"].Value.ToString();
                 nombre.Text = fila.Cells["nombre"].Value.ToString();

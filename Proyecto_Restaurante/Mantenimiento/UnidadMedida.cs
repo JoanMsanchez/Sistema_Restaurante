@@ -9,22 +9,20 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic.Logging;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
-    public partial class Categoria : Form
+    public partial class UnidadMedida : Form
     {
 
-        private int id_categoria_seleccionada = -1;
+        private int id_UnidadMedida_seleccionada = -1;
 
         //Fields
         private int bordeSize = 2;
 
 
         //Constructor
-        public Categoria()
+        public UnidadMedida()
         {
             InitializeComponent();
             llenar_tabla_datagridview();
@@ -38,25 +36,23 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-
         SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
         //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
-
         public void Limpiar()
         {
-            nomcategoria.Clear();
+            nomUnidadMedida.Clear();
             activo.Checked = false;
             inactivo.Checked = false;
             buscanom.Clear();
-            id_categoria_seleccionada = -1;
+            id_UnidadMedida_seleccionada = -1;
         }
 
         public void llenar_tabla_datagridview()
         {
             try
             {
-                string consulta = "SELECT * FROM categoria_producto";
+                string consulta = "SELECT * FROM unidad_medida";
                 SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
                 DataTable dt = new DataTable();
                 adaptador.Fill(dt);
@@ -73,15 +69,15 @@ namespace Proyecto_Restaurante.Mantenimiento
                 // Mover la columna "No" a la posición 0 (primera)
                 dt.Columns["No"].SetOrdinal(0);
 
-                DGVCategoria.DataSource = dt;
+                DGVUnidadMedida.DataSource = dt;
 
-                if (DGVCategoria.Columns.Contains("id_categoria"))
+                if (DGVUnidadMedida.Columns.Contains("id_unidad"))
                 {
-                    DGVCategoria.Columns["id_categoria"].Visible = false;
+                    DGVUnidadMedida.Columns["id_unidad"].Visible = false;
                 }
-                DGVCategoria.Columns["No"].HeaderText = "#";
-                DGVCategoria.Columns["nombre"].HeaderText = "Nombre";
-                DGVCategoria.Columns["estado"].HeaderText = "Estado";
+                DGVUnidadMedida.Columns["No"].HeaderText = "#";
+                DGVUnidadMedida.Columns["nombre"].HeaderText = "Nombre";
+                DGVUnidadMedida.Columns["estado"].HeaderText = "Estado";
 
             }
             catch (Exception ex)
@@ -90,133 +86,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        private void limpiar_Click(object sender, EventArgs e)
-        {
-            Limpiar();
-        }
-
-        private void guardar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(nomcategoria.Text) ||
-                    (!activo.Checked && !inactivo.Checked))
-                {
-                    MessageBox.Show("Por favor, complete el nombre y seleccione el estado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                conexion.Open();
-
-                int estado = activo.Checked ? 1 : 0;
-
-                SqlCommand cmd;
-
-                if (id_categoria_seleccionada != -1)
-                {
-                    // MODIFICAR
-                    string consulta = "UPDATE categoria_producto SET nombre = @nombre, estado = @estado WHERE id_categoria = @id";
-                    cmd = new SqlCommand(consulta, conexion);
-                    cmd.Parameters.AddWithValue("@id", id_categoria_seleccionada);
-                    MessageBox.Show("Categoría modificada correctamente");
-                }
-                else
-                {
-                    // INSERTAR
-                    string consulta = "INSERT INTO categoria_producto (nombre, estado) VALUES (@nombre, @estado)";
-                    cmd = new SqlCommand(consulta, conexion);
-                    MessageBox.Show("Categoría registrada correctamente");
-                }
-
-                cmd.Parameters.AddWithValue("@nombre", nomcategoria.Text.Trim());
-                cmd.Parameters.AddWithValue("@estado", estado);
-                cmd.ExecuteNonQuery();
-
-                llenar_tabla_datagridview();
-                Limpiar(); // esto también resetea el id
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al guardar: " + ex.Message);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-        }
-
-        private void nomcategoria_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("Solo se permiten letras en el nombre.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void buscanom_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                conexion.Open();
-
-                string consulta = "SELECT * FROM categoria_producto WHERE nombre LIKE @nombre";
-                SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
-                adaptador.SelectCommand.Parameters.AddWithValue("@nombre", "%" + buscanom.Text.Trim() + "%");
-
-                DataTable dt = new DataTable();
-                adaptador.Fill(dt);
-
-                // Agregar columna "No"
-                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
-                dt.Columns.Add(columnaSecuencia);
-
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    dt.Rows[i]["No"] = i + 1;
-                }
-
-                dt.Columns["No"].SetOrdinal(0); // mover al inicio
-
-                DGVCategoria.DataSource = dt;
-
-                if (DGVCategoria.Columns.Contains("id_categoria"))
-                {
-                    DGVCategoria.Columns["id_categoria"].Visible = false;
-                }
-
-                DGVCategoria.Columns["No"].HeaderText = "#";
-                DGVCategoria.Columns["nombre"].HeaderText = "Nombre";
-                DGVCategoria.Columns["estado"].HeaderText = "Estado";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al buscar: " + ex.Message);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-        }
-
-        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow fila = DGVCategoria.Rows[e.RowIndex];
-                id_categoria_seleccionada = Convert.ToInt32(fila.Cells["id_categoria"].Value); // guardamos el id
-
-                nomcategoria.Text = fila.Cells["nombre"].Value.ToString();
-
-                int estado = Convert.ToInt32(fila.Cells["estado"].Value);
-                if (estado == 1)
-                    activo.Checked = true;
-                else
-                    inactivo.Checked = true;
-            }
-        }
-
-        private void panelCategoria_MouseDown(object sender, MouseEventArgs e)
+        private void panelUnidadMedida_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
@@ -234,7 +104,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         }
 
         //Event methods
-        private void Categoria_Resize(object sender, EventArgs e)
+        private void UnidadMedida_Resize(object sender, EventArgs e)
         {
             AdjustForm();
         }
@@ -255,12 +125,12 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        private void btnMinimizarCategoria_Click(object sender, EventArgs e)
+        private void btnMinimizarUnidadMedida_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void btnMaximizarCategoria_Click(object sender, EventArgs e)
+        private void btnMaximizarUnidadMedida_Click(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Normal)
                 this.WindowState = FormWindowState.Maximized;
@@ -268,10 +138,135 @@ namespace Proyecto_Restaurante.Mantenimiento
                 this.WindowState = FormWindowState.Normal;
         }
 
-        private void btnCerrarCategoria_Click(object sender, EventArgs e)
+        private void btnCerrarUnidadMedida_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        private void limpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar();
+        }
+
+        private void guardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(nomUnidadMedida.Text) ||
+                    (!activo.Checked && !inactivo.Checked))
+                {
+                    MessageBox.Show("Por favor, complete el nombre y seleccione el estado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                conexion.Open();
+
+                int estado = activo.Checked ? 1 : 0;
+
+                SqlCommand cmd;
+
+                if (id_UnidadMedida_seleccionada != -1)
+                {
+                    // MODIFICAR
+                    string consulta = "UPDATE unidad_medida SET nombre = @nombre, estado = @estado WHERE id_unidad = @id";
+                    cmd = new SqlCommand(consulta, conexion);
+                    cmd.Parameters.AddWithValue("@id", id_UnidadMedida_seleccionada);
+                    MessageBox.Show("Unidad de medida modificada correctamente");
+                }
+                else
+                {
+                    // INSERTAR
+                    string consulta = "INSERT INTO unidad_medida (nombre, estado) VALUES (@nombre, @estado)";
+                    cmd = new SqlCommand(consulta, conexion);
+                    MessageBox.Show("Unidad de medida registrada correctamente");
+                }
+
+                cmd.Parameters.AddWithValue("@nombre", nomUnidadMedida.Text.Trim());
+                cmd.Parameters.AddWithValue("@estado", estado);
+                cmd.ExecuteNonQuery();
+
+                llenar_tabla_datagridview();
+                Limpiar(); // esto también resetea el id
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar: " + ex.Message);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+        private void nomUnidadMedida_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten letras en el nombre.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void buscanom_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                conexion.Open();
+
+                string consulta = "SELECT * FROM unidad_medida WHERE nombre LIKE @nombre";
+                SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
+                adaptador.SelectCommand.Parameters.AddWithValue("@nombre", "%" + buscanom.Text.Trim() + "%");
+
+                DataTable dt = new DataTable();
+                adaptador.Fill(dt);
+
+                // Agregar columna "No"
+                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
+                dt.Columns.Add(columnaSecuencia);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["No"] = i + 1;
+                }
+
+                dt.Columns["No"].SetOrdinal(0); // mover al inicio
+
+                DGVUnidadMedida.DataSource = dt;
+
+                if (DGVUnidadMedida.Columns.Contains("id_unidad"))
+                {
+                    DGVUnidadMedida.Columns["id_unidad"].Visible = false;
+                }
+
+                DGVUnidadMedida.Columns["No"].HeaderText = "#";
+                DGVUnidadMedida.Columns["nombre"].HeaderText = "Nombre";
+                DGVUnidadMedida.Columns["estado"].HeaderText = "Estado";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar: " + ex.Message);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+        private void DGVUnidadMedida_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow fila = DGVUnidadMedida.Rows[e.RowIndex];
+                id_UnidadMedida_seleccionada = Convert.ToInt32(fila.Cells["id_unidad"].Value); // guardamos el id
+
+                nomUnidadMedida.Text = fila.Cells["nombre"].Value.ToString();
+
+                int estado = Convert.ToInt32(fila.Cells["estado"].Value);
+                if (estado == 1)
+                    activo.Checked = true;
+                else
+                    inactivo.Checked = true;
+            }
+        }
     }
 }
