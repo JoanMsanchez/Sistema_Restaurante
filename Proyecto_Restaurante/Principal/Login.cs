@@ -91,7 +91,10 @@ namespace Proyecto_Restaurante
                     string Usuario = usuario.Text.Trim();
                     string Clave = contasena.Text.Trim();
 
-                    string consulta = "SELECT COUNT(*) FROM empleado WHERE usuario = @usuario AND clave = @clave";
+                    string consulta = @"SELECT COUNT(*) FROM empleado 
+                    WHERE usuario COLLATE Latin1_General_CS_AS = @usuario 
+                      AND clave COLLATE Latin1_General_CS_AS = @clave";
+
                     SqlCommand cmd = new SqlCommand(consulta, conexion);
                     cmd.Parameters.AddWithValue("@usuario", Usuario);
                     cmd.Parameters.AddWithValue("@clave", Clave);

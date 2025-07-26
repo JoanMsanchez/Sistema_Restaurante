@@ -183,7 +183,7 @@ namespace Proyecto_Restaurante
 
                 if (buscausuario.Checked)
                 {
-                    consulta = "SELECT * FROM empleado WHERE usuario LIKE '%" + busca.Text.Trim() + "%'";
+                    consulta = "SELECT * FROM empleado WHERE usuario COLLATE Latin1_General_CI_AS LIKE '%" + busca.Text.Trim() + "%'";
                 }
                 else if (buscanombre.Checked)
                 {

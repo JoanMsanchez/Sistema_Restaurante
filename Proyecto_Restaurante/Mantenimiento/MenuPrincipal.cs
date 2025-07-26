@@ -188,5 +188,12 @@ namespace Proyecto_Restaurante.Mantenimiento
             Categoria ca = new Categoria();
             ca.Show();
         }
+
+        private void iconButton5_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Login login = new Login();
+            login.Show();
+        }
     }
 }

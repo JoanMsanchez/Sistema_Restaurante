@@ -17,6 +17,8 @@ namespace Proyecto_Restaurante.Mantenimiento
     public partial class Categoria : Form
     {
 
+        private int id_categoria_seleccionada = -1;
+
         //Fields
         private int bordeSize = 2;
 
@@ -47,7 +49,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             activo.Checked = false;
             inactivo.Checked = false;
             buscanom.Clear();
-
+            id_categoria_seleccionada = -1;
         }
 
         public void llenar_tabla_datagridview()
@@ -110,51 +112,39 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 conexion.Open();
 
-                int estado = 0;
+                int estado = activo.Checked ? 1 : 0;
 
-                if (activo.Checked)
+                SqlCommand cmd;
+
+                if (id_categoria_seleccionada != -1)
                 {
-                    estado = 1;
-                }
-                else if (inactivo.Checked)
-                {
-                    estado = 0;
-                }
-
-                // Verificar si ya existe la categoría
-                string verificar = "SELECT COUNT(*) FROM categoria_producto WHERE nombre = @nombre";
-                SqlCommand cmdVerificar = new SqlCommand(verificar, conexion);
-                cmdVerificar.Parameters.AddWithValue("@nombre", nomcategoria.Text.Trim());
-                int existe = (int)cmdVerificar.ExecuteScalar();
-
-                string consulta;
-
-                if (existe > 0)
-                {
-                    //Ya existe: MODIFICAR
-                    consulta = "UPDATE categoria_producto SET nombre = @estado WHERE nombre = @nombre";
-                    MessageBox.Show("Categoría actualizada correctamente");
+                    // MODIFICAR
+                    string consulta = "UPDATE categoria_producto SET nombre = @nombre, estado = @estado WHERE id_categoria = @id";
+                    cmd = new SqlCommand(consulta, conexion);
+                    cmd.Parameters.AddWithValue("@id", id_categoria_seleccionada);
+                    MessageBox.Show("Categoría modificada correctamente");
                 }
                 else
                 {
-                    // No existe: INSERTAR
-                    consulta = "INSERT INTO categoria_producto (nombre, estado) VALUES (@nombre, @estado)";
+                    // INSERTAR
+                    string consulta = "INSERT INTO categoria_producto (nombre, estado) VALUES (@nombre, @estado)";
+                    cmd = new SqlCommand(consulta, conexion);
                     MessageBox.Show("Categoría registrada correctamente");
                 }
 
-                SqlCommand ejecutar = new SqlCommand(consulta, conexion);
-                ejecutar.Parameters.AddWithValue("@nombre", nomcategoria.Text.Trim());
-                ejecutar.Parameters.AddWithValue("@estado", estado);
-                ejecutar.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@nombre", nomcategoria.Text.Trim());
+                cmd.Parameters.AddWithValue("@estado", estado);
+                cmd.ExecuteNonQuery();
 
                 llenar_tabla_datagridview();
-                Limpiar();
-
-                conexion.Close();
+                Limpiar(); // esto también resetea el id
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al guardar: " + ex.Message);
+            }
+            finally
+            {
                 conexion.Close();
             }
         }
@@ -198,6 +188,8 @@ namespace Proyecto_Restaurante.Mantenimiento
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
+                id_categoria_seleccionada = Convert.ToInt32(fila.Cells["id_categoria"].Value); // guardamos el id
+
                 nomcategoria.Text = fila.Cells["nombre"].Value.ToString();
 
                 int estado = Convert.ToInt32(fila.Cells["estado"].Value);
