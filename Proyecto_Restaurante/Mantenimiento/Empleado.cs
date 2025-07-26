@@ -183,11 +183,13 @@ namespace Proyecto_Restaurante
 
                 if (buscausuario.Checked)
                 {
-                    consulta = "SELECT * FROM empleado WHERE usuario COLLATE Latin1_General_CI_AS LIKE '%" + busca.Text.Trim() + "%'";
+                    // Búsqueda por usuario (insensible a mayúsculas/minúsculas)
+                    consulta = "SELECT * FROM empleado WHERE usuario COLLATE Latin1_General_CI_AS LIKE @busqueda";
                 }
                 else if (buscanombre.Checked)
                 {
-                    consulta = "SELECT * FROM empleado WHERE nombre LIKE '%" + busca.Text.Trim() + "%'";
+                    // Búsqueda por nombre (sensible a mayúsculas/minúsculas por defecto)
+                    consulta = "SELECT * FROM empleado WHERE nombre LIKE @busqueda";
                 }
                 else
                 {
@@ -196,10 +198,37 @@ namespace Proyecto_Restaurante
                 }
 
                 SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
+                adaptador.SelectCommand.Parameters.AddWithValue("@busqueda", "%" + busca.Text.Trim() + "%");
+
                 DataTable dt = new DataTable();
                 adaptador.Fill(dt);
 
+                // Agregar columna "No"
+                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
+                dt.Columns.Add(columnaSecuencia);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["No"] = i + 1;
+                }
+
+                dt.Columns["No"].SetOrdinal(0); // Mover la columna "No" al inicio
+
                 dataGridView1.DataSource = dt;
+
+                // Ocultar id_empleado si está
+                if (dataGridView1.Columns.Contains("id_empleado"))
+                {
+                    dataGridView1.Columns["id_empleado"].Visible = false;
+                }
+
+                // Encabezados personalizados
+                dataGridView1.Columns["No"].HeaderText = "#";
+                dataGridView1.Columns["usuario"].HeaderText = "Usuario";
+                dataGridView1.Columns["clave"].HeaderText = "Clave";
+                dataGridView1.Columns["nombre"].HeaderText = "Nombre";
+                dataGridView1.Columns["apellidos"].HeaderText = "Apellidos";
+                dataGridView1.Columns["estado"].HeaderText = "Estado";
             }
             catch (Exception ex)
             {

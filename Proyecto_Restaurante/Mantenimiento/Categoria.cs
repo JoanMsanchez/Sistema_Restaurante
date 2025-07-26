@@ -164,14 +164,34 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 conexion.Open();
 
-                string consulta = "";
-                consulta = "SELECT * FROM categoria_producto WHERE nombre LIKE '%" + buscanom.Text.Trim() + "%'";
-
+                string consulta = "SELECT * FROM categoria_producto WHERE nombre LIKE @nombre";
                 SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
+                adaptador.SelectCommand.Parameters.AddWithValue("@nombre", "%" + buscanom.Text.Trim() + "%");
+
                 DataTable dt = new DataTable();
                 adaptador.Fill(dt);
 
+                // Agregar columna "No"
+                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
+                dt.Columns.Add(columnaSecuencia);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["No"] = i + 1;
+                }
+
+                dt.Columns["No"].SetOrdinal(0); // mover al inicio
+
                 dataGridView1.DataSource = dt;
+
+                if (dataGridView1.Columns.Contains("id_categoria"))
+                {
+                    dataGridView1.Columns["id_categoria"].Visible = false;
+                }
+
+                dataGridView1.Columns["No"].HeaderText = "#";
+                dataGridView1.Columns["nombre"].HeaderText = "Nombre";
+                dataGridView1.Columns["estado"].HeaderText = "Estado";
             }
             catch (Exception ex)
             {
