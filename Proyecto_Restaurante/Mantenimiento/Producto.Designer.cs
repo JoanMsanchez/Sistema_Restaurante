@@ -28,13 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Producto));
             panelProducto = new Panel();
             btnMaximizarProducto = new FontAwesome.Sharp.IconButton();
             btnCerrarProducto = new FontAwesome.Sharp.IconButton();
             btnMinimizarProducto = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
             panel1 = new Panel();
+            btnConsultaProducto = new FontAwesome.Sharp.IconButton();
+            pictureBox1 = new PictureBox();
+            label8 = new Label();
+            activo = new RadioButton();
+            desactivo = new RadioButton();
+            panel5 = new Panel();
+            venta = new TextBox();
+            label5 = new Label();
+            panel6 = new Panel();
+            costo = new TextBox();
+            label6 = new Label();
+            panel7 = new Panel();
+            stockMinimo = new TextBox();
+            label7 = new Label();
+            panel4 = new Panel();
+            stockActual = new TextBox();
+            label4 = new Label();
+            descripcion = new TextBox();
+            label2 = new Label();
+            panel3 = new Panel();
+            nombre = new TextBox();
+            label3 = new Label();
             panelProducto.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panelProducto
@@ -47,7 +72,7 @@
             panelProducto.Dock = DockStyle.Top;
             panelProducto.Location = new Point(0, 0);
             panelProducto.Name = "panelProducto";
-            panelProducto.Size = new Size(1005, 72);
+            panelProducto.Size = new Size(973, 72);
             panelProducto.TabIndex = 0;
             panelProducto.MouseDown += panelProducto_MouseDown;
             // 
@@ -61,7 +86,7 @@
             btnMaximizarProducto.IconColor = Color.OldLace;
             btnMaximizarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarProducto.IconSize = 20;
-            btnMaximizarProducto.Location = new Point(920, 0);
+            btnMaximizarProducto.Location = new Point(888, 0);
             btnMaximizarProducto.Margin = new Padding(2);
             btnMaximizarProducto.Name = "btnMaximizarProducto";
             btnMaximizarProducto.Size = new Size(45, 25);
@@ -79,7 +104,7 @@
             btnCerrarProducto.IconColor = Color.OldLace;
             btnCerrarProducto.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarProducto.IconSize = 20;
-            btnCerrarProducto.Location = new Point(960, 0);
+            btnCerrarProducto.Location = new Point(928, 0);
             btnCerrarProducto.Margin = new Padding(2);
             btnCerrarProducto.Name = "btnCerrarProducto";
             btnCerrarProducto.Size = new Size(45, 25);
@@ -97,7 +122,7 @@
             btnMinimizarProducto.IconColor = Color.OldLace;
             btnMinimizarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarProducto.IconSize = 20;
-            btnMinimizarProducto.Location = new Point(877, 0);
+            btnMinimizarProducto.Location = new Point(845, 0);
             btnMinimizarProducto.Margin = new Padding(2);
             btnMinimizarProducto.Name = "btnMinimizarProducto";
             btnMinimizarProducto.Size = new Size(45, 25);
@@ -119,24 +144,304 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnConsultaProducto);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(label8);
+            panel1.Controls.Add(activo);
+            panel1.Controls.Add(desactivo);
+            panel1.Controls.Add(panel5);
+            panel1.Controls.Add(venta);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(panel6);
+            panel1.Controls.Add(costo);
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(panel7);
+            panel1.Controls.Add(stockMinimo);
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(panel4);
+            panel1.Controls.Add(stockActual);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(descripcion);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(panel3);
+            panel1.Controls.Add(nombre);
+            panel1.Controls.Add(label3);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 72);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1005, 440);
+            panel1.Size = new Size(973, 431);
             panel1.TabIndex = 1;
+            // 
+            // btnConsultaProducto
+            // 
+            btnConsultaProducto.BackColor = Color.DarkOrange;
+            btnConsultaProducto.FlatAppearance.BorderSize = 0;
+            btnConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.Wrench;
+            btnConsultaProducto.IconColor = SystemColors.ControlLightLight;
+            btnConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnConsultaProducto.Location = new Point(866, 322);
+            btnConsultaProducto.Name = "btnConsultaProducto";
+            btnConsultaProducto.Size = new Size(78, 78);
+            btnConsultaProducto.TabIndex = 43;
+            btnConsultaProducto.UseVisualStyleBackColor = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(802, -12);
+            pictureBox1.Margin = new Padding(4);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(171, 126);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 42;
+            pictureBox1.TabStop = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.ForeColor = Color.White;
+            label8.Location = new Point(35, 334);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(103, 29);
+            label8.TabIndex = 41;
+            label8.Text = "Estado";
+            // 
+            // activo
+            // 
+            activo.AutoSize = true;
+            activo.Font = new Font("Verdana", 10.2F);
+            activo.Location = new Point(153, 322);
+            activo.Margin = new Padding(4);
+            activo.Name = "activo";
+            activo.Size = new Size(101, 29);
+            activo.TabIndex = 39;
+            activo.Text = "Activo";
+            activo.UseVisualStyleBackColor = true;
+            // 
+            // desactivo
+            // 
+            desactivo.AutoSize = true;
+            desactivo.Font = new Font("Verdana", 10.2F);
+            desactivo.Location = new Point(153, 359);
+            desactivo.Margin = new Padding(4);
+            desactivo.Name = "desactivo";
+            desactivo.Size = new Size(121, 29);
+            desactivo.TabIndex = 40;
+            desactivo.Text = "Inactivo";
+            desactivo.UseVisualStyleBackColor = true;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.White;
+            panel5.ForeColor = Color.White;
+            panel5.Location = new Point(624, 266);
+            panel5.Margin = new Padding(4);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(198, 2);
+            panel5.TabIndex = 38;
+            // 
+            // venta
+            // 
+            venta.BackColor = Color.FromArgb(255, 161, 43);
+            venta.BorderStyle = BorderStyle.None;
+            venta.Font = new Font("Verdana", 9F, FontStyle.Bold);
+            venta.ForeColor = Color.White;
+            venta.Location = new Point(628, 245);
+            venta.Margin = new Padding(4);
+            venta.Name = "venta";
+            venta.Size = new Size(191, 22);
+            venta.TabIndex = 37;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label5.ForeColor = Color.White;
+            label5.Location = new Point(444, 238);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(183, 29);
+            label5.TabIndex = 36;
+            label5.Text = "Precio Venta";
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.White;
+            panel6.ForeColor = Color.White;
+            panel6.Location = new Point(211, 259);
+            panel6.Margin = new Padding(4);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(198, 2);
+            panel6.TabIndex = 35;
+            // 
+            // costo
+            // 
+            costo.BackColor = Color.FromArgb(255, 161, 43);
+            costo.BorderStyle = BorderStyle.None;
+            costo.Font = new Font("Verdana", 9F, FontStyle.Bold);
+            costo.ForeColor = Color.White;
+            costo.Location = new Point(215, 238);
+            costo.Margin = new Padding(4);
+            costo.Name = "costo";
+            costo.Size = new Size(191, 22);
+            costo.TabIndex = 34;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label6.ForeColor = Color.White;
+            label6.Location = new Point(35, 231);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(179, 29);
+            label6.TabIndex = 33;
+            label6.Text = "Precio Costo";
+            // 
+            // panel7
+            // 
+            panel7.BackColor = Color.White;
+            panel7.ForeColor = Color.White;
+            panel7.Location = new Point(625, 186);
+            panel7.Margin = new Padding(4);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(198, 2);
+            panel7.TabIndex = 32;
+            // 
+            // stockMinimo
+            // 
+            stockMinimo.BackColor = Color.FromArgb(255, 161, 43);
+            stockMinimo.BorderStyle = BorderStyle.None;
+            stockMinimo.Font = new Font("Verdana", 9F, FontStyle.Bold);
+            stockMinimo.ForeColor = Color.White;
+            stockMinimo.Location = new Point(629, 165);
+            stockMinimo.Margin = new Padding(4);
+            stockMinimo.Name = "stockMinimo";
+            stockMinimo.Size = new Size(191, 22);
+            stockMinimo.TabIndex = 31;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label7.ForeColor = Color.White;
+            label7.Location = new Point(435, 159);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(192, 29);
+            label7.TabIndex = 30;
+            label7.Text = "Stock Minimo";
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.White;
+            panel4.ForeColor = Color.White;
+            panel4.Location = new Point(219, 180);
+            panel4.Margin = new Padding(4);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(198, 2);
+            panel4.TabIndex = 29;
+            // 
+            // stockActual
+            // 
+            stockActual.BackColor = Color.FromArgb(255, 161, 43);
+            stockActual.BorderStyle = BorderStyle.None;
+            stockActual.Font = new Font("Verdana", 9F, FontStyle.Bold);
+            stockActual.ForeColor = Color.White;
+            stockActual.Location = new Point(223, 159);
+            stockActual.Margin = new Padding(4);
+            stockActual.Name = "stockActual";
+            stockActual.Size = new Size(191, 22);
+            stockActual.TabIndex = 28;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label4.ForeColor = Color.White;
+            label4.Location = new Point(35, 152);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(180, 29);
+            label4.TabIndex = 27;
+            label4.Text = "Stock Actual";
+            // 
+            // descripcion
+            // 
+            descripcion.BackColor = Color.FromArgb(255, 161, 43);
+            descripcion.BorderStyle = BorderStyle.None;
+            descripcion.Font = new Font("Verdana", 9F, FontStyle.Bold);
+            descripcion.ForeColor = Color.White;
+            descripcion.Location = new Point(542, 53);
+            descripcion.Margin = new Padding(4);
+            descripcion.Multiline = true;
+            descripcion.Name = "descripcion";
+            descripcion.Size = new Size(241, 85);
+            descripcion.TabIndex = 25;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(365, 76);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(169, 29);
+            label2.TabIndex = 24;
+            label2.Text = "Descripcion";
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.ForeColor = Color.White;
+            panel3.Location = new Point(155, 97);
+            panel3.Margin = new Padding(4);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(198, 2);
+            panel3.TabIndex = 23;
+            // 
+            // nombre
+            // 
+            nombre.BackColor = Color.FromArgb(255, 161, 43);
+            nombre.BorderStyle = BorderStyle.None;
+            nombre.Font = new Font("Verdana", 9F, FontStyle.Bold);
+            nombre.ForeColor = Color.White;
+            nombre.Location = new Point(159, 76);
+            nombre.Margin = new Padding(4);
+            nombre.Name = "nombre";
+            nombre.Size = new Size(191, 22);
+            nombre.TabIndex = 22;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(34, 70);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(119, 29);
+            label3.TabIndex = 5;
+            label3.Text = "Nombre";
             // 
             // Producto
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(1005, 512);
+            ClientSize = new Size(973, 503);
             Controls.Add(panel1);
             Controls.Add(panelProducto);
             Name = "Producto";
             Text = "Producto";
             panelProducto.ResumeLayout(false);
             panelProducto.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -148,5 +453,27 @@
         private FontAwesome.Sharp.IconButton btnMaximizarProducto;
         private FontAwesome.Sharp.IconButton btnCerrarProducto;
         private FontAwesome.Sharp.IconButton btnMinimizarProducto;
+        protected Label label3;
+        protected Label label2;
+        private Panel panel3;
+        protected TextBox nombre;
+        private Panel panel4;
+        protected TextBox stockActual;
+        protected Label label4;
+        protected TextBox descripcion;
+        private Panel panel5;
+        protected TextBox venta;
+        protected Label label5;
+        private Panel panel6;
+        protected TextBox costo;
+        protected Label label6;
+        private Panel panel7;
+        protected TextBox stockMinimo;
+        protected Label label7;
+        private PictureBox pictureBox1;
+        private Label label8;
+        protected RadioButton activo;
+        protected RadioButton desactivo;
+        private FontAwesome.Sharp.IconButton btnConsultaProducto;
     }
 }
