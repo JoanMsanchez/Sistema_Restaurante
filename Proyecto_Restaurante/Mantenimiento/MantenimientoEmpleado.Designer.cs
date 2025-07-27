@@ -163,11 +163,11 @@
             // activo
             // 
             activo.AutoSize = true;
-            activo.Font = new Font("Verdana", 10.2F);
+            activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.Location = new Point(523, 227);
             activo.Margin = new Padding(4);
             activo.Name = "activo";
-            activo.Size = new Size(101, 29);
+            activo.Size = new Size(108, 29);
             activo.TabIndex = 17;
             activo.Text = "Activo";
             activo.UseVisualStyleBackColor = true;
@@ -175,11 +175,11 @@
             // desactivo
             // 
             desactivo.AutoSize = true;
-            desactivo.Font = new Font("Verdana", 10.2F);
+            desactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             desactivo.Location = new Point(523, 264);
             desactivo.Margin = new Padding(4);
             desactivo.Name = "desactivo";
-            desactivo.Size = new Size(121, 29);
+            desactivo.Size = new Size(130, 29);
             desactivo.TabIndex = 18;
             desactivo.Text = "Inactivo";
             desactivo.UseVisualStyleBackColor = true;
@@ -583,7 +583,7 @@
             label8.TabIndex = 0;
             label8.Text = "EMPLEADO";
             // 
-            // Empleado
+            // MantenimientoEmpleado
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -592,7 +592,7 @@
             Controls.Add(panelEmpleado);
             Controls.Add(panel1);
             Margin = new Padding(4);
-            Name = "Empleado";
+            Name = "MantenimientoEmpleado";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Empleado";
             panel1.ResumeLayout(false);

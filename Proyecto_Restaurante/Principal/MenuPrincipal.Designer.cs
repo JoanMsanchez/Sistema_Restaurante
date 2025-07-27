@@ -496,8 +496,9 @@
             ConsultaProducto.IconColor = Color.White;
             ConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ConsultaProducto.Name = "ConsultaProducto";
-            ConsultaProducto.Size = new Size(228, 34);
+            ConsultaProducto.Size = new Size(270, 34);
             ConsultaProducto.Text = "Productos";
+            ConsultaProducto.Click += ConsultaProducto_Click;
             // 
             // ResportesInventario
             // 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
+using Proyecto_Restaurante.Consulta;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
@@ -206,6 +207,12 @@ namespace Proyecto_Restaurante.Mantenimiento
         {
             MantenimientoProducto producto = new MantenimientoProducto();
             producto.Show();
+        }
+
+        private void ConsultaProducto_Click(object sender, EventArgs e)
+        {
+            ConsultaProductos consultaProducto = new ConsultaProductos();
+            consultaProducto.Show();
         }
     }
 }

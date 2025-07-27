@@ -271,12 +271,12 @@
             // inactivo
             // 
             inactivo.AutoSize = true;
-            inactivo.Font = new Font("Verdana", 10.2F);
+            inactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             inactivo.ForeColor = Color.White;
             inactivo.Location = new Point(167, 239);
             inactivo.Margin = new Padding(4);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(121, 29);
+            inactivo.Size = new Size(130, 29);
             inactivo.TabIndex = 31;
             inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
@@ -285,12 +285,12 @@
             // activo
             // 
             activo.AutoSize = true;
-            activo.Font = new Font("Verdana", 10.2F);
+            activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
             activo.Location = new Point(167, 196);
             activo.Margin = new Padding(4);
             activo.Name = "activo";
-            activo.Size = new Size(101, 29);
+            activo.Size = new Size(108, 29);
             activo.TabIndex = 30;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -371,7 +371,7 @@
             DGVUnidadMedida.TabIndex = 28;
             DGVUnidadMedida.CellMouseDoubleClick += DGVUnidadMedida_CellMouseDoubleClick;
             // 
-            // UnidadMedida
+            // MantenimientoUnidadMedida
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -379,7 +379,7 @@
             ClientSize = new Size(862, 542);
             Controls.Add(panel1);
             Controls.Add(panelUnidadMedida);
-            Name = "UnidadMedida";
+            Name = "MantenimientoUnidadMedida";
             Text = "Form1";
             panelUnidadMedida.ResumeLayout(false);
             panelUnidadMedida.PerformLayout();

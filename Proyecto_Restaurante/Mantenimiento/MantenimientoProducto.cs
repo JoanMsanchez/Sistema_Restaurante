@@ -9,6 +9,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.Logging;
+using Proyecto_Restaurante.Consulta;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
@@ -17,13 +19,13 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         //Fields
         private int bordeSize = 2;
+        private int idProductoSeleccionado = -1;
 
 
         //Constructor
         public MantenimientoProducto()
         {
             InitializeComponent();
-            //llenar_tabla_datagridview();
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
         }
@@ -55,7 +57,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         }
 
         //Event methods
-        private void UnidadMedida_Resize(object sender, EventArgs e)
+        private void Producto_Resize(object sender, EventArgs e)
         {
             AdjustForm();
         }
@@ -92,6 +94,147 @@ namespace Proyecto_Restaurante.Mantenimiento
         private void btnCerrarProducto_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnConsultaProducto_Click(object sender, EventArgs e)
+        {
+            ConsultaProductos consultaProducto = new ConsultaProductos();
+            consultaProducto.Show();
+        }
+
+        private void limpiar()
+        {
+            nombre.Clear();
+            costo.Clear();
+            venta.Clear();
+            stockActual.Clear();
+            stockMinimo.Clear();
+            descripcion.Clear();
+            activo.Checked = false;
+            desactivo.Checked = false;
+        }
+
+        private void guardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                conexion.Open();
+
+                int estadoValor = activo.Checked ? 1 : 0;
+
+                // TEMPORAL: usamos ID 1 para categoría y unidad (ajustar cuando agregues ComboBox)
+                if (comboCategoria.SelectedIndex == -1 || comboUnidad.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Por favor selecciona una Categoría y una Unidad.");
+                    return;
+                }
+
+                int idCategoria = Convert.ToInt32(comboCategoria.SelectedValue);
+                int idUnidad = Convert.ToInt32(comboUnidad.SelectedValue);
+
+                string consultaExistencia = "SELECT COUNT(*) FROM producto WHERE nombre = @nombre";
+                SqlCommand cmdExistencia = new SqlCommand(consultaExistencia, conexion);
+                cmdExistencia.Parameters.AddWithValue("@nombre", nombre.Text);
+
+                int existe = (int)cmdExistencia.ExecuteScalar();
+
+                string consulta;
+
+                if (existe > 0)
+                {
+                    consulta = @"UPDATE producto SET descripcion = @descripcion, id_categoria = @id_categoria, id_unidad = @id_unidad, 
+                                    stock_actual = @stock_actual, stock_minimo = @stock_minimo, precio_costo = @precio_costo, 
+                                    precio_venta = @precio_venta, estado = @estado WHERE nombre = @nombre";
+                    MessageBox.Show("Producto actualizado correctamente.");
+                }
+                else
+                {
+                    consulta = @"INSERT INTO producto (nombre, descripcion, id_categoria, id_unidad, stock_actual, stock_minimo, 
+                                    precio_costo, precio_venta, estado) 
+                         VALUES (@nombre, @descripcion, @id_categoria, @id_unidad, 
+                                 @stock_actual, @stock_minimo, @precio_costo, @precio_venta, @estado)";
+                    MessageBox.Show("Producto insertado correctamente.");
+                }
+
+                SqlCommand cmd = new SqlCommand(consulta, conexion);
+                cmd.Parameters.AddWithValue("@nombre", nombre.Text);
+                cmd.Parameters.AddWithValue("@descripcion", descripcion.Text);
+                cmd.Parameters.AddWithValue("@id_categoria", idCategoria);
+                cmd.Parameters.AddWithValue("@id_unidad", idUnidad);
+                cmd.Parameters.AddWithValue("@stock_actual", decimal.Parse(stockActual.Text));
+                cmd.Parameters.AddWithValue("@stock_minimo", decimal.Parse(stockMinimo.Text));
+                cmd.Parameters.AddWithValue("@precio_costo", decimal.Parse(costo.Text));
+                cmd.Parameters.AddWithValue("@precio_venta", decimal.Parse(venta.Text));
+                cmd.Parameters.AddWithValue("@estado", estadoValor);
+
+                cmd.ExecuteNonQuery();
+                limpiar();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar: " + ex.Message);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+
+
+        private void Limpiar_Click(object sender, EventArgs e)
+        {
+            limpiar();
+        }
+
+        private void MantenimientoProducto_Load(object sender, EventArgs e)
+        {
+            CargarCategorias();
+            CargarUnidades();
+        }
+        private void CargarCategorias()
+        {
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT id_categoria, nombre FROM categoria_producto WHERE estado = 1", conexion);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                comboCategoria.DataSource = dt;
+                comboCategoria.DisplayMember = "nombre";
+                comboCategoria.ValueMember = "id_categoria";
+                comboCategoria.SelectedIndex = -1;  // No seleccionar ninguno por defecto
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar categorías: " + ex.Message);
+            }
+        }
+
+        private void CargarUnidades()
+        {
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT id_unidad, nombre FROM unidad_medida WHERE estado = 1", conexion);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                comboUnidad.DataSource = dt;
+                comboUnidad.DisplayMember = "nombre";
+                comboUnidad.ValueMember = "id_unidad";
+                comboUnidad.SelectedIndex = -1; // No seleccionar ninguno por defecto
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar unidades: " + ex.Message);
+            }
+        }
+
+        private void comboUnidad_MouseEnter(object sender, EventArgs e)
+        {
+            ComboBox cb = sender as ComboBox;
+            if (cb != null && cb.Items.Count > 0 && !cb.DroppedDown)
+            {
+                cb.DroppedDown = true;  // Abre el desplegable
+            }
         }
     }
 }

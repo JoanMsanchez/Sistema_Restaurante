@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_Restaurante.Consulta
 {
-    partial class Productos
+    partial class ConsultaProductos
     {
         /// <summary>
         /// Required designer variable.
@@ -28,35 +28,97 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            panel2 = new Panel();
+            panelConsultaProducto = new Panel();
+            btnMaximizarConsultaProducto = new FontAwesome.Sharp.IconButton();
+            btnCerrarConsultaProducto = new FontAwesome.Sharp.IconButton();
+            btnMinimizarConsultaProducto = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
-            btnMaximizarProducto = new FontAwesome.Sharp.IconButton();
-            btnCerrarProducto = new FontAwesome.Sharp.IconButton();
-            btnMinimizarProducto = new FontAwesome.Sharp.IconButton();
-            panel1.SuspendLayout();
+            panel2 = new Panel();
+            label3 = new Label();
+            panel6 = new Panel();
+            buscar = new TextBox();
+            dataGridView1 = new DataGridView();
+            nombre = new DataGridViewTextBoxColumn();
+            descripcion = new DataGridViewTextBoxColumn();
+            comboCategoria = new DataGridViewTextBoxColumn();
+            comboUnidad = new DataGridViewTextBoxColumn();
+            stockActual = new DataGridViewTextBoxColumn();
+            stockMinimo = new DataGridViewTextBoxColumn();
+            costo = new DataGridViewTextBoxColumn();
+            venta = new DataGridViewTextBoxColumn();
+            estado = new DataGridViewTextBoxColumn();
+            panelConsultaProducto.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
-            // panel1
+            // panelConsultaProducto
             // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(btnMaximizarProducto);
-            panel1.Controls.Add(btnCerrarProducto);
-            panel1.Controls.Add(btnMinimizarProducto);
-            panel1.Controls.Add(label1);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(948, 72);
-            panel1.TabIndex = 0;
+            panelConsultaProducto.BackColor = Color.White;
+            panelConsultaProducto.Controls.Add(btnMaximizarConsultaProducto);
+            panelConsultaProducto.Controls.Add(btnCerrarConsultaProducto);
+            panelConsultaProducto.Controls.Add(btnMinimizarConsultaProducto);
+            panelConsultaProducto.Controls.Add(label1);
+            panelConsultaProducto.Dock = DockStyle.Top;
+            panelConsultaProducto.Location = new Point(0, 0);
+            panelConsultaProducto.Name = "panelConsultaProducto";
+            panelConsultaProducto.Size = new Size(1924, 72);
+            panelConsultaProducto.TabIndex = 0;
+            panelConsultaProducto.MouseDown += panelConsultaProducto_MouseDown;
             // 
-            // panel2
+            // btnMaximizarConsultaProducto
             // 
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 72);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(948, 501);
-            panel2.TabIndex = 1;
+            btnMaximizarConsultaProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximizarConsultaProducto.BackColor = Color.CornflowerBlue;
+            btnMaximizarConsultaProducto.FlatAppearance.BorderSize = 0;
+            btnMaximizarConsultaProducto.FlatStyle = FlatStyle.Flat;
+            btnMaximizarConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+            btnMaximizarConsultaProducto.IconColor = Color.OldLace;
+            btnMaximizarConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMaximizarConsultaProducto.IconSize = 20;
+            btnMaximizarConsultaProducto.Location = new Point(1839, 0);
+            btnMaximizarConsultaProducto.Margin = new Padding(2);
+            btnMaximizarConsultaProducto.Name = "btnMaximizarConsultaProducto";
+            btnMaximizarConsultaProducto.Size = new Size(45, 25);
+            btnMaximizarConsultaProducto.TabIndex = 15;
+            btnMaximizarConsultaProducto.UseVisualStyleBackColor = false;
+            btnMaximizarConsultaProducto.Click += btnMaximizarConsultaProducto_Click;
+            // 
+            // btnCerrarConsultaProducto
+            // 
+            btnCerrarConsultaProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCerrarConsultaProducto.BackColor = Color.Tomato;
+            btnCerrarConsultaProducto.FlatAppearance.BorderSize = 0;
+            btnCerrarConsultaProducto.FlatStyle = FlatStyle.Flat;
+            btnCerrarConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnCerrarConsultaProducto.IconColor = Color.OldLace;
+            btnCerrarConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            btnCerrarConsultaProducto.IconSize = 20;
+            btnCerrarConsultaProducto.Location = new Point(1879, 0);
+            btnCerrarConsultaProducto.Margin = new Padding(2);
+            btnCerrarConsultaProducto.Name = "btnCerrarConsultaProducto";
+            btnCerrarConsultaProducto.Size = new Size(45, 25);
+            btnCerrarConsultaProducto.TabIndex = 16;
+            btnCerrarConsultaProducto.UseVisualStyleBackColor = false;
+            btnCerrarConsultaProducto.Click += btnCerrarConsultaProducto_Click;
+            // 
+            // btnMinimizarConsultaProducto
+            // 
+            btnMinimizarConsultaProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimizarConsultaProducto.BackColor = Color.Turquoise;
+            btnMinimizarConsultaProducto.FlatAppearance.BorderSize = 0;
+            btnMinimizarConsultaProducto.FlatStyle = FlatStyle.Flat;
+            btnMinimizarConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            btnMinimizarConsultaProducto.IconColor = Color.OldLace;
+            btnMinimizarConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMinimizarConsultaProducto.IconSize = 20;
+            btnMinimizarConsultaProducto.Location = new Point(1796, 0);
+            btnMinimizarConsultaProducto.Margin = new Padding(2);
+            btnMinimizarConsultaProducto.Name = "btnMinimizarConsultaProducto";
+            btnMinimizarConsultaProducto.Size = new Size(45, 25);
+            btnMinimizarConsultaProducto.TabIndex = 14;
+            btnMinimizarConsultaProducto.UseVisualStyleBackColor = false;
+            btnMinimizarConsultaProducto.Click += btnMinimizarConsultaProducto_Click;
             // 
             // label1
             // 
@@ -70,79 +132,163 @@
             label1.TabIndex = 2;
             label1.Text = "PRODUCTO";
             // 
-            // btnMaximizarProducto
+            // panel2
             // 
-            btnMaximizarProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMaximizarProducto.BackColor = Color.CornflowerBlue;
-            btnMaximizarProducto.FlatAppearance.BorderSize = 0;
-            btnMaximizarProducto.FlatStyle = FlatStyle.Flat;
-            btnMaximizarProducto.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
-            btnMaximizarProducto.IconColor = Color.OldLace;
-            btnMaximizarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnMaximizarProducto.IconSize = 20;
-            btnMaximizarProducto.Location = new Point(863, 0);
-            btnMaximizarProducto.Margin = new Padding(2);
-            btnMaximizarProducto.Name = "btnMaximizarProducto";
-            btnMaximizarProducto.Size = new Size(45, 25);
-            btnMaximizarProducto.TabIndex = 15;
-            btnMaximizarProducto.UseVisualStyleBackColor = false;
+            panel2.Controls.Add(dataGridView1);
+            panel2.Controls.Add(panel6);
+            panel2.Controls.Add(buscar);
+            panel2.Controls.Add(label3);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(0, 72);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1924, 507);
+            panel2.TabIndex = 1;
             // 
-            // btnCerrarProducto
+            // label3
             // 
-            btnCerrarProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCerrarProducto.BackColor = Color.Tomato;
-            btnCerrarProducto.FlatAppearance.BorderSize = 0;
-            btnCerrarProducto.FlatStyle = FlatStyle.Flat;
-            btnCerrarProducto.IconChar = FontAwesome.Sharp.IconChar.X;
-            btnCerrarProducto.IconColor = Color.OldLace;
-            btnCerrarProducto.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            btnCerrarProducto.IconSize = 20;
-            btnCerrarProducto.Location = new Point(903, 0);
-            btnCerrarProducto.Margin = new Padding(2);
-            btnCerrarProducto.Name = "btnCerrarProducto";
-            btnCerrarProducto.Size = new Size(45, 25);
-            btnCerrarProducto.TabIndex = 16;
-            btnCerrarProducto.UseVisualStyleBackColor = false;
+            label3.AutoSize = true;
+            label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(23, 74);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(233, 29);
+            label3.TabIndex = 6;
+            label3.Text = "Buscar Producto";
             // 
-            // btnMinimizarProducto
+            // panel6
             // 
-            btnMinimizarProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMinimizarProducto.BackColor = Color.Turquoise;
-            btnMinimizarProducto.FlatAppearance.BorderSize = 0;
-            btnMinimizarProducto.FlatStyle = FlatStyle.Flat;
-            btnMinimizarProducto.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
-            btnMinimizarProducto.IconColor = Color.OldLace;
-            btnMinimizarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnMinimizarProducto.IconSize = 20;
-            btnMinimizarProducto.Location = new Point(820, 0);
-            btnMinimizarProducto.Margin = new Padding(2);
-            btnMinimizarProducto.Name = "btnMinimizarProducto";
-            btnMinimizarProducto.Size = new Size(45, 25);
-            btnMinimizarProducto.TabIndex = 14;
-            btnMinimizarProducto.UseVisualStyleBackColor = false;
+            panel6.BackColor = Color.White;
+            panel6.ForeColor = Color.White;
+            panel6.Location = new Point(49, 141);
+            panel6.Margin = new Padding(4);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(169, 2);
+            panel6.TabIndex = 24;
             // 
-            // Productos
+            // buscar
+            // 
+            buscar.BackColor = Color.FromArgb(255, 161, 43);
+            buscar.BorderStyle = BorderStyle.None;
+            buscar.Font = new Font("Verdana", 9F, FontStyle.Bold);
+            buscar.ForeColor = Color.White;
+            buscar.Location = new Point(55, 116);
+            buscar.Margin = new Padding(4);
+            buscar.Name = "buscar";
+            buscar.Size = new Size(162, 22);
+            buscar.TabIndex = 25;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { nombre, descripcion, comboCategoria, comboUnidad, stockActual, stockMinimo, costo, venta, estado });
+            dataGridView1.Location = new Point(249, 116);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 62;
+            dataGridView1.Size = new Size(1412, 351);
+            dataGridView1.TabIndex = 26;
+            // 
+            // nombre
+            // 
+            nombre.HeaderText = "Nombre";
+            nombre.MinimumWidth = 8;
+            nombre.Name = "nombre";
+            nombre.Width = 150;
+            // 
+            // descripcion
+            // 
+            descripcion.HeaderText = "Descripcion";
+            descripcion.MinimumWidth = 8;
+            descripcion.Name = "descripcion";
+            descripcion.Width = 150;
+            // 
+            // comboCategoria
+            // 
+            comboCategoria.HeaderText = "Categoria";
+            comboCategoria.MinimumWidth = 8;
+            comboCategoria.Name = "comboCategoria";
+            comboCategoria.Width = 150;
+            // 
+            // comboUnidad
+            // 
+            comboUnidad.HeaderText = "Unidad";
+            comboUnidad.MinimumWidth = 8;
+            comboUnidad.Name = "comboUnidad";
+            comboUnidad.Width = 150;
+            // 
+            // stockActual
+            // 
+            stockActual.HeaderText = "Stock Actual";
+            stockActual.MinimumWidth = 8;
+            stockActual.Name = "stockActual";
+            stockActual.Width = 150;
+            // 
+            // stockMinimo
+            // 
+            stockMinimo.HeaderText = "Stock Minimo";
+            stockMinimo.MinimumWidth = 8;
+            stockMinimo.Name = "stockMinimo";
+            stockMinimo.Width = 150;
+            // 
+            // costo
+            // 
+            costo.HeaderText = "Costo Compra";
+            costo.MinimumWidth = 8;
+            costo.Name = "costo";
+            costo.Width = 150;
+            // 
+            // venta
+            // 
+            venta.HeaderText = "Costo venta";
+            venta.MinimumWidth = 8;
+            venta.Name = "venta";
+            venta.Width = 150;
+            // 
+            // estado
+            // 
+            estado.HeaderText = "Estado";
+            estado.MinimumWidth = 8;
+            estado.Name = "estado";
+            estado.Width = 150;
+            // 
+            // ConsultaProductos
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(948, 573);
+            ClientSize = new Size(1924, 579);
             Controls.Add(panel2);
-            Controls.Add(panel1);
-            Name = "Productos";
+            Controls.Add(panelConsultaProducto);
+            Name = "ConsultaProductos";
             Text = "Productos";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            panelConsultaProducto.ResumeLayout(false);
+            panelConsultaProducto.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel panel1;
+        private Panel panelConsultaProducto;
         private Panel panel2;
         private Label label1;
-        private FontAwesome.Sharp.IconButton btnMaximizarProducto;
-        private FontAwesome.Sharp.IconButton btnCerrarProducto;
-        private FontAwesome.Sharp.IconButton btnMinimizarProducto;
+        private FontAwesome.Sharp.IconButton btnMaximizarConsultaProducto;
+        private FontAwesome.Sharp.IconButton btnCerrarConsultaProducto;
+        private FontAwesome.Sharp.IconButton btnMinimizarConsultaProducto;
+        protected Label label3;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn nombre;
+        private DataGridViewTextBoxColumn descripcion;
+        private DataGridViewTextBoxColumn comboCategoria;
+        private DataGridViewTextBoxColumn comboUnidad;
+        private DataGridViewTextBoxColumn stockActual;
+        private DataGridViewTextBoxColumn stockMinimo;
+        private DataGridViewTextBoxColumn costo;
+        private DataGridViewTextBoxColumn venta;
+        private DataGridViewTextBoxColumn estado;
+        private Panel panel6;
+        private TextBox buscar;
     }
 }
