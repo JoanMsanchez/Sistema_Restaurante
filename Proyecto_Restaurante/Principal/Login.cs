@@ -18,6 +18,7 @@ namespace Proyecto_Restaurante
         public Login()
         {
             InitializeComponent();
+            this.Load += Login_Load; // Asegúrate de conectar el evento Load
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
         }
@@ -178,6 +179,15 @@ namespace Proyecto_Restaurante
         private void btnCerrarLogin_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                usuario.Focus();
+            }));
+
         }
     }
 }

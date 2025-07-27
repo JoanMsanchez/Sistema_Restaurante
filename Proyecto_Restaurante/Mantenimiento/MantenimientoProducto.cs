@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
-    public partial class Producto : Form
+    public partial class MantenimientoProducto : Form
     {
 
         //Fields
@@ -20,7 +20,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
 
         //Constructor
-        public Producto()
+        public MantenimientoProducto()
         {
             InitializeComponent();
             //llenar_tabla_datagridview();

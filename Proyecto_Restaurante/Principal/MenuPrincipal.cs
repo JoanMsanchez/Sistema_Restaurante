@@ -48,13 +48,13 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Empleado u = new Empleado();
+            MantenimientoEmpleado u = new MantenimientoEmpleado();
             u.Show();
         }
 
         private void btnAcceso_Empleado(object sender, EventArgs e)
         {
-            Empleado u = new Empleado();
+            MantenimientoEmpleado u = new MantenimientoEmpleado();
             u.Show();
         }
 
@@ -65,7 +65,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            Empleado u = new Empleado();
+            MantenimientoEmpleado u = new MantenimientoEmpleado();
             u.Show();
         }
 
@@ -174,7 +174,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void MantenimientoEmpleados_Click(object sender, EventArgs e)
         {
-            Empleado en = new Empleado();
+            MantenimientoEmpleado en = new MantenimientoEmpleado();
             en.Show();
         }
 
@@ -185,7 +185,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void MantenimientoCategoria_Click(object sender, EventArgs e)
         {
-            Categoria ca = new Categoria();
+            MantenimientoCategoria ca = new MantenimientoCategoria();
             ca.Show();
         }
 
@@ -198,13 +198,13 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void MantenimientoUnidades_Click(object sender, EventArgs e)
         {
-            UnidadMedida unidadMedida = new UnidadMedida();
+            MantenimientoUnidadMedida unidadMedida = new MantenimientoUnidadMedida();
             unidadMedida.Show();
         }
 
         private void MantenimientoProductos_Click(object sender, EventArgs e)
         {
-            Producto producto = new Producto();
+            MantenimientoProducto producto = new MantenimientoProducto();
             producto.Show();
         }
     }

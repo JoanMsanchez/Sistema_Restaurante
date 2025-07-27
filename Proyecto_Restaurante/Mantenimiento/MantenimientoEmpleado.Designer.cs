@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_Restaurante
 {
-    partial class Empleado
+    partial class MantenimientoEmpleado
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Empleado));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoEmpleado));
             label2 = new Label();
             label3 = new Label();
             label5 = new Label();
@@ -314,47 +314,47 @@
             // 
             DGVEmpleado.AllowUserToAddRows = false;
             DGVEmpleado.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = Color.White;
-            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVEmpleado.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVEmpleado.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DGVEmpleado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVEmpleado.BackgroundColor = Color.FromArgb(255, 161, 43);
             DGVEmpleado.BorderStyle = BorderStyle.None;
             DGVEmpleado.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            DGVEmpleado.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DGVEmpleado.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DGVEmpleado.ColumnHeadersHeight = 25;
             DGVEmpleado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle7.ForeColor = Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = Color.White;
-            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            DGVEmpleado.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            DGVEmpleado.DefaultCellStyle = dataGridViewCellStyle3;
             DGVEmpleado.EnableHeadersVisualStyles = false;
             DGVEmpleado.Location = new Point(236, 386);
             DGVEmpleado.Margin = new Padding(4);
             DGVEmpleado.Name = "DGVEmpleado";
             DGVEmpleado.ReadOnly = true;
             DGVEmpleado.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = Color.White;
-            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            DGVEmpleado.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            DGVEmpleado.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVEmpleado.RowHeadersVisible = false;
             DGVEmpleado.RowHeadersWidth = 51;
             DGVEmpleado.Size = new Size(884, 384);
@@ -448,7 +448,7 @@
             // 
             // panelEmpleado
             // 
-            panelEmpleado.BackColor = Color.FromArgb(233, 233, 233);
+            panelEmpleado.BackColor = Color.White;
             panelEmpleado.Controls.Add(btnMaximizarEmpleado);
             panelEmpleado.Controls.Add(btnCerrarEmpleado);
             panelEmpleado.Controls.Add(btnMinimizarEmpleado);

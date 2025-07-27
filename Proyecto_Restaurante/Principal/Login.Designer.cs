@@ -151,7 +151,7 @@
             // 
             // panelLogin
             // 
-            panelLogin.BackColor = Color.FromArgb(233, 233, 233);
+            panelLogin.BackColor = Color.White;
             panelLogin.Controls.Add(btnMaximizarLogin);
             panelLogin.Controls.Add(btnCerrarLogin);
             panelLogin.Controls.Add(btnMinimizarLogin);
@@ -257,6 +257,7 @@
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            Load += Login_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelLogin.ResumeLayout(false);
             panelLogin.PerformLayout();

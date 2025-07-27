@@ -45,11 +45,11 @@
             label1 = new Label();
             panelEscritorio = new Panel();
             DropMenu_restaurante = new ContextMenuStrip(components);
-            procesosRestaurante = new FontAwesome.Sharp.IconMenuItem();
-            FacturacionRestaurante = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoRestaurante = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoMesas = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoEmpleados = new FontAwesome.Sharp.IconMenuItem();
+            procesosRestaurante = new FontAwesome.Sharp.IconMenuItem();
+            FacturacionRestaurante = new FontAwesome.Sharp.IconMenuItem();
             DropMenu_inventario = new ContextMenuStrip(components);
             MantenimientoInventario = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoProductos = new FontAwesome.Sharp.IconMenuItem();
@@ -313,30 +313,6 @@
             DropMenu_restaurante.Name = "DropMenu_restaurante";
             DropMenu_restaurante.Size = new Size(272, 68);
             // 
-            // procesosRestaurante
-            // 
-            procesosRestaurante.BackColor = Color.Orange;
-            procesosRestaurante.DropDownItems.AddRange(new ToolStripItem[] { FacturacionRestaurante });
-            procesosRestaurante.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            procesosRestaurante.ForeColor = SystemColors.ButtonHighlight;
-            procesosRestaurante.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
-            procesosRestaurante.IconColor = Color.White;
-            procesosRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            procesosRestaurante.Name = "procesosRestaurante";
-            procesosRestaurante.Size = new Size(271, 32);
-            procesosRestaurante.Text = "Procesos";
-            // 
-            // FacturacionRestaurante
-            // 
-            FacturacionRestaurante.BackColor = Color.DarkOrange;
-            FacturacionRestaurante.ForeColor = SystemColors.ButtonHighlight;
-            FacturacionRestaurante.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
-            FacturacionRestaurante.IconColor = Color.White;
-            FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            FacturacionRestaurante.Name = "FacturacionRestaurante";
-            FacturacionRestaurante.Size = new Size(270, 34);
-            FacturacionRestaurante.Text = "Facturacion";
-            // 
             // MantenimientoRestaurante
             // 
             MantenimientoRestaurante.BackColor = Color.Orange;
@@ -358,7 +334,7 @@
             MantenimientoMesas.IconColor = Color.White;
             MantenimientoMesas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoMesas.Name = "MantenimientoMesas";
-            MantenimientoMesas.Size = new Size(270, 34);
+            MantenimientoMesas.Size = new Size(236, 34);
             MantenimientoMesas.Text = "Mesas";
             // 
             // MantenimientoEmpleados
@@ -369,9 +345,33 @@
             MantenimientoEmpleados.IconColor = Color.White;
             MantenimientoEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoEmpleados.Name = "MantenimientoEmpleados";
-            MantenimientoEmpleados.Size = new Size(270, 34);
+            MantenimientoEmpleados.Size = new Size(236, 34);
             MantenimientoEmpleados.Text = "Empleados";
             MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
+            // 
+            // procesosRestaurante
+            // 
+            procesosRestaurante.BackColor = Color.Orange;
+            procesosRestaurante.DropDownItems.AddRange(new ToolStripItem[] { FacturacionRestaurante });
+            procesosRestaurante.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            procesosRestaurante.ForeColor = SystemColors.ButtonHighlight;
+            procesosRestaurante.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
+            procesosRestaurante.IconColor = Color.White;
+            procesosRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            procesosRestaurante.Name = "procesosRestaurante";
+            procesosRestaurante.Size = new Size(271, 32);
+            procesosRestaurante.Text = "Procesos";
+            // 
+            // FacturacionRestaurante
+            // 
+            FacturacionRestaurante.BackColor = Color.DarkOrange;
+            FacturacionRestaurante.ForeColor = SystemColors.ButtonHighlight;
+            FacturacionRestaurante.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
+            FacturacionRestaurante.IconColor = Color.White;
+            FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            FacturacionRestaurante.Name = "FacturacionRestaurante";
+            FacturacionRestaurante.Size = new Size(245, 34);
+            FacturacionRestaurante.Text = "Facturacion";
             // 
             // DropMenu_inventario
             // 
@@ -496,7 +496,7 @@
             ConsultaProducto.IconColor = Color.White;
             ConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ConsultaProducto.Name = "ConsultaProducto";
-            ConsultaProducto.Size = new Size(270, 34);
+            ConsultaProducto.Size = new Size(228, 34);
             ConsultaProducto.Text = "Productos";
             // 
             // ResportesInventario

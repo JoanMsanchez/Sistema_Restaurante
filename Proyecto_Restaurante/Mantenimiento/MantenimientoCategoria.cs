@@ -14,7 +14,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
-    public partial class Categoria : Form
+    public partial class MantenimientoCategoria : Form
     {
 
         private int id_categoria_seleccionada = -1;
@@ -24,7 +24,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
 
         //Constructor
-        public Categoria()
+        public MantenimientoCategoria()
         {
             InitializeComponent();
             llenar_tabla_datagridview();

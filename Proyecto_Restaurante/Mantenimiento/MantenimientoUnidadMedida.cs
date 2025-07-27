@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
-    public partial class UnidadMedida : Form
+    public partial class MantenimientoUnidadMedida : Form
     {
 
         private int id_UnidadMedida_seleccionada = -1;
@@ -22,7 +22,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
 
         //Constructor
-        public UnidadMedida()
+        public MantenimientoUnidadMedida()
         {
             InitializeComponent();
             llenar_tabla_datagridview();

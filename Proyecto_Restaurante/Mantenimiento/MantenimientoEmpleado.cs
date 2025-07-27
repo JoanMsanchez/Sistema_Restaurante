@@ -14,17 +14,16 @@ using Proyecto_Restaurante.Mantenimiento;
 namespace Proyecto_Restaurante
 {
 
-    public partial class Empleado : Form
+    public partial class MantenimientoEmpleado : Form
     {
         //Fields
         private int bordeSize = 2;
 
 
         //Constructor
-        public Empleado()
+        public MantenimientoEmpleado()
         {
             InitializeComponent();
-            llenar_tabla_datagridview();
             llenar_tabla_datagridview();
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color

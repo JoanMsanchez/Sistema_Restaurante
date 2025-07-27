@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_Restaurante.Mantenimiento
 {
-    partial class UnidadMedida
+    partial class MantenimientoUnidadMedida
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnidadMedida));
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoUnidadMedida));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panelUnidadMedida = new Panel();
             btnMaximizarUnidadMedida = new FontAwesome.Sharp.IconButton();
             btnCerrarUnidadMedida = new FontAwesome.Sharp.IconButton();
@@ -60,7 +60,7 @@
             // 
             // panelUnidadMedida
             // 
-            panelUnidadMedida.BackColor = Color.FromArgb(233, 233, 233);
+            panelUnidadMedida.BackColor = Color.White;
             panelUnidadMedida.Controls.Add(btnMaximizarUnidadMedida);
             panelUnidadMedida.Controls.Add(btnCerrarUnidadMedida);
             panelUnidadMedida.Controls.Add(btnMinimizarUnidadMedida);
@@ -324,47 +324,47 @@
             // 
             DGVUnidadMedida.AllowUserToAddRows = false;
             DGVUnidadMedida.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = Color.White;
-            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVUnidadMedida.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVUnidadMedida.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DGVUnidadMedida.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVUnidadMedida.BackgroundColor = Color.FromArgb(255, 161, 43);
             DGVUnidadMedida.BorderStyle = BorderStyle.None;
             DGVUnidadMedida.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            DGVUnidadMedida.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DGVUnidadMedida.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DGVUnidadMedida.ColumnHeadersHeight = 25;
             DGVUnidadMedida.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle7.ForeColor = Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = Color.White;
-            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            DGVUnidadMedida.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            DGVUnidadMedida.DefaultCellStyle = dataGridViewCellStyle3;
             DGVUnidadMedida.EnableHeadersVisualStyles = false;
             DGVUnidadMedida.Location = new Point(430, 239);
             DGVUnidadMedida.Margin = new Padding(4);
             DGVUnidadMedida.Name = "DGVUnidadMedida";
             DGVUnidadMedida.ReadOnly = true;
             DGVUnidadMedida.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = Color.White;
-            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            DGVUnidadMedida.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            DGVUnidadMedida.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVUnidadMedida.RowHeadersVisible = false;
             DGVUnidadMedida.RowHeadersWidth = 51;
             DGVUnidadMedida.Size = new Size(392, 208);
