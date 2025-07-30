@@ -26,6 +26,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public MantenimientoProducto()
         {
             InitializeComponent();
+            this.Load += MantenimientoProducto_Load;
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
         }
@@ -102,13 +103,15 @@ namespace Proyecto_Restaurante.Mantenimiento
             consultaProducto.Show();
         }
 
+        public event EventHandler ProductoGuardado;
+
         private void limpiar()
         {
             nombre.Clear();
             costo.Clear();
             venta.Clear();
-            stockActual.Clear();
-            stockMinimo.Clear();
+            txtstockActual.Clear();
+            txtstockMinimo.Clear();
             descripcion.Clear();
             activo.Checked = false;
             desactivo.Checked = false;
@@ -161,14 +164,17 @@ namespace Proyecto_Restaurante.Mantenimiento
                 cmd.Parameters.AddWithValue("@descripcion", descripcion.Text);
                 cmd.Parameters.AddWithValue("@id_categoria", idCategoria);
                 cmd.Parameters.AddWithValue("@id_unidad", idUnidad);
-                cmd.Parameters.AddWithValue("@stock_actual", decimal.Parse(stockActual.Text));
-                cmd.Parameters.AddWithValue("@stock_minimo", decimal.Parse(stockMinimo.Text));
+                cmd.Parameters.AddWithValue("@stock_actual", decimal.Parse(txtstockActual.Text));
+                cmd.Parameters.AddWithValue("@stock_minimo", decimal.Parse(txtstockMinimo.Text));
                 cmd.Parameters.AddWithValue("@precio_costo", decimal.Parse(costo.Text));
                 cmd.Parameters.AddWithValue("@precio_venta", decimal.Parse(venta.Text));
                 cmd.Parameters.AddWithValue("@estado", estadoValor);
 
                 cmd.ExecuteNonQuery();
                 limpiar();
+
+                ProductoGuardado?.Invoke(this, EventArgs.Empty);
+
             }
             catch (Exception ex)
             {
@@ -192,6 +198,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             CargarCategorias();
             CargarUnidades();
         }
+        
         private void CargarCategorias()
         {
             try
@@ -236,22 +243,34 @@ namespace Proyecto_Restaurante.Mantenimiento
                 cb.DroppedDown = true;  // Abre el desplegable
             }
         }
-
-        public void CargarDatosProducto(int idProducto, string nombreProducto, string descripcionProducto,
-                                 decimal precioCosto, decimal precioVenta, decimal stockActualValue,
-                                 decimal stockMinimoValue, string nombreCategoria, string nombreUnidad, int estado)
+        
+        public void CargarDatosProducto(int idProducto,
+                string nombreProd,
+                string descripcionProd,
+                decimal precioCosto,
+                decimal precioVenta,
+                decimal stockActual,
+                decimal stockMinimo,
+                int idCategoria,
+                string nombreCategoria,
+                int idUnidad,
+                string nombreUnidad,
+                int estado)
         {
+            // ID y textos
             this.idProductoSeleccionado = idProducto;
-            nombre.Text = nombreProducto;
-            descripcion.Text = descripcionProducto;
+            nombre.Text = nombreProd;
+            descripcion.Text = descripcionProd;
             costo.Text = precioCosto.ToString("F2");
             venta.Text = precioVenta.ToString("F2");
-            stockActual.Text = stockActualValue.ToString();
-            stockMinimo.Text = stockMinimoValue.ToString();
+            txtstockActual.Text = stockActual.ToString("F2");
+            txtstockMinimo.Text = stockMinimo.ToString("F2");
 
-            comboCategoria.SelectedIndex = comboCategoria.FindStringExact(nombreCategoria);
-            comboUnidad.SelectedIndex = comboUnidad.FindStringExact(nombreUnidad);
 
+            comboCategoria.SelectedValue = idCategoria;
+            comboUnidad.SelectedValue = idUnidad;
+
+            // Estado
             activo.Checked = (estado == 1);
             desactivo.Checked = (estado == 0);
         }

@@ -28,12 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             panelConsultaProducto = new Panel();
             btnMaximizarConsultaProducto = new FontAwesome.Sharp.IconButton();
             btnCerrarConsultaProducto = new FontAwesome.Sharp.IconButton();
             btnMinimizarConsultaProducto = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
             panel2 = new Panel();
+            unidadproducto = new RadioButton();
+            categoriaproducto = new RadioButton();
+            nombreproducto = new RadioButton();
             dataGridView1 = new DataGridView();
             panel6 = new Panel();
             buscar = new TextBox();
@@ -125,6 +133,9 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(unidadproducto);
+            panel2.Controls.Add(categoriaproducto);
+            panel2.Controls.Add(nombreproducto);
             panel2.Controls.Add(dataGridView1);
             panel2.Controls.Add(panel6);
             panel2.Controls.Add(buscar);
@@ -136,13 +147,96 @@
             panel2.Size = new Size(1286, 454);
             panel2.TabIndex = 1;
             // 
+            // unidadproducto
+            // 
+            unidadproducto.AutoSize = true;
+            unidadproducto.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
+            unidadproducto.ForeColor = Color.White;
+            unidadproducto.Location = new Point(849, 49);
+            unidadproducto.Name = "unidadproducto";
+            unidadproducto.Size = new Size(202, 24);
+            unidadproducto.TabIndex = 29;
+            unidadproducto.TabStop = true;
+            unidadproducto.Text = "Unidad de medida";
+            unidadproducto.UseVisualStyleBackColor = true;
+            // 
+            // categoriaproducto
+            // 
+            categoriaproducto.AutoSize = true;
+            categoriaproducto.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
+            categoriaproducto.ForeColor = Color.White;
+            categoriaproducto.Location = new Point(722, 49);
+            categoriaproducto.Name = "categoriaproducto";
+            categoriaproducto.Size = new Size(121, 24);
+            categoriaproducto.TabIndex = 28;
+            categoriaproducto.TabStop = true;
+            categoriaproducto.Text = "Categoria";
+            categoriaproducto.UseVisualStyleBackColor = true;
+            // 
+            // nombreproducto
+            // 
+            nombreproducto.AutoSize = true;
+            nombreproducto.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
+            nombreproducto.ForeColor = Color.White;
+            nombreproducto.Location = new Point(611, 49);
+            nombreproducto.Name = "nombreproducto";
+            nombreproducto.Size = new Size(105, 24);
+            nombreproducto.TabIndex = 27;
+            nombreproducto.TabStop = true;
+            nombreproducto.Text = "Nombre";
+            nombreproducto.UseVisualStyleBackColor = true;
+            // 
             // dataGridView1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.FromArgb(255, 161, 43);
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = Color.White;
+            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridView1.ColumnHeadersHeight = 29;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle8.ForeColor = Color.White;
+            dataGridViewCellStyle8.SelectionBackColor = Color.White;
+            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.Location = new Point(11, 124);
             dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle9.ForeColor = Color.White;
+            dataGridViewCellStyle9.SelectionBackColor = Color.White;
+            dataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 62;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle10.ForeColor = Color.White;
+            dataGridViewCellStyle10.SelectionBackColor = Color.White;
+            dataGridViewCellStyle10.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle10;
             dataGridView1.Size = new Size(1264, 281);
             dataGridView1.TabIndex = 26;
             dataGridView1.CellMouseDoubleClick += dataGridView1_CellMouseDoubleClick;
@@ -151,7 +245,7 @@
             // 
             panel6.BackColor = Color.White;
             panel6.ForeColor = Color.White;
-            panel6.Location = new Point(568, 74);
+            panel6.Location = new Point(431, 74);
             panel6.Name = "panel6";
             panel6.Size = new Size(135, 2);
             panel6.TabIndex = 24;
@@ -159,20 +253,21 @@
             // buscar
             // 
             buscar.BackColor = Color.FromArgb(255, 161, 43);
-            buscar.BorderStyle = BorderStyle.None;
+            buscar.BorderStyle = BorderStyle.FixedSingle;
             buscar.Font = new Font("Verdana", 9F, FontStyle.Bold);
             buscar.ForeColor = Color.White;
-            buscar.Location = new Point(568, 49);
+            buscar.Location = new Point(431, 49);
             buscar.Name = "buscar";
-            buscar.Size = new Size(130, 19);
+            buscar.Size = new Size(130, 26);
             buscar.TabIndex = 25;
+            buscar.TextChanged += buscar_TextChanged;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(365, 43);
+            label3.Location = new Point(228, 43);
             label3.Name = "label3";
             label3.Size = new Size(197, 25);
             label3.TabIndex = 6;
@@ -210,5 +305,8 @@
         private DataGridView dataGridView1;
         private Panel panel6;
         private TextBox buscar;
+        private RadioButton unidadproducto;
+        private RadioButton categoriaproducto;
+        private RadioButton nombreproducto;
     }
 }
