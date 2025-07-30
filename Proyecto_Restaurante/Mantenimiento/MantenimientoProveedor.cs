@@ -96,10 +96,20 @@ namespace Proyecto_Restaurante.Mantenimiento
             this.Close();
         }
 
+        private ConsultaProveedor consultaProveedorForm = null;
+
         private void btnConsultaProveedor_Click(object sender, EventArgs e)
         {
-            ConsultaProveedor consulta = new ConsultaProveedor(this);
-            consulta.Show();
+            if (consultaProveedorForm == null || consultaProveedorForm.IsDisposed)
+            {
+                consultaProveedorForm = new ConsultaProveedor(this);
+                consultaProveedorForm.Show();
+            }
+            else
+            {
+                // Si ya está abierta, solo la traemos al frente
+                consultaProveedorForm.BringToFront();
+            }
         }
         private void limpiar()
         {
