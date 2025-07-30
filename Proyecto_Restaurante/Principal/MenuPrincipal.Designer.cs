@@ -64,12 +64,25 @@
             ResportesInventario = new FontAwesome.Sharp.IconMenuItem();
             StockAnualInventario = new FontAwesome.Sharp.IconMenuItem();
             EntradasSalidasInventario = new FontAwesome.Sharp.IconMenuItem();
+            DropMenu_CuentasXcobrar = new ContextMenuStrip(components);
+            MantenimientoCXC = new FontAwesome.Sharp.IconMenuItem();
+            ProcesoCXC = new FontAwesome.Sharp.IconMenuItem();
+            ReportesCXC = new FontAwesome.Sharp.IconMenuItem();
+            ClientesCXC = new FontAwesome.Sharp.IconMenuItem();
+            CondiciondePagoCXC = new FontAwesome.Sharp.IconMenuItem();
+            MetododePagoCXC = new FontAwesome.Sharp.IconMenuItem();
+            RegistrodePagoCXC = new FontAwesome.Sharp.IconMenuItem();
+            CXC = new FontAwesome.Sharp.IconMenuItem();
+            EstadodeCuentaCXC = new FontAwesome.Sharp.IconMenuItem();
+            CuentasVencidasCXC = new FontAwesome.Sharp.IconMenuItem();
+            ResumendeDeudaporCliente = new FontAwesome.Sharp.IconMenuItem();
             panelMenu.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelTitulo.SuspendLayout();
             DropMenu_restaurante.SuspendLayout();
             DropMenu_inventario.SuspendLayout();
+            DropMenu_CuentasXcobrar.SuspendLayout();
             SuspendLayout();
             // 
             // panelMenu
@@ -334,7 +347,7 @@
             MantenimientoMesas.IconColor = Color.White;
             MantenimientoMesas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoMesas.Name = "MantenimientoMesas";
-            MantenimientoMesas.Size = new Size(236, 34);
+            MantenimientoMesas.Size = new Size(270, 34);
             MantenimientoMesas.Text = "Mesas";
             // 
             // MantenimientoEmpleados
@@ -345,7 +358,7 @@
             MantenimientoEmpleados.IconColor = Color.White;
             MantenimientoEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoEmpleados.Name = "MantenimientoEmpleados";
-            MantenimientoEmpleados.Size = new Size(236, 34);
+            MantenimientoEmpleados.Size = new Size(270, 34);
             MantenimientoEmpleados.Text = "Empleados";
             MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
             // 
@@ -370,7 +383,7 @@
             FacturacionRestaurante.IconColor = Color.White;
             FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             FacturacionRestaurante.Name = "FacturacionRestaurante";
-            FacturacionRestaurante.Size = new Size(245, 34);
+            FacturacionRestaurante.Size = new Size(270, 34);
             FacturacionRestaurante.Text = "Facturacion";
             // 
             // DropMenu_inventario
@@ -535,6 +548,141 @@
             EntradasSalidasInventario.Size = new Size(320, 34);
             EntradasSalidasInventario.Text = "Entradas y Salidas";
             // 
+            // DropMenu_CuentasXcobrar
+            // 
+            DropMenu_CuentasXcobrar.ImageScalingSize = new Size(24, 24);
+            DropMenu_CuentasXcobrar.Items.AddRange(new ToolStripItem[] { MantenimientoCXC, ProcesoCXC, ReportesCXC });
+            DropMenu_CuentasXcobrar.Name = "DropMenu_CuentasXcobrar";
+            DropMenu_CuentasXcobrar.Size = new Size(260, 100);
+            // 
+            // MantenimientoCXC
+            // 
+            MantenimientoCXC.BackColor = Color.FromArgb(255, 161, 43);
+            MantenimientoCXC.DropDownItems.AddRange(new ToolStripItem[] { ClientesCXC, CondiciondePagoCXC, MetododePagoCXC });
+            MantenimientoCXC.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            MantenimientoCXC.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoCXC.IconChar = FontAwesome.Sharp.IconChar.Wrench;
+            MantenimientoCXC.IconColor = Color.White;
+            MantenimientoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoCXC.Name = "MantenimientoCXC";
+            MantenimientoCXC.Size = new Size(259, 32);
+            MantenimientoCXC.Text = "Mantenimiento";
+            // 
+            // ProcesoCXC
+            // 
+            ProcesoCXC.BackColor = Color.FromArgb(255, 161, 43);
+            ProcesoCXC.DropDownItems.AddRange(new ToolStripItem[] { RegistrodePagoCXC });
+            ProcesoCXC.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ProcesoCXC.ForeColor = SystemColors.ControlLightLight;
+            ProcesoCXC.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
+            ProcesoCXC.IconColor = Color.White;
+            ProcesoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ProcesoCXC.Name = "ProcesoCXC";
+            ProcesoCXC.Size = new Size(259, 32);
+            ProcesoCXC.Text = "Procesos";
+            // 
+            // ReportesCXC
+            // 
+            ReportesCXC.BackColor = Color.FromArgb(255, 161, 43);
+            ReportesCXC.DropDownItems.AddRange(new ToolStripItem[] { CXC, EstadodeCuentaCXC, CuentasVencidasCXC, ResumendeDeudaporCliente });
+            ReportesCXC.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ReportesCXC.ForeColor = SystemColors.ControlLightLight;
+            ReportesCXC.IconChar = FontAwesome.Sharp.IconChar.Scroll;
+            ReportesCXC.IconColor = Color.White;
+            ReportesCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ReportesCXC.Name = "ReportesCXC";
+            ReportesCXC.Size = new Size(259, 32);
+            ReportesCXC.Text = "Reportes";
+            // 
+            // ClientesCXC
+            // 
+            ClientesCXC.BackColor = Color.DarkOrange;
+            ClientesCXC.ForeColor = SystemColors.ControlLightLight;
+            ClientesCXC.IconChar = FontAwesome.Sharp.IconChar.UserCircle;
+            ClientesCXC.IconColor = Color.White;
+            ClientesCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ClientesCXC.IconSize = 50;
+            ClientesCXC.Name = "ClientesCXC";
+            ClientesCXC.Size = new Size(346, 34);
+            ClientesCXC.Text = "Clientes";
+            // 
+            // CondiciondePagoCXC
+            // 
+            CondiciondePagoCXC.BackColor = Color.DarkOrange;
+            CondiciondePagoCXC.ForeColor = SystemColors.ControlLightLight;
+            CondiciondePagoCXC.IconChar = FontAwesome.Sharp.IconChar.MoneyBill;
+            CondiciondePagoCXC.IconColor = Color.White;
+            CondiciondePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            CondiciondePagoCXC.Name = "CondiciondePagoCXC";
+            CondiciondePagoCXC.Size = new Size(346, 34);
+            CondiciondePagoCXC.Text = "Condiciones de Pago";
+            // 
+            // MetododePagoCXC
+            // 
+            MetododePagoCXC.BackColor = Color.DarkOrange;
+            MetododePagoCXC.ForeColor = SystemColors.ControlLightLight;
+            MetododePagoCXC.IconChar = FontAwesome.Sharp.IconChar.CreditCard;
+            MetododePagoCXC.IconColor = Color.White;
+            MetododePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MetododePagoCXC.Name = "MetododePagoCXC";
+            MetododePagoCXC.Size = new Size(346, 34);
+            MetododePagoCXC.Text = "Metodos de Pago";
+            // 
+            // RegistrodePagoCXC
+            // 
+            RegistrodePagoCXC.BackColor = Color.DarkOrange;
+            RegistrodePagoCXC.ForeColor = SystemColors.ControlLightLight;
+            RegistrodePagoCXC.IconChar = FontAwesome.Sharp.IconChar.Pager;
+            RegistrodePagoCXC.IconColor = Color.White;
+            RegistrodePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            RegistrodePagoCXC.Name = "RegistrodePagoCXC";
+            RegistrodePagoCXC.Size = new Size(306, 34);
+            RegistrodePagoCXC.Text = "Registro de Pago";
+            // 
+            // CXC
+            // 
+            CXC.BackColor = Color.DarkOrange;
+            CXC.ForeColor = SystemColors.ControlLightLight;
+            CXC.IconChar = FontAwesome.Sharp.IconChar.MoneyBills;
+            CXC.IconColor = Color.White;
+            CXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            CXC.Name = "CXC";
+            CXC.Size = new Size(330, 34);
+            CXC.Text = "Cuentas por Cobrar";
+            // 
+            // EstadodeCuentaCXC
+            // 
+            EstadodeCuentaCXC.BackColor = Color.DarkOrange;
+            EstadodeCuentaCXC.ForeColor = SystemColors.ControlLightLight;
+            EstadodeCuentaCXC.IconChar = FontAwesome.Sharp.IconChar.ChartSimple;
+            EstadodeCuentaCXC.IconColor = Color.White;
+            EstadodeCuentaCXC.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            EstadodeCuentaCXC.Name = "EstadodeCuentaCXC";
+            EstadodeCuentaCXC.Size = new Size(330, 34);
+            EstadodeCuentaCXC.Text = "Estado de Cuenta";
+            // 
+            // CuentasVencidasCXC
+            // 
+            CuentasVencidasCXC.BackColor = Color.DarkOrange;
+            CuentasVencidasCXC.ForeColor = SystemColors.ControlLightLight;
+            CuentasVencidasCXC.IconChar = FontAwesome.Sharp.IconChar.ClockRotateLeft;
+            CuentasVencidasCXC.IconColor = Color.White;
+            CuentasVencidasCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            CuentasVencidasCXC.Name = "CuentasVencidasCXC";
+            CuentasVencidasCXC.Size = new Size(330, 34);
+            CuentasVencidasCXC.Text = "Cuentas Vencidas";
+            // 
+            // ResumendeDeudaporCliente
+            // 
+            ResumendeDeudaporCliente.BackColor = Color.DarkOrange;
+            ResumendeDeudaporCliente.ForeColor = SystemColors.ControlLightLight;
+            ResumendeDeudaporCliente.IconChar = FontAwesome.Sharp.IconChar.CalendarDay;
+            ResumendeDeudaporCliente.IconColor = Color.White;
+            ResumendeDeudaporCliente.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ResumendeDeudaporCliente.Name = "ResumendeDeudaporCliente";
+            ResumendeDeudaporCliente.Size = new Size(455, 34);
+            ResumendeDeudaporCliente.Text = "Resumen de deuda por Cliente";
+            // 
             // MenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -556,6 +704,7 @@
             panelTitulo.PerformLayout();
             DropMenu_restaurante.ResumeLayout(false);
             DropMenu_inventario.ResumeLayout(false);
+            DropMenu_CuentasXcobrar.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -595,5 +744,17 @@
         private FontAwesome.Sharp.IconMenuItem ResportesInventario;
         private FontAwesome.Sharp.IconMenuItem StockAnualInventario;
         private FontAwesome.Sharp.IconMenuItem EntradasSalidasInventario;
+        private ContextMenuStrip DropMenu_CuentasXcobrar;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoCXC;
+        private FontAwesome.Sharp.IconMenuItem ProcesoCXC;
+        private FontAwesome.Sharp.IconMenuItem ReportesCXC;
+        private FontAwesome.Sharp.IconMenuItem ClientesCXC;
+        private FontAwesome.Sharp.IconMenuItem CondiciondePagoCXC;
+        private FontAwesome.Sharp.IconMenuItem MetododePagoCXC;
+        private FontAwesome.Sharp.IconMenuItem RegistrodePagoCXC;
+        private FontAwesome.Sharp.IconMenuItem CXC;
+        private FontAwesome.Sharp.IconMenuItem EstadodeCuentaCXC;
+        private FontAwesome.Sharp.IconMenuItem CuentasVencidasCXC;
+        private FontAwesome.Sharp.IconMenuItem ResumendeDeudaporCliente;
     }
 }
