@@ -66,12 +66,12 @@
             EntradasSalidasInventario = new FontAwesome.Sharp.IconMenuItem();
             DropMenu_CuentasXcobrar = new ContextMenuStrip(components);
             MantenimientoCXC = new FontAwesome.Sharp.IconMenuItem();
-            ProcesoCXC = new FontAwesome.Sharp.IconMenuItem();
-            ReportesCXC = new FontAwesome.Sharp.IconMenuItem();
             ClientesCXC = new FontAwesome.Sharp.IconMenuItem();
             CondiciondePagoCXC = new FontAwesome.Sharp.IconMenuItem();
             MetododePagoCXC = new FontAwesome.Sharp.IconMenuItem();
+            ProcesoCXC = new FontAwesome.Sharp.IconMenuItem();
             RegistrodePagoCXC = new FontAwesome.Sharp.IconMenuItem();
+            ReportesCXC = new FontAwesome.Sharp.IconMenuItem();
             CXC = new FontAwesome.Sharp.IconMenuItem();
             EstadodeCuentaCXC = new FontAwesome.Sharp.IconMenuItem();
             CuentasVencidasCXC = new FontAwesome.Sharp.IconMenuItem();
@@ -97,7 +97,7 @@
             panelMenu.Location = new Point(0, 0);
             panelMenu.Margin = new Padding(2);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(262, 628);
+            panelMenu.Size = new Size(262, 551);
             panelMenu.TabIndex = 0;
             // 
             // btnCxc
@@ -120,6 +120,7 @@
             btnCxc.TextAlign = ContentAlignment.MiddleLeft;
             btnCxc.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCxc.UseVisualStyleBackColor = true;
+            btnCxc.Click += btnCxc_Click;
             // 
             // btnInventario
             // 
@@ -154,7 +155,7 @@
             iconButton5.IconColor = Color.OldLace;
             iconButton5.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButton5.IconSize = 46;
-            iconButton5.Location = new Point(0, 554);
+            iconButton5.Location = new Point(0, 477);
             iconButton5.Margin = new Padding(2);
             iconButton5.Name = "iconButton5";
             iconButton5.Size = new Size(262, 74);
@@ -315,7 +316,7 @@
             panelEscritorio.Location = new Point(262, 71);
             panelEscritorio.Margin = new Padding(2);
             panelEscritorio.Name = "panelEscritorio";
-            panelEscritorio.Size = new Size(943, 557);
+            panelEscritorio.Size = new Size(943, 480);
             panelEscritorio.TabIndex = 1;
             panelEscritorio.Paint += panelEscritorio_Paint;
             // 
@@ -347,7 +348,7 @@
             MantenimientoMesas.IconColor = Color.White;
             MantenimientoMesas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoMesas.Name = "MantenimientoMesas";
-            MantenimientoMesas.Size = new Size(270, 34);
+            MantenimientoMesas.Size = new Size(236, 34);
             MantenimientoMesas.Text = "Mesas";
             // 
             // MantenimientoEmpleados
@@ -358,7 +359,7 @@
             MantenimientoEmpleados.IconColor = Color.White;
             MantenimientoEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoEmpleados.Name = "MantenimientoEmpleados";
-            MantenimientoEmpleados.Size = new Size(270, 34);
+            MantenimientoEmpleados.Size = new Size(236, 34);
             MantenimientoEmpleados.Text = "Empleados";
             MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
             // 
@@ -383,7 +384,7 @@
             FacturacionRestaurante.IconColor = Color.White;
             FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             FacturacionRestaurante.Name = "FacturacionRestaurante";
-            FacturacionRestaurante.Size = new Size(270, 34);
+            FacturacionRestaurante.Size = new Size(245, 34);
             FacturacionRestaurante.Text = "Facturacion";
             // 
             // DropMenu_inventario
@@ -452,6 +453,7 @@
             MantenimientoProveedores.Name = "MantenimientoProveedores";
             MantenimientoProveedores.Size = new Size(338, 34);
             MantenimientoProveedores.Text = "Proveedores";
+            MantenimientoProveedores.Click += MantenimientoProveedores_Click;
             // 
             // MantenimientoTipoDeMovimiento
             // 
@@ -509,7 +511,7 @@
             ConsultaProducto.IconColor = Color.White;
             ConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ConsultaProducto.Name = "ConsultaProducto";
-            ConsultaProducto.Size = new Size(270, 34);
+            ConsultaProducto.Size = new Size(228, 34);
             ConsultaProducto.Text = "Productos";
             ConsultaProducto.Click += ConsultaProducto_Click;
             // 
@@ -568,32 +570,6 @@
             MantenimientoCXC.Size = new Size(259, 32);
             MantenimientoCXC.Text = "Mantenimiento";
             // 
-            // ProcesoCXC
-            // 
-            ProcesoCXC.BackColor = Color.FromArgb(255, 161, 43);
-            ProcesoCXC.DropDownItems.AddRange(new ToolStripItem[] { RegistrodePagoCXC });
-            ProcesoCXC.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ProcesoCXC.ForeColor = SystemColors.ControlLightLight;
-            ProcesoCXC.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
-            ProcesoCXC.IconColor = Color.White;
-            ProcesoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            ProcesoCXC.Name = "ProcesoCXC";
-            ProcesoCXC.Size = new Size(259, 32);
-            ProcesoCXC.Text = "Procesos";
-            // 
-            // ReportesCXC
-            // 
-            ReportesCXC.BackColor = Color.FromArgb(255, 161, 43);
-            ReportesCXC.DropDownItems.AddRange(new ToolStripItem[] { CXC, EstadodeCuentaCXC, CuentasVencidasCXC, ResumendeDeudaporCliente });
-            ReportesCXC.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ReportesCXC.ForeColor = SystemColors.ControlLightLight;
-            ReportesCXC.IconChar = FontAwesome.Sharp.IconChar.Scroll;
-            ReportesCXC.IconColor = Color.White;
-            ReportesCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            ReportesCXC.Name = "ReportesCXC";
-            ReportesCXC.Size = new Size(259, 32);
-            ReportesCXC.Text = "Reportes";
-            // 
             // ClientesCXC
             // 
             ClientesCXC.BackColor = Color.DarkOrange;
@@ -628,6 +604,19 @@
             MetododePagoCXC.Size = new Size(346, 34);
             MetododePagoCXC.Text = "Metodos de Pago";
             // 
+            // ProcesoCXC
+            // 
+            ProcesoCXC.BackColor = Color.FromArgb(255, 161, 43);
+            ProcesoCXC.DropDownItems.AddRange(new ToolStripItem[] { RegistrodePagoCXC });
+            ProcesoCXC.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ProcesoCXC.ForeColor = SystemColors.ControlLightLight;
+            ProcesoCXC.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
+            ProcesoCXC.IconColor = Color.White;
+            ProcesoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ProcesoCXC.Name = "ProcesoCXC";
+            ProcesoCXC.Size = new Size(259, 32);
+            ProcesoCXC.Text = "Procesos";
+            // 
             // RegistrodePagoCXC
             // 
             RegistrodePagoCXC.BackColor = Color.DarkOrange;
@@ -639,6 +628,19 @@
             RegistrodePagoCXC.Size = new Size(306, 34);
             RegistrodePagoCXC.Text = "Registro de Pago";
             // 
+            // ReportesCXC
+            // 
+            ReportesCXC.BackColor = Color.FromArgb(255, 161, 43);
+            ReportesCXC.DropDownItems.AddRange(new ToolStripItem[] { CXC, EstadodeCuentaCXC, CuentasVencidasCXC, ResumendeDeudaporCliente });
+            ReportesCXC.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ReportesCXC.ForeColor = SystemColors.ControlLightLight;
+            ReportesCXC.IconChar = FontAwesome.Sharp.IconChar.Scroll;
+            ReportesCXC.IconColor = Color.White;
+            ReportesCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            ReportesCXC.Name = "ReportesCXC";
+            ReportesCXC.Size = new Size(259, 32);
+            ReportesCXC.Text = "Reportes";
+            // 
             // CXC
             // 
             CXC.BackColor = Color.DarkOrange;
@@ -647,7 +649,7 @@
             CXC.IconColor = Color.White;
             CXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CXC.Name = "CXC";
-            CXC.Size = new Size(330, 34);
+            CXC.Size = new Size(455, 34);
             CXC.Text = "Cuentas por Cobrar";
             // 
             // EstadodeCuentaCXC
@@ -658,7 +660,7 @@
             EstadodeCuentaCXC.IconColor = Color.White;
             EstadodeCuentaCXC.IconFont = FontAwesome.Sharp.IconFont.Solid;
             EstadodeCuentaCXC.Name = "EstadodeCuentaCXC";
-            EstadodeCuentaCXC.Size = new Size(330, 34);
+            EstadodeCuentaCXC.Size = new Size(455, 34);
             EstadodeCuentaCXC.Text = "Estado de Cuenta";
             // 
             // CuentasVencidasCXC
@@ -669,7 +671,7 @@
             CuentasVencidasCXC.IconColor = Color.White;
             CuentasVencidasCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CuentasVencidasCXC.Name = "CuentasVencidasCXC";
-            CuentasVencidasCXC.Size = new Size(330, 34);
+            CuentasVencidasCXC.Size = new Size(455, 34);
             CuentasVencidasCXC.Text = "Cuentas Vencidas";
             // 
             // ResumendeDeudaporCliente
@@ -688,7 +690,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(233, 233, 233);
-            ClientSize = new Size(1205, 628);
+            ClientSize = new Size(1205, 551);
             Controls.Add(panelEscritorio);
             Controls.Add(panelTitulo);
             Controls.Add(panelMenu);

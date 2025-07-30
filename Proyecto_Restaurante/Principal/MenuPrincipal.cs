@@ -214,5 +214,16 @@ namespace Proyecto_Restaurante.Mantenimiento
             ConsultaProductos consultaProducto = new ConsultaProductos();
             consultaProducto.Show();
         }
+
+        private void btnCxc_Click(object sender, EventArgs e)
+        {
+            DropMenu_CuentasXcobrar.Show(btnCxc, new Point(btnCxc.Width, 0));
+        }
+
+        private void MantenimientoProveedores_Click(object sender, EventArgs e)
+        {
+            MantenimientoProveedor proveedor = new MantenimientoProveedor();
+            proveedor.Show();
+        }
     }
 }

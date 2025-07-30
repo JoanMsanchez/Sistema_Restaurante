@@ -29,8 +29,8 @@ namespace Proyecto_Restaurante
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void Acceder_Click(object sender, EventArgs e)
         {
@@ -46,7 +46,10 @@ namespace Proyecto_Restaurante
                 string Usuario = usuario.Text.Trim();
                 string Clave = contasena.Text.Trim();
 
-                string consulta = "SELECT COUNT(*) FROM empleado WHERE usuario = @usuario AND clave = @clave";
+                string consulta = @"SELECT COUNT(*) FROM empleado 
+                            WHERE usuario COLLATE Latin1_General_CS_AS = @usuario 
+                              AND clave COLLATE Latin1_General_CS_AS = @clave";
+
                 SqlCommand cmd = new SqlCommand(consulta, conexion);
                 cmd.Parameters.AddWithValue("@usuario", Usuario);
                 cmd.Parameters.AddWithValue("@clave", Clave);
