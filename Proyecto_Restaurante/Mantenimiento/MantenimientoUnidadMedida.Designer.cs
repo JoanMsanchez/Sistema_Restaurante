@@ -67,8 +67,9 @@
             panelUnidadMedida.Controls.Add(label1);
             panelUnidadMedida.Dock = DockStyle.Top;
             panelUnidadMedida.Location = new Point(0, 0);
+            panelUnidadMedida.Margin = new Padding(2, 2, 2, 2);
             panelUnidadMedida.Name = "panelUnidadMedida";
-            panelUnidadMedida.Size = new Size(862, 72);
+            panelUnidadMedida.Size = new Size(690, 58);
             panelUnidadMedida.TabIndex = 0;
             panelUnidadMedida.MouseDown += panelUnidadMedida_MouseDown;
             // 
@@ -82,10 +83,10 @@
             btnMaximizarUnidadMedida.IconColor = Color.OldLace;
             btnMaximizarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarUnidadMedida.IconSize = 20;
-            btnMaximizarUnidadMedida.Location = new Point(777, 0);
+            btnMaximizarUnidadMedida.Location = new Point(622, 0);
             btnMaximizarUnidadMedida.Margin = new Padding(2);
             btnMaximizarUnidadMedida.Name = "btnMaximizarUnidadMedida";
-            btnMaximizarUnidadMedida.Size = new Size(45, 25);
+            btnMaximizarUnidadMedida.Size = new Size(36, 20);
             btnMaximizarUnidadMedida.TabIndex = 12;
             btnMaximizarUnidadMedida.UseVisualStyleBackColor = false;
             btnMaximizarUnidadMedida.Click += btnMaximizarUnidadMedida_Click;
@@ -100,10 +101,10 @@
             btnCerrarUnidadMedida.IconColor = Color.OldLace;
             btnCerrarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarUnidadMedida.IconSize = 20;
-            btnCerrarUnidadMedida.Location = new Point(817, 0);
+            btnCerrarUnidadMedida.Location = new Point(654, 0);
             btnCerrarUnidadMedida.Margin = new Padding(2);
             btnCerrarUnidadMedida.Name = "btnCerrarUnidadMedida";
-            btnCerrarUnidadMedida.Size = new Size(45, 25);
+            btnCerrarUnidadMedida.Size = new Size(36, 20);
             btnCerrarUnidadMedida.TabIndex = 13;
             btnCerrarUnidadMedida.UseVisualStyleBackColor = false;
             btnCerrarUnidadMedida.Click += btnCerrarUnidadMedida_Click;
@@ -118,10 +119,10 @@
             btnMinimizarUnidadMedida.IconColor = Color.OldLace;
             btnMinimizarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarUnidadMedida.IconSize = 20;
-            btnMinimizarUnidadMedida.Location = new Point(734, 0);
+            btnMinimizarUnidadMedida.Location = new Point(587, 0);
             btnMinimizarUnidadMedida.Margin = new Padding(2);
             btnMinimizarUnidadMedida.Name = "btnMinimizarUnidadMedida";
-            btnMinimizarUnidadMedida.Size = new Size(45, 25);
+            btnMinimizarUnidadMedida.Size = new Size(36, 20);
             btnMinimizarUnidadMedida.TabIndex = 11;
             btnMinimizarUnidadMedida.UseVisualStyleBackColor = false;
             btnMinimizarUnidadMedida.Click += btnMinimizarUnidadMedida_Click;
@@ -131,10 +132,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(255, 161, 43);
-            label1.Location = new Point(13, 9);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(10, 7);
             label1.Name = "label1";
-            label1.Size = new Size(432, 44);
+            label1.Size = new Size(357, 36);
             label1.TabIndex = 1;
             label1.Text = "UNIDAD DE MEDIDA";
             // 
@@ -154,18 +154,18 @@
             panel1.Controls.Add(label2);
             panel1.Controls.Add(DGVUnidadMedida);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 72);
+            panel1.Location = new Point(0, 58);
+            panel1.Margin = new Padding(2, 2, 2, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(862, 470);
+            panel1.Size = new Size(690, 376);
             panel1.TabIndex = 1;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(683, -9);
-            pictureBox1.Margin = new Padding(4);
+            pictureBox1.Location = new Point(546, -7);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(179, 120);
+            pictureBox1.Size = new Size(143, 96);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 39;
             pictureBox1.TabStop = false;
@@ -181,10 +181,9 @@
             limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             limpiar.IconSize = 35;
             limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            limpiar.Location = new Point(216, 325);
-            limpiar.Margin = new Padding(4);
+            limpiar.Location = new Point(173, 260);
             limpiar.Name = "limpiar";
-            limpiar.Size = new Size(175, 70);
+            limpiar.Size = new Size(140, 56);
             limpiar.TabIndex = 38;
             limpiar.Text = "     Limpiar";
             limpiar.UseVisualStyleBackColor = true;
@@ -201,10 +200,9 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(13, 325);
-            guardar.Margin = new Padding(4);
+            guardar.Location = new Point(10, 260);
             guardar.Name = "guardar";
-            guardar.Size = new Size(181, 70);
+            guardar.Size = new Size(145, 56);
             guardar.TabIndex = 37;
             guardar.Text = "     Guardar";
             guardar.UseVisualStyleBackColor = true;
@@ -216,10 +214,9 @@
             buscanom.BorderStyle = BorderStyle.None;
             buscanom.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buscanom.ForeColor = Color.WhiteSmoke;
-            buscanom.Location = new Point(536, 196);
-            buscanom.Margin = new Padding(4);
+            buscanom.Location = new Point(429, 157);
             buscanom.Name = "buscanom";
-            buscanom.Size = new Size(184, 22);
+            buscanom.Size = new Size(147, 19);
             buscanom.TabIndex = 36;
             buscanom.TextChanged += buscanom_TextChanged;
             // 
@@ -229,10 +226,9 @@
             nomUnidadMedida.BorderStyle = BorderStyle.None;
             nomUnidadMedida.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nomUnidadMedida.ForeColor = Color.WhiteSmoke;
-            nomUnidadMedida.Location = new Point(173, 114);
-            nomUnidadMedida.Margin = new Padding(4);
+            nomUnidadMedida.Location = new Point(138, 91);
             nomUnidadMedida.Name = "nomUnidadMedida";
-            nomUnidadMedida.Size = new Size(184, 22);
+            nomUnidadMedida.Size = new Size(147, 19);
             nomUnidadMedida.TabIndex = 35;
             nomUnidadMedida.KeyPress += nomUnidadMedida_KeyPress;
             // 
@@ -240,20 +236,18 @@
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(536, 218);
-            panel3.Margin = new Padding(4);
+            panel3.Location = new Point(429, 174);
             panel3.Name = "panel3";
-            panel3.Size = new Size(188, 2);
+            panel3.Size = new Size(150, 2);
             panel3.TabIndex = 34;
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(169, 135);
-            panel2.Margin = new Padding(4);
+            panel2.Location = new Point(135, 108);
             panel2.Name = "panel2";
-            panel2.Size = new Size(188, 2);
+            panel2.Size = new Size(150, 2);
             panel2.TabIndex = 33;
             // 
             // label4
@@ -261,10 +255,9 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(487, 155);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(390, 124);
             label4.Name = "label4";
-            label4.Size = new Size(271, 29);
+            label4.Size = new Size(229, 25);
             label4.TabIndex = 32;
             label4.Text = "Buscar por Nombre";
             // 
@@ -273,10 +266,9 @@
             inactivo.AutoSize = true;
             inactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             inactivo.ForeColor = Color.White;
-            inactivo.Location = new Point(167, 239);
-            inactivo.Margin = new Padding(4);
+            inactivo.Location = new Point(134, 191);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(130, 29);
+            inactivo.Size = new Size(109, 24);
             inactivo.TabIndex = 31;
             inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
@@ -287,10 +279,9 @@
             activo.AutoSize = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(167, 196);
-            activo.Margin = new Padding(4);
+            activo.Location = new Point(134, 157);
             activo.Name = "activo";
-            activo.Size = new Size(108, 29);
+            activo.Size = new Size(90, 24);
             activo.TabIndex = 30;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -301,10 +292,9 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(46, 212);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(37, 170);
             label3.Name = "label3";
-            label3.Size = new Size(103, 29);
+            label3.Size = new Size(88, 25);
             label3.TabIndex = 29;
             label3.Text = "Estado";
             // 
@@ -313,10 +303,9 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(46, 107);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(37, 86);
             label2.Name = "label2";
-            label2.Size = new Size(119, 29);
+            label2.Size = new Size(101, 25);
             label2.TabIndex = 5;
             label2.Text = "Nombre";
             // 
@@ -352,8 +341,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVUnidadMedida.DefaultCellStyle = dataGridViewCellStyle3;
             DGVUnidadMedida.EnableHeadersVisualStyles = false;
-            DGVUnidadMedida.Location = new Point(430, 239);
-            DGVUnidadMedida.Margin = new Padding(4);
+            DGVUnidadMedida.Location = new Point(344, 191);
             DGVUnidadMedida.Name = "DGVUnidadMedida";
             DGVUnidadMedida.ReadOnly = true;
             DGVUnidadMedida.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -367,19 +355,21 @@
             DGVUnidadMedida.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVUnidadMedida.RowHeadersVisible = false;
             DGVUnidadMedida.RowHeadersWidth = 51;
-            DGVUnidadMedida.Size = new Size(392, 208);
+            DGVUnidadMedida.Size = new Size(314, 166);
             DGVUnidadMedida.TabIndex = 28;
             DGVUnidadMedida.CellMouseDoubleClick += DGVUnidadMedida_CellMouseDoubleClick;
             // 
             // MantenimientoUnidadMedida
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(862, 542);
+            ClientSize = new Size(690, 434);
             Controls.Add(panel1);
             Controls.Add(panelUnidadMedida);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "MantenimientoUnidadMedida";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             panelUnidadMedida.ResumeLayout(false);
             panelUnidadMedida.PerformLayout();

@@ -211,8 +211,13 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void ConsultaProducto_Click(object sender, EventArgs e)
         {
-            ConsultaProductos consultaProducto = new ConsultaProductos();
-            consultaProducto.Show();
+            MantenimientoProducto mp = new MantenimientoProducto();
+
+            mp.Show();
+            mp.Hide();
+
+            ConsultaProductos consulta = new ConsultaProductos(mp);
+            consulta.Show();
         }
 
         private void btnCxc_Click(object sender, EventArgs e)
@@ -224,6 +229,12 @@ namespace Proyecto_Restaurante.Mantenimiento
         {
             MantenimientoProveedor proveedor = new MantenimientoProveedor();
             proveedor.Show();
+        }
+
+        private void ClientesCXC_Click(object sender, EventArgs e)
+        {
+            MantenimientoCliente cliente = new MantenimientoCliente();
+            cliente.Show();
         }
     }
 }

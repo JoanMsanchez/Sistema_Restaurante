@@ -37,8 +37,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelProducto_MouseDown(object sender, MouseEventArgs e)
         {
@@ -99,8 +99,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void btnConsultaProducto_Click(object sender, EventArgs e)
         {
-            ConsultaProductos consultaProducto = new ConsultaProductos();
-            consultaProducto.Show();
+            ConsultaProductos consulta = new ConsultaProductos(this);
+            consulta.Show();
         }
 
         public event EventHandler ProductoGuardado;
@@ -113,6 +113,8 @@ namespace Proyecto_Restaurante.Mantenimiento
             txtstockActual.Clear();
             txtstockMinimo.Clear();
             descripcion.Clear();
+            comboCategoria.Text = "";
+            comboUnidad.Text = "";
             activo.Checked = false;
             desactivo.Checked = false;
         }
@@ -198,8 +200,8 @@ namespace Proyecto_Restaurante.Mantenimiento
             CargarCategorias();
             CargarUnidades();
         }
-        
-        private void CargarCategorias()
+
+        public void CargarCategorias()
         {
             try
             {
@@ -217,7 +219,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        private void CargarUnidades()
+        public void CargarUnidades()
         {
             try
             {
@@ -243,7 +245,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                 cb.DroppedDown = true;  // Abre el desplegable
             }
         }
-        
+
         public void CargarDatosProducto(int idProducto,
                 string nombreProd,
                 string descripcionProd,

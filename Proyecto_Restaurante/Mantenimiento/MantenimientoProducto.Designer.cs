@@ -273,7 +273,7 @@
             // 
             panel6.BackColor = Color.White;
             panel6.ForeColor = Color.White;
-            panel6.Location = new Point(416, 169);
+            panel6.Location = new Point(412, 185);
             panel6.Name = "panel6";
             panel6.Size = new Size(100, 2);
             panel6.TabIndex = 47;
@@ -289,11 +289,12 @@
             // 
             // btnConsultaProducto
             // 
-            btnConsultaProducto.BackColor = Color.DarkOrange;
+            btnConsultaProducto.BackColor = Color.FromArgb(255, 161, 43);
             btnConsultaProducto.FlatAppearance.BorderSize = 0;
+            btnConsultaProducto.FlatStyle = FlatStyle.Flat;
             btnConsultaProducto.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnConsultaProducto.ForeColor = Color.White;
-            btnConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.Wrench;
+            btnConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.Search;
             btnConsultaProducto.IconColor = SystemColors.ControlLightLight;
             btnConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnConsultaProducto.IconSize = 30;
@@ -311,7 +312,7 @@
             // 
             panel4.BackColor = Color.White;
             panel4.ForeColor = Color.White;
-            panel4.Location = new Point(418, 108);
+            panel4.Location = new Point(414, 114);
             panel4.Name = "panel4";
             panel4.Size = new Size(100, 2);
             panel4.TabIndex = 45;
@@ -366,7 +367,7 @@
             venta.BorderStyle = BorderStyle.None;
             venta.Font = new Font("Verdana", 9F, FontStyle.Bold);
             venta.ForeColor = Color.White;
-            venta.Location = new Point(420, 149);
+            venta.Location = new Point(416, 165);
             venta.Name = "venta";
             venta.Size = new Size(100, 19);
             venta.TabIndex = 37;
@@ -376,7 +377,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(256, 146);
+            label5.Location = new Point(256, 159);
             label5.Name = "label5";
             label5.Size = new Size(154, 25);
             label5.TabIndex = 36;
@@ -388,7 +389,7 @@
             costo.BorderStyle = BorderStyle.None;
             costo.Font = new Font("Verdana", 9F, FontStyle.Bold);
             costo.ForeColor = Color.White;
-            costo.Location = new Point(420, 88);
+            costo.Location = new Point(416, 94);
             costo.Name = "costo";
             costo.Size = new Size(100, 19);
             costo.TabIndex = 34;
@@ -398,7 +399,7 @@
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label6.ForeColor = Color.White;
-            label6.Location = new Point(259, 85);
+            label6.Location = new Point(257, 88);
             label6.Name = "label6";
             label6.Size = new Size(153, 25);
             label6.TabIndex = 33;
@@ -511,6 +512,7 @@
             Controls.Add(panelProducto);
             Margin = new Padding(2);
             Name = "MantenimientoProducto";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Producto";
             Load += MantenimientoProducto_Load;
             panelProducto.ResumeLayout(false);

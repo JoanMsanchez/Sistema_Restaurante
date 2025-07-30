@@ -56,8 +56,9 @@
             panelConsultaProveedor.Controls.Add(label8);
             panelConsultaProveedor.Dock = DockStyle.Top;
             panelConsultaProveedor.Location = new Point(0, 0);
+            panelConsultaProveedor.Margin = new Padding(2, 2, 2, 2);
             panelConsultaProveedor.Name = "panelConsultaProveedor";
-            panelConsultaProveedor.Size = new Size(1066, 72);
+            panelConsultaProveedor.Size = new Size(853, 58);
             panelConsultaProveedor.TabIndex = 0;
             panelConsultaProveedor.MouseDown += panelConsultaProveedor_MouseDown;
             // 
@@ -71,10 +72,10 @@
             btnMaximizarproveedor.IconColor = Color.OldLace;
             btnMaximizarproveedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarproveedor.IconSize = 20;
-            btnMaximizarproveedor.Location = new Point(981, 0);
+            btnMaximizarproveedor.Location = new Point(785, 0);
             btnMaximizarproveedor.Margin = new Padding(2);
             btnMaximizarproveedor.Name = "btnMaximizarproveedor";
-            btnMaximizarproveedor.Size = new Size(45, 25);
+            btnMaximizarproveedor.Size = new Size(36, 20);
             btnMaximizarproveedor.TabIndex = 12;
             btnMaximizarproveedor.UseVisualStyleBackColor = false;
             btnMaximizarproveedor.Click += btnMaximizarproveedor_Click;
@@ -89,10 +90,10 @@
             btnCerrarProveedor.IconColor = Color.OldLace;
             btnCerrarProveedor.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarProveedor.IconSize = 20;
-            btnCerrarProveedor.Location = new Point(1021, 0);
+            btnCerrarProveedor.Location = new Point(817, 0);
             btnCerrarProveedor.Margin = new Padding(2);
             btnCerrarProveedor.Name = "btnCerrarProveedor";
-            btnCerrarProveedor.Size = new Size(45, 25);
+            btnCerrarProveedor.Size = new Size(36, 20);
             btnCerrarProveedor.TabIndex = 13;
             btnCerrarProveedor.UseVisualStyleBackColor = false;
             btnCerrarProveedor.Click += btnCerrarProveedor_Click;
@@ -107,10 +108,10 @@
             btnMinimizarProveedor.IconColor = Color.OldLace;
             btnMinimizarProveedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarProveedor.IconSize = 20;
-            btnMinimizarProveedor.Location = new Point(938, 0);
+            btnMinimizarProveedor.Location = new Point(750, 0);
             btnMinimizarProveedor.Margin = new Padding(2);
             btnMinimizarProveedor.Name = "btnMinimizarProveedor";
-            btnMinimizarProveedor.Size = new Size(45, 25);
+            btnMinimizarProveedor.Size = new Size(36, 20);
             btnMinimizarProveedor.TabIndex = 11;
             btnMinimizarProveedor.UseVisualStyleBackColor = false;
             btnMinimizarProveedor.Click += btnMinimizarProveedor_Click;
@@ -120,10 +121,9 @@
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.FromArgb(255, 161, 43);
-            label8.Location = new Point(13, 9);
-            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Location = new Point(10, 7);
             label8.Name = "label8";
-            label8.Size = new Size(271, 44);
+            label8.Size = new Size(225, 36);
             label8.TabIndex = 1;
             label8.Text = "PROVEEDOR";
             // 
@@ -134,19 +134,19 @@
             panel2.Controls.Add(busca);
             panel2.Controls.Add(DGVProveedor);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(0, 72);
+            panel2.Location = new Point(0, 58);
+            panel2.Margin = new Padding(2, 2, 2, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1066, 528);
+            panel2.Size = new Size(853, 422);
             panel2.TabIndex = 1;
             // 
             // panel1
             // 
             panel1.BackColor = Color.White;
             panel1.ForeColor = Color.White;
-            panel1.Location = new Point(590, 83);
-            panel1.Margin = new Padding(4);
+            panel1.Location = new Point(472, 66);
             panel1.Name = "panel1";
-            panel1.Size = new Size(198, 2);
+            panel1.Size = new Size(158, 2);
             panel1.TabIndex = 31;
             // 
             // label2
@@ -154,10 +154,9 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(320, 51);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(256, 41);
             label2.Name = "label2";
-            label2.Size = new Size(268, 29);
+            label2.Size = new Size(226, 25);
             label2.TabIndex = 29;
             label2.Text = "Buscar por nombre";
             // 
@@ -167,10 +166,9 @@
             busca.BorderStyle = BorderStyle.None;
             busca.Font = new Font("Verdana", 9F, FontStyle.Bold);
             busca.ForeColor = Color.White;
-            busca.Location = new Point(596, 58);
-            busca.Margin = new Padding(4);
+            busca.Location = new Point(477, 46);
             busca.Name = "busca";
-            busca.Size = new Size(191, 22);
+            busca.Size = new Size(153, 19);
             busca.TabIndex = 30;
             busca.TextChanged += busca_TextChanged;
             // 
@@ -206,8 +204,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVProveedor.DefaultCellStyle = dataGridViewCellStyle3;
             DGVProveedor.EnableHeadersVisualStyles = false;
-            DGVProveedor.Location = new Point(83, 137);
-            DGVProveedor.Margin = new Padding(4);
+            DGVProveedor.Location = new Point(66, 110);
             DGVProveedor.Name = "DGVProveedor";
             DGVProveedor.ReadOnly = true;
             DGVProveedor.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -221,19 +218,21 @@
             DGVProveedor.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVProveedor.RowHeadersVisible = false;
             DGVProveedor.RowHeadersWidth = 51;
-            DGVProveedor.Size = new Size(900, 351);
+            DGVProveedor.Size = new Size(720, 281);
             DGVProveedor.TabIndex = 28;
-            DGVProveedor.CellDoubleClick += this.DGVProveedor_CellDoubleClick;
+            DGVProveedor.CellDoubleClick += DGVProveedor_CellDoubleClick;
             // 
             // ConsultaProveedor
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(1066, 600);
+            ClientSize = new Size(853, 480);
             Controls.Add(panel2);
             Controls.Add(panelConsultaProveedor);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "ConsultaProveedor";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "CosultaProveedor";
             panelConsultaProveedor.ResumeLayout(false);
             panelConsultaProveedor.PerformLayout();
