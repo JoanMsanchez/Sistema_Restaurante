@@ -236,5 +236,24 @@ namespace Proyecto_Restaurante.Mantenimiento
                 cb.DroppedDown = true;  // Abre el desplegable
             }
         }
+
+        public void CargarDatosProducto(int idProducto, string nombreProducto, string descripcionProducto,
+                                 decimal precioCosto, decimal precioVenta, decimal stockActualValue,
+                                 decimal stockMinimoValue, string nombreCategoria, string nombreUnidad, int estado)
+        {
+            this.idProductoSeleccionado = idProducto;
+            nombre.Text = nombreProducto;
+            descripcion.Text = descripcionProducto;
+            costo.Text = precioCosto.ToString("F2");
+            venta.Text = precioVenta.ToString("F2");
+            stockActual.Text = stockActualValue.ToString();
+            stockMinimo.Text = stockMinimoValue.ToString();
+
+            comboCategoria.SelectedIndex = comboCategoria.FindStringExact(nombreCategoria);
+            comboUnidad.SelectedIndex = comboUnidad.FindStringExact(nombreUnidad);
+
+            activo.Checked = (estado == 1);
+            desactivo.Checked = (estado == 0);
+        }
     }
 }

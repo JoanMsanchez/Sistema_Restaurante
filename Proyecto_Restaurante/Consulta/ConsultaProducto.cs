@@ -9,6 +9,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Proyecto_Restaurante.Mantenimiento;
+
 
 namespace Proyecto_Restaurante.Consulta
 {
@@ -22,7 +24,7 @@ namespace Proyecto_Restaurante.Consulta
         public ConsultaProductos()
         {
             InitializeComponent();
-            //llenar_tabla_datagridview();
+            llenar_tabla_datagridview();
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
         }
@@ -33,8 +35,8 @@ namespace Proyecto_Restaurante.Consulta
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelConsultaProducto_MouseDown(object sender, MouseEventArgs e)
         {
@@ -91,6 +93,74 @@ namespace Proyecto_Restaurante.Consulta
         private void btnCerrarConsultaProducto_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void llenar_tabla_datagridview()
+        {
+            try
+            {
+                conexion.Open();
+                string consulta = @"
+            SELECT 
+                p.id_producto,
+                p.nombre,
+                p.descripcion,
+                c.nombre AS categoria,
+                u.nombre AS unidad,
+                p.stock_actual,
+                p.stock_minimo,
+                p.precio_costo,
+                p.precio_venta,
+                p.estado
+            FROM producto p
+            INNER JOIN categoria_producto c ON p.id_categoria = c.id_categoria
+            INNER JOIN unidad_medida u ON p.id_unidad = u.id_unidad";
+
+                SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
+                DataTable dt = new DataTable();
+                adaptador.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los productos: " + ex.Message);
+            }
+            finally
+            {
+                conexion.Close(); 
+            }
+        }
+
+        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
+
+                int id = Convert.ToInt32(fila.Cells["id_producto"].Value);
+                string nombre = fila.Cells["nombre"].Value.ToString();
+                string descripcion = fila.Cells["descripcion"].Value.ToString();
+                string categoria = fila.Cells["categoria"].Value.ToString();
+                string unidad = fila.Cells["unidad"].Value.ToString();
+                decimal precioCosto = Convert.ToDecimal(fila.Cells["precio_costo"].Value);
+                decimal precioVenta = Convert.ToDecimal(fila.Cells["precio_venta"].Value);
+                decimal stockActual = Convert.ToDecimal(fila.Cells["stock_actual"].Value);
+                decimal stockMinimo = Convert.ToDecimal(fila.Cells["stock_minimo"].Value);
+                int estado = Convert.ToInt32(fila.Cells["estado"].Value);
+
+                Form formularioExistente = Application.OpenForms.Cast<Form>().FirstOrDefault(f => f is MantenimientoProducto);
+                if (formularioExistente != null)
+                {
+                    formularioExistente.BringToFront();
+                    MessageBox.Show("El formulario ya está abierto.");
+                    return;
+                }
+
+                MantenimientoProducto mantenimiento = new MantenimientoProducto();
+                mantenimiento.Show();
+                mantenimiento.CargarDatosProducto(id, nombre, descripcion, precioCosto, precioVenta, stockActual, stockMinimo, categoria, unidad, estado);
+            }
+
         }
     }
 }

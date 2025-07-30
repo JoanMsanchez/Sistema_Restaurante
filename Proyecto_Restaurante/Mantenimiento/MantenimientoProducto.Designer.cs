@@ -291,15 +291,19 @@
             // 
             btnConsultaProducto.BackColor = Color.DarkOrange;
             btnConsultaProducto.FlatAppearance.BorderSize = 0;
+            btnConsultaProducto.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnConsultaProducto.ForeColor = Color.White;
             btnConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.Wrench;
             btnConsultaProducto.IconColor = SystemColors.ControlLightLight;
             btnConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnConsultaProducto.IconSize = 30;
-            btnConsultaProducto.Location = new Point(712, 366);
+            btnConsultaProducto.ImageAlign = ContentAlignment.MiddleLeft;
+            btnConsultaProducto.Location = new Point(371, 381);
             btnConsultaProducto.Margin = new Padding(2);
             btnConsultaProducto.Name = "btnConsultaProducto";
-            btnConsultaProducto.Size = new Size(38, 38);
+            btnConsultaProducto.Size = new Size(149, 52);
             btnConsultaProducto.TabIndex = 43;
+            btnConsultaProducto.Text = "    Consulta";
             btnConsultaProducto.UseVisualStyleBackColor = false;
             btnConsultaProducto.Click += btnConsultaProducto_Click;
             // 
@@ -326,7 +330,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(662, 219);
+            label8.Location = new Point(656, 261);
             label8.Name = "label8";
             label8.Size = new Size(88, 25);
             label8.TabIndex = 41;
@@ -337,7 +341,7 @@
             activo.AutoSize = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = SystemColors.ControlLightLight;
-            activo.Location = new Point(609, 247);
+            activo.Location = new Point(603, 289);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 39;
@@ -349,7 +353,7 @@
             desactivo.AutoSize = true;
             desactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             desactivo.ForeColor = SystemColors.ControlLightLight;
-            desactivo.Location = new Point(706, 247);
+            desactivo.Location = new Point(699, 289);
             desactivo.Name = "desactivo";
             desactivo.Size = new Size(109, 24);
             desactivo.TabIndex = 40;
@@ -449,7 +453,7 @@
             descripcion.BackColor = Color.FromArgb(255, 161, 43);
             descripcion.Font = new Font("Verdana", 9F, FontStyle.Bold);
             descripcion.ForeColor = Color.White;
-            descripcion.Location = new Point(579, 88);
+            descripcion.Location = new Point(563, 123);
             descripcion.Multiline = true;
             descripcion.Name = "descripcion";
             descripcion.Size = new Size(252, 111);
@@ -460,7 +464,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(637, 60);
+            label2.Location = new Point(620, 95);
             label2.Name = "label2";
             label2.Size = new Size(144, 25);
             label2.TabIndex = 24;
