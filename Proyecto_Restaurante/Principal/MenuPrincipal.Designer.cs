@@ -391,7 +391,7 @@
             DropMenu_inventario.ImageScalingSize = new Size(24, 24);
             DropMenu_inventario.Items.AddRange(new ToolStripItem[] { MantenimientoInventario, ProcesosInventario, ConsultasInventario, ResportesInventario });
             DropMenu_inventario.Name = "DropMenu_inventario";
-            DropMenu_inventario.Size = new Size(240, 124);
+            DropMenu_inventario.Size = new Size(240, 152);
             // 
             // MantenimientoInventario
             // 
@@ -414,7 +414,7 @@
             MantenimientoProductos.IconColor = Color.White;
             MantenimientoProductos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoProductos.Name = "MantenimientoProductos";
-            MantenimientoProductos.Size = new Size(283, 26);
+            MantenimientoProductos.Size = new Size(287, 30);
             MantenimientoProductos.Text = "Productos";
             MantenimientoProductos.Click += MantenimientoProductos_Click;
             // 
@@ -426,7 +426,7 @@
             MantenimientoCategoria.IconColor = Color.White;
             MantenimientoCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoCategoria.Name = "MantenimientoCategoria";
-            MantenimientoCategoria.Size = new Size(283, 26);
+            MantenimientoCategoria.Size = new Size(287, 30);
             MantenimientoCategoria.Text = "Categorias";
             MantenimientoCategoria.Click += MantenimientoCategoria_Click;
             // 
@@ -438,7 +438,7 @@
             MantenimientoUnidades.IconColor = Color.White;
             MantenimientoUnidades.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoUnidades.Name = "MantenimientoUnidades";
-            MantenimientoUnidades.Size = new Size(283, 26);
+            MantenimientoUnidades.Size = new Size(287, 30);
             MantenimientoUnidades.Text = "Unidades de Medida";
             MantenimientoUnidades.Click += MantenimientoUnidades_Click;
             // 
@@ -450,7 +450,7 @@
             MantenimientoProveedores.IconColor = Color.White;
             MantenimientoProveedores.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoProveedores.Name = "MantenimientoProveedores";
-            MantenimientoProveedores.Size = new Size(283, 26);
+            MantenimientoProveedores.Size = new Size(287, 30);
             MantenimientoProveedores.Text = "Proveedores";
             MantenimientoProveedores.Click += MantenimientoProveedores_Click;
             // 
@@ -462,8 +462,9 @@
             MantenimientoTipoDeMovimiento.IconColor = Color.White;
             MantenimientoTipoDeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoTipoDeMovimiento.Name = "MantenimientoTipoDeMovimiento";
-            MantenimientoTipoDeMovimiento.Size = new Size(283, 26);
+            MantenimientoTipoDeMovimiento.Size = new Size(287, 30);
             MantenimientoTipoDeMovimiento.Text = "Tipo de Movimiento";
+            MantenimientoTipoDeMovimiento.Click += MantenimientoTipoDeMovimiento_Click;
             // 
             // ProcesosInventario
             // 
@@ -486,7 +487,7 @@
             RegistroDeMovimientoInventario.IconColor = Color.White;
             RegistroDeMovimientoInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             RegistroDeMovimientoInventario.Name = "RegistroDeMovimientoInventario";
-            RegistroDeMovimientoInventario.Size = new Size(319, 26);
+            RegistroDeMovimientoInventario.Size = new Size(323, 30);
             RegistroDeMovimientoInventario.Text = "Registro de Movimiento";
             // 
             // ConsultasInventario
@@ -554,7 +555,7 @@
             DropMenu_CuentasXcobrar.ImageScalingSize = new Size(24, 24);
             DropMenu_CuentasXcobrar.Items.AddRange(new ToolStripItem[] { MantenimientoCXC, ProcesoCXC, ReportesCXC });
             DropMenu_CuentasXcobrar.Name = "DropMenu_CuentasXcobrar";
-            DropMenu_CuentasXcobrar.Size = new Size(230, 122);
+            DropMenu_CuentasXcobrar.Size = new Size(230, 94);
             // 
             // MantenimientoCXC
             // 
@@ -578,7 +579,7 @@
             ClientesCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ClientesCXC.IconSize = 50;
             ClientesCXC.Name = "ClientesCXC";
-            ClientesCXC.Size = new Size(293, 30);
+            ClientesCXC.Size = new Size(289, 26);
             ClientesCXC.Text = "Clientes";
             ClientesCXC.Click += ClientesCXC_Click;
             // 
@@ -590,7 +591,7 @@
             CondiciondePagoCXC.IconColor = Color.White;
             CondiciondePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CondiciondePagoCXC.Name = "CondiciondePagoCXC";
-            CondiciondePagoCXC.Size = new Size(293, 30);
+            CondiciondePagoCXC.Size = new Size(289, 26);
             CondiciondePagoCXC.Text = "Condiciones de Pago";
             CondiciondePagoCXC.Click += CondiciondePagoCXC_Click;
             // 
@@ -602,8 +603,9 @@
             MetododePagoCXC.IconColor = Color.White;
             MetododePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MetododePagoCXC.Name = "MetododePagoCXC";
-            MetododePagoCXC.Size = new Size(293, 30);
+            MetododePagoCXC.Size = new Size(289, 26);
             MetododePagoCXC.Text = "Metodos de Pago";
+            MetododePagoCXC.Click += MetododePagoCXC_Click;
             // 
             // ProcesoCXC
             // 

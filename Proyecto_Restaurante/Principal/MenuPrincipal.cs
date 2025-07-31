@@ -243,5 +243,17 @@ namespace Proyecto_Restaurante.Mantenimiento
             condicion.Show();
 
         }
+
+        private void MetododePagoCXC_Click(object sender, EventArgs e)
+        {
+            MantenimientoMetodoPago metodopago = new MantenimientoMetodoPago();
+            metodopago.Show();
+        }
+
+        private void MantenimientoTipoDeMovimiento_Click(object sender, EventArgs e)
+        {
+            MantenimientoTipoMovimiento tipomovimiento = new MantenimientoTipoMovimiento();
+            tipomovimiento.Show();
+        }
     }
 }
