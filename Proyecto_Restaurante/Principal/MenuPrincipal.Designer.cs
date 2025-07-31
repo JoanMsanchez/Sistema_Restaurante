@@ -554,7 +554,7 @@
             DropMenu_CuentasXcobrar.ImageScalingSize = new Size(24, 24);
             DropMenu_CuentasXcobrar.Items.AddRange(new ToolStripItem[] { MantenimientoCXC, ProcesoCXC, ReportesCXC });
             DropMenu_CuentasXcobrar.Name = "DropMenu_CuentasXcobrar";
-            DropMenu_CuentasXcobrar.Size = new Size(230, 94);
+            DropMenu_CuentasXcobrar.Size = new Size(230, 122);
             // 
             // MantenimientoCXC
             // 
@@ -578,7 +578,7 @@
             ClientesCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ClientesCXC.IconSize = 50;
             ClientesCXC.Name = "ClientesCXC";
-            ClientesCXC.Size = new Size(289, 26);
+            ClientesCXC.Size = new Size(293, 30);
             ClientesCXC.Text = "Clientes";
             ClientesCXC.Click += ClientesCXC_Click;
             // 
@@ -590,8 +590,9 @@
             CondiciondePagoCXC.IconColor = Color.White;
             CondiciondePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CondiciondePagoCXC.Name = "CondiciondePagoCXC";
-            CondiciondePagoCXC.Size = new Size(289, 26);
+            CondiciondePagoCXC.Size = new Size(293, 30);
             CondiciondePagoCXC.Text = "Condiciones de Pago";
+            CondiciondePagoCXC.Click += CondiciondePagoCXC_Click;
             // 
             // MetododePagoCXC
             // 
@@ -601,7 +602,7 @@
             MetododePagoCXC.IconColor = Color.White;
             MetododePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MetododePagoCXC.Name = "MetododePagoCXC";
-            MetododePagoCXC.Size = new Size(289, 26);
+            MetododePagoCXC.Size = new Size(293, 30);
             MetododePagoCXC.Text = "Metodos de Pago";
             // 
             // ProcesoCXC

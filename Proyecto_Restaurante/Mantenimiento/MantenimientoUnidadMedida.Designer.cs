@@ -67,7 +67,7 @@
             panelUnidadMedida.Controls.Add(label1);
             panelUnidadMedida.Dock = DockStyle.Top;
             panelUnidadMedida.Location = new Point(0, 0);
-            panelUnidadMedida.Margin = new Padding(2, 2, 2, 2);
+            panelUnidadMedida.Margin = new Padding(2);
             panelUnidadMedida.Name = "panelUnidadMedida";
             panelUnidadMedida.Size = new Size(690, 58);
             panelUnidadMedida.TabIndex = 0;
@@ -155,7 +155,7 @@
             panel1.Controls.Add(DGVUnidadMedida);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 58);
-            panel1.Margin = new Padding(2, 2, 2, 2);
+            panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
             panel1.Size = new Size(690, 376);
             panel1.TabIndex = 1;
@@ -214,7 +214,7 @@
             buscanom.BorderStyle = BorderStyle.None;
             buscanom.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buscanom.ForeColor = Color.WhiteSmoke;
-            buscanom.Location = new Point(429, 157);
+            buscanom.Location = new Point(429, 152);
             buscanom.Name = "buscanom";
             buscanom.Size = new Size(147, 19);
             buscanom.TabIndex = 36;
@@ -226,7 +226,7 @@
             nomUnidadMedida.BorderStyle = BorderStyle.None;
             nomUnidadMedida.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nomUnidadMedida.ForeColor = Color.WhiteSmoke;
-            nomUnidadMedida.Location = new Point(138, 91);
+            nomUnidadMedida.Location = new Point(144, 88);
             nomUnidadMedida.Name = "nomUnidadMedida";
             nomUnidadMedida.Size = new Size(147, 19);
             nomUnidadMedida.TabIndex = 35;
@@ -367,7 +367,7 @@
             ClientSize = new Size(690, 434);
             Controls.Add(panel1);
             Controls.Add(panelUnidadMedida);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "MantenimientoUnidadMedida";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";

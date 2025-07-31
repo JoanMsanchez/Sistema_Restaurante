@@ -236,5 +236,12 @@ namespace Proyecto_Restaurante.Mantenimiento
             MantenimientoCliente cliente = new MantenimientoCliente();
             cliente.Show();
         }
+
+        private void CondiciondePagoCXC_Click(object sender, EventArgs e)
+        {
+            MantenimientoCondicionPago condicion = new MantenimientoCondicionPago();
+            condicion.Show();
+
+        }
     }
 }
