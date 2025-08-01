@@ -36,8 +36,8 @@ namespace Proyecto_Restaurante.Mantenimiento
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelMantenimientoCliente_MouseDown(object sender, MouseEventArgs e)
         {
@@ -236,11 +236,10 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void nombre_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Permitir solo letras, tecla de retroceso y espacio
             if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
             {
                 e.Handled = true;
-                MessageBox.Show("Solo se permiten letras en el campo nombre.");
+                MessageBox.Show("Solo se permiten letras en el nombre.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

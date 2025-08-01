@@ -21,6 +21,9 @@ namespace Proyecto_Restaurante
 
 
         //Constructor
+
+        private int id_empleado_seleccionada = -1;
+
         public MantenimientoEmpleado()
         {
             InitializeComponent();
@@ -91,82 +94,10 @@ namespace Proyecto_Restaurante
             busca.Clear();
             buscausuario.Checked = false;
             buscanombre.Checked = false;
+            id_empleado_seleccionada = -1;
+
         }
 
-        private void Guardar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                conexion.Open();
-
-                int estado = 0;
-
-                if (activo.Checked == true)
-                {
-                    estado = 1;
-                }
-                else if (desactivo.Checked == true)
-                {
-                    estado = 0;
-                }
-
-                // Verificar si ya existe el usuario
-                string verificar = "select count(*) from empleado where usuario = '" + login.Text + "'";
-                SqlCommand cmdVerificar = new SqlCommand(verificar, conexion);
-                int existe = (int)cmdVerificar.ExecuteScalar();
-
-                string consulta;
-
-                if (existe > 0)
-                {
-                    // Ya existe: MODIFICAR
-                    consulta = "update empleado set clave = '" + contrasena.Text + "', nombre = '" + nombre.Text + "', apellidos = '" + apellido.Text + "', estado = " + estado +
-                               " where usuario = '" + login.Text + "'";
-                    MessageBox.Show("Registro modificado correctamente");
-                }
-                else
-                {
-                    // No existe: INSERTAR
-                    consulta = "insert into empleado (usuario, clave, nombre, apellidos, estado) " +
-                               "values ('" + login.Text + "','" + contrasena.Text + "','" + nombre.Text + "','" + apellido.Text + "'," + estado + ")";
-                    MessageBox.Show("Registro insertado correctamente");
-                }
-
-                SqlCommand ejecutar = new SqlCommand(consulta, conexion);
-                ejecutar.ExecuteNonQuery();
-
-                llenar_tabla_datagridview();
-                limpiar();
-
-                conexion.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al guardar: " + ex.Message);
-                conexion.Close();
-            }
-        }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                login.Text = DGVEmpleado.SelectedCells[1].Value.ToString();
-                contrasena.Text = DGVEmpleado.SelectedCells[2].Value.ToString();
-                nombre.Text = DGVEmpleado.SelectedCells[3].Value.ToString();
-                apellido.Text = DGVEmpleado.SelectedCells[4].Value.ToString();
-
-                int estado = Convert.ToInt32(DGVEmpleado.SelectedCells[5].Value);
-                if (estado == 1)
-                    activo.Checked = true;
-                else if (estado == 0)
-                    desactivo.Checked = true;
-            }
-            catch
-            {
-                // Evitar errores si se hace clic fuera de los datos
-            }
-        }
         private void Limpiar_Click(object sender, EventArgs e)
         {
             limpiar();
@@ -249,60 +180,67 @@ namespace Proyecto_Restaurante
             try
             {
                 if (string.IsNullOrWhiteSpace(login.Text) ||
-                string.IsNullOrWhiteSpace(contrasena.Text) ||
-                string.IsNullOrWhiteSpace(nombre.Text) ||
-                string.IsNullOrWhiteSpace(apellido.Text) ||
-                (!activo.Checked && !desactivo.Checked))
+                    string.IsNullOrWhiteSpace(contrasena.Text) ||
+                    string.IsNullOrWhiteSpace(nombre.Text) ||
+                    string.IsNullOrWhiteSpace(apellido.Text) ||
+                    (!activo.Checked && !desactivo.Checked))
                 {
                     MessageBox.Show("Por favor, complete todos los campos y seleccione el estado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 conexion.Open();
 
-                int estado = 0;
+                string consultaVerificar = "SELECT COUNT(*) FROM empleado WHERE usuario = @usuario AND id_empleado <> @id";
+                SqlCommand cmdVerificar = new SqlCommand(consultaVerificar, conexion);
+                cmdVerificar.Parameters.AddWithValue("@usuario", login.Text.Trim());
+                cmdVerificar.Parameters.AddWithValue("@id", id_empleado_seleccionada != -1 ? id_empleado_seleccionada : 0);
+                int usuarioExiste = (int)cmdVerificar.ExecuteScalar();
 
-                if (activo.Checked == true)
+                if (usuarioExiste > 0)
                 {
-                    estado = 1;
+                    MessageBox.Show("El usuario ya existe. Por favor elige otro.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else if (desactivo.Checked == true)
+
+                int estado = activo.Checked ? 1 : 0;
+                SqlCommand cmd;
+
+                if (id_empleado_seleccionada != -1)
                 {
-                    estado = 0;
-                }
-
-                // Verificar si ya existe el usuario
-                string verificar = "select count(*) from empleado where usuario = '" + login.Text + "'";
-                SqlCommand cmdVerificar = new SqlCommand(verificar, conexion);
-                int existe = (int)cmdVerificar.ExecuteScalar();
-
-                string consulta;
-
-                if (existe > 0)
-                {
-                    // Ya existe: MODIFICAR
-                    consulta = "update empleado set clave = '" + contrasena.Text + "', nombre = '" + nombre.Text + "', apellidos = '" + apellido.Text + "', estado = " + estado +
-                               " where usuario = '" + login.Text + "'";
-                    MessageBox.Show("Registro modificado correctamente");
+                    // MODIFICAR por ID
+                    string consulta = "UPDATE empleado SET usuario = @usuario, clave = @clave, nombre = @nombre, apellidos = @apellidos, estado = @estado WHERE id_empleado = @id";
+                    cmd = new SqlCommand(consulta, conexion);
+                    cmd.Parameters.AddWithValue("@id", id_empleado_seleccionada);
+                    MessageBox.Show("Empleado modificado correctamente.");
                 }
                 else
                 {
-                    // No existe: INSERTAR
-                    consulta = "insert into empleado (usuario, clave, nombre, apellidos, estado) " +
-                               "values ('" + login.Text + "','" + contrasena.Text + "','" + nombre.Text + "','" + apellido.Text + "'," + estado + ")";
-                    MessageBox.Show("Registro insertado correctamente");
+                    // INSERTAR
+                    string consulta = "INSERT INTO empleado (usuario, clave, nombre, apellidos, estado) VALUES (@usuario, @clave, @nombre, @apellidos, @estado)";
+                    cmd = new SqlCommand(consulta, conexion);
+                    MessageBox.Show("Empleado guardado correctamente.");
                 }
 
-                SqlCommand ejecutar = new SqlCommand(consulta, conexion);
-                ejecutar.ExecuteNonQuery();
+                // Parámetros comunes
+                cmd.Parameters.AddWithValue("@usuario", login.Text.Trim());
+                cmd.Parameters.AddWithValue("@clave", contrasena.Text.Trim());
+                cmd.Parameters.AddWithValue("@nombre", nombre.Text.Trim());
+                cmd.Parameters.AddWithValue("@apellidos", apellido.Text.Trim());
+                cmd.Parameters.AddWithValue("@estado", estado);
+
+                cmd.ExecuteNonQuery();
 
                 llenar_tabla_datagridview();
                 limpiar();
-
-                conexion.Close();
+                id_empleado_seleccionada = -1;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al guardar: " + ex.Message);
+            }
+            finally
+            {
                 conexion.Close();
             }
         }
@@ -351,17 +289,27 @@ namespace Proyecto_Restaurante
         {
             if (e.RowIndex >= 0)
             {
-                DataGridViewRow fila = DGVEmpleado.Rows[e.RowIndex];
-                login.Text = fila.Cells["usuario"].Value.ToString();
-                contrasena.Text = fila.Cells["clave"].Value.ToString();
-                nombre.Text = fila.Cells["nombre"].Value.ToString();
-                apellido.Text = fila.Cells["apellidos"].Value.ToString();
+                try
+                {
+                    DataGridViewRow fila = DGVEmpleado.Rows[e.RowIndex];
 
-                int estado = Convert.ToInt32(fila.Cells["estado"].Value);
-                if (estado == 1)
-                    activo.Checked = true;
-                else
-                    desactivo.Checked = true;
+                    id_empleado_seleccionada = Convert.ToInt32(fila.Cells["id_empleado"].Value);
+
+                    login.Text = fila.Cells["usuario"].Value.ToString();
+                    contrasena.Text = fila.Cells["clave"].Value.ToString();
+                    nombre.Text = fila.Cells["nombre"].Value.ToString();
+                    apellido.Text = fila.Cells["apellidos"].Value.ToString();
+
+                    int estado = Convert.ToInt32(fila.Cells["estado"].Value);
+                    if (estado == 1)
+                        activo.Checked = true;
+                    else
+                        desactivo.Checked = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al cargar los datos del empleado: " + ex.Message);
+                }
             }
         }
 

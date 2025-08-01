@@ -28,6 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             panel1 = new Panel();
             buscaCondicion = new RadioButton();
             buscaNombre = new RadioButton();
@@ -55,9 +60,8 @@
             panel1.Controls.Add(DGVConsultaCliente);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1000, 564);
+            panel1.Size = new Size(800, 451);
             panel1.TabIndex = 0;
             // 
             // buscaCondicion
@@ -65,10 +69,9 @@
             buscaCondicion.AutoSize = true;
             buscaCondicion.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             buscaCondicion.ForeColor = Color.White;
-            buscaCondicion.Location = new Point(694, 105);
-            buscaCondicion.Margin = new Padding(4);
+            buscaCondicion.Location = new Point(555, 84);
             buscaCondicion.Name = "buscaCondicion";
-            buscaCondicion.Size = new Size(252, 29);
+            buscaCondicion.Size = new Size(206, 24);
             buscaCondicion.TabIndex = 33;
             buscaCondicion.TabStop = true;
             buscaCondicion.Text = "Condición de Pago";
@@ -80,10 +83,9 @@
             buscaNombre.AutoSize = true;
             buscaNombre.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             buscaNombre.ForeColor = Color.White;
-            buscaNombre.Location = new Point(555, 105);
-            buscaNombre.Margin = new Padding(4);
+            buscaNombre.Location = new Point(444, 84);
             buscaNombre.Name = "buscaNombre";
-            buscaNombre.Size = new Size(130, 29);
+            buscaNombre.Size = new Size(105, 24);
             buscaNombre.TabIndex = 32;
             buscaNombre.TabStop = true;
             buscaNombre.Text = "Nombre";
@@ -94,10 +96,9 @@
             // 
             panel6.BackColor = Color.White;
             panel6.ForeColor = Color.White;
-            panel6.Location = new Point(369, 136);
-            panel6.Margin = new Padding(4);
+            panel6.Location = new Point(295, 109);
             panel6.Name = "panel6";
-            panel6.Size = new Size(169, 2);
+            panel6.Size = new Size(135, 2);
             panel6.TabIndex = 30;
             // 
             // buscar
@@ -106,10 +107,9 @@
             buscar.BorderStyle = BorderStyle.FixedSingle;
             buscar.Font = new Font("Verdana", 9F, FontStyle.Bold);
             buscar.ForeColor = Color.White;
-            buscar.Location = new Point(369, 105);
-            buscar.Margin = new Padding(4);
+            buscar.Location = new Point(295, 84);
             buscar.Name = "buscar";
-            buscar.Size = new Size(162, 29);
+            buscar.Size = new Size(130, 26);
             buscar.TabIndex = 31;
             buscar.TextChanged += buscar_TextChanged;
             // 
@@ -118,22 +118,63 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(146, 102);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(117, 82);
             label3.Name = "label3";
-            label3.Size = new Size(205, 29);
+            label3.Size = new Size(172, 25);
             label3.TabIndex = 29;
             label3.Text = "Buscar Cliente";
             // 
             // DGVConsultaCliente
             // 
+            DGVConsultaCliente.AllowUserToAddRows = false;
+            DGVConsultaCliente.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVConsultaCliente.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            DGVConsultaCliente.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVConsultaCliente.BackgroundColor = Color.FromArgb(255, 161, 43);
-            DGVConsultaCliente.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DGVConsultaCliente.Location = new Point(29, 168);
-            DGVConsultaCliente.Margin = new Padding(4);
+            DGVConsultaCliente.BorderStyle = BorderStyle.None;
+            DGVConsultaCliente.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DGVConsultaCliente.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            DGVConsultaCliente.ColumnHeadersHeight = 29;
+            DGVConsultaCliente.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            DGVConsultaCliente.DefaultCellStyle = dataGridViewCellStyle3;
+            DGVConsultaCliente.EnableHeadersVisualStyles = false;
+            DGVConsultaCliente.Location = new Point(23, 134);
             DGVConsultaCliente.Name = "DGVConsultaCliente";
+            DGVConsultaCliente.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            DGVConsultaCliente.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            DGVConsultaCliente.RowHeadersVisible = false;
             DGVConsultaCliente.RowHeadersWidth = 51;
-            DGVConsultaCliente.Size = new Size(931, 359);
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = Color.White;
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVConsultaCliente.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            DGVConsultaCliente.Size = new Size(765, 287);
             DGVConsultaCliente.TabIndex = 0;
             DGVConsultaCliente.CellMouseDoubleClick += DGVConsultaCliente_CellMouseDoubleClick;
             // 
@@ -146,8 +187,9 @@
             panelConsultaCliente.Controls.Add(label6);
             panelConsultaCliente.Dock = DockStyle.Top;
             panelConsultaCliente.Location = new Point(0, 0);
+            panelConsultaCliente.Margin = new Padding(2, 2, 2, 2);
             panelConsultaCliente.Name = "panelConsultaCliente";
-            panelConsultaCliente.Size = new Size(1000, 68);
+            panelConsultaCliente.Size = new Size(800, 54);
             panelConsultaCliente.TabIndex = 1;
             panelConsultaCliente.MouseDown += panelConsultaCliente_MouseDown;
             // 
@@ -161,10 +203,10 @@
             btnMaximizarCategoria.IconColor = Color.OldLace;
             btnMaximizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarCategoria.IconSize = 20;
-            btnMaximizarCategoria.Location = new Point(915, 0);
+            btnMaximizarCategoria.Location = new Point(732, 0);
             btnMaximizarCategoria.Margin = new Padding(2);
             btnMaximizarCategoria.Name = "btnMaximizarCategoria";
-            btnMaximizarCategoria.Size = new Size(45, 25);
+            btnMaximizarCategoria.Size = new Size(36, 20);
             btnMaximizarCategoria.TabIndex = 12;
             btnMaximizarCategoria.UseVisualStyleBackColor = false;
             btnMaximizarCategoria.Click += btnMaximizarCategoria_Click;
@@ -179,10 +221,10 @@
             btnCerrarCategoria.IconColor = Color.OldLace;
             btnCerrarCategoria.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarCategoria.IconSize = 20;
-            btnCerrarCategoria.Location = new Point(955, 0);
+            btnCerrarCategoria.Location = new Point(764, 0);
             btnCerrarCategoria.Margin = new Padding(2);
             btnCerrarCategoria.Name = "btnCerrarCategoria";
-            btnCerrarCategoria.Size = new Size(45, 25);
+            btnCerrarCategoria.Size = new Size(36, 20);
             btnCerrarCategoria.TabIndex = 13;
             btnCerrarCategoria.UseVisualStyleBackColor = false;
             btnCerrarCategoria.Click += btnCerrarCategoria_Click;
@@ -197,10 +239,10 @@
             btnMinimizarCategoria.IconColor = Color.OldLace;
             btnMinimizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarCategoria.IconSize = 20;
-            btnMinimizarCategoria.Location = new Point(872, 0);
+            btnMinimizarCategoria.Location = new Point(698, 0);
             btnMinimizarCategoria.Margin = new Padding(2);
             btnMinimizarCategoria.Name = "btnMinimizarCategoria";
-            btnMinimizarCategoria.Size = new Size(45, 25);
+            btnMinimizarCategoria.Size = new Size(36, 20);
             btnMinimizarCategoria.TabIndex = 11;
             btnMinimizarCategoria.UseVisualStyleBackColor = false;
             btnMinimizarCategoria.Click += btnMinimizarCategoria_Click;
@@ -210,22 +252,20 @@
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(255, 161, 43);
-            label6.Location = new Point(13, 9);
-            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Location = new Point(10, 7);
             label6.Name = "label6";
-            label6.Size = new Size(193, 44);
+            label6.Size = new Size(159, 36);
             label6.TabIndex = 2;
             label6.Text = "CLIENTE";
             // 
             // ConsultaCliente
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(1000, 564);
+            ClientSize = new Size(800, 451);
             Controls.Add(panelConsultaCliente);
             Controls.Add(panel1);
-            Margin = new Padding(4);
             Name = "ConsultaCliente";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ConcultaCliente";

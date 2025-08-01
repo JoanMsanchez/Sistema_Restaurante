@@ -33,6 +33,9 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panel1 = new Panel();
+            panel6 = new Panel();
+            busDias = new RadioButton();
+            busDescripcion = new RadioButton();
             diascredito = new TextBox();
             panel5 = new Panel();
             label5 = new Label();
@@ -42,7 +45,7 @@
             label1 = new Label();
             limpiar = new FontAwesome.Sharp.IconButton();
             guardar = new FontAwesome.Sharp.IconButton();
-            buscanom = new TextBox();
+            busca = new TextBox();
             nomCondicion = new TextBox();
             panel3 = new Panel();
             panel2 = new Panel();
@@ -53,12 +56,14 @@
             label2 = new Label();
             DGVCondiconPago = new DataGridView();
             panel1.SuspendLayout();
+            panel6.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVCondiconPago).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(panel6);
             panel1.Controls.Add(diascredito);
             panel1.Controls.Add(panel5);
             panel1.Controls.Add(label5);
@@ -66,7 +71,7 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(limpiar);
             panel1.Controls.Add(guardar);
-            panel1.Controls.Add(buscanom);
+            panel1.Controls.Add(busca);
             panel1.Controls.Add(nomCondicion);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(panel2);
@@ -78,8 +83,43 @@
             panel1.Controls.Add(DGVCondiconPago);
             panel1.Location = new Point(0, 1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(768, 495);
+            panel1.Size = new Size(898, 507);
             panel1.TabIndex = 0;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(busDias);
+            panel6.Controls.Add(busDescripcion);
+            panel6.Location = new Point(598, 239);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(250, 36);
+            panel6.TabIndex = 56;
+            // 
+            // busDias
+            // 
+            busDias.AutoSize = true;
+            busDias.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
+            busDias.ForeColor = Color.White;
+            busDias.Location = new Point(150, 3);
+            busDias.Name = "busDias";
+            busDias.Size = new Size(71, 24);
+            busDias.TabIndex = 1;
+            busDias.TabStop = true;
+            busDias.Text = "Días";
+            busDias.UseVisualStyleBackColor = true;
+            // 
+            // busDescripcion
+            // 
+            busDescripcion.AutoSize = true;
+            busDescripcion.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
+            busDescripcion.ForeColor = Color.White;
+            busDescripcion.Location = new Point(3, 3);
+            busDescripcion.Name = "busDescripcion";
+            busDescripcion.Size = new Size(141, 24);
+            busDescripcion.TabIndex = 0;
+            busDescripcion.TabStop = true;
+            busDescripcion.Text = "Descripción";
+            busDescripcion.UseVisualStyleBackColor = true;
             // 
             // diascredito
             // 
@@ -87,16 +127,17 @@
             diascredito.BorderStyle = BorderStyle.None;
             diascredito.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             diascredito.ForeColor = Color.WhiteSmoke;
-            diascredito.Location = new Point(506, 109);
+            diascredito.Location = new Point(613, 111);
             diascredito.Name = "diascredito";
             diascredito.Size = new Size(70, 19);
             diascredito.TabIndex = 55;
+            diascredito.KeyPress += diascredito_KeyPress;
             // 
             // panel5
             // 
             panel5.BackColor = Color.White;
             panel5.ForeColor = Color.White;
-            panel5.Location = new Point(506, 133);
+            panel5.Location = new Point(613, 132);
             panel5.Name = "panel5";
             panel5.Size = new Size(70, 2);
             panel5.TabIndex = 54;
@@ -106,7 +147,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(353, 109);
+            label5.Location = new Point(460, 108);
             label5.Name = "label5";
             label5.Size = new Size(147, 25);
             label5.TabIndex = 53;
@@ -117,7 +158,7 @@
             panel4.Controls.Add(autopagoNO);
             panel4.Controls.Add(autopagoSI);
             panel4.ForeColor = Color.FromArgb(255, 161, 43);
-            panel4.Location = new Point(149, 163);
+            panel4.Location = new Point(149, 168);
             panel4.Name = "panel4";
             panel4.Size = new Size(131, 85);
             panel4.TabIndex = 52;
@@ -197,16 +238,17 @@
             guardar.UseVisualStyleBackColor = true;
             guardar.Click += guardar_Click;
             // 
-            // buscanom
+            // busca
             // 
-            buscanom.BackColor = Color.FromArgb(255, 161, 43);
-            buscanom.BorderStyle = BorderStyle.None;
-            buscanom.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buscanom.ForeColor = Color.WhiteSmoke;
-            buscanom.Location = new Point(480, 251);
-            buscanom.Name = "buscanom";
-            buscanom.Size = new Size(147, 19);
-            buscanom.TabIndex = 48;
+            busca.BackColor = Color.FromArgb(255, 161, 43);
+            busca.BorderStyle = BorderStyle.None;
+            busca.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            busca.ForeColor = Color.WhiteSmoke;
+            busca.Location = new Point(392, 256);
+            busca.Name = "busca";
+            busca.Size = new Size(200, 19);
+            busca.TabIndex = 48;
+            busca.TextChanged += buscanom_TextChanged;
             // 
             // nomCondicion
             // 
@@ -214,18 +256,19 @@
             nomCondicion.BorderStyle = BorderStyle.None;
             nomCondicion.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nomCondicion.ForeColor = Color.WhiteSmoke;
-            nomCondicion.Location = new Point(183, 109);
+            nomCondicion.Location = new Point(180, 112);
             nomCondicion.Name = "nomCondicion";
-            nomCondicion.Size = new Size(147, 19);
+            nomCondicion.Size = new Size(270, 19);
             nomCondicion.TabIndex = 47;
+            nomCondicion.KeyPress += nomCondicion_KeyPress;
             // 
             // panel3
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(480, 273);
+            panel3.Location = new Point(392, 278);
             panel3.Name = "panel3";
-            panel3.Size = new Size(150, 2);
+            panel3.Size = new Size(200, 2);
             panel3.TabIndex = 46;
             // 
             // panel2
@@ -234,7 +277,7 @@
             panel2.ForeColor = Color.White;
             panel2.Location = new Point(180, 134);
             panel2.Name = "panel2";
-            panel2.Size = new Size(150, 2);
+            panel2.Size = new Size(270, 2);
             panel2.TabIndex = 45;
             // 
             // label4
@@ -242,11 +285,11 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(441, 223);
+            label4.Location = new Point(450, 228);
             label4.Name = "label4";
-            label4.Size = new Size(250, 25);
+            label4.Size = new Size(88, 25);
             label4.TabIndex = 44;
-            label4.Text = "Buscar por Condición";
+            label4.Text = "Buscar";
             // 
             // inactivo
             // 
@@ -307,6 +350,7 @@
             DGVCondiconPago.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DGVCondiconPago.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVCondiconPago.BackgroundColor = Color.FromArgb(255, 161, 43);
+            DGVCondiconPago.BorderStyle = BorderStyle.None;
             DGVCondiconPago.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
@@ -327,7 +371,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVCondiconPago.DefaultCellStyle = dataGridViewCellStyle3;
             DGVCondiconPago.EnableHeadersVisualStyles = false;
-            DGVCondiconPago.Location = new Point(353, 281);
+            DGVCondiconPago.Location = new Point(339, 286);
             DGVCondiconPago.Name = "DGVCondiconPago";
             DGVCondiconPago.ReadOnly = true;
             DGVCondiconPago.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -341,20 +385,24 @@
             DGVCondiconPago.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVCondiconPago.RowHeadersVisible = false;
             DGVCondiconPago.RowHeadersWidth = 51;
-            DGVCondiconPago.Size = new Size(406, 205);
+            DGVCondiconPago.Size = new Size(553, 218);
             DGVCondiconPago.TabIndex = 40;
+            DGVCondiconPago.CellMouseDoubleClick += DGVCondiconPago_CellMouseDoubleClick;
             // 
             // MantenimientoCondicionPago
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(771, 499);
+            ClientSize = new Size(904, 510);
             Controls.Add(panel1);
             Name = "MantenimientoCondicionPago";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MantenimientoCondicionPago";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DGVCondiconPago).EndInit();
@@ -366,7 +414,7 @@
         private Panel panel1;
         private FontAwesome.Sharp.IconButton limpiar;
         private FontAwesome.Sharp.IconButton guardar;
-        private TextBox buscanom;
+        private TextBox busca;
         private TextBox nomCondicion;
         private Panel panel3;
         private Panel panel2;
@@ -383,5 +431,8 @@
         private TextBox diascredito;
         private Panel panel5;
         private Label label5;
+        private Panel panel6;
+        private RadioButton busDias;
+        private RadioButton busDescripcion;
     }
 }

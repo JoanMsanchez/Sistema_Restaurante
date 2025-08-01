@@ -19,10 +19,12 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         //Fields
         private int bordeSize = 2;
-        private int idProductoSeleccionado = -1;
+        //private int idProductoSeleccionado = -1;
 
 
         //Constructor
+
+        private int id_producto_seleccionado = -1;
         public MantenimientoProducto()
         {
             InitializeComponent();
@@ -137,31 +139,37 @@ namespace Proyecto_Restaurante.Mantenimiento
                 int idCategoria = Convert.ToInt32(comboCategoria.SelectedValue);
                 int idUnidad = Convert.ToInt32(comboUnidad.SelectedValue);
 
-                string consultaExistencia = "SELECT COUNT(*) FROM producto WHERE nombre = @nombre";
-                SqlCommand cmdExistencia = new SqlCommand(consultaExistencia, conexion);
-                cmdExistencia.Parameters.AddWithValue("@nombre", nombre.Text);
+                //string consultaExistencia = "SELECT COUNT(*) FROM producto WHERE nombre = @nombre";
+                //SqlCommand cmdExistencia = new SqlCommand(consultaExistencia, conexion);
+                //cmdExistencia.Parameters.AddWithValue("@nombre", nombre.Text);
+                //int existe = (int)cmdExistencia.ExecuteScalar();
+                //string consulta;
 
-                int existe = (int)cmdExistencia.ExecuteScalar();
+                SqlCommand cmd;
 
-                string consulta;
 
-                if (existe > 0)
+                if (id_producto_seleccionado > 0)
                 {
-                    consulta = @"UPDATE producto SET descripcion = @descripcion, id_categoria = @id_categoria, id_unidad = @id_unidad, 
-                                    stock_actual = @stock_actual, stock_minimo = @stock_minimo, precio_costo = @precio_costo, 
-                                    precio_venta = @precio_venta, estado = @estado WHERE nombre = @nombre";
-                    MessageBox.Show("Producto actualizado correctamente.");
+                    string consulta = @"UPDATE producto 
+                                SET nombre = @nombre, descripcion = @descripcion, id_categoria = @id_categoria, 
+                                    id_unidad = @id_unidad, stock_actual = @stock_actual, stock_minimo = @stock_minimo, 
+                                    precio_costo = @precio_costo, precio_venta = @precio_venta, estado = @estado 
+                                WHERE id_producto = @id";
+                    cmd = new SqlCommand(consulta, conexion);
+                    cmd.Parameters.AddWithValue("@id", id_producto_seleccionado);
+                    MessageBox.Show("Producto modificado correctamente.");
                 }
                 else
                 {
-                    consulta = @"INSERT INTO producto (nombre, descripcion, id_categoria, id_unidad, stock_actual, stock_minimo, 
-                                    precio_costo, precio_venta, estado) 
-                         VALUES (@nombre, @descripcion, @id_categoria, @id_unidad, 
-                                 @stock_actual, @stock_minimo, @precio_costo, @precio_venta, @estado)";
+                    string consulta = @"INSERT INTO producto (nombre, descripcion, id_categoria, id_unidad, 
+                                stock_actual, stock_minimo, precio_costo, precio_venta, estado) 
+                                VALUES (@nombre, @descripcion, @id_categoria, @id_unidad, 
+                                @stock_actual, @stock_minimo, @precio_costo, @precio_venta, @estado)";
+                    cmd = new SqlCommand(consulta, conexion);
                     MessageBox.Show("Producto insertado correctamente.");
                 }
 
-                SqlCommand cmd = new SqlCommand(consulta, conexion);
+                //SqlCommand cmd = new SqlCommand(consulta, conexion);
                 cmd.Parameters.AddWithValue("@nombre", nombre.Text);
                 cmd.Parameters.AddWithValue("@descripcion", descripcion.Text);
                 cmd.Parameters.AddWithValue("@id_categoria", idCategoria);
@@ -174,6 +182,9 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 cmd.ExecuteNonQuery();
                 limpiar();
+
+                id_producto_seleccionado = -1;
+
 
                 ProductoGuardado?.Invoke(this, EventArgs.Empty);
 
@@ -260,7 +271,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                 int estado)
         {
             // ID y textos
-            this.idProductoSeleccionado = idProducto;
+            this.id_producto_seleccionado = idProducto;
             nombre.Text = nombreProd;
             descripcion.Text = descripcionProd;
             costo.Text = precioCosto.ToString("F2");
@@ -275,6 +286,51 @@ namespace Proyecto_Restaurante.Mantenimiento
             // Estado
             activo.Checked = (estado == 1);
             desactivo.Checked = (estado == 0);
+        }
+
+        private void txtstockActual_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void txtstockMinimo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void costo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void venta_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void nombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten letras en el nombre.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

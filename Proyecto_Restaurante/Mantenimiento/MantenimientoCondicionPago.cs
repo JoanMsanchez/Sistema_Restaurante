@@ -17,12 +17,13 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private int id_condicion_seleccionada = -1;
 
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         public MantenimientoCondicionPago()
         {
             InitializeComponent();
+            llenar_tabla_datagridview();
         }
 
         public void Limpiar()
@@ -33,7 +34,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             autopagoSI.Checked = false;
             autopagoNO.Checked = false;
             diascredito.Clear();
-            buscanom.Clear();
+            busca.Clear();
         }
         private void limpiar_Click(object sender, EventArgs e)
         {
@@ -142,6 +143,113 @@ namespace Proyecto_Restaurante.Mantenimiento
             finally
             {
                 conexion.Close();
+            }
+        }
+
+        private void DGVCondiconPago_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow fila = DGVCondiconPago.Rows[e.RowIndex];
+                id_condicion_seleccionada = Convert.ToInt32(fila.Cells["id_condicion"].Value); // guardamos el id
+
+                nomCondicion.Text = fila.Cells["descripcion"].Value.ToString();
+                diascredito.Text = fila.Cells["dias_credito"].Value.ToString();
+                int autopago = Convert.ToInt32(fila.Cells["autopago"].Value);
+                if (autopago == 1)
+                    autopagoSI.Checked = true;
+                else
+                    autopagoNO.Checked = true;
+
+                int estado = Convert.ToInt32(fila.Cells["estado"].Value);
+                if (estado == 1)
+                    activo.Checked = true;
+                else
+                    inactivo.Checked = true;
+            }
+        }
+
+        private void buscanom_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                conexion.Open();
+
+                string consulta = "";
+
+                if (busDescripcion.Checked)
+                {
+                    // Búsqueda por usuario (insensible a mayúsculas/minúsculas)
+                    consulta = "SELECT * FROM condicion WHERE descripcion LIKE @busqueda";
+                }
+                else if (busDias.Checked)
+                {
+                    // Búsqueda por nombre (sensible a mayúsculas/minúsculas por defecto)
+                    consulta = "SELECT * FROM condicion WHERE dias_credito LIKE @busqueda";
+                }
+                else
+                {
+                    MessageBox.Show("Seleccione un criterio de búsqueda");
+                    return;
+                }
+
+                SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
+                adaptador.SelectCommand.Parameters.AddWithValue("@busqueda", "%" + busca.Text.Trim() + "%");
+
+                DataTable dt = new DataTable();
+                adaptador.Fill(dt);
+
+                // Agregar columna "No"
+                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
+                dt.Columns.Add(columnaSecuencia);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["No"] = i + 1;
+                }
+
+                dt.Columns["No"].SetOrdinal(0); // Mover la columna "No" al inicio
+
+                DGVCondiconPago.DataSource = dt;
+
+                // Ocultar id_empleado si está
+                if (DGVCondiconPago.Columns.Contains("id_empleado"))
+                {
+                    DGVCondiconPago.Columns["id_empleado"].Visible = false;
+                }
+
+                // Encabezados personalizados
+                DGVCondiconPago.Columns["No"].HeaderText = "#";
+                DGVCondiconPago.Columns["descripcion"].HeaderText = "Descripción";
+                DGVCondiconPago.Columns["autopago"].HeaderText = "Autopago";
+                DGVCondiconPago.Columns["dias_credito"].HeaderText = "Día credito";
+                DGVCondiconPago.Columns["estado"].HeaderText = "Estado";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar: " + ex.Message);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+        private void nomCondicion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten letras en la descripción.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void diascredito_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

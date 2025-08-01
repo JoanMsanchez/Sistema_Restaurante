@@ -290,7 +290,7 @@
             panel1.ForeColor = Color.White;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(896, 659);
+            panel1.Size = new Size(909, 659);
             panel1.TabIndex = 21;
             panel1.Paint += panel1_Paint;
             // 
@@ -433,9 +433,9 @@
             panelEmpleado.Controls.Add(label8);
             panelEmpleado.Dock = DockStyle.Top;
             panelEmpleado.Location = new Point(0, 0);
-            panelEmpleado.Margin = new Padding(2, 2, 2, 2);
+            panelEmpleado.Margin = new Padding(2);
             panelEmpleado.Name = "panelEmpleado";
-            panelEmpleado.Size = new Size(896, 58);
+            panelEmpleado.Size = new Size(909, 58);
             panelEmpleado.TabIndex = 22;
             panelEmpleado.MouseDown += panelEmpleado_MouseDown;
             // 
@@ -449,7 +449,7 @@
             btnMaximizarEmpleado.IconColor = Color.OldLace;
             btnMaximizarEmpleado.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarEmpleado.IconSize = 20;
-            btnMaximizarEmpleado.Location = new Point(828, 0);
+            btnMaximizarEmpleado.Location = new Point(841, 0);
             btnMaximizarEmpleado.Margin = new Padding(2);
             btnMaximizarEmpleado.Name = "btnMaximizarEmpleado";
             btnMaximizarEmpleado.Size = new Size(36, 20);
@@ -467,7 +467,7 @@
             btnCerrarEmpleado.IconColor = Color.OldLace;
             btnCerrarEmpleado.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarEmpleado.IconSize = 20;
-            btnCerrarEmpleado.Location = new Point(860, 0);
+            btnCerrarEmpleado.Location = new Point(873, 0);
             btnCerrarEmpleado.Margin = new Padding(2);
             btnCerrarEmpleado.Name = "btnCerrarEmpleado";
             btnCerrarEmpleado.Size = new Size(36, 20);
@@ -485,7 +485,7 @@
             btnMinimizarEmpleado.IconColor = Color.OldLace;
             btnMinimizarEmpleado.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarEmpleado.IconSize = 20;
-            btnMinimizarEmpleado.Location = new Point(794, 0);
+            btnMinimizarEmpleado.Location = new Point(807, 0);
             btnMinimizarEmpleado.Margin = new Padding(2);
             btnMinimizarEmpleado.Name = "btnMinimizarEmpleado";
             btnMinimizarEmpleado.Size = new Size(36, 20);
@@ -503,7 +503,7 @@
             btnMaximizarCategoria.IconColor = Color.OldLace;
             btnMaximizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarCategoria.IconSize = 20;
-            btnMaximizarCategoria.Location = new Point(1358, 0);
+            btnMaximizarCategoria.Location = new Point(1371, 0);
             btnMaximizarCategoria.Margin = new Padding(2);
             btnMaximizarCategoria.Name = "btnMaximizarCategoria";
             btnMaximizarCategoria.Size = new Size(36, 20);
@@ -521,7 +521,7 @@
             btnCerrarCategoria.IconColor = Color.OldLace;
             btnCerrarCategoria.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarCategoria.IconSize = 20;
-            btnCerrarCategoria.Location = new Point(1390, 0);
+            btnCerrarCategoria.Location = new Point(1403, 0);
             btnCerrarCategoria.Margin = new Padding(2);
             btnCerrarCategoria.Name = "btnCerrarCategoria";
             btnCerrarCategoria.Size = new Size(36, 20);
@@ -539,7 +539,7 @@
             btnMinimizarCategoria.IconColor = Color.OldLace;
             btnMinimizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarCategoria.IconSize = 20;
-            btnMinimizarCategoria.Location = new Point(1323, 0);
+            btnMinimizarCategoria.Location = new Point(1336, 0);
             btnMinimizarCategoria.Margin = new Padding(2);
             btnMinimizarCategoria.Name = "btnMinimizarCategoria";
             btnMinimizarCategoria.Size = new Size(36, 20);
@@ -563,7 +563,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(896, 659);
+            ClientSize = new Size(909, 659);
             Controls.Add(panelEmpleado);
             Controls.Add(panel1);
             Name = "MantenimientoEmpleado";

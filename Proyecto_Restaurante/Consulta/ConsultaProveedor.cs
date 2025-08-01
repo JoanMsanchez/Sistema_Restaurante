@@ -120,9 +120,9 @@ namespace Proyecto_Restaurante.Consulta
 
                 DGVProveedor.DataSource = dt;
 
-                if (DGVProveedor.Columns.Contains("id_empleado"))
+                if (DGVProveedor.Columns.Contains("id_proveedor"))
                 {
-                    DGVProveedor.Columns["id_empleado"].Visible = false;
+                    DGVProveedor.Columns["id_proveedor"].Visible = false;
                 }
                 DGVProveedor.Columns["No"].HeaderText = "#";
                 DGVProveedor.Columns["nombre"].HeaderText = "Nombre";

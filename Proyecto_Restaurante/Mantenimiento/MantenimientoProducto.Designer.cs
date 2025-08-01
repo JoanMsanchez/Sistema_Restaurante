@@ -371,6 +371,7 @@
             venta.Name = "venta";
             venta.Size = new Size(100, 19);
             venta.TabIndex = 37;
+            venta.KeyPress += venta_KeyPress;
             // 
             // label5
             // 
@@ -393,6 +394,7 @@
             costo.Name = "costo";
             costo.Size = new Size(100, 19);
             costo.TabIndex = 34;
+            costo.KeyPress += costo_KeyPress;
             // 
             // label6
             // 
@@ -415,6 +417,7 @@
             txtstockMinimo.Name = "txtstockMinimo";
             txtstockMinimo.Size = new Size(100, 19);
             txtstockMinimo.TabIndex = 31;
+            txtstockMinimo.KeyPress += txtstockMinimo_KeyPress;
             // 
             // label7
             // 
@@ -437,6 +440,7 @@
             txtstockActual.Name = "txtstockActual";
             txtstockActual.Size = new Size(100, 19);
             txtstockActual.TabIndex = 28;
+            txtstockActual.KeyPress += txtstockActual_KeyPress;
             // 
             // label4
             // 
@@ -490,6 +494,7 @@
             nombre.Name = "nombre";
             nombre.Size = new Size(158, 19);
             nombre.TabIndex = 22;
+            nombre.KeyPress += nombre_KeyPress;
             // 
             // label3
             // 
