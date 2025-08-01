@@ -255,5 +255,17 @@ namespace Proyecto_Restaurante.Mantenimiento
             MantenimientoTipoMovimiento tipomovimiento = new MantenimientoTipoMovimiento();
             tipomovimiento.Show();
         }
+
+        private void ConsultaProveedor_Click(object sender, EventArgs e)
+        {
+            ConsultaProveedor consultaProveedor = new ConsultaProveedor();
+            consultaProveedor.Show();
+        }
+
+        private void ConsultaCliente_Click(object sender, EventArgs e)
+        {
+            ConsultaCliente consultaCliente = new ConsultaCliente();
+            consultaCliente.Show();
+        }
     }
 }

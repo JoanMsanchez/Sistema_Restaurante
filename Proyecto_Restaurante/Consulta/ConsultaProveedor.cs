@@ -37,8 +37,8 @@ namespace Proyecto_Restaurante.Consulta
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelConsultaProveedor_MouseDown(object sender, MouseEventArgs e)
         {
@@ -189,7 +189,7 @@ namespace Proyecto_Restaurante.Consulta
             }
         }
 
-        public ConsultaProveedor(MantenimientoProveedor mantenimientoForm)
+        public ConsultaProveedor(MantenimientoProveedor mantenimientoForm = null)
         {
             InitializeComponent();
             this.mantenimientoForm = mantenimientoForm;
@@ -203,18 +203,26 @@ namespace Proyecto_Restaurante.Consulta
             {
                 DataGridViewRow fila = DGVProveedor.Rows[e.RowIndex];
 
+                int idProveedor = Convert.ToInt32(fila.Cells["id_proveedor"].Value);
                 string nombreProveedor = fila.Cells["nombre"].Value.ToString();
                 string telefonoProveedor = fila.Cells["telefono"].Value.ToString();
                 string emailProveedor = fila.Cells["email"].Value.ToString();
                 string direccionProveedor = fila.Cells["direccion"].Value.ToString();
                 string estadoProveedor = fila.Cells["estado"].Value.ToString();
 
-                mantenimientoForm.CargarDatos(nombreProveedor, telefonoProveedor, emailProveedor, direccionProveedor, estadoProveedor);
+                // Crear form si es necesario
+                if (mantenimientoForm == null || mantenimientoForm.IsDisposed)
+                {
+                    mantenimientoForm = new MantenimientoProveedor();
+                }
+
+                // Solo una llamada válida
+                mantenimientoForm.CargarDatos(idProveedor, nombreProveedor, telefonoProveedor, emailProveedor, direccionProveedor, estadoProveedor);
 
                 mantenimientoForm.Show();
                 mantenimientoForm.BringToFront();
 
-                this.Close(); // Opcional: cerrar ventana de consulta si ya no se necesita
+                this.Close();
             }
         }
 

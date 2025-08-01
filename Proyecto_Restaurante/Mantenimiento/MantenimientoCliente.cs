@@ -36,8 +36,8 @@ namespace Proyecto_Restaurante.Mantenimiento
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelMantenimientoCliente_MouseDown(object sender, MouseEventArgs e)
         {
@@ -217,7 +217,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                 comboCondicion.DataSource = dt;
                 comboCondicion.DisplayMember = "descripcion";
                 comboCondicion.ValueMember = "id_condicion";
-                comboCondicion.SelectedIndex = -1; // Para que no haya selección al inicio
+                comboCondicion.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -253,24 +253,32 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        public void CargarDatosCliente(int idCliente, string nombreCliente, string telefonoCliente, string emailCliente, string direccionCliente, string condicionCliente, int estado)
+        public void CargarDatosCliente(int idCliente, string nombreCliente, string telefonoCliente, string emailCliente, string direccionCliente, int idCondicion, int estado)
         {
-            // Guardamos el ID del cliente cargado
             idClienteSeleccionado = idCliente;
 
             nombre.Text = nombreCliente;
             telefono.Text = telefonoCliente;
             email.Text = emailCliente;
             direccion.Text = direccionCliente;
-            comboCondicion.Text = condicionCliente;
+
+            // Reforzamos la carga de condiciones antes de seleccionar el valor
+            if (comboCondicion.DataSource == null || comboCondicion.Items.Count == 0)
+            {
+                CargarCondiciones();
+            }
+
+            comboCondicion.SelectedValue = idCondicion;
+
+            // Validación extra por si el valor no existe aún
+            if (comboCondicion.SelectedValue == null || Convert.ToInt32(comboCondicion.SelectedValue) != idCondicion)
+            {
+                MessageBox.Show($"No se encontró la condición con ID {idCondicion} en el comboCondicion.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
             activo.Checked = (estado == 1);
             desactivo.Checked = (estado == 0);
 
-            guardar.Text = "Actualizar";
         }
-
-
-
-
     }
 }

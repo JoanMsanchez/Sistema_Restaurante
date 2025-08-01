@@ -36,8 +36,8 @@ namespace Proyecto_Restaurante.Consulta
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
 
         private void panelConsultaCliente_MouseDown(object sender, MouseEventArgs e)
@@ -103,6 +103,7 @@ namespace Proyecto_Restaurante.Consulta
             {
                 string query = @"
             SELECT c.id_cliente, c.nombre, c.telefono, c.email, c.direccion,
+                   c.id_condicion,
                    co.descripcion AS condicion,
                    CASE WHEN c.estado = 1 THEN 'Activo' ELSE 'Inactivo' END AS estadoCliente
             FROM cliente c
@@ -113,14 +114,24 @@ namespace Proyecto_Restaurante.Consulta
 
                 conexion.Open();
                 adapter.Fill(dt);
+                // Agregar columna de números secuenciales
+                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
+                dt.Columns.Add(columnaSecuencia);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["No"] = i + 1;
+                }
+                dt.Columns["No"].SetOrdinal(0);
+
+                dt.Columns["No"].SetOrdinal(0); // Colocar "No" al inicio
                 conexion.Close();
 
                 DGVConsultaCliente.DataSource = dt;
-
-                // Opcional: ajustar encabezados o columnas
                 DGVConsultaCliente.Columns["id_cliente"].Visible = false;
+                DGVConsultaCliente.Columns["id_condicion"].Visible = false;
                 DGVConsultaCliente.Columns["condicion"].HeaderText = "Condición";
                 DGVConsultaCliente.Columns["estadoCliente"].HeaderText = "Estado";
+                DGVConsultaCliente.Columns["No"].HeaderText = "#";
 
             }
             catch (Exception ex)
@@ -148,6 +159,7 @@ namespace Proyecto_Restaurante.Consulta
                 string consulta = @"
             SELECT 
                 c.id_cliente, c.nombre, c.telefono, c.email, c.direccion,
+                c.id_condicion,
                 co.descripcion AS condicion,
                 CASE WHEN c.estado = 1 THEN 'Activo' ELSE 'Inactivo' END AS estadoCliente
             FROM cliente c
@@ -190,6 +202,7 @@ namespace Proyecto_Restaurante.Consulta
                 // Ocultar columna id_cliente
                 if (DGVConsultaCliente.Columns.Contains("id_cliente"))
                     DGVConsultaCliente.Columns["id_cliente"].Visible = false;
+                    DGVConsultaCliente.Columns["id_condicion"].Visible = false;
 
                 // Ajustar encabezados
                 DGVConsultaCliente.Columns["No"].HeaderText = "#";
@@ -223,7 +236,7 @@ namespace Proyecto_Restaurante.Consulta
 
         private MantenimientoCliente mantenimientoClienteForm;
 
-        public ConsultaCliente(MantenimientoCliente mantenimientoForm)
+        public ConsultaCliente(MantenimientoCliente mantenimientoForm = null)
         {
             InitializeComponent();
             llenar_tabla_datagridview();
@@ -233,23 +246,29 @@ namespace Proyecto_Restaurante.Consulta
 
         private void DGVConsultaCliente_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            if (e.RowIndex >= 0)
             {
-                if (e.RowIndex >= 0)
+                DataGridViewRow fila = DGVConsultaCliente.Rows[e.RowIndex];
+
+                int idCliente = Convert.ToInt32(fila.Cells["id_cliente"].Value);
+                string nombre = fila.Cells["nombre"].Value.ToString();
+                string telefono = fila.Cells["telefono"].Value.ToString();
+                string email = fila.Cells["email"].Value.ToString();
+                string direccion = fila.Cells["direccion"].Value.ToString();
+                int idCondicion = Convert.ToInt32(fila.Cells["id_condicion"].Value); // ← importante
+                string estadoStr = fila.Cells["estadoCliente"].Value.ToString();
+                int estado = estadoStr == "Activo" ? 1 : 0;
+
+                if (mantenimientoClienteForm == null || mantenimientoClienteForm.IsDisposed)
                 {
-                    DataGridViewRow fila = DGVConsultaCliente.Rows[e.RowIndex];
-
-                    int idCliente = Convert.ToInt32(fila.Cells["id_cliente"].Value); // <- nombre correcto
-                    string nombre = fila.Cells["nombre"].Value.ToString();
-                    string telefono = fila.Cells["telefono"].Value.ToString();
-                    string email = fila.Cells["email"].Value.ToString();
-                    string direccion = fila.Cells["direccion"].Value.ToString();
-                    string condicion = fila.Cells["condicion"].Value.ToString();
-                    string estadoStr = fila.Cells["estadoCliente"].Value.ToString();
-                    int estado = estadoStr == "Activo" ? 1 : 0;
-
-                    mantenimientoClienteForm.CargarDatosCliente(idCliente, nombre, telefono, email, direccion, condicion, estado);
-                    this.Close();
+                    mantenimientoClienteForm = new MantenimientoCliente();
                 }
+
+                mantenimientoClienteForm.Show();
+                mantenimientoClienteForm.BringToFront();
+                mantenimientoClienteForm.CargarDatosCliente(idCliente, nombre, telefono, email, direccion, idCondicion, estado);
+
+                this.Close();
             }
         }
     }

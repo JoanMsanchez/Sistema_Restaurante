@@ -16,10 +16,10 @@ namespace Proyecto_Restaurante.Mantenimiento
 {
     public partial class MantenimientoProveedor : Form
     {
+        private int? idProveedorSeleccionado = null;
 
         //Fields
         private int bordeSize = 2;
-        private int idProductoSeleccionado = -1;
 
 
         //Constructor
@@ -36,8 +36,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelMantenimientoProveedor_MouseDown(object sender, MouseEventArgs e)
         {
@@ -138,36 +138,59 @@ namespace Proyecto_Restaurante.Mantenimiento
                 conexion.Open();
                 int estado = activo.Checked ? 1 : 0;
 
-                // Verificar si el proveedor ya existe
-                string verificar = "SELECT COUNT(*) FROM proveedor WHERE email = @email";
-                SqlCommand cmdVerificar = new SqlCommand(verificar, conexion);
-                cmdVerificar.Parameters.AddWithValue("@email", email.Text.Trim());
-                int existe = (int)cmdVerificar.ExecuteScalar();
+                // Verificar si el correo ya existe en otro proveedor
+                string queryVerificarCorreo = @"SELECT COUNT(*) FROM proveedor 
+                                WHERE email = @correo AND id_proveedor != @id";
+                SqlCommand cmdVerificar = new SqlCommand(queryVerificarCorreo, conexion);
+                cmdVerificar.Parameters.AddWithValue("@correo", email.Text.Trim());
+                cmdVerificar.Parameters.AddWithValue("@id", idProveedorSeleccionado ?? 0);
 
+                int duplicados = (int)cmdVerificar.ExecuteScalar();
+
+                if (duplicados > 0)
+                {
+                    MessageBox.Show("Ya existe otro proveedor con este correo electrónico.", "Correo duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Verificar si el proveedor ya existe
                 string consulta;
 
-                if (existe > 0)
+                if (idProveedorSeleccionado != null)
                 {
+                    // Actualizar usando el ID
                     consulta = @"UPDATE proveedor 
-                         SET nombre = @nombre, telefono = @telefono, direccion = @direccion, estado = @estado
-                         WHERE email = @email";
+                 SET nombre = @nombre, telefono = @telefono, email = @nuevoEmail, direccion = @direccion, estado = @estado
+                 WHERE id_proveedor = @id";
+
+                    SqlCommand cmdGuardar = new SqlCommand(consulta, conexion);
+                    cmdGuardar.Parameters.AddWithValue("@nombre", nombre.Text.Trim());
+                    cmdGuardar.Parameters.AddWithValue("@telefono", telefono.Text.Trim());
+                    cmdGuardar.Parameters.AddWithValue("@nuevoEmail", email.Text.Trim());
+                    cmdGuardar.Parameters.AddWithValue("@direccion", direccion.Text.Trim());
+                    cmdGuardar.Parameters.AddWithValue("@estado", estado);
+                    cmdGuardar.Parameters.AddWithValue("@id", idProveedorSeleccionado);
+
+                    cmdGuardar.ExecuteNonQuery();
                     MessageBox.Show("Proveedor actualizado correctamente.");
                 }
                 else
                 {
+                    // Insertar
                     consulta = @"INSERT INTO proveedor (nombre, telefono, email, direccion, estado) 
-                         VALUES (@nombre, @telefono, @email, @direccion, @estado)";
+                 VALUES (@nombre, @telefono, @email, @direccion, @estado)";
+
+                    SqlCommand cmdGuardar = new SqlCommand(consulta, conexion);
+                    cmdGuardar.Parameters.AddWithValue("@nombre", nombre.Text.Trim());
+                    cmdGuardar.Parameters.AddWithValue("@telefono", telefono.Text.Trim());
+                    cmdGuardar.Parameters.AddWithValue("@email", email.Text.Trim());
+                    cmdGuardar.Parameters.AddWithValue("@direccion", direccion.Text.Trim());
+                    cmdGuardar.Parameters.AddWithValue("@estado", estado);
+
+                    cmdGuardar.ExecuteNonQuery();
                     MessageBox.Show("Proveedor insertado correctamente.");
                 }
 
-                SqlCommand cmdGuardar = new SqlCommand(consulta, conexion);
-                cmdGuardar.Parameters.AddWithValue("@nombre", nombre.Text.Trim());
-                cmdGuardar.Parameters.AddWithValue("@telefono", telefono.Text.Trim());
-                cmdGuardar.Parameters.AddWithValue("@email", email.Text.Trim());
-                cmdGuardar.Parameters.AddWithValue("@direccion", direccion.Text.Trim());
-                cmdGuardar.Parameters.AddWithValue("@estado", estado);
-
-                cmdGuardar.ExecuteNonQuery();
                 limpiar();
             }
             catch (Exception ex)
@@ -176,6 +199,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
             finally
             {
+                idProveedorSeleccionado = null;
                 conexion.Close();
             }
         }
@@ -205,18 +229,25 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        public void CargarDatos(string nombreProveedor, string telefonoProveedor, string emailProveedor, string direccionProveedor, string estadoProveedor)
+        public void CargarDatos(int idProveedor, string nombreProveedor, string telefonoProveedor, string emailProveedor, string direccionProveedor, string estadoProveedor)
         {
+            idProveedorSeleccionado = idProveedor;
+
             nombre.Text = nombreProveedor;
             telefono.Text = telefonoProveedor;
             email.Text = emailProveedor;
             direccion.Text = direccionProveedor;
 
-            // Puedes usar esto si tienes radio buttons para estado
-            if (estadoProveedor == "Activo")
+            if (estadoProveedor == "Activo" || estadoProveedor == "1")
+            {
                 activo.Checked = true;
+                desactivo.Checked = false;
+            }
             else
+            {
                 desactivo.Checked = true;
+                activo.Checked = false;
+            }
         }
     }
 }
