@@ -37,8 +37,8 @@ namespace Proyecto_Restaurante.Mantenimiento
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelMantenimientoCliente_MouseDown(object sender, MouseEventArgs e)
         {
@@ -101,8 +101,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             nomMovimiento.Clear();
             activo.Checked = false;
             inactivo.Checked = false;
-            stockmas.Checked = false;
-            stockmenos.Checked = false;
+            afectastock.Clear();
             buscanom.Clear();
         }
         private void limpiar_Click(object sender, EventArgs e)
@@ -155,7 +154,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 // Validaciones básicas
                 if (string.IsNullOrWhiteSpace(nomMovimiento.Text) ||
-                    (!stockmas.Checked && !stockmenos.Checked) ||
+                    (string.IsNullOrWhiteSpace(afectastock.Text)) ||
                     (!activo.Checked && !inactivo.Checked))
                 {
                     MessageBox.Show("Por favor, complete todos los campos requeridos.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -164,7 +163,15 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 conexion.Open();
 
-                int afectastock = stockmas.Checked ? 1 : -1;
+                //int afectastock = stockmas.Checked ? 1 : -1;
+
+                int afectastockm;
+                if (!int.TryParse(afectastock.Text.Trim(), out afectastockm))
+                {
+                    MessageBox.Show("El valor de 'Afecta Stock' debe ser un número válido.", "Error de entrada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 int estado = activo.Checked ? 1 : 0;
 
                 SqlCommand cmd;
@@ -187,7 +194,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 // Parámetros comunes
                 cmd.Parameters.AddWithValue("@descripcion", nomMovimiento.Text.Trim());
-                cmd.Parameters.AddWithValue("@afecta_stock", afectastock);
+                cmd.Parameters.AddWithValue("@afecta_stock", afectastockm);
                 cmd.Parameters.AddWithValue("@estado", estado);
 
                 cmd.ExecuteNonQuery();
@@ -211,6 +218,11 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten letras en el nombre del movimiento.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                afectastock.Focus();
             }
         }
 
@@ -268,17 +280,23 @@ namespace Proyecto_Restaurante.Mantenimiento
                 id_tipomovimiento_seleccionada = Convert.ToInt32(fila.Cells["id_tipo_mov"].Value); // guardamos el id
 
                 nomMovimiento.Text = fila.Cells["descripcion"].Value.ToString();
-                int afectastock = Convert.ToInt32(fila.Cells["afecta_stock"].Value);
-                if (afectastock == 1)
-                    stockmas.Checked = true;
-                else
-                    stockmenos.Checked = true;
+                afectastock.Text = fila.Cells["afecta_stock"].Value.ToString();
 
+                //int afectastock = Convert.ToInt32(fila.Cells["afecta_stock"].Value);
                 int estado = Convert.ToInt32(fila.Cells["estado"].Value);
                 if (estado == 1)
                     activo.Checked = true;
                 else
                     inactivo.Checked = true;
+            }
+        }
+
+        private void afectastock_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

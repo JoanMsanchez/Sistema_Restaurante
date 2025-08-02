@@ -37,8 +37,8 @@ namespace Proyecto_Restaurante.Consulta
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelConsultaProveedor_MouseDown(object sender, MouseEventArgs e)
         {
@@ -208,7 +208,8 @@ namespace Proyecto_Restaurante.Consulta
                 string telefonoProveedor = fila.Cells["telefono"].Value.ToString();
                 string emailProveedor = fila.Cells["email"].Value.ToString();
                 string direccionProveedor = fila.Cells["direccion"].Value.ToString();
-                string estadoProveedor = fila.Cells["estado"].Value.ToString();
+                int estadoProveedor = Convert.ToInt32(fila.Cells["estado"].Value);
+                //string estadoProveedor = fila.Cells["estado"].Value.ToString();
 
                 // Crear form si es necesario
                 if (mantenimientoForm == null || mantenimientoForm.IsDisposed)

@@ -36,8 +36,8 @@ namespace Proyecto_Restaurante.Mantenimiento
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelMantenimientoCliente_MouseDown(object sender, MouseEventArgs e)
         {
@@ -105,17 +105,16 @@ namespace Proyecto_Restaurante.Mantenimiento
             comboCondicion.SelectedIndex = -1;
             activo.Checked = false;
             desactivo.Checked = false;
-            guardar.Text = "Guardar";
         }
 
         private void guardar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(nombre.Text) ||
-       string.IsNullOrWhiteSpace(telefono.Text) ||
-       string.IsNullOrWhiteSpace(email.Text) ||
-       string.IsNullOrWhiteSpace(direccion.Text) ||
-       comboCondicion.SelectedIndex == -1 ||
-       (!activo.Checked && !desactivo.Checked))
+               string.IsNullOrWhiteSpace(telefono.Text) ||
+               string.IsNullOrWhiteSpace(email.Text) ||
+               string.IsNullOrWhiteSpace(direccion.Text) ||
+               comboCondicion.SelectedIndex == -1 ||
+               (!activo.Checked && !desactivo.Checked))
             {
                 MessageBox.Show("Por favor, completa todos los campos antes de guardar.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -128,14 +127,29 @@ namespace Proyecto_Restaurante.Mantenimiento
                 int estadoValor = activo.Checked ? 1 : 0;
                 int idCondicion = Convert.ToInt32(comboCondicion.SelectedValue);
 
+                // Validar correo único
+                string queryVerificarCorreo = @"SELECT COUNT(*) FROM cliente  
+                                WHERE email = @correo AND id_cliente != @id";
+                SqlCommand cmdCorreo = new SqlCommand(queryVerificarCorreo, conexion);
+                cmdCorreo.Parameters.AddWithValue("@correo", email.Text.Trim());
+                cmdCorreo.Parameters.AddWithValue("@id", idClienteSeleccionado ?? 0);
+
+                int existe = (int)cmdCorreo.ExecuteScalar();
+
+                if (existe > 0)
+                {
+                    MessageBox.Show("El correo ya está registrado con otro cliente.");
+                    return;
+                }
+
                 SqlCommand cmd;
 
                 if (idClienteSeleccionado == null || idClienteSeleccionado == -1)
                 {
                     // Insertar nuevo cliente
                     string consultaInsert = @"INSERT INTO cliente 
-                (nombre, telefono, email, direccion, id_condicion, estado) 
-                VALUES (@nombre, @telefono, @email, @direccion, @idCondicion, @estado)";
+                    (nombre, telefono, email, direccion, id_condicion, estado) 
+                    VALUES (@nombre, @telefono, @email, @direccion, @idCondicion, @estado)";
 
                     cmd = new SqlCommand(consultaInsert, conexion);
                     cmd.Parameters.AddWithValue("@nombre", nombre.Text.Trim());
@@ -152,9 +166,9 @@ namespace Proyecto_Restaurante.Mantenimiento
                 {
                     // Actualizar cliente existente
                     string consultaUpdate = @"UPDATE cliente SET 
-                nombre = @nombre, telefono = @telefono, email = @email, direccion = @direccion, 
-                id_condicion = @idCondicion, estado = @estado 
-                WHERE id_cliente = @idCliente";
+                    nombre = @nombre, telefono = @telefono, email = @email, direccion = @direccion, 
+                    id_condicion = @idCondicion, estado = @estado 
+                    WHERE id_cliente = @idCliente";
 
                     cmd = new SqlCommand(consultaUpdate, conexion);
                     cmd.Parameters.AddWithValue("@nombre", nombre.Text.Trim());
@@ -175,12 +189,9 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
             finally
             {
-                if (conexion.State == ConnectionState.Open)
-                    conexion.Close();
-
-                limpiar();
+                conexion.Close();
+                //limpiar();
                 idClienteSeleccionado = null;
-                guardar.Text = "Guardar";
             }
         }
 
@@ -241,6 +252,11 @@ namespace Proyecto_Restaurante.Mantenimiento
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten letras en el nombre.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                telefono.Focus();
+            }
         }
 
         private void telefono_KeyPress(object sender, KeyPressEventArgs e)
@@ -250,6 +266,11 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten números en el campo teléfono.");
+            }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                email.Focus();
             }
         }
 
@@ -279,6 +300,14 @@ namespace Proyecto_Restaurante.Mantenimiento
             activo.Checked = (estado == 1);
             desactivo.Checked = (estado == 0);
 
+        }
+
+        private void email_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                direccion.Focus();
+            }
         }
     }
 }

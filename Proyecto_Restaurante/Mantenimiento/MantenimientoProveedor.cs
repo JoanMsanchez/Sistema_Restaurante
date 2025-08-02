@@ -36,8 +36,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        ///SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelMantenimientoProveedor_MouseDown(object sender, MouseEventArgs e)
         {
@@ -119,15 +119,16 @@ namespace Proyecto_Restaurante.Mantenimiento
             direccion.Clear();
             activo.Checked = false;
             desactivo.Checked = false;
+            idProveedorSeleccionado = null;
         }
 
         private void guardar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(nombre.Text) ||
-        string.IsNullOrWhiteSpace(telefono.Text) ||
-        string.IsNullOrWhiteSpace(email.Text) ||
-        string.IsNullOrWhiteSpace(direccion.Text) ||
-        (!activo.Checked && !desactivo.Checked))
+            string.IsNullOrWhiteSpace(telefono.Text) ||
+            string.IsNullOrWhiteSpace(email.Text) ||
+            string.IsNullOrWhiteSpace(direccion.Text) ||
+            (!activo.Checked && !desactivo.Checked))
             {
                 MessageBox.Show("Por favor, completa todos los campos antes de guardar.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -217,6 +218,11 @@ namespace Proyecto_Restaurante.Mantenimiento
                 nombre.Clear();
                 MessageBox.Show("Solo se permiten letras en el campo de nombre.", "Entrada inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                telefono.Focus();
+            }
         }
 
         private void telefono_KeyPress(object sender, KeyPressEventArgs e)
@@ -227,9 +233,14 @@ namespace Proyecto_Restaurante.Mantenimiento
                 telefono.Clear();
                 MessageBox.Show("Solo se permiten números en el campo de teléfono.", "Entrada inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                email.Focus();
+            }
         }
 
-        public void CargarDatos(int idProveedor, string nombreProveedor, string telefonoProveedor, string emailProveedor, string direccionProveedor, string estadoProveedor)
+        public void CargarDatos(int idProveedor, string nombreProveedor, string telefonoProveedor, string emailProveedor, string direccionProveedor, int estadoProveedor)
         {
             idProveedorSeleccionado = idProveedor;
 
@@ -237,16 +248,15 @@ namespace Proyecto_Restaurante.Mantenimiento
             telefono.Text = telefonoProveedor;
             email.Text = emailProveedor;
             direccion.Text = direccionProveedor;
+            activo.Checked = (estadoProveedor == 1);
+            desactivo.Checked = (estadoProveedor == 0);
+        }
 
-            if (estadoProveedor == "Activo" || estadoProveedor == "1")
+        private void email_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                activo.Checked = true;
-                desactivo.Checked = false;
-            }
-            else
-            {
-                desactivo.Checked = true;
-                activo.Checked = false;
+                direccion.Focus();
             }
         }
     }

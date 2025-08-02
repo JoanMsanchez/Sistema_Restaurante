@@ -80,9 +80,8 @@
             panel1.Controls.Add(label3);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(835, 586);
+            panel1.Size = new Size(668, 469);
             panel1.TabIndex = 0;
             // 
             // comboCondicion
@@ -91,10 +90,9 @@
             comboCondicion.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboCondicion.ForeColor = Color.White;
             comboCondicion.FormattingEnabled = true;
-            comboCondicion.Location = new Point(72, 364);
-            comboCondicion.Margin = new Padding(4, 4, 4, 4);
+            comboCondicion.Location = new Point(58, 291);
             comboCondicion.Name = "comboCondicion";
-            comboCondicion.Size = new Size(188, 30);
+            comboCondicion.Size = new Size(151, 26);
             comboCondicion.TabIndex = 72;
             // 
             // label1
@@ -102,10 +100,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(39, 328);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(31, 262);
             label1.Name = "label1";
-            label1.Size = new Size(259, 29);
+            label1.Size = new Size(219, 25);
             label1.TabIndex = 71;
             label1.Text = "Condición de Pago";
             // 
@@ -120,10 +117,9 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(95, 484);
-            guardar.Margin = new Padding(4, 4, 4, 4);
+            guardar.Location = new Point(76, 387);
             guardar.Name = "guardar";
-            guardar.Size = new Size(192, 65);
+            guardar.Size = new Size(154, 52);
             guardar.TabIndex = 69;
             guardar.Text = "      Guardar";
             guardar.UseVisualStyleBackColor = true;
@@ -140,10 +136,9 @@
             Limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             Limpiar.IconSize = 35;
             Limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            Limpiar.Location = new Point(322, 484);
-            Limpiar.Margin = new Padding(4, 4, 4, 4);
+            Limpiar.Location = new Point(258, 387);
             Limpiar.Name = "Limpiar";
-            Limpiar.Size = new Size(179, 65);
+            Limpiar.Size = new Size(143, 52);
             Limpiar.TabIndex = 68;
             Limpiar.Text = "    Limpiar";
             Limpiar.UseVisualStyleBackColor = true;
@@ -161,10 +156,10 @@
             btnConsultaCliente.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnConsultaCliente.IconSize = 30;
             btnConsultaCliente.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConsultaCliente.Location = new Point(546, 484);
+            btnConsultaCliente.Location = new Point(437, 387);
             btnConsultaCliente.Margin = new Padding(2);
             btnConsultaCliente.Name = "btnConsultaCliente";
-            btnConsultaCliente.Size = new Size(186, 65);
+            btnConsultaCliente.Size = new Size(149, 52);
             btnConsultaCliente.TabIndex = 67;
             btnConsultaCliente.Text = "    Consulta";
             btnConsultaCliente.UseVisualStyleBackColor = false;
@@ -175,10 +170,9 @@
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(496, 339);
-            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Location = new Point(397, 271);
             label8.Name = "label8";
-            label8.Size = new Size(103, 29);
+            label8.Size = new Size(88, 25);
             label8.TabIndex = 66;
             label8.Text = "Estado";
             // 
@@ -187,10 +181,9 @@
             activo.AutoSize = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = SystemColors.ControlLightLight;
-            activo.Location = new Point(606, 322);
-            activo.Margin = new Padding(4, 4, 4, 4);
+            activo.Location = new Point(485, 258);
             activo.Name = "activo";
-            activo.Size = new Size(108, 29);
+            activo.Size = new Size(90, 24);
             activo.TabIndex = 64;
             activo.Text = "Activo";
             activo.UseVisualStyleBackColor = true;
@@ -200,10 +193,9 @@
             desactivo.AutoSize = true;
             desactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             desactivo.ForeColor = SystemColors.ControlLightLight;
-            desactivo.Location = new Point(606, 359);
-            desactivo.Margin = new Padding(4, 4, 4, 4);
+            desactivo.Location = new Point(485, 287);
             desactivo.Name = "desactivo";
-            desactivo.Size = new Size(130, 29);
+            desactivo.Size = new Size(109, 24);
             desactivo.TabIndex = 65;
             desactivo.Text = "Inactivo";
             desactivo.UseVisualStyleBackColor = true;
@@ -213,11 +205,10 @@
             direccion.BackColor = Color.FromArgb(255, 161, 43);
             direccion.Font = new Font("Verdana", 9F, FontStyle.Bold);
             direccion.ForeColor = Color.White;
-            direccion.Location = new Point(462, 142);
-            direccion.Margin = new Padding(4, 4, 4, 4);
+            direccion.Location = new Point(370, 114);
             direccion.Multiline = true;
             direccion.Name = "direccion";
-            direccion.Size = new Size(314, 138);
+            direccion.Size = new Size(252, 111);
             direccion.TabIndex = 63;
             // 
             // label5
@@ -225,10 +216,9 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(546, 105);
-            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Location = new Point(437, 84);
             label5.Name = "label5";
-            label5.Size = new Size(138, 29);
+            label5.Size = new Size(118, 25);
             label5.TabIndex = 62;
             label5.Text = "Direccion";
             // 
@@ -236,10 +226,9 @@
             // 
             panel4.BackColor = Color.White;
             panel4.ForeColor = Color.White;
-            panel4.Location = new Point(118, 286);
-            panel4.Margin = new Padding(4, 4, 4, 4);
+            panel4.Location = new Point(94, 229);
             panel4.Name = "panel4";
-            panel4.Size = new Size(240, 2);
+            panel4.Size = new Size(192, 2);
             panel4.TabIndex = 61;
             // 
             // email
@@ -248,21 +237,20 @@
             email.BorderStyle = BorderStyle.None;
             email.Font = new Font("Verdana", 9F, FontStyle.Bold);
             email.ForeColor = Color.White;
-            email.Location = new Point(122, 262);
-            email.Margin = new Padding(4, 4, 4, 4);
+            email.Location = new Point(98, 210);
             email.Name = "email";
-            email.Size = new Size(240, 22);
+            email.Size = new Size(192, 19);
             email.TabIndex = 60;
+            email.KeyPress += email_KeyPress;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(18, 258);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(14, 206);
             label4.Name = "label4";
-            label4.Size = new Size(98, 29);
+            label4.Size = new Size(84, 25);
             label4.TabIndex = 59;
             label4.Text = "E-mail";
             // 
@@ -270,10 +258,9 @@
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(146, 210);
-            panel2.Margin = new Padding(4, 4, 4, 4);
+            panel2.Location = new Point(117, 168);
             panel2.Name = "panel2";
-            panel2.Size = new Size(198, 2);
+            panel2.Size = new Size(158, 2);
             panel2.TabIndex = 58;
             // 
             // telefono
@@ -282,10 +269,9 @@
             telefono.BorderStyle = BorderStyle.None;
             telefono.Font = new Font("Verdana", 9F, FontStyle.Bold);
             telefono.ForeColor = Color.White;
-            telefono.Location = new Point(152, 188);
-            telefono.Margin = new Padding(4, 4, 4, 4);
+            telefono.Location = new Point(122, 150);
             telefono.Name = "telefono";
-            telefono.Size = new Size(198, 22);
+            telefono.Size = new Size(158, 19);
             telefono.TabIndex = 57;
             telefono.KeyPress += telefono_KeyPress;
             // 
@@ -294,10 +280,9 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(18, 182);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(14, 146);
             label2.Name = "label2";
-            label2.Size = new Size(128, 29);
+            label2.Size = new Size(109, 25);
             label2.TabIndex = 56;
             label2.Text = "Telefono";
             // 
@@ -305,10 +290,9 @@
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(146, 134);
-            panel3.Margin = new Padding(4, 4, 4, 4);
+            panel3.Location = new Point(117, 107);
             panel3.Name = "panel3";
-            panel3.Size = new Size(198, 2);
+            panel3.Size = new Size(158, 2);
             panel3.TabIndex = 55;
             // 
             // nombre
@@ -317,10 +301,9 @@
             nombre.BorderStyle = BorderStyle.None;
             nombre.Font = new Font("Verdana", 9F, FontStyle.Bold);
             nombre.ForeColor = Color.White;
-            nombre.Location = new Point(152, 112);
-            nombre.Margin = new Padding(4, 4, 4, 4);
+            nombre.Location = new Point(122, 90);
             nombre.Name = "nombre";
-            nombre.Size = new Size(198, 22);
+            nombre.Size = new Size(158, 19);
             nombre.TabIndex = 54;
             nombre.KeyPress += nombre_KeyPress;
             // 
@@ -329,10 +312,9 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(18, 108);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(14, 86);
             label3.Name = "label3";
-            label3.Size = new Size(119, 29);
+            label3.Size = new Size(101, 25);
             label3.TabIndex = 53;
             label3.Text = "Nombre";
             // 
@@ -347,7 +329,7 @@
             panelMantenimientoCliente.Location = new Point(0, 0);
             panelMantenimientoCliente.Margin = new Padding(2);
             panelMantenimientoCliente.Name = "panelMantenimientoCliente";
-            panelMantenimientoCliente.Size = new Size(835, 68);
+            panelMantenimientoCliente.Size = new Size(668, 54);
             panelMantenimientoCliente.TabIndex = 1;
             panelMantenimientoCliente.MouseDown += panelMantenimientoCliente_MouseDown;
             // 
@@ -361,10 +343,10 @@
             btnMaximizarMetodo.IconColor = Color.OldLace;
             btnMaximizarMetodo.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarMetodo.IconSize = 20;
-            btnMaximizarMetodo.Location = new Point(750, 0);
+            btnMaximizarMetodo.Location = new Point(600, 0);
             btnMaximizarMetodo.Margin = new Padding(2);
             btnMaximizarMetodo.Name = "btnMaximizarMetodo";
-            btnMaximizarMetodo.Size = new Size(45, 25);
+            btnMaximizarMetodo.Size = new Size(36, 20);
             btnMaximizarMetodo.TabIndex = 9;
             btnMaximizarMetodo.UseVisualStyleBackColor = false;
             btnMaximizarMetodo.Click += btnMaximizarCategoria_Click;
@@ -379,10 +361,10 @@
             btnCerrarMetodo.IconColor = Color.OldLace;
             btnCerrarMetodo.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarMetodo.IconSize = 20;
-            btnCerrarMetodo.Location = new Point(790, 0);
+            btnCerrarMetodo.Location = new Point(632, 0);
             btnCerrarMetodo.Margin = new Padding(2);
             btnCerrarMetodo.Name = "btnCerrarMetodo";
-            btnCerrarMetodo.Size = new Size(45, 25);
+            btnCerrarMetodo.Size = new Size(36, 20);
             btnCerrarMetodo.TabIndex = 10;
             btnCerrarMetodo.UseVisualStyleBackColor = false;
             btnCerrarMetodo.Click += btnCerrarCategoria_Click;
@@ -397,10 +379,10 @@
             btnMinimizarMetodo.IconColor = Color.OldLace;
             btnMinimizarMetodo.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarMetodo.IconSize = 20;
-            btnMinimizarMetodo.Location = new Point(708, 0);
+            btnMinimizarMetodo.Location = new Point(566, 0);
             btnMinimizarMetodo.Margin = new Padding(2);
             btnMinimizarMetodo.Name = "btnMinimizarMetodo";
-            btnMinimizarMetodo.Size = new Size(45, 25);
+            btnMinimizarMetodo.Size = new Size(36, 20);
             btnMinimizarMetodo.TabIndex = 8;
             btnMinimizarMetodo.UseVisualStyleBackColor = false;
             btnMinimizarMetodo.Click += btnMinimizarCategoria_Click;
@@ -410,22 +392,20 @@
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(255, 161, 43);
-            label6.Location = new Point(12, 9);
-            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Location = new Point(10, 7);
             label6.Name = "label6";
-            label6.Size = new Size(193, 44);
+            label6.Size = new Size(159, 36);
             label6.TabIndex = 1;
             label6.Text = "CLIENTE";
             // 
             // MantenimientoCliente
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(835, 586);
+            ClientSize = new Size(668, 469);
             Controls.Add(panelMantenimientoCliente);
             Controls.Add(panel1);
-            Margin = new Padding(4, 4, 4, 4);
             Name = "MantenimientoCliente";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MantenimientoCliente";

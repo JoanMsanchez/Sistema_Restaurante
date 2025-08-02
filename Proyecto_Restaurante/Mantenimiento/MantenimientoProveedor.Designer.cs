@@ -296,6 +296,7 @@
             email.Name = "email";
             email.Size = new Size(192, 19);
             email.TabIndex = 31;
+            email.KeyPress += email_KeyPress;
             // 
             // label4
             // 

@@ -66,10 +66,12 @@
             btnCerrarCategoria = new FontAwesome.Sharp.IconButton();
             btnMinimizarCategoria = new FontAwesome.Sharp.IconButton();
             label8 = new Label();
+            panel7 = new Panel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVEmpleado).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelEmpleado.SuspendLayout();
+            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // label2
@@ -157,7 +159,7 @@
             // 
             activo.AutoSize = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            activo.Location = new Point(418, 182);
+            activo.Location = new Point(3, 6);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 17;
@@ -168,7 +170,7 @@
             // 
             desactivo.AutoSize = true;
             desactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            desactivo.Location = new Point(418, 211);
+            desactivo.Location = new Point(3, 36);
             desactivo.Name = "desactivo";
             desactivo.Size = new Size(109, 24);
             desactivo.TabIndex = 18;
@@ -262,6 +264,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 161, 43);
+            panel1.Controls.Add(panel7);
             panel1.Controls.Add(DGVEmpleado);
             panel1.Controls.Add(panel6);
             panel1.Controls.Add(panel5);
@@ -273,10 +276,8 @@
             panel1.Controls.Add(login);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(guardar);
-            panel1.Controls.Add(activo);
             panel1.Controls.Add(contrasena);
             panel1.Controls.Add(label3);
-            panel1.Controls.Add(desactivo);
             panel1.Controls.Add(apellido);
             panel1.Controls.Add(nombre);
             panel1.Controls.Add(buscanombre);
@@ -558,6 +559,15 @@
             label8.TabIndex = 0;
             label8.Text = "EMPLEADO";
             // 
+            // panel7
+            // 
+            panel7.Controls.Add(activo);
+            panel7.Controls.Add(desactivo);
+            panel7.Location = new Point(418, 171);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(131, 67);
+            panel7.TabIndex = 28;
+            // 
             // MantenimientoEmpleado
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -576,6 +586,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelEmpleado.ResumeLayout(false);
             panelEmpleado.PerformLayout();
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -617,5 +629,6 @@
         private Label label8;
         private FontAwesome.Sharp.IconButton btnMaximizarEmpleado;
         private FontAwesome.Sharp.IconButton btnMinimizarEmpleado;
+        private Panel panel7;
     }
 }
