@@ -27,6 +27,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public MantenimientoCategoria()
         {
             InitializeComponent();
+            this.Shown += MantenimientoCategoria_Shown;
             llenar_tabla_datagridview();
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
@@ -39,8 +40,8 @@ namespace Proyecto_Restaurante.Mantenimiento
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
 
         public void Limpiar()
@@ -273,5 +274,9 @@ namespace Proyecto_Restaurante.Mantenimiento
             this.Close();
         }
 
+        private void MantenimientoCategoria_Shown(object sender, EventArgs e)
+        {
+            nomcategoria.Focus();
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public MantenimientoMetodoPago()
         {
             InitializeComponent();
+            this.Shown += MantenimientoMetodoPago_Shown;
             llenar_tabla_datagridview();
             id_metodopago_seleccionada = -1;
             this.Padding = new Padding(bordeSize); //Border size
@@ -36,8 +37,8 @@ namespace Proyecto_Restaurante.Mantenimiento
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelMantenimientoMetododePago_MouseDown(object sender, MouseEventArgs e)
         {
@@ -270,5 +271,9 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
+        private void MantenimientoMetodoPago_Shown(object sender, EventArgs e)
+        {
+            nomMetodoPago.Focus();
+        }
     }
 }

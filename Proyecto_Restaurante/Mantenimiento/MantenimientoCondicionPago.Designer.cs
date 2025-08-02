@@ -89,19 +89,17 @@
             panel1.Controls.Add(DGVCondiconPago);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1130, 638);
+            panel1.Size = new Size(904, 510);
             panel1.TabIndex = 0;
             // 
             // panel6
             // 
             panel6.Controls.Add(busDias);
             panel6.Controls.Add(busDescripcion);
-            panel6.Location = new Point(748, 299);
-            panel6.Margin = new Padding(4);
+            panel6.Location = new Point(598, 239);
             panel6.Name = "panel6";
-            panel6.Size = new Size(312, 45);
+            panel6.Size = new Size(250, 36);
             panel6.TabIndex = 56;
             // 
             // busDias
@@ -109,10 +107,9 @@
             busDias.AutoSize = true;
             busDias.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             busDias.ForeColor = Color.White;
-            busDias.Location = new Point(188, 4);
-            busDias.Margin = new Padding(4);
+            busDias.Location = new Point(150, 3);
             busDias.Name = "busDias";
-            busDias.Size = new Size(87, 29);
+            busDias.Size = new Size(71, 24);
             busDias.TabIndex = 1;
             busDias.TabStop = true;
             busDias.Text = "Días";
@@ -123,10 +120,9 @@
             busDescripcion.AutoSize = true;
             busDescripcion.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             busDescripcion.ForeColor = Color.White;
-            busDescripcion.Location = new Point(4, 4);
-            busDescripcion.Margin = new Padding(4);
+            busDescripcion.Location = new Point(3, 3);
             busDescripcion.Name = "busDescripcion";
-            busDescripcion.Size = new Size(172, 29);
+            busDescripcion.Size = new Size(141, 24);
             busDescripcion.TabIndex = 0;
             busDescripcion.TabStop = true;
             busDescripcion.Text = "Descripción";
@@ -138,10 +134,9 @@
             diascredito.BorderStyle = BorderStyle.None;
             diascredito.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             diascredito.ForeColor = Color.WhiteSmoke;
-            diascredito.Location = new Point(766, 139);
-            diascredito.Margin = new Padding(4);
+            diascredito.Location = new Point(613, 111);
             diascredito.Name = "diascredito";
-            diascredito.Size = new Size(88, 22);
+            diascredito.Size = new Size(70, 19);
             diascredito.TabIndex = 55;
             diascredito.KeyPress += diascredito_KeyPress;
             // 
@@ -149,10 +144,9 @@
             // 
             panel5.BackColor = Color.White;
             panel5.ForeColor = Color.White;
-            panel5.Location = new Point(766, 165);
-            panel5.Margin = new Padding(4);
+            panel5.Location = new Point(613, 132);
             panel5.Name = "panel5";
-            panel5.Size = new Size(88, 2);
+            panel5.Size = new Size(70, 2);
             panel5.TabIndex = 54;
             // 
             // label5
@@ -160,10 +154,9 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(575, 135);
-            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Location = new Point(460, 108);
             label5.Name = "label5";
-            label5.Size = new Size(173, 29);
+            label5.Size = new Size(147, 25);
             label5.TabIndex = 53;
             label5.Text = "Días crédito";
             // 
@@ -172,10 +165,9 @@
             panel4.Controls.Add(autopagoNO);
             panel4.Controls.Add(autopagoSI);
             panel4.ForeColor = Color.FromArgb(255, 161, 43);
-            panel4.Location = new Point(186, 210);
-            panel4.Margin = new Padding(4);
+            panel4.Location = new Point(149, 168);
             panel4.Name = "panel4";
-            panel4.Size = new Size(164, 106);
+            panel4.Size = new Size(131, 85);
             panel4.TabIndex = 52;
             // 
             // autopagoNO
@@ -183,10 +175,9 @@
             autopagoNO.AutoSize = true;
             autopagoNO.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             autopagoNO.ForeColor = Color.White;
-            autopagoNO.Location = new Point(14, 60);
-            autopagoNO.Margin = new Padding(4);
+            autopagoNO.Location = new Point(11, 48);
             autopagoNO.Name = "autopagoNO";
-            autopagoNO.Size = new Size(69, 29);
+            autopagoNO.Size = new Size(56, 24);
             autopagoNO.TabIndex = 1;
             autopagoNO.TabStop = true;
             autopagoNO.Text = "No";
@@ -198,10 +189,9 @@
             autopagoSI.AutoSize = true;
             autopagoSI.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             autopagoSI.ForeColor = Color.White;
-            autopagoSI.Location = new Point(14, 22);
-            autopagoSI.Margin = new Padding(4);
+            autopagoSI.Location = new Point(11, 18);
             autopagoSI.Name = "autopagoSI";
-            autopagoSI.Size = new Size(59, 29);
+            autopagoSI.Size = new Size(48, 24);
             autopagoSI.TabIndex = 0;
             autopagoSI.TabStop = true;
             autopagoSI.Text = "Si";
@@ -213,10 +203,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(41, 245);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(33, 196);
             label1.Name = "label1";
-            label1.Size = new Size(150, 29);
+            label1.Size = new Size(127, 25);
             label1.TabIndex = 51;
             label1.Text = "Autopago ";
             // 
@@ -231,10 +220,9 @@
             limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             limpiar.IconSize = 35;
             limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            limpiar.Location = new Point(219, 494);
-            limpiar.Margin = new Padding(4);
+            limpiar.Location = new Point(175, 395);
             limpiar.Name = "limpiar";
-            limpiar.Size = new Size(175, 70);
+            limpiar.Size = new Size(140, 56);
             limpiar.TabIndex = 50;
             limpiar.Text = "     Limpiar";
             limpiar.UseVisualStyleBackColor = true;
@@ -251,10 +239,9 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(30, 494);
-            guardar.Margin = new Padding(4);
+            guardar.Location = new Point(24, 395);
             guardar.Name = "guardar";
-            guardar.Size = new Size(181, 70);
+            guardar.Size = new Size(145, 56);
             guardar.TabIndex = 49;
             guardar.Text = "     Guardar";
             guardar.UseVisualStyleBackColor = true;
@@ -266,10 +253,9 @@
             busca.BorderStyle = BorderStyle.None;
             busca.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             busca.ForeColor = Color.WhiteSmoke;
-            busca.Location = new Point(490, 320);
-            busca.Margin = new Padding(4);
+            busca.Location = new Point(392, 256);
             busca.Name = "busca";
-            busca.Size = new Size(250, 22);
+            busca.Size = new Size(200, 19);
             busca.TabIndex = 48;
             busca.TextChanged += buscanom_TextChanged;
             // 
@@ -279,10 +265,9 @@
             nomCondicion.BorderStyle = BorderStyle.None;
             nomCondicion.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nomCondicion.ForeColor = Color.WhiteSmoke;
-            nomCondicion.Location = new Point(225, 140);
-            nomCondicion.Margin = new Padding(4);
+            nomCondicion.Location = new Point(180, 112);
             nomCondicion.Name = "nomCondicion";
-            nomCondicion.Size = new Size(338, 22);
+            nomCondicion.Size = new Size(270, 19);
             nomCondicion.TabIndex = 47;
             nomCondicion.KeyPress += nomCondicion_KeyPress;
             // 
@@ -290,20 +275,18 @@
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(490, 348);
-            panel3.Margin = new Padding(4);
+            panel3.Location = new Point(392, 278);
             panel3.Name = "panel3";
-            panel3.Size = new Size(250, 2);
+            panel3.Size = new Size(200, 2);
             panel3.TabIndex = 46;
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(225, 168);
-            panel2.Margin = new Padding(4);
+            panel2.Location = new Point(180, 134);
             panel2.Name = "panel2";
-            panel2.Size = new Size(338, 2);
+            panel2.Size = new Size(270, 2);
             panel2.TabIndex = 45;
             // 
             // label4
@@ -311,10 +294,9 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(562, 285);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(450, 228);
             label4.Name = "label4";
-            label4.Size = new Size(104, 29);
+            label4.Size = new Size(88, 25);
             label4.TabIndex = 44;
             label4.Text = "Buscar";
             // 
@@ -323,10 +305,9 @@
             inactivo.AutoSize = true;
             inactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             inactivo.ForeColor = Color.White;
-            inactivo.Location = new Point(154, 384);
-            inactivo.Margin = new Padding(4);
+            inactivo.Location = new Point(123, 307);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(130, 29);
+            inactivo.Size = new Size(109, 24);
             inactivo.TabIndex = 43;
             inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
@@ -337,10 +318,9 @@
             activo.AutoSize = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(154, 341);
-            activo.Margin = new Padding(4);
+            activo.Location = new Point(123, 273);
             activo.Name = "activo";
-            activo.Size = new Size(108, 29);
+            activo.Size = new Size(90, 24);
             activo.TabIndex = 42;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -351,10 +331,9 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(41, 351);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(33, 281);
             label3.Name = "label3";
-            label3.Size = new Size(103, 29);
+            label3.Size = new Size(88, 25);
             label3.TabIndex = 41;
             label3.Text = "Estado";
             // 
@@ -363,10 +342,9 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(41, 132);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(33, 106);
             label2.Name = "label2";
-            label2.Size = new Size(169, 29);
+            label2.Size = new Size(144, 25);
             label2.TabIndex = 39;
             label2.Text = "Descripción";
             // 
@@ -402,8 +380,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVCondiconPago.DefaultCellStyle = dataGridViewCellStyle3;
             DGVCondiconPago.EnableHeadersVisualStyles = false;
-            DGVCondiconPago.Location = new Point(424, 358);
-            DGVCondiconPago.Margin = new Padding(4);
+            DGVCondiconPago.Location = new Point(339, 286);
             DGVCondiconPago.Name = "DGVCondiconPago";
             DGVCondiconPago.ReadOnly = true;
             DGVCondiconPago.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -417,7 +394,7 @@
             DGVCondiconPago.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVCondiconPago.RowHeadersVisible = false;
             DGVCondiconPago.RowHeadersWidth = 51;
-            DGVCondiconPago.Size = new Size(691, 272);
+            DGVCondiconPago.Size = new Size(553, 218);
             DGVCondiconPago.TabIndex = 40;
             DGVCondiconPago.CellMouseDoubleClick += DGVCondiconPago_CellMouseDoubleClick;
             // 
@@ -430,8 +407,9 @@
             panelMantenimientoCondicion.Controls.Add(label6);
             panelMantenimientoCondicion.Dock = DockStyle.Top;
             panelMantenimientoCondicion.Location = new Point(0, 0);
+            panelMantenimientoCondicion.Margin = new Padding(2, 2, 2, 2);
             panelMantenimientoCondicion.Name = "panelMantenimientoCondicion";
-            panelMantenimientoCondicion.Size = new Size(1130, 68);
+            panelMantenimientoCondicion.Size = new Size(904, 54);
             panelMantenimientoCondicion.TabIndex = 1;
             panelMantenimientoCondicion.MouseDown += panelMantenimientoCondicion_MouseDown;
             // 
@@ -445,10 +423,10 @@
             btnMaximizarCondicion.IconColor = Color.OldLace;
             btnMaximizarCondicion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarCondicion.IconSize = 20;
-            btnMaximizarCondicion.Location = new Point(1045, 0);
+            btnMaximizarCondicion.Location = new Point(836, 0);
             btnMaximizarCondicion.Margin = new Padding(2);
             btnMaximizarCondicion.Name = "btnMaximizarCondicion";
-            btnMaximizarCondicion.Size = new Size(45, 25);
+            btnMaximizarCondicion.Size = new Size(36, 20);
             btnMaximizarCondicion.TabIndex = 12;
             btnMaximizarCondicion.UseVisualStyleBackColor = false;
             btnMaximizarCondicion.Click += btnMaximizarCondicion_Click;
@@ -463,10 +441,10 @@
             btnCerrarCondicion.IconColor = Color.OldLace;
             btnCerrarCondicion.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarCondicion.IconSize = 20;
-            btnCerrarCondicion.Location = new Point(1085, 0);
+            btnCerrarCondicion.Location = new Point(868, 0);
             btnCerrarCondicion.Margin = new Padding(2);
             btnCerrarCondicion.Name = "btnCerrarCondicion";
-            btnCerrarCondicion.Size = new Size(45, 25);
+            btnCerrarCondicion.Size = new Size(36, 20);
             btnCerrarCondicion.TabIndex = 13;
             btnCerrarCondicion.UseVisualStyleBackColor = false;
             btnCerrarCondicion.Click += btnCerrarCondicion_Click;
@@ -481,10 +459,10 @@
             btnMinimizarCondicion.IconColor = Color.OldLace;
             btnMinimizarCondicion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarCondicion.IconSize = 20;
-            btnMinimizarCondicion.Location = new Point(1003, 0);
+            btnMinimizarCondicion.Location = new Point(802, 0);
             btnMinimizarCondicion.Margin = new Padding(2);
             btnMinimizarCondicion.Name = "btnMinimizarCondicion";
-            btnMinimizarCondicion.Size = new Size(45, 25);
+            btnMinimizarCondicion.Size = new Size(36, 20);
             btnMinimizarCondicion.TabIndex = 11;
             btnMinimizarCondicion.UseVisualStyleBackColor = false;
             btnMinimizarCondicion.Click += btnMinimizarCondicion_Click;
@@ -494,25 +472,24 @@
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(255, 161, 43);
-            label6.Location = new Point(13, 9);
-            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Location = new Point(10, 7);
             label6.Name = "label6";
-            label6.Size = new Size(456, 44);
+            label6.Size = new Size(379, 36);
             label6.TabIndex = 2;
             label6.Text = "CONDICION DE PAGO";
             // 
             // MantenimientoCondicionPago
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(1130, 638);
+            ClientSize = new Size(904, 510);
             Controls.Add(panelMantenimientoCondicion);
             Controls.Add(panel1);
-            Margin = new Padding(4);
             Name = "MantenimientoCondicionPago";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MantenimientoCondicionPago";
+            Shown += MantenimientoCondicionPago_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel6.ResumeLayout(false);

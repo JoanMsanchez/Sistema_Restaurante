@@ -39,8 +39,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelProducto_MouseDown(object sender, MouseEventArgs e)
         {
@@ -222,6 +222,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void MantenimientoProducto_Load(object sender, EventArgs e)
         {
+            BeginInvoke((Action)(() => nombre.Focus()));
             CargarCategorias();
             CargarUnidades();
         }
@@ -325,6 +326,10 @@ namespace Proyecto_Restaurante.Mantenimiento
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                txtstockMinimo.Focus();
+            }
         }
 
         private void txtstockMinimo_KeyPress(object sender, KeyPressEventArgs e)
@@ -333,6 +338,11 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                costo.Focus();
             }
         }
 
@@ -343,6 +353,10 @@ namespace Proyecto_Restaurante.Mantenimiento
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                venta.Focus();
+            }
         }
 
         private void venta_KeyPress(object sender, KeyPressEventArgs e)
@@ -352,6 +366,11 @@ namespace Proyecto_Restaurante.Mantenimiento
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                descripcion.Focus();
+            }
         }
 
         private void nombre_KeyPress(object sender, KeyPressEventArgs e)
@@ -360,6 +379,11 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten letras en el nombre.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                txtstockActual.Focus();
             }
         }
     }

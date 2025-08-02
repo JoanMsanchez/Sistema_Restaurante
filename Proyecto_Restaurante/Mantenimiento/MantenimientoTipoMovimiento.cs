@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Windows.Forms;
 using Proyecto_Restaurante.Principal;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
@@ -25,6 +26,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public MantenimientoTipoMovimiento()
         {
             InitializeComponent();
+            this.Shown += MantenimientoTipoMovimiento_Shown;
             llenar_tabla_datagridview();
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
@@ -298,6 +300,11 @@ namespace Proyecto_Restaurante.Mantenimiento
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten números.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void MantenimientoTipoMovimiento_Shown(object sender, EventArgs e)
+        {
+            nomMovimiento.Focus();
         }
     }
 }

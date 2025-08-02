@@ -25,6 +25,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public MantenimientoCliente()
         {
             InitializeComponent();
+            this.Shown += MantenimientoCliente_Shown;
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
         }
@@ -308,6 +309,11 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 direccion.Focus();
             }
+        }
+
+        private void MantenimientoCliente_Shown(object sender, EventArgs e)
+        {
+            nombre.Focus();
         }
     }
 }

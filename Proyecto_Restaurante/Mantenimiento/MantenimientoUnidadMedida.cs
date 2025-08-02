@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
@@ -25,6 +26,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public MantenimientoUnidadMedida()
         {
             InitializeComponent();
+            this.Shown += MantenimientoUnidadMedida_Shown;
             llenar_tabla_datagridview();
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
@@ -36,8 +38,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         public void Limpiar()
         {
@@ -267,6 +269,12 @@ namespace Proyecto_Restaurante.Mantenimiento
                 else
                     inactivo.Checked = true;
             }
+        }
+
+        private void MantenimientoUnidadMedida_Shown(object sender, EventArgs e)
+        {
+            //BeginInvoke((Action)(() => nomUnidadMedida.Focus()));
+            nomUnidadMedida.Focus();
         }
     }
 }

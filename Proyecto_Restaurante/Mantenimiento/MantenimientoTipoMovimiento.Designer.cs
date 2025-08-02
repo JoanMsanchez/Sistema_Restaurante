@@ -392,6 +392,7 @@
             Name = "MantenimientoTipoMovimiento";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MantenimientoTipoMovimiento";
+            Shown += MantenimientoTipoMovimiento_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DGVTipoMovimiento).EndInit();

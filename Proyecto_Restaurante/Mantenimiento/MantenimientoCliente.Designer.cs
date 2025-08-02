@@ -410,6 +410,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MantenimientoCliente";
             Load += MantenimientoCliente_Load;
+            Shown += MantenimientoCliente_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panelMantenimientoCliente.ResumeLayout(false);

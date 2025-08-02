@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoCategoria));
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             panel1 = new Panel();
             pictureBox1 = new PictureBox();
             panel3 = new Panel();
@@ -76,18 +76,16 @@
             panel1.Controls.Add(guardar);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(862, 542);
+            panel1.Size = new Size(690, 434);
             panel1.TabIndex = 0;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(683, 65);
-            pictureBox1.Margin = new Padding(4);
+            pictureBox1.Location = new Point(546, 52);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(179, 120);
+            pictureBox1.Size = new Size(143, 96);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 27;
             pictureBox1.TabStop = false;
@@ -96,79 +94,76 @@
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(548, 276);
-            panel3.Margin = new Padding(4);
+            panel3.Location = new Point(438, 221);
             panel3.Name = "panel3";
-            panel3.Size = new Size(179, 2);
+            panel3.Size = new Size(143, 2);
             panel3.TabIndex = 29;
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(162, 204);
-            panel2.Margin = new Padding(4);
+            panel2.Location = new Point(130, 163);
             panel2.Name = "panel2";
-            panel2.Size = new Size(188, 2);
+            panel2.Size = new Size(150, 2);
             panel2.TabIndex = 28;
             // 
             // DGVCategoria
             // 
             DGVCategoria.AllowUserToAddRows = false;
             DGVCategoria.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVCategoria.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVCategoria.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DGVCategoria.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVCategoria.BackgroundColor = Color.FromArgb(255, 161, 43);
             DGVCategoria.BorderStyle = BorderStyle.None;
             DGVCategoria.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle7.ForeColor = Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = Color.White;
-            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            DGVCategoria.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DGVCategoria.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DGVCategoria.ColumnHeadersHeight = 29;
             DGVCategoria.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.Black;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = Color.White;
-            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            DGVCategoria.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.Black;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            DGVCategoria.DefaultCellStyle = dataGridViewCellStyle3;
             DGVCategoria.EnableHeadersVisualStyles = false;
-            DGVCategoria.Location = new Point(447, 309);
-            DGVCategoria.Margin = new Padding(4);
+            DGVCategoria.Location = new Point(358, 247);
             DGVCategoria.Name = "DGVCategoria";
             DGVCategoria.ReadOnly = true;
             DGVCategoria.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle9.ForeColor = Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = Color.White;
-            dataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            DGVCategoria.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            DGVCategoria.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVCategoria.RowHeadersVisible = false;
             DGVCategoria.RowHeadersWidth = 51;
-            dataGridViewCellStyle10.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle10.ForeColor = Color.White;
-            dataGridViewCellStyle10.SelectionBackColor = Color.White;
-            dataGridViewCellStyle10.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVCategoria.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = Color.White;
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVCategoria.RowsDefaultCellStyle = dataGridViewCellStyle5;
             DGVCategoria.RowTemplate.DefaultCellStyle.BackColor = Color.FromArgb(255, 161, 43);
             DGVCategoria.RowTemplate.DefaultCellStyle.ForeColor = Color.White;
             DGVCategoria.RowTemplate.DefaultCellStyle.SelectionBackColor = Color.White;
             DGVCategoria.RowTemplate.DefaultCellStyle.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVCategoria.Size = new Size(392, 208);
+            DGVCategoria.Size = new Size(314, 166);
             DGVCategoria.TabIndex = 10;
             DGVCategoria.CellMouseDoubleClick += dataGridView1_CellMouseDoubleClick;
             // 
@@ -177,10 +172,9 @@
             inactivo.AutoSize = true;
             inactivo.Font = new Font("Verdana", 10.2F);
             inactivo.ForeColor = Color.White;
-            inactivo.Location = new Point(162, 299);
-            inactivo.Margin = new Padding(4);
+            inactivo.Location = new Point(130, 239);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(121, 29);
+            inactivo.Size = new Size(100, 24);
             inactivo.TabIndex = 9;
             inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
@@ -191,10 +185,9 @@
             activo.AutoSize = true;
             activo.Font = new Font("Verdana", 10.2F);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(166, 256);
-            activo.Margin = new Padding(4);
+            activo.Location = new Point(133, 205);
             activo.Name = "activo";
-            activo.Size = new Size(101, 29);
+            activo.Size = new Size(83, 24);
             activo.TabIndex = 8;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -205,10 +198,9 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(497, 214);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(398, 171);
             label4.Name = "label4";
-            label4.Size = new Size(271, 29);
+            label4.Size = new Size(229, 25);
             label4.TabIndex = 7;
             label4.Text = "Buscar por Nombre";
             // 
@@ -218,10 +210,9 @@
             buscanom.BorderStyle = BorderStyle.None;
             buscanom.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buscanom.ForeColor = Color.White;
-            buscanom.Location = new Point(548, 256);
-            buscanom.Margin = new Padding(4);
+            buscanom.Location = new Point(438, 205);
             buscanom.Name = "buscanom";
-            buscanom.Size = new Size(175, 22);
+            buscanom.Size = new Size(140, 19);
             buscanom.TabIndex = 6;
             buscanom.TextChanged += buscanom_TextChanged;
             // 
@@ -230,10 +221,9 @@
             estado.AutoSize = true;
             estado.Font = new Font("Verdana", 12F, FontStyle.Bold);
             estado.ForeColor = Color.White;
-            estado.Location = new Point(48, 276);
-            estado.Margin = new Padding(4, 0, 4, 0);
+            estado.Location = new Point(38, 221);
             estado.Name = "estado";
-            estado.Size = new Size(103, 29);
+            estado.Size = new Size(88, 25);
             estado.TabIndex = 5;
             estado.Text = "Estado";
             // 
@@ -242,10 +232,9 @@
             label.AutoSize = true;
             label.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label.ForeColor = Color.White;
-            label.Location = new Point(32, 171);
-            label.Margin = new Padding(4, 0, 4, 0);
+            label.Location = new Point(26, 137);
             label.Name = "label";
-            label.Size = new Size(119, 29);
+            label.Size = new Size(101, 25);
             label.TabIndex = 4;
             label.Text = "Nombre";
             // 
@@ -255,10 +244,9 @@
             nomcategoria.BorderStyle = BorderStyle.None;
             nomcategoria.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nomcategoria.ForeColor = Color.WhiteSmoke;
-            nomcategoria.Location = new Point(166, 179);
-            nomcategoria.Margin = new Padding(4);
+            nomcategoria.Location = new Point(133, 143);
             nomcategoria.Name = "nomcategoria";
-            nomcategoria.Size = new Size(184, 22);
+            nomcategoria.Size = new Size(147, 19);
             nomcategoria.TabIndex = 3;
             nomcategoria.KeyPress += nomcategoria_KeyPress;
             // 
@@ -273,10 +261,9 @@
             limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             limpiar.IconSize = 35;
             limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            limpiar.Location = new Point(211, 386);
-            limpiar.Margin = new Padding(4);
+            limpiar.Location = new Point(169, 309);
             limpiar.Name = "limpiar";
-            limpiar.Size = new Size(175, 70);
+            limpiar.Size = new Size(140, 56);
             limpiar.TabIndex = 2;
             limpiar.Text = "     Limpiar";
             limpiar.UseVisualStyleBackColor = true;
@@ -293,10 +280,9 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(22, 386);
-            guardar.Margin = new Padding(4);
+            guardar.Location = new Point(18, 309);
             guardar.Name = "guardar";
-            guardar.Size = new Size(181, 70);
+            guardar.Size = new Size(145, 56);
             guardar.TabIndex = 1;
             guardar.Text = "     Guardar";
             guardar.UseVisualStyleBackColor = true;
@@ -307,10 +293,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(255, 161, 43);
-            label1.Location = new Point(13, 9);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(10, 7);
             label1.Name = "label1";
-            label1.Size = new Size(259, 44);
+            label1.Size = new Size(213, 36);
             label1.TabIndex = 0;
             label1.Text = "CATEGORIA";
             // 
@@ -323,8 +308,9 @@
             panelCategoria.Controls.Add(label1);
             panelCategoria.Dock = DockStyle.Top;
             panelCategoria.Location = new Point(0, 0);
+            panelCategoria.Margin = new Padding(2, 2, 2, 2);
             panelCategoria.Name = "panelCategoria";
-            panelCategoria.Size = new Size(862, 68);
+            panelCategoria.Size = new Size(690, 54);
             panelCategoria.TabIndex = 1;
             panelCategoria.MouseDown += panelCategoria_MouseDown;
             // 
@@ -338,10 +324,10 @@
             btnMaximizarCategoria.IconColor = Color.OldLace;
             btnMaximizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarCategoria.IconSize = 20;
-            btnMaximizarCategoria.Location = new Point(777, 0);
+            btnMaximizarCategoria.Location = new Point(622, 0);
             btnMaximizarCategoria.Margin = new Padding(2);
             btnMaximizarCategoria.Name = "btnMaximizarCategoria";
-            btnMaximizarCategoria.Size = new Size(45, 25);
+            btnMaximizarCategoria.Size = new Size(36, 20);
             btnMaximizarCategoria.TabIndex = 6;
             btnMaximizarCategoria.UseVisualStyleBackColor = false;
             btnMaximizarCategoria.Click += btnMaximizarCategoria_Click;
@@ -356,10 +342,10 @@
             btnCerrarCategoria.IconColor = Color.OldLace;
             btnCerrarCategoria.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarCategoria.IconSize = 20;
-            btnCerrarCategoria.Location = new Point(817, 0);
+            btnCerrarCategoria.Location = new Point(654, 0);
             btnCerrarCategoria.Margin = new Padding(2);
             btnCerrarCategoria.Name = "btnCerrarCategoria";
-            btnCerrarCategoria.Size = new Size(45, 25);
+            btnCerrarCategoria.Size = new Size(36, 20);
             btnCerrarCategoria.TabIndex = 7;
             btnCerrarCategoria.UseVisualStyleBackColor = false;
             btnCerrarCategoria.Click += btnCerrarCategoria_Click;
@@ -374,26 +360,26 @@
             btnMinimizarCategoria.IconColor = Color.OldLace;
             btnMinimizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarCategoria.IconSize = 20;
-            btnMinimizarCategoria.Location = new Point(734, 0);
+            btnMinimizarCategoria.Location = new Point(587, 0);
             btnMinimizarCategoria.Margin = new Padding(2);
             btnMinimizarCategoria.Name = "btnMinimizarCategoria";
-            btnMinimizarCategoria.Size = new Size(45, 25);
+            btnMinimizarCategoria.Size = new Size(36, 20);
             btnMinimizarCategoria.TabIndex = 5;
             btnMinimizarCategoria.UseVisualStyleBackColor = false;
             btnMinimizarCategoria.Click += btnMinimizarCategoria_Click;
             // 
-            // Categoria
+            // MantenimientoCategoria
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(862, 542);
+            ClientSize = new Size(690, 434);
             Controls.Add(panelCategoria);
             Controls.Add(panel1);
-            Margin = new Padding(4);
-            Name = "Categoria";
+            Name = "MantenimientoCategoria";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Categoria";
+            Shown += MantenimientoCategoria_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

@@ -371,6 +371,7 @@
             Name = "MantenimientoUnidadMedida";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            Load += MantenimientoUnidadMedida_Shown;
             panelUnidadMedida.ResumeLayout(false);
             panelUnidadMedida.PerformLayout();
             panel1.ResumeLayout(false);

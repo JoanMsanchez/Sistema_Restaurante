@@ -27,6 +27,7 @@ namespace Proyecto_Restaurante
         public MantenimientoEmpleado()
         {
             InitializeComponent();
+            login.Focus();
             llenar_tabla_datagridview();
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color

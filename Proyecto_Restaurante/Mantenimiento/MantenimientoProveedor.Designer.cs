@@ -385,6 +385,7 @@
             Name = "MantenimientoProveedor";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MantenimientoProveedor";
+            Shown += MantenimientoProveedor_Shown;
             panelMantenimientoProveedor.ResumeLayout(false);
             panelMantenimientoProveedor.PerformLayout();
             panel1.ResumeLayout(false);
