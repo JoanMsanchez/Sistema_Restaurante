@@ -105,8 +105,10 @@ namespace Proyecto_Restaurante.Mantenimiento
             autopagoSI.Checked = false;
             autopagoNO.Checked = false;
             diascredito.Clear();
+            diascredito.Enabled = true;
             busca.Clear();
         }
+
         private void limpiar_Click(object sender, EventArgs e)
         {
             Limpiar();
@@ -324,5 +326,22 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
+        private void autopagoSI_CheckedChanged(object sender, EventArgs e)
+        {
+            if (autopagoSI.Checked)
+            {
+                diascredito.Text = "0";
+                diascredito.Enabled = false;
+            }
+        }
+
+        private void autopagoNO_CheckedChanged(object sender, EventArgs e)
+        {
+            if (autopagoNO.Checked)
+            {
+                diascredito.Enabled = true;
+                diascredito.Clear();
+            }
+        }
     }
 }

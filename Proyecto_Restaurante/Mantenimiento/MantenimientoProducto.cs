@@ -123,6 +123,20 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void guardar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(nombre.Text) ||
+                    string.IsNullOrWhiteSpace(descripcion.Text) ||
+                    string.IsNullOrWhiteSpace(costo.Text) ||
+                    string.IsNullOrWhiteSpace(venta.Text) ||
+                    string.IsNullOrWhiteSpace(txtstockActual.Text) ||
+                    string.IsNullOrWhiteSpace(txtstockMinimo.Text) ||
+                    comboCategoria.SelectedIndex == -1 ||
+                    comboUnidad.SelectedIndex == -1 ||
+                    (!activo.Checked && !desactivo.Checked))
+            {
+                MessageBox.Show("Por favor completa todos los campos antes de guardar.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 conexion.Open();
@@ -257,19 +271,19 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        public void CargarDatosProducto(int idProducto,
-                string nombreProd,
-                string descripcionProd,
-                decimal precioCosto,
-                decimal precioVenta,
-                decimal stockActual,
-                decimal stockMinimo,
-                int idCategoria,
-                string nombreCategoria,
-                int idUnidad,
-                string nombreUnidad,
-                int estado)
+        public void CargarDatosProducto(int idProducto,string nombreProd,string descripcionProd,decimal precioCosto,decimal precioVenta,decimal stockActual,decimal stockMinimo,int idCategoria,string nombreCategoria,int idUnidad,string nombreUnidad,int estado)
         {
+            // Asegurar que los combos estén cargados
+            CargarCategorias();
+            CargarUnidades();
+
+            // Forzar refresco de los bindings
+            comboCategoria.BindingContext = new BindingContext();
+            comboUnidad.BindingContext = new BindingContext();
+
+            comboCategoria.SelectedValue = idCategoria;
+            comboUnidad.SelectedValue = idUnidad;
+
             // ID y textos
             this.id_producto_seleccionado = idProducto;
             nombre.Text = nombreProd;
@@ -279,9 +293,25 @@ namespace Proyecto_Restaurante.Mantenimiento
             txtstockActual.Text = stockActual.ToString("F2");
             txtstockMinimo.Text = stockMinimo.ToString("F2");
 
+            // Buscar y asignar la categoría
+            foreach (DataRowView item in comboCategoria.Items)
+            {
+                if ((int)item["id_categoria"] == idCategoria)
+                {
+                    comboCategoria.SelectedItem = item;
+                    break;
+                }
+            }
 
-            comboCategoria.SelectedValue = idCategoria;
-            comboUnidad.SelectedValue = idUnidad;
+            // Buscar y asignar la unidad
+            foreach (DataRowView item in comboUnidad.Items)
+            {
+                if ((int)item["id_unidad"] == idUnidad)
+                {
+                    comboUnidad.SelectedItem = item;
+                    break;
+                }
+            }
 
             // Estado
             activo.Checked = (estado == 1);

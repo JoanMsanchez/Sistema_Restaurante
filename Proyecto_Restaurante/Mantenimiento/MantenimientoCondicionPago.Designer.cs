@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panel1 = new Panel();
             panel6 = new Panel();
             busDias = new RadioButton();
@@ -191,6 +191,7 @@
             autopagoNO.TabStop = true;
             autopagoNO.Text = "No";
             autopagoNO.UseVisualStyleBackColor = true;
+            autopagoNO.CheckedChanged += autopagoNO_CheckedChanged;
             // 
             // autopagoSI
             // 
@@ -205,6 +206,7 @@
             autopagoSI.TabStop = true;
             autopagoSI.Text = "Si";
             autopagoSI.UseVisualStyleBackColor = true;
+            autopagoSI.CheckedChanged += autopagoSI_CheckedChanged;
             // 
             // label1
             // 
@@ -372,47 +374,47 @@
             // 
             DGVCondiconPago.AllowUserToAddRows = false;
             DGVCondiconPago.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle9.ForeColor = Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = Color.White;
-            dataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVCondiconPago.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVCondiconPago.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DGVCondiconPago.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVCondiconPago.BackgroundColor = Color.FromArgb(255, 161, 43);
             DGVCondiconPago.BorderStyle = BorderStyle.None;
             DGVCondiconPago.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle10.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle10.ForeColor = Color.White;
-            dataGridViewCellStyle10.SelectionBackColor = Color.White;
-            dataGridViewCellStyle10.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            DGVCondiconPago.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DGVCondiconPago.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DGVCondiconPago.ColumnHeadersHeight = 25;
             DGVCondiconPago.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle11.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle11.ForeColor = Color.White;
-            dataGridViewCellStyle11.SelectionBackColor = Color.White;
-            dataGridViewCellStyle11.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
-            DGVCondiconPago.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            DGVCondiconPago.DefaultCellStyle = dataGridViewCellStyle3;
             DGVCondiconPago.EnableHeadersVisualStyles = false;
             DGVCondiconPago.Location = new Point(424, 358);
             DGVCondiconPago.Margin = new Padding(4);
             DGVCondiconPago.Name = "DGVCondiconPago";
             DGVCondiconPago.ReadOnly = true;
             DGVCondiconPago.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle12.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle12.ForeColor = Color.White;
-            dataGridViewCellStyle12.SelectionBackColor = Color.White;
-            dataGridViewCellStyle12.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
-            DGVCondiconPago.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            DGVCondiconPago.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVCondiconPago.RowHeadersVisible = false;
             DGVCondiconPago.RowHeadersWidth = 51;
             DGVCondiconPago.Size = new Size(691, 272);
