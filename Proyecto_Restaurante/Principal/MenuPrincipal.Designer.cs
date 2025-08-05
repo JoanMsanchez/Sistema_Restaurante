@@ -48,6 +48,7 @@
             MantenimientoRestaurante = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoMesas = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoEmpleados = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoSala = new FontAwesome.Sharp.IconMenuItem();
             procesosRestaurante = new FontAwesome.Sharp.IconMenuItem();
             FacturacionRestaurante = new FontAwesome.Sharp.IconMenuItem();
             DropMenu_inventario = new ContextMenuStrip(components);
@@ -333,7 +334,7 @@
             // MantenimientoRestaurante
             // 
             MantenimientoRestaurante.BackColor = Color.Orange;
-            MantenimientoRestaurante.DropDownItems.AddRange(new ToolStripItem[] { MantenimientoMesas, MantenimientoEmpleados });
+            MantenimientoRestaurante.DropDownItems.AddRange(new ToolStripItem[] { MantenimientoSala, MantenimientoMesas, MantenimientoEmpleados });
             MantenimientoRestaurante.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             MantenimientoRestaurante.ForeColor = SystemColors.ControlLightLight;
             MantenimientoRestaurante.IconChar = FontAwesome.Sharp.IconChar.Wrench;
@@ -353,6 +354,7 @@
             MantenimientoMesas.Name = "MantenimientoMesas";
             MantenimientoMesas.Size = new Size(236, 34);
             MantenimientoMesas.Text = "Mesas";
+            MantenimientoMesas.Click += MantenimientoMesas_Click;
             // 
             // MantenimientoEmpleados
             // 
@@ -365,6 +367,18 @@
             MantenimientoEmpleados.Size = new Size(236, 34);
             MantenimientoEmpleados.Text = "Empleados";
             MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
+            // 
+            // MantenimientoSala
+            // 
+            MantenimientoSala.BackColor = Color.DarkOrange;
+            MantenimientoSala.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoSala.IconChar = FontAwesome.Sharp.IconChar.Couch;
+            MantenimientoSala.IconColor = Color.White;
+            MantenimientoSala.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoSala.Name = "MantenimientoSala";
+            MantenimientoSala.Size = new Size(236, 34);
+            MantenimientoSala.Text = "Salas";
+            MantenimientoSala.Click += MantenimientoSala_Click;
             // 
             // procesosRestaurante
             // 
@@ -387,7 +401,7 @@
             FacturacionRestaurante.IconColor = Color.White;
             FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             FacturacionRestaurante.Name = "FacturacionRestaurante";
-            FacturacionRestaurante.Size = new Size(245, 34);
+            FacturacionRestaurante.Size = new Size(270, 34);
             FacturacionRestaurante.Text = "Facturacion";
             // 
             // DropMenu_inventario
@@ -805,5 +819,6 @@
         private FontAwesome.Sharp.IconMenuItem ConsultaProveedor;
         private FontAwesome.Sharp.IconMenuItem ConsultasCXC;
         private FontAwesome.Sharp.IconMenuItem ConsultaCliente;
+        private FontAwesome.Sharp.IconMenuItem MantenimientoSala;
     }
 }

@@ -267,5 +267,17 @@ namespace Proyecto_Restaurante.Mantenimiento
             ConsultaCliente consultaCliente = new ConsultaCliente();
             consultaCliente.Show();
         }
+
+        private void MantenimientoMesas_Click(object sender, EventArgs e)
+        {
+            MantenimientoMesa mesa = new MantenimientoMesa();
+            mesa.Show();
+        }
+
+        private void MantenimientoSala_Click(object sender, EventArgs e)
+        {
+            MantenimientoSala sala = new MantenimientoSala();
+            sala.Show();
+        }
     }
 }

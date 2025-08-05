@@ -1276,6 +1276,9 @@
   <metadata name="MantenimientoRestaurante.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>277, 66</value>
   </metadata>
+  <metadata name="MantenimientoSala.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>508, 132</value>
+  </metadata>
   <metadata name="MantenimientoMesas.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>548, 66</value>
   </metadata>
@@ -1376,6 +1379,6 @@
     <value>749, 159</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>76</value>
+    <value>187</value>
   </metadata>
 </root>
