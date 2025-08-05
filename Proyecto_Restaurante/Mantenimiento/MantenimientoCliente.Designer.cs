@@ -87,6 +87,7 @@
             // comboCondicion
             // 
             comboCondicion.BackColor = Color.FromArgb(255, 161, 43);
+            comboCondicion.DropDownStyle = ComboBoxStyle.DropDownList;
             comboCondicion.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboCondicion.ForeColor = Color.White;
             comboCondicion.FormattingEnabled = true;

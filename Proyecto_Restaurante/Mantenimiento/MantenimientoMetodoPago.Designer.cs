@@ -156,11 +156,11 @@
             // inactivo
             // 
             inactivo.AutoSize = true;
-            inactivo.Font = new Font("Verdana", 10.2F);
+            inactivo.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             inactivo.ForeColor = Color.White;
             inactivo.Location = new Point(124, 237);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(100, 24);
+            inactivo.Size = new Size(109, 24);
             inactivo.TabIndex = 38;
             inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
@@ -169,11 +169,11 @@
             // activo
             // 
             activo.AutoSize = true;
-            activo.Font = new Font("Verdana", 10.2F);
+            activo.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             activo.ForeColor = Color.White;
             activo.Location = new Point(124, 207);
             activo.Name = "activo";
-            activo.Size = new Size(83, 24);
+            activo.Size = new Size(90, 24);
             activo.TabIndex = 37;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -283,7 +283,7 @@
             panelMantenimientoMetododePago.Controls.Add(label6);
             panelMantenimientoMetododePago.Dock = DockStyle.Top;
             panelMantenimientoMetododePago.Location = new Point(0, 0);
-            panelMantenimientoMetododePago.Margin = new Padding(2, 2, 2, 2);
+            panelMantenimientoMetododePago.Margin = new Padding(2);
             panelMantenimientoMetododePago.Name = "panelMantenimientoMetododePago";
             panelMantenimientoMetododePago.Size = new Size(702, 54);
             panelMantenimientoMetododePago.TabIndex = 1;

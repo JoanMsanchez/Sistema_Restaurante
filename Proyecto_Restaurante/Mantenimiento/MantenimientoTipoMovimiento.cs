@@ -165,8 +165,6 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 conexion.Open();
 
-                //int afectastock = stockmas.Checked ? 1 : -1;
-
                 int afectastockm;
                 if (!int.TryParse(afectastock.Text.Trim(), out afectastockm))
                 {

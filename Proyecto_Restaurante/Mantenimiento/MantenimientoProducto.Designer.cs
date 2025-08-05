@@ -206,6 +206,7 @@
             // comboUnidad
             // 
             comboUnidad.BackColor = Color.FromArgb(255, 161, 43);
+            comboUnidad.DropDownStyle = ComboBoxStyle.DropDownList;
             comboUnidad.FlatStyle = FlatStyle.Flat;
             comboUnidad.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboUnidad.ForeColor = SystemColors.ControlLightLight;
@@ -220,6 +221,7 @@
             // comboCategoria
             // 
             comboCategoria.BackColor = Color.FromArgb(255, 161, 43);
+            comboCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
             comboCategoria.FlatStyle = FlatStyle.Flat;
             comboCategoria.Font = new Font("Verdana", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboCategoria.ForeColor = SystemColors.ControlLightLight;
@@ -331,7 +333,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(656, 261);
+            label8.Location = new Point(580, 273);
             label8.Name = "label8";
             label8.Size = new Size(88, 25);
             label8.TabIndex = 41;
@@ -342,7 +344,7 @@
             activo.AutoSize = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = SystemColors.ControlLightLight;
-            activo.Location = new Point(603, 289);
+            activo.Location = new Point(674, 259);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 39;
@@ -354,7 +356,7 @@
             desactivo.AutoSize = true;
             desactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             desactivo.ForeColor = SystemColors.ControlLightLight;
-            desactivo.Location = new Point(699, 289);
+            desactivo.Location = new Point(672, 289);
             desactivo.Name = "desactivo";
             desactivo.Size = new Size(109, 24);
             desactivo.TabIndex = 40;

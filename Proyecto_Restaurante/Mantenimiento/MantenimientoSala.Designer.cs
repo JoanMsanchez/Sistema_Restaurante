@@ -74,8 +74,9 @@
             panel1.Controls.Add(descripcion);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(999, 590);
+            panel1.Size = new Size(799, 472);
             panel1.TabIndex = 0;
             // 
             // fecha
@@ -84,11 +85,10 @@
             fecha.BorderStyle = BorderStyle.None;
             fecha.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             fecha.ForeColor = Color.WhiteSmoke;
-            fecha.Location = new Point(628, 161);
-            fecha.Margin = new Padding(4);
+            fecha.Location = new Point(502, 129);
             fecha.Name = "fecha";
             fecha.ReadOnly = true;
-            fecha.Size = new Size(184, 22);
+            fecha.Size = new Size(147, 19);
             fecha.TabIndex = 53;
             // 
             // label2
@@ -96,10 +96,9 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(643, 128);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(514, 102);
             label2.Name = "label2";
-            label2.Size = new Size(92, 29);
+            label2.Size = new Size(77, 25);
             label2.TabIndex = 52;
             label2.Text = "Fecha";
             // 
@@ -114,10 +113,9 @@
             limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             limpiar.IconSize = 35;
             limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            limpiar.Location = new Point(229, 450);
-            limpiar.Margin = new Padding(4);
+            limpiar.Location = new Point(183, 360);
             limpiar.Name = "limpiar";
-            limpiar.Size = new Size(175, 70);
+            limpiar.Size = new Size(140, 56);
             limpiar.TabIndex = 51;
             limpiar.Text = "     Limpiar";
             limpiar.UseVisualStyleBackColor = true;
@@ -134,10 +132,9 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(39, 450);
-            guardar.Margin = new Padding(4);
+            guardar.Location = new Point(31, 360);
             guardar.Name = "guardar";
-            guardar.Size = new Size(181, 70);
+            guardar.Size = new Size(145, 56);
             guardar.TabIndex = 50;
             guardar.Text = "     Guardar";
             guardar.UseVisualStyleBackColor = true;
@@ -175,8 +172,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVSala.DefaultCellStyle = dataGridViewCellStyle3;
             DGVSala.EnableHeadersVisualStyles = false;
-            DGVSala.Location = new Point(477, 361);
-            DGVSala.Margin = new Padding(4);
+            DGVSala.Location = new Point(382, 289);
             DGVSala.Name = "DGVSala";
             DGVSala.ReadOnly = true;
             DGVSala.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -199,7 +195,7 @@
             DGVSala.RowTemplate.DefaultCellStyle.ForeColor = Color.White;
             DGVSala.RowTemplate.DefaultCellStyle.SelectionBackColor = Color.White;
             DGVSala.RowTemplate.DefaultCellStyle.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVSala.Size = new Size(509, 208);
+            DGVSala.Size = new Size(407, 166);
             DGVSala.TabIndex = 49;
             DGVSala.CellMouseDoubleClick += DGVSala_CellMouseDoubleClick;
             // 
@@ -207,10 +203,9 @@
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(643, 314);
-            panel3.Margin = new Padding(4);
+            panel3.Location = new Point(514, 251);
             panel3.Name = "panel3";
-            panel3.Size = new Size(179, 2);
+            panel3.Size = new Size(143, 2);
             panel3.TabIndex = 48;
             // 
             // label4
@@ -218,10 +213,9 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(569, 251);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(455, 201);
             label4.Name = "label4";
-            label4.Size = new Size(321, 29);
+            label4.Size = new Size(272, 25);
             label4.TabIndex = 47;
             label4.Text = "Buscar por Descripcion";
             // 
@@ -231,22 +225,20 @@
             buscar.BorderStyle = BorderStyle.None;
             buscar.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buscar.ForeColor = Color.White;
-            buscar.Location = new Point(643, 294);
-            buscar.Margin = new Padding(4);
+            buscar.Location = new Point(514, 235);
             buscar.Name = "buscar";
-            buscar.Size = new Size(175, 22);
+            buscar.Size = new Size(140, 19);
             buscar.TabIndex = 46;
             buscar.TextChanged += buscar_TextChanged;
             // 
             // desactivo
             // 
             desactivo.AutoSize = true;
-            desactivo.Font = new Font("Verdana", 10.2F);
+            desactivo.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             desactivo.ForeColor = Color.White;
-            desactivo.Location = new Point(169, 354);
-            desactivo.Margin = new Padding(4);
+            desactivo.Location = new Point(135, 283);
             desactivo.Name = "desactivo";
-            desactivo.Size = new Size(121, 29);
+            desactivo.Size = new Size(109, 24);
             desactivo.TabIndex = 45;
             desactivo.TabStop = true;
             desactivo.Text = "Inactivo";
@@ -255,12 +247,11 @@
             // activo
             // 
             activo.AutoSize = true;
-            activo.Font = new Font("Verdana", 10.2F);
+            activo.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(169, 317);
-            activo.Margin = new Padding(4);
+            activo.Location = new Point(135, 254);
             activo.Name = "activo";
-            activo.Size = new Size(101, 29);
+            activo.Size = new Size(90, 24);
             activo.TabIndex = 44;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -271,10 +262,9 @@
             estado.AutoSize = true;
             estado.Font = new Font("Verdana", 12F, FontStyle.Bold);
             estado.ForeColor = Color.White;
-            estado.Location = new Point(50, 337);
-            estado.Margin = new Padding(4, 0, 4, 0);
+            estado.Location = new Point(40, 270);
             estado.Name = "estado";
-            estado.Size = new Size(103, 29);
+            estado.Size = new Size(88, 25);
             estado.TabIndex = 43;
             estado.Text = "Estado";
             // 
@@ -283,10 +273,9 @@
             label.AutoSize = true;
             label.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label.ForeColor = Color.White;
-            label.Location = new Point(101, 99);
-            label.Margin = new Padding(4, 0, 4, 0);
+            label.Location = new Point(81, 79);
             label.Name = "label";
-            label.Size = new Size(169, 29);
+            label.Size = new Size(144, 25);
             label.TabIndex = 42;
             label.Text = "Descripcion";
             // 
@@ -295,11 +284,10 @@
             descripcion.BackColor = Color.FromArgb(255, 161, 43);
             descripcion.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             descripcion.ForeColor = Color.WhiteSmoke;
-            descripcion.Location = new Point(39, 143);
-            descripcion.Margin = new Padding(4);
+            descripcion.Location = new Point(31, 114);
             descripcion.Multiline = true;
             descripcion.Name = "descripcion";
-            descripcion.Size = new Size(295, 111);
+            descripcion.Size = new Size(237, 90);
             descripcion.TabIndex = 41;
             // 
             // panelSala
@@ -311,8 +299,9 @@
             panelSala.Controls.Add(label1);
             panelSala.Dock = DockStyle.Top;
             panelSala.Location = new Point(0, 0);
+            panelSala.Margin = new Padding(2);
             panelSala.Name = "panelSala";
-            panelSala.Size = new Size(999, 68);
+            panelSala.Size = new Size(799, 54);
             panelSala.TabIndex = 1;
             panelSala.MouseDown += panelSala_MouseDown;
             // 
@@ -326,10 +315,10 @@
             btnMaximizarSala.IconColor = Color.OldLace;
             btnMaximizarSala.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarSala.IconSize = 20;
-            btnMaximizarSala.Location = new Point(914, 0);
+            btnMaximizarSala.Location = new Point(731, 0);
             btnMaximizarSala.Margin = new Padding(2);
             btnMaximizarSala.Name = "btnMaximizarSala";
-            btnMaximizarSala.Size = new Size(45, 25);
+            btnMaximizarSala.Size = new Size(36, 20);
             btnMaximizarSala.TabIndex = 9;
             btnMaximizarSala.UseVisualStyleBackColor = false;
             btnMaximizarSala.Click += btnMaximizarSala_Click;
@@ -344,10 +333,10 @@
             btnCerrarSala.IconColor = Color.OldLace;
             btnCerrarSala.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarSala.IconSize = 20;
-            btnCerrarSala.Location = new Point(954, 0);
+            btnCerrarSala.Location = new Point(763, 0);
             btnCerrarSala.Margin = new Padding(2);
             btnCerrarSala.Name = "btnCerrarSala";
-            btnCerrarSala.Size = new Size(45, 25);
+            btnCerrarSala.Size = new Size(36, 20);
             btnCerrarSala.TabIndex = 10;
             btnCerrarSala.UseVisualStyleBackColor = false;
             btnCerrarSala.Click += btnCerrarSala_Click;
@@ -362,10 +351,10 @@
             btnMinimizarSala.IconColor = Color.OldLace;
             btnMinimizarSala.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarSala.IconSize = 20;
-            btnMinimizarSala.Location = new Point(870, 0);
+            btnMinimizarSala.Location = new Point(696, 0);
             btnMinimizarSala.Margin = new Padding(2);
             btnMinimizarSala.Name = "btnMinimizarSala";
-            btnMinimizarSala.Size = new Size(45, 25);
+            btnMinimizarSala.Size = new Size(36, 20);
             btnMinimizarSala.TabIndex = 8;
             btnMinimizarSala.UseVisualStyleBackColor = false;
             btnMinimizarSala.Click += btnMinimizarSala_Click;
@@ -375,22 +364,23 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(255, 161, 43);
-            label1.Location = new Point(13, 9);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(10, 7);
             label1.Name = "label1";
-            label1.Size = new Size(124, 44);
+            label1.Size = new Size(101, 36);
             label1.TabIndex = 1;
             label1.Text = "SALA";
             // 
             // MantenimientoSala
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(999, 590);
+            ClientSize = new Size(799, 472);
             Controls.Add(panelSala);
             Controls.Add(panel1);
+            Margin = new Padding(2);
             Name = "MantenimientoSala";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MantenimientoSala";
             Shown += MantenimientoSala_Shown;
             panel1.ResumeLayout(false);

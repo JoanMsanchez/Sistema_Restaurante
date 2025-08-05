@@ -115,8 +115,9 @@ namespace Proyecto_Restaurante.Mantenimiento
             txtstockActual.Clear();
             txtstockMinimo.Clear();
             descripcion.Clear();
-            comboCategoria.Text = "";
-            comboUnidad.Text = "";
+            comboCategoria.SelectedIndex = -1;
+            comboUnidad.SelectedIndex = -1;
+            //comboUnidad.Text = "";
             activo.Checked = false;
             desactivo.Checked = false;
         }

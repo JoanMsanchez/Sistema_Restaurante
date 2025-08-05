@@ -170,11 +170,11 @@
             // inactivo
             // 
             inactivo.AutoSize = true;
-            inactivo.Font = new Font("Verdana", 10.2F);
+            inactivo.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             inactivo.ForeColor = Color.White;
             inactivo.Location = new Point(130, 239);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(100, 24);
+            inactivo.Size = new Size(109, 24);
             inactivo.TabIndex = 9;
             inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
@@ -183,11 +183,11 @@
             // activo
             // 
             activo.AutoSize = true;
-            activo.Font = new Font("Verdana", 10.2F);
+            activo.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             activo.ForeColor = Color.White;
             activo.Location = new Point(133, 205);
             activo.Name = "activo";
-            activo.Size = new Size(83, 24);
+            activo.Size = new Size(90, 24);
             activo.TabIndex = 8;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -308,7 +308,7 @@
             panelCategoria.Controls.Add(label1);
             panelCategoria.Dock = DockStyle.Top;
             panelCategoria.Location = new Point(0, 0);
-            panelCategoria.Margin = new Padding(2, 2, 2, 2);
+            panelCategoria.Margin = new Padding(2);
             panelCategoria.Name = "panelCategoria";
             panelCategoria.Size = new Size(690, 54);
             panelCategoria.TabIndex = 1;
