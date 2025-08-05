@@ -14,6 +14,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 {
     public partial class MantenimientoSala : Form
     {
+        private int id_sala_seleccionada = -1;
+
         //Fields
         private int bordeSize = 2;
 
@@ -22,6 +24,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public MantenimientoSala()
         {
             InitializeComponent();
+            llenar_tabla_datagridview();
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
         }
@@ -89,6 +92,199 @@ namespace Proyecto_Restaurante.Mantenimiento
         private void btnCerrarSala_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        public void Limpiar()
+        {
+            descripcion.Clear();
+            activo.Checked = false;
+            desactivo.Checked = false;
+            buscar.Clear();
+            id_sala_seleccionada = -1;
+        }
+
+        private void limpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar();
+        }
+
+        public void llenar_tabla_datagridview()
+        {
+            try
+            {
+                string consulta = "SELECT * FROM sala";
+                SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
+                DataTable dt = new DataTable();
+                adaptador.Fill(dt);
+
+                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
+                dt.Columns.Add(columnaSecuencia);
+
+                // Llenar con la secuencia
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["No"] = i + 1;
+                }
+
+                // Mover la columna "No" a la posición 0 (primera)
+                dt.Columns["No"].SetOrdinal(0);
+
+                DGVSala.DataSource = dt;
+
+                if (DGVSala.Columns.Contains("id_sala"))
+                {
+                    DGVSala.Columns["id_sala"].Visible = false;
+                }
+                DGVSala.Columns["No"].HeaderText = "#";
+                DGVSala.Columns["descripcion"].HeaderText = "Descripcion";
+                DGVSala.Columns["estado"].HeaderText = "Estado";
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al llenar tabla: " + ex.Message);
+            }
+        }
+
+        private void guardar_Click(object sender, EventArgs e)
+        {
+            buscar.Clear();
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(descripcion.Text) ||
+                    (!activo.Checked && !desactivo.Checked))
+                {
+                    MessageBox.Show("Por favor, complete la descripción y seleccione el estado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                conexion.Open();
+
+                int estado = activo.Checked ? 1 : 0;
+                DateTime fechaActual = DateTime.Now; // Fecha del sistema
+                string fechaTexto = fechaActual.ToString("yyyy-MM-dd"); // Para insertar en SQL (formato correcto)
+                fecha.Text = fechaTexto; // Mostrar en TextBox
+
+                SqlCommand cmd;
+
+                if (id_sala_seleccionada != -1)
+                {
+                    // MODIFICAR
+                    string consulta = "INSERT INTO sala (descripcion, fecha, estado) VALUES (@descripcion, @fecha, @estado)";
+                    cmd = new SqlCommand(consulta, conexion);
+                    cmd.Parameters.AddWithValue("@fecha", DateTime.Parse(fecha.Text));
+                    cmd.Parameters.AddWithValue("@id", id_sala_seleccionada);
+                    cmd.Parameters.AddWithValue("@descripcion", descripcion.Text.Trim());
+                    cmd.Parameters.AddWithValue("@estado", estado);
+
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Sala modificada correctamente.");
+                }
+                else
+                {
+                    // INSERTAR (incluye fecha)
+                    string consulta = "INSERT INTO sala (descripcion, fecha, estado) VALUES (@descripcion, @fecha, @estado)";
+                    cmd = new SqlCommand(consulta, conexion);
+                    cmd.Parameters.AddWithValue("@descripcion", descripcion.Text.Trim());
+                    cmd.Parameters.AddWithValue("@fecha", fechaActual); // Puedes usar .ToString("yyyy-MM-dd") también si prefieres
+                    cmd.Parameters.AddWithValue("@estado", estado);
+
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Sala registrada correctamente.");
+                }
+
+                llenar_tabla_datagridview();
+                Limpiar();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar: " + ex.Message);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+        private void buscar_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                conexion.Open();
+
+                string consulta = "SELECT * FROM sala WHERE descripcion LIKE @descripcion";
+                SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
+                adaptador.SelectCommand.Parameters.AddWithValue("@descripcion", "%" + buscar.Text.Trim() + "%");
+
+                DataTable dt = new DataTable();
+                adaptador.Fill(dt);
+
+                // Agregar columna "No"
+                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
+                dt.Columns.Add(columnaSecuencia);
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["No"] = i + 1;
+                }
+
+                dt.Columns["No"].SetOrdinal(0); // mover al inicio
+
+                DGVSala.DataSource = dt;
+
+                if (DGVSala.Columns.Contains("id_sala"))
+                {
+                    DGVSala.Columns["id_sala"].Visible = false;
+                }
+
+                DGVSala.Columns["No"].HeaderText = "#";
+                DGVSala.Columns["descripcion"].HeaderText = "Nombre";
+                DGVSala.Columns["estado"].HeaderText = "Estado";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar: " + ex.Message);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+        private void DGVSala_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow fila = DGVSala.Rows[e.RowIndex];
+                id_sala_seleccionada = Convert.ToInt32(fila.Cells["id_sala"].Value); // guardamos el id
+
+                descripcion.Text = fila.Cells["descripcion"].Value.ToString();
+
+                // Cargar fecha al TextBox
+                if (fila.Cells["fecha"].Value != DBNull.Value)
+                {
+                    DateTime fechaGuardada = Convert.ToDateTime(fila.Cells["fecha"].Value);
+                    fecha.Text = fechaGuardada.ToString("yyyy-MM-dd"); // Formato deseado
+                }
+                else
+                {
+                    fecha.Clear(); // por si estuviera en blanco
+                }
+
+                // Cargar estado
+                int estado = Convert.ToInt32(fila.Cells["estado"].Value);
+                if (estado == 1)
+                    activo.Checked = true;
+                else
+                    desactivo.Checked = true;
+            }
+        }
+
+        private void MantenimientoSala_Shown(object sender, EventArgs e)
+        {
+            descripcion.Focus();
+            fecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
         }
     }
 }
