@@ -36,8 +36,8 @@ namespace Proyecto_Restaurante.Consulta
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
 
         private void panelConsultaCliente_MouseDown(object sender, MouseEventArgs e)
@@ -226,11 +226,13 @@ namespace Proyecto_Restaurante.Consulta
 
         private void buscaNombre_CheckedChanged(object sender, EventArgs e)
         {
+            buscar.Focus();
             buscar.Clear();
         }
 
         private void buscaCondicion_CheckedChanged(object sender, EventArgs e)
         {
+            buscar.Focus();
             buscar.Clear();
         }
 

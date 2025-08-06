@@ -87,13 +87,13 @@
             // comboCondicion
             // 
             comboCondicion.BackColor = Color.FromArgb(255, 161, 43);
-            comboCondicion.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboCondicion.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboCondicion.FlatStyle = FlatStyle.Flat;
+            comboCondicion.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboCondicion.ForeColor = Color.White;
             comboCondicion.FormattingEnabled = true;
             comboCondicion.Location = new Point(58, 291);
             comboCondicion.Name = "comboCondicion";
-            comboCondicion.Size = new Size(151, 26);
+            comboCondicion.Size = new Size(151, 28);
             comboCondicion.TabIndex = 72;
             // 
             // label1

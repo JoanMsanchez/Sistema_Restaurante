@@ -56,7 +56,7 @@
             panelConsultaProveedor.Controls.Add(label8);
             panelConsultaProveedor.Dock = DockStyle.Top;
             panelConsultaProveedor.Location = new Point(0, 0);
-            panelConsultaProveedor.Margin = new Padding(2, 2, 2, 2);
+            panelConsultaProveedor.Margin = new Padding(2);
             panelConsultaProveedor.Name = "panelConsultaProveedor";
             panelConsultaProveedor.Size = new Size(853, 58);
             panelConsultaProveedor.TabIndex = 0;
@@ -135,7 +135,7 @@
             panel2.Controls.Add(DGVProveedor);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 58);
-            panel2.Margin = new Padding(2, 2, 2, 2);
+            panel2.Margin = new Padding(2);
             panel2.Name = "panel2";
             panel2.Size = new Size(853, 422);
             panel2.TabIndex = 1;
@@ -144,7 +144,7 @@
             // 
             panel1.BackColor = Color.White;
             panel1.ForeColor = Color.White;
-            panel1.Location = new Point(472, 66);
+            panel1.Location = new Point(483, 64);
             panel1.Name = "panel1";
             panel1.Size = new Size(158, 2);
             panel1.TabIndex = 31;
@@ -166,7 +166,7 @@
             busca.BorderStyle = BorderStyle.None;
             busca.Font = new Font("Verdana", 9F, FontStyle.Bold);
             busca.ForeColor = Color.White;
-            busca.Location = new Point(477, 46);
+            busca.Location = new Point(488, 46);
             busca.Name = "busca";
             busca.Size = new Size(153, 19);
             busca.TabIndex = 30;
@@ -230,10 +230,11 @@
             ClientSize = new Size(853, 480);
             Controls.Add(panel2);
             Controls.Add(panelConsultaProveedor);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "ConsultaProveedor";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CosultaProveedor";
+            Shown += ConsultaProveedor_Shown;
             panelConsultaProveedor.ResumeLayout(false);
             panelConsultaProveedor.PerformLayout();
             panel2.ResumeLayout(false);

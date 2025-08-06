@@ -104,12 +104,12 @@
             // buscar
             // 
             buscar.BackColor = Color.FromArgb(255, 161, 43);
-            buscar.BorderStyle = BorderStyle.FixedSingle;
+            buscar.BorderStyle = BorderStyle.None;
             buscar.Font = new Font("Verdana", 9F, FontStyle.Bold);
             buscar.ForeColor = Color.White;
-            buscar.Location = new Point(295, 84);
+            buscar.Location = new Point(300, 89);
             buscar.Name = "buscar";
-            buscar.Size = new Size(130, 26);
+            buscar.Size = new Size(130, 19);
             buscar.TabIndex = 31;
             buscar.TextChanged += buscar_TextChanged;
             // 
@@ -187,7 +187,7 @@
             panelConsultaCliente.Controls.Add(label6);
             panelConsultaCliente.Dock = DockStyle.Top;
             panelConsultaCliente.Location = new Point(0, 0);
-            panelConsultaCliente.Margin = new Padding(2, 2, 2, 2);
+            panelConsultaCliente.Margin = new Padding(2);
             panelConsultaCliente.Name = "panelConsultaCliente";
             panelConsultaCliente.Size = new Size(800, 54);
             panelConsultaCliente.TabIndex = 1;

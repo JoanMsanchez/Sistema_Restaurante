@@ -159,6 +159,7 @@
             unidadproducto.TabStop = true;
             unidadproducto.Text = "Unidad de medida";
             unidadproducto.UseVisualStyleBackColor = true;
+            unidadproducto.CheckedChanged += unidadproducto_CheckedChanged;
             // 
             // categoriaproducto
             // 
@@ -172,6 +173,7 @@
             categoriaproducto.TabStop = true;
             categoriaproducto.Text = "Categoria";
             categoriaproducto.UseVisualStyleBackColor = true;
+            categoriaproducto.CheckedChanged += categoriaproducto_CheckedChanged;
             // 
             // nombreproducto
             // 
@@ -185,6 +187,7 @@
             nombreproducto.TabStop = true;
             nombreproducto.Text = "Nombre";
             nombreproducto.UseVisualStyleBackColor = true;
+            nombreproducto.CheckedChanged += nombreproducto_CheckedChanged;
             // 
             // dataGridView1
             // 
@@ -254,12 +257,12 @@
             // buscar
             // 
             buscar.BackColor = Color.FromArgb(255, 161, 43);
-            buscar.BorderStyle = BorderStyle.FixedSingle;
+            buscar.BorderStyle = BorderStyle.None;
             buscar.Font = new Font("Verdana", 9F, FontStyle.Bold);
             buscar.ForeColor = Color.White;
-            buscar.Location = new Point(431, 49);
+            buscar.Location = new Point(436, 49);
             buscar.Name = "buscar";
-            buscar.Size = new Size(130, 26);
+            buscar.Size = new Size(130, 19);
             buscar.TabIndex = 25;
             buscar.TextChanged += buscar_TextChanged;
             // 

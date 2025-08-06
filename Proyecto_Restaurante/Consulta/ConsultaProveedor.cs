@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Proyecto_Restaurante.Mantenimiento;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Proyecto_Restaurante.Consulta
 {
@@ -27,8 +28,14 @@ namespace Proyecto_Restaurante.Consulta
         {
             InitializeComponent();
             llenar_tabla_datagridview();
+            this.Shown += ConsultaProveedor_Shown;
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
+        }
+
+        private void ConsultaProveedor_Shown1(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         //Drag Form
@@ -37,8 +44,8 @@ namespace Proyecto_Restaurante.Consulta
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelConsultaProveedor_MouseDown(object sender, MouseEventArgs e)
         {
@@ -227,7 +234,10 @@ namespace Proyecto_Restaurante.Consulta
             }
         }
 
+        private void ConsultaProveedor_Shown(object sender, EventArgs e)
+        {
+            busca.Focus();
 
-
+        }
     }
 }
