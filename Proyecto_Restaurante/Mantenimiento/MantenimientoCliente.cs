@@ -104,7 +104,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             email.Clear();
             direccion.Clear();
             comboCondicion.SelectedIndex = -1;
-            activo.Checked = false;
+            activo.Checked = true;
             desactivo.Checked = false;
         }
 
@@ -314,6 +314,12 @@ namespace Proyecto_Restaurante.Mantenimiento
         private void MantenimientoCliente_Shown(object sender, EventArgs e)
         {
             nombre.Focus();
+        }
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            MantenimientoCondicionPago condicion = new MantenimientoCondicionPago();
+            condicion.Show();
         }
     }
 }

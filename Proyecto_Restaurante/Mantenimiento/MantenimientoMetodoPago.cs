@@ -100,7 +100,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public void Limpiar()
         {
             nomMetodoPago.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             inactivo.Checked = false;
             buscanom.Clear();
             id_metodopago_seleccionada = -1;

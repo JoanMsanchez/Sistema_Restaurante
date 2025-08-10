@@ -49,6 +49,7 @@
             label4 = new Label();
             busca = new TextBox();
             panel1 = new Panel();
+            panel7 = new Panel();
             DGVEmpleado = new DataGridView();
             panel6 = new Panel();
             panel5 = new Panel();
@@ -66,12 +67,11 @@
             btnCerrarCategoria = new FontAwesome.Sharp.IconButton();
             btnMinimizarCategoria = new FontAwesome.Sharp.IconButton();
             label8 = new Label();
-            panel7 = new Panel();
             panel1.SuspendLayout();
+            panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVEmpleado).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelEmpleado.SuspendLayout();
-            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // label2
@@ -158,11 +158,13 @@
             // activo
             // 
             activo.AutoSize = true;
+            activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.Location = new Point(3, 6);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 17;
+            activo.TabStop = true;
             activo.Text = "Activo";
             activo.UseVisualStyleBackColor = true;
             // 
@@ -294,6 +296,15 @@
             panel1.Size = new Size(909, 659);
             panel1.TabIndex = 21;
             panel1.Paint += panel1_Paint;
+            // 
+            // panel7
+            // 
+            panel7.Controls.Add(activo);
+            panel7.Controls.Add(desactivo);
+            panel7.Location = new Point(418, 171);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(131, 67);
+            panel7.TabIndex = 28;
             // 
             // DGVEmpleado
             // 
@@ -559,15 +570,6 @@
             label8.TabIndex = 0;
             label8.Text = "EMPLEADO";
             // 
-            // panel7
-            // 
-            panel7.Controls.Add(activo);
-            panel7.Controls.Add(desactivo);
-            panel7.Location = new Point(418, 171);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(131, 67);
-            panel7.TabIndex = 28;
-            // 
             // MantenimientoEmpleado
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -582,12 +584,12 @@
             Load += MantenimientoEmpleado_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DGVEmpleado).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelEmpleado.ResumeLayout(false);
             panelEmpleado.PerformLayout();
-            panel7.ResumeLayout(false);
-            panel7.PerformLayout();
             ResumeLayout(false);
         }
 

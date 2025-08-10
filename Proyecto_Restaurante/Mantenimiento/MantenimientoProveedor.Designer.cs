@@ -206,17 +206,16 @@
             btnConsultaProveedor.FlatStyle = FlatStyle.Flat;
             btnConsultaProveedor.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnConsultaProveedor.ForeColor = Color.White;
-            btnConsultaProveedor.IconChar = FontAwesome.Sharp.IconChar.Wrench;
+            btnConsultaProveedor.IconChar = FontAwesome.Sharp.IconChar.Search;
             btnConsultaProveedor.IconColor = SystemColors.ControlLightLight;
             btnConsultaProveedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnConsultaProveedor.IconSize = 30;
             btnConsultaProveedor.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConsultaProveedor.Location = new Point(416, 371);
+            btnConsultaProveedor.Location = new Point(296, 28);
             btnConsultaProveedor.Margin = new Padding(2);
             btnConsultaProveedor.Name = "btnConsultaProveedor";
-            btnConsultaProveedor.Size = new Size(149, 52);
+            btnConsultaProveedor.Size = new Size(43, 41);
             btnConsultaProveedor.TabIndex = 50;
-            btnConsultaProveedor.Text = "    Consulta";
             btnConsultaProveedor.UseVisualStyleBackColor = false;
             btnConsultaProveedor.Click += btnConsultaProveedor_Click;
             // 
@@ -234,12 +233,14 @@
             // activo
             // 
             activo.AutoSize = true;
+            activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = SystemColors.ControlLightLight;
             activo.Location = new Point(114, 230);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 42;
+            activo.TabStop = true;
             activo.Text = "Activo";
             activo.UseVisualStyleBackColor = true;
             // 

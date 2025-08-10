@@ -101,9 +101,9 @@ namespace Proyecto_Restaurante.Mantenimiento
         public void Limpiar()
         {
             nomCondicion.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             inactivo.Checked = false;
-            autopagoSI.Checked = false;
+            autopagoSI.Checked = true;
             autopagoNO.Checked = false;
             diascredito.Clear();
             diascredito.Enabled = true;
@@ -113,6 +113,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         private void limpiar_Click(object sender, EventArgs e)
         {
             Limpiar();
+            autopagonumero();
         }
 
         public void llenar_tabla_datagridview()
@@ -228,7 +229,6 @@ namespace Proyecto_Restaurante.Mantenimiento
                 id_condicion_seleccionada = Convert.ToInt32(fila.Cells["id_condicion"].Value); // guardamos el id
 
                 nomCondicion.Text = fila.Cells["descripcion"].Value.ToString();
-                diascredito.Text = fila.Cells["dias_credito"].Value.ToString();
                 int autopago = Convert.ToInt32(fila.Cells["autopago"].Value);
                 if (autopago == 1)
                     autopagoSI.Checked = true;
@@ -240,6 +240,8 @@ namespace Proyecto_Restaurante.Mantenimiento
                     activo.Checked = true;
                 else
                     inactivo.Checked = true;
+                diascredito.Text = fila.Cells["dias_credito"].Value.ToString();
+
             }
         }
 
@@ -334,25 +336,32 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void autopagoSI_CheckedChanged(object sender, EventArgs e)
         {
-            if (autopagoSI.Checked)
-            {
-                diascredito.Text = "0";
-                diascredito.Enabled = false;
-            }
+            autopagonumero();
         }
 
         private void autopagoNO_CheckedChanged(object sender, EventArgs e)
         {
-            if (autopagoNO.Checked)
-            {
-                diascredito.Enabled = true;
-                diascredito.Clear();
-            }
+            autopagonumero();
         }
 
         private void MantenimientoCondicionPago_Shown(object sender, EventArgs e)
         {
             nomCondicion.Focus();
+            autopagonumero();
+        }
+
+        private void autopagonumero()
+        {
+            if (autopagoSI.Checked)
+            {
+                diascredito.Text = "0";
+                diascredito.ReadOnly = true;
+            }
+            else 
+            {
+                diascredito.Text = "";
+                diascredito.ReadOnly = false;
+            }
         }
     }
 }

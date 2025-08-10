@@ -270,13 +270,13 @@
             inactivo.Name = "inactivo";
             inactivo.Size = new Size(109, 24);
             inactivo.TabIndex = 31;
-            inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
             inactivo.UseVisualStyleBackColor = true;
             // 
             // activo
             // 
             activo.AutoSize = true;
+            activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
             activo.Location = new Point(134, 157);

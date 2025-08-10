@@ -91,9 +91,9 @@
             comboCondicion.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboCondicion.ForeColor = Color.White;
             comboCondicion.FormattingEnabled = true;
-            comboCondicion.Location = new Point(58, 291);
+            comboCondicion.Location = new Point(49, 291);
             comboCondicion.Name = "comboCondicion";
-            comboCondicion.Size = new Size(151, 28);
+            comboCondicion.Size = new Size(167, 28);
             comboCondicion.TabIndex = 72;
             // 
             // label1
@@ -157,12 +157,12 @@
             btnConsultaCliente.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnConsultaCliente.IconSize = 30;
             btnConsultaCliente.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConsultaCliente.Location = new Point(437, 387);
+            btnConsultaCliente.Location = new Point(285, 69);
             btnConsultaCliente.Margin = new Padding(2);
             btnConsultaCliente.Name = "btnConsultaCliente";
-            btnConsultaCliente.Size = new Size(149, 52);
+            btnConsultaCliente.Size = new Size(48, 40);
             btnConsultaCliente.TabIndex = 67;
-            btnConsultaCliente.Text = "    Consulta";
+            btnConsultaCliente.Text = "   ";
             btnConsultaCliente.UseVisualStyleBackColor = false;
             btnConsultaCliente.Click += btnConsultaCliente_Click;
             // 
@@ -180,12 +180,14 @@
             // activo
             // 
             activo.AutoSize = true;
+            activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = SystemColors.ControlLightLight;
             activo.Location = new Point(485, 258);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 64;
+            activo.TabStop = true;
             activo.Text = "Activo";
             activo.UseVisualStyleBackColor = true;
             // 

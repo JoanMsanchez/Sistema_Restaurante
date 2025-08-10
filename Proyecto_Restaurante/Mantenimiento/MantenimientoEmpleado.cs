@@ -89,7 +89,7 @@ namespace Proyecto_Restaurante
             contrasena.Clear();
             nombre.Clear();
             apellido.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             desactivo.Checked = false;
             login.Focus();
             busca.Clear();

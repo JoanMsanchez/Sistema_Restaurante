@@ -301,12 +301,11 @@
             btnConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnConsultaProducto.IconSize = 30;
             btnConsultaProducto.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConsultaProducto.Location = new Point(371, 381);
+            btnConsultaProducto.Location = new Point(282, 25);
             btnConsultaProducto.Margin = new Padding(2);
             btnConsultaProducto.Name = "btnConsultaProducto";
-            btnConsultaProducto.Size = new Size(149, 52);
+            btnConsultaProducto.Size = new Size(39, 43);
             btnConsultaProducto.TabIndex = 43;
-            btnConsultaProducto.Text = "    Consulta";
             btnConsultaProducto.UseVisualStyleBackColor = false;
             btnConsultaProducto.Click += btnConsultaProducto_Click;
             // 
@@ -342,12 +341,14 @@
             // activo
             // 
             activo.AutoSize = true;
+            activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = SystemColors.ControlLightLight;
             activo.Location = new Point(674, 259);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 39;
+            activo.TabStop = true;
             activo.Text = "Activo";
             activo.UseVisualStyleBackColor = true;
             // 

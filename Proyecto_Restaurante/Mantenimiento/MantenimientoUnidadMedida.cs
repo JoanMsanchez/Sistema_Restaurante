@@ -44,7 +44,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public void Limpiar()
         {
             nomUnidadMedida.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             inactivo.Checked = false;
             buscanom.Clear();
             id_UnidadMedida_seleccionada = -1;

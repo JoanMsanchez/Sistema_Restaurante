@@ -101,7 +101,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public void Limpiar()
         {
             nomMovimiento.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             inactivo.Checked = false;
             afectastock.Clear();
             buscanom.Clear();

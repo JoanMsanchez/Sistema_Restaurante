@@ -47,7 +47,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public void Limpiar()
         {
             nomcategoria.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             inactivo.Checked = false;
             buscanom.Clear();
             id_categoria_seleccionada = -1;

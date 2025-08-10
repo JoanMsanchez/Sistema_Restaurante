@@ -118,7 +118,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             comboCategoria.SelectedIndex = -1;
             comboUnidad.SelectedIndex = -1;
             //comboUnidad.Text = "";
-            activo.Checked = false;
+            activo.Checked = true;
             desactivo.Checked = false;
         }
 

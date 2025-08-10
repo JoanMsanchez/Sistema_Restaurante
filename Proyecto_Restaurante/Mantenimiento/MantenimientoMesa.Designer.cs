@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoMesa));
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panelMesa = new Panel();
             btnMaximizarMesa = new FontAwesome.Sharp.IconButton();
             btnCerrarMesa = new FontAwesome.Sharp.IconButton();
@@ -339,46 +339,46 @@
             // 
             DGVMesa.AllowUserToAddRows = false;
             DGVMesa.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle17.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle17.ForeColor = Color.White;
-            dataGridViewCellStyle17.SelectionBackColor = Color.White;
-            dataGridViewCellStyle17.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVMesa.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVMesa.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DGVMesa.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVMesa.BackgroundColor = Color.FromArgb(255, 161, 43);
             DGVMesa.BorderStyle = BorderStyle.None;
             DGVMesa.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle18.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle18.ForeColor = Color.White;
-            dataGridViewCellStyle18.SelectionBackColor = Color.White;
-            dataGridViewCellStyle18.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle18.WrapMode = DataGridViewTriState.True;
-            DGVMesa.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DGVMesa.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DGVMesa.ColumnHeadersHeight = 25;
             DGVMesa.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle19.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle19.ForeColor = Color.White;
-            dataGridViewCellStyle19.SelectionBackColor = Color.White;
-            dataGridViewCellStyle19.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle19.WrapMode = DataGridViewTriState.False;
-            DGVMesa.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            DGVMesa.DefaultCellStyle = dataGridViewCellStyle3;
             DGVMesa.EnableHeadersVisualStyles = false;
             DGVMesa.Location = new Point(318, 270);
             DGVMesa.Name = "DGVMesa";
             DGVMesa.ReadOnly = true;
             DGVMesa.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle20.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle20.ForeColor = Color.White;
-            dataGridViewCellStyle20.SelectionBackColor = Color.White;
-            dataGridViewCellStyle20.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle20.WrapMode = DataGridViewTriState.True;
-            DGVMesa.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            DGVMesa.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVMesa.RowHeadersVisible = false;
             DGVMesa.RowHeadersWidth = 51;
             DGVMesa.Size = new Size(557, 228);
@@ -442,6 +442,7 @@
             // activo
             // 
             activo.AutoSize = true;
+            activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
             activo.Location = new Point(126, 304);
@@ -472,7 +473,6 @@
             inactivo.Name = "inactivo";
             inactivo.Size = new Size(109, 24);
             inactivo.TabIndex = 60;
-            inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
             inactivo.UseVisualStyleBackColor = true;
             // 

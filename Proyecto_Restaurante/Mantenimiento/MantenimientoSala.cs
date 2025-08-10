@@ -97,7 +97,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         public void Limpiar()
         {
             descripcion.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             desactivo.Checked = false;
             buscar.Clear();
             id_sala_seleccionada = -1;

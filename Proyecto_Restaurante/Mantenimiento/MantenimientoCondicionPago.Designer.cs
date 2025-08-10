@@ -179,7 +179,6 @@
             autopagoNO.Name = "autopagoNO";
             autopagoNO.Size = new Size(56, 24);
             autopagoNO.TabIndex = 1;
-            autopagoNO.TabStop = true;
             autopagoNO.Text = "No";
             autopagoNO.UseVisualStyleBackColor = true;
             autopagoNO.CheckedChanged += autopagoNO_CheckedChanged;
@@ -187,6 +186,7 @@
             // autopagoSI
             // 
             autopagoSI.AutoSize = true;
+            autopagoSI.Checked = true;
             autopagoSI.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             autopagoSI.ForeColor = Color.White;
             autopagoSI.Location = new Point(11, 18);
@@ -309,13 +309,13 @@
             inactivo.Name = "inactivo";
             inactivo.Size = new Size(109, 24);
             inactivo.TabIndex = 43;
-            inactivo.TabStop = true;
             inactivo.Text = "Inactivo";
             inactivo.UseVisualStyleBackColor = true;
             // 
             // activo
             // 
             activo.AutoSize = true;
+            activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
             activo.Location = new Point(123, 273);
@@ -407,7 +407,7 @@
             panelMantenimientoCondicion.Controls.Add(label6);
             panelMantenimientoCondicion.Dock = DockStyle.Top;
             panelMantenimientoCondicion.Location = new Point(0, 0);
-            panelMantenimientoCondicion.Margin = new Padding(2, 2, 2, 2);
+            panelMantenimientoCondicion.Margin = new Padding(2);
             panelMantenimientoCondicion.Name = "panelMantenimientoCondicion";
             panelMantenimientoCondicion.Size = new Size(904, 54);
             panelMantenimientoCondicion.TabIndex = 1;

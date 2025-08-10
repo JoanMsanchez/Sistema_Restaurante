@@ -240,13 +240,13 @@
             desactivo.Name = "desactivo";
             desactivo.Size = new Size(109, 24);
             desactivo.TabIndex = 45;
-            desactivo.TabStop = true;
             desactivo.Text = "Inactivo";
             desactivo.UseVisualStyleBackColor = true;
             // 
             // activo
             // 
             activo.AutoSize = true;
+            activo.Checked = true;
             activo.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             activo.ForeColor = Color.White;
             activo.Location = new Point(135, 254);

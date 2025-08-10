@@ -118,7 +118,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             telefono.Clear();
             email.Clear();
             direccion.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             desactivo.Checked = false;
             idProveedorSeleccionado = null;
         }

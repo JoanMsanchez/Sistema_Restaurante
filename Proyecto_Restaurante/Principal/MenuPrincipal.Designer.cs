@@ -46,9 +46,9 @@
             panelEscritorio = new Panel();
             DropMenu_restaurante = new ContextMenuStrip(components);
             MantenimientoRestaurante = new FontAwesome.Sharp.IconMenuItem();
+            MantenimientoSala = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoMesas = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoEmpleados = new FontAwesome.Sharp.IconMenuItem();
-            MantenimientoSala = new FontAwesome.Sharp.IconMenuItem();
             procesosRestaurante = new FontAwesome.Sharp.IconMenuItem();
             FacturacionRestaurante = new FontAwesome.Sharp.IconMenuItem();
             DropMenu_inventario = new ContextMenuStrip(components);
@@ -101,7 +101,7 @@
             panelMenu.Location = new Point(0, 0);
             panelMenu.Margin = new Padding(2);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(262, 551);
+            panelMenu.Size = new Size(210, 441);
             panelMenu.TabIndex = 0;
             // 
             // btnCxc
@@ -114,10 +114,10 @@
             btnCxc.IconChar = FontAwesome.Sharp.IconChar.FileInvoiceDollar;
             btnCxc.IconColor = Color.OldLace;
             btnCxc.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnCxc.Location = new Point(0, 322);
+            btnCxc.Location = new Point(0, 257);
             btnCxc.Margin = new Padding(2);
             btnCxc.Name = "btnCxc";
-            btnCxc.Size = new Size(262, 99);
+            btnCxc.Size = new Size(210, 79);
             btnCxc.TabIndex = 2;
             btnCxc.Tag = "CUENTAS POR              COBRAR";
             btnCxc.Text = "iconButton2";
@@ -136,10 +136,10 @@
             btnInventario.IconChar = FontAwesome.Sharp.IconChar.Warehouse;
             btnInventario.IconColor = Color.OldLace;
             btnInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnInventario.Location = new Point(0, 223);
+            btnInventario.Location = new Point(0, 178);
             btnInventario.Margin = new Padding(2);
             btnInventario.Name = "btnInventario";
-            btnInventario.Size = new Size(262, 99);
+            btnInventario.Size = new Size(210, 79);
             btnInventario.TabIndex = 6;
             btnInventario.Tag = "INVENTARIO";
             btnInventario.Text = "iconButton1";
@@ -159,10 +159,10 @@
             iconButton5.IconColor = Color.OldLace;
             iconButton5.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconButton5.IconSize = 46;
-            iconButton5.Location = new Point(0, 477);
+            iconButton5.Location = new Point(0, 382);
             iconButton5.Margin = new Padding(2);
             iconButton5.Name = "iconButton5";
-            iconButton5.Size = new Size(262, 74);
+            iconButton5.Size = new Size(210, 59);
             iconButton5.TabIndex = 5;
             iconButton5.Tag = "LOGOUT";
             iconButton5.Text = "iconButton5";
@@ -181,10 +181,10 @@
             btnRestaurante.IconChar = FontAwesome.Sharp.IconChar.Utensils;
             btnRestaurante.IconColor = Color.OldLace;
             btnRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnRestaurante.Location = new Point(0, 124);
+            btnRestaurante.Location = new Point(0, 99);
             btnRestaurante.Margin = new Padding(2);
             btnRestaurante.Name = "btnRestaurante";
-            btnRestaurante.Size = new Size(262, 99);
+            btnRestaurante.Size = new Size(210, 79);
             btnRestaurante.TabIndex = 3;
             btnRestaurante.Tag = "RESTAURANTE";
             btnRestaurante.Text = "iconButton3";
@@ -202,16 +202,15 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(262, 124);
+            panel1.Size = new Size(210, 99);
             panel1.TabIndex = 0;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(181, 124);
+            pictureBox1.Size = new Size(145, 99);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
@@ -224,10 +223,10 @@
             btnBarraMenu.IconColor = Color.OldLace;
             btnBarraMenu.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnBarraMenu.IconSize = 35;
-            btnBarraMenu.Location = new Point(199, 0);
+            btnBarraMenu.Location = new Point(159, 0);
             btnBarraMenu.Margin = new Padding(2);
             btnBarraMenu.Name = "btnBarraMenu";
-            btnBarraMenu.Size = new Size(64, 61);
+            btnBarraMenu.Size = new Size(51, 49);
             btnBarraMenu.TabIndex = 1;
             btnBarraMenu.UseVisualStyleBackColor = true;
             btnBarraMenu.Click += btnBarraMenu_Click;
@@ -240,10 +239,10 @@
             panelTitulo.Controls.Add(btnMinimizar);
             panelTitulo.Controls.Add(label1);
             panelTitulo.Dock = DockStyle.Top;
-            panelTitulo.Location = new Point(262, 0);
+            panelTitulo.Location = new Point(210, 0);
             panelTitulo.Margin = new Padding(2);
             panelTitulo.Name = "panelTitulo";
-            panelTitulo.Size = new Size(943, 71);
+            panelTitulo.Size = new Size(754, 57);
             panelTitulo.TabIndex = 0;
             panelTitulo.MouseDown += panelTitulo_MouseDown;
             // 
@@ -257,10 +256,10 @@
             btnMaximizar.IconColor = Color.OldLace;
             btnMaximizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizar.IconSize = 20;
-            btnMaximizar.Location = new Point(856, 0);
+            btnMaximizar.Location = new Point(685, 0);
             btnMaximizar.Margin = new Padding(2);
             btnMaximizar.Name = "btnMaximizar";
-            btnMaximizar.Size = new Size(45, 25);
+            btnMaximizar.Size = new Size(36, 20);
             btnMaximizar.TabIndex = 3;
             btnMaximizar.UseVisualStyleBackColor = false;
             btnMaximizar.Click += btnMaximizar_Click;
@@ -275,10 +274,10 @@
             btnCerrar.IconColor = Color.OldLace;
             btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrar.IconSize = 20;
-            btnCerrar.Location = new Point(898, 0);
+            btnCerrar.Location = new Point(718, 0);
             btnCerrar.Margin = new Padding(2);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(45, 25);
+            btnCerrar.Size = new Size(36, 20);
             btnCerrar.TabIndex = 4;
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
@@ -293,10 +292,10 @@
             btnMinimizar.IconColor = Color.OldLace;
             btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizar.IconSize = 20;
-            btnMinimizar.Location = new Point(812, 0);
+            btnMinimizar.Location = new Point(650, 0);
             btnMinimizar.Margin = new Padding(2);
             btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(45, 25);
+            btnMinimizar.Size = new Size(36, 20);
             btnMinimizar.TabIndex = 2;
             btnMinimizar.UseVisualStyleBackColor = false;
             btnMinimizar.Click += btnMinimizar_Click;
@@ -306,10 +305,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(255, 161, 43);
-            label1.Location = new Point(42, 9);
+            label1.Location = new Point(34, 7);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(347, 48);
+            label1.Size = new Size(298, 41);
             label1.TabIndex = 0;
             label1.Text = "LA ESQUINITA";
             // 
@@ -317,10 +316,10 @@
             // 
             panelEscritorio.BackColor = Color.OldLace;
             panelEscritorio.Dock = DockStyle.Fill;
-            panelEscritorio.Location = new Point(262, 71);
+            panelEscritorio.Location = new Point(210, 57);
             panelEscritorio.Margin = new Padding(2);
             panelEscritorio.Name = "panelEscritorio";
-            panelEscritorio.Size = new Size(943, 480);
+            panelEscritorio.Size = new Size(754, 384);
             panelEscritorio.TabIndex = 1;
             panelEscritorio.Paint += panelEscritorio_Paint;
             // 
@@ -329,7 +328,7 @@
             DropMenu_restaurante.ImageScalingSize = new Size(24, 24);
             DropMenu_restaurante.Items.AddRange(new ToolStripItem[] { MantenimientoRestaurante, procesosRestaurante });
             DropMenu_restaurante.Name = "DropMenu_restaurante";
-            DropMenu_restaurante.Size = new Size(272, 68);
+            DropMenu_restaurante.Size = new Size(240, 64);
             // 
             // MantenimientoRestaurante
             // 
@@ -341,8 +340,20 @@
             MantenimientoRestaurante.IconColor = Color.White;
             MantenimientoRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoRestaurante.Name = "MantenimientoRestaurante";
-            MantenimientoRestaurante.Size = new Size(271, 32);
+            MantenimientoRestaurante.Size = new Size(239, 30);
             MantenimientoRestaurante.Text = "Mantenimientos";
+            // 
+            // MantenimientoSala
+            // 
+            MantenimientoSala.BackColor = Color.DarkOrange;
+            MantenimientoSala.ForeColor = SystemColors.ControlLightLight;
+            MantenimientoSala.IconChar = FontAwesome.Sharp.IconChar.Couch;
+            MantenimientoSala.IconColor = Color.White;
+            MantenimientoSala.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            MantenimientoSala.Name = "MantenimientoSala";
+            MantenimientoSala.Size = new Size(196, 26);
+            MantenimientoSala.Text = "Salas";
+            MantenimientoSala.Click += MantenimientoSala_Click;
             // 
             // MantenimientoMesas
             // 
@@ -352,7 +363,7 @@
             MantenimientoMesas.IconColor = Color.White;
             MantenimientoMesas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoMesas.Name = "MantenimientoMesas";
-            MantenimientoMesas.Size = new Size(236, 34);
+            MantenimientoMesas.Size = new Size(196, 26);
             MantenimientoMesas.Text = "Mesas";
             MantenimientoMesas.Click += MantenimientoMesas_Click;
             // 
@@ -364,21 +375,9 @@
             MantenimientoEmpleados.IconColor = Color.White;
             MantenimientoEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoEmpleados.Name = "MantenimientoEmpleados";
-            MantenimientoEmpleados.Size = new Size(236, 34);
+            MantenimientoEmpleados.Size = new Size(196, 26);
             MantenimientoEmpleados.Text = "Empleados";
             MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
-            // 
-            // MantenimientoSala
-            // 
-            MantenimientoSala.BackColor = Color.DarkOrange;
-            MantenimientoSala.ForeColor = SystemColors.ControlLightLight;
-            MantenimientoSala.IconChar = FontAwesome.Sharp.IconChar.Couch;
-            MantenimientoSala.IconColor = Color.White;
-            MantenimientoSala.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            MantenimientoSala.Name = "MantenimientoSala";
-            MantenimientoSala.Size = new Size(236, 34);
-            MantenimientoSala.Text = "Salas";
-            MantenimientoSala.Click += MantenimientoSala_Click;
             // 
             // procesosRestaurante
             // 
@@ -390,7 +389,7 @@
             procesosRestaurante.IconColor = Color.White;
             procesosRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             procesosRestaurante.Name = "procesosRestaurante";
-            procesosRestaurante.Size = new Size(271, 32);
+            procesosRestaurante.Size = new Size(239, 30);
             procesosRestaurante.Text = "Procesos";
             // 
             // FacturacionRestaurante
@@ -401,7 +400,7 @@
             FacturacionRestaurante.IconColor = Color.White;
             FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             FacturacionRestaurante.Name = "FacturacionRestaurante";
-            FacturacionRestaurante.Size = new Size(270, 34);
+            FacturacionRestaurante.Size = new Size(203, 26);
             FacturacionRestaurante.Text = "Facturacion";
             // 
             // DropMenu_inventario
@@ -409,7 +408,7 @@
             DropMenu_inventario.ImageScalingSize = new Size(24, 24);
             DropMenu_inventario.Items.AddRange(new ToolStripItem[] { MantenimientoInventario, ProcesosInventario, ConsultasInventario, ResportesInventario });
             DropMenu_inventario.Name = "DropMenu_inventario";
-            DropMenu_inventario.Size = new Size(272, 132);
+            DropMenu_inventario.Size = new Size(240, 124);
             // 
             // MantenimientoInventario
             // 
@@ -421,7 +420,7 @@
             MantenimientoInventario.IconColor = Color.White;
             MantenimientoInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoInventario.Name = "MantenimientoInventario";
-            MantenimientoInventario.Size = new Size(271, 32);
+            MantenimientoInventario.Size = new Size(239, 30);
             MantenimientoInventario.Text = "Mantenimientos";
             // 
             // MantenimientoProductos
@@ -432,7 +431,7 @@
             MantenimientoProductos.IconColor = Color.White;
             MantenimientoProductos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoProductos.Name = "MantenimientoProductos";
-            MantenimientoProductos.Size = new Size(338, 34);
+            MantenimientoProductos.Size = new Size(283, 26);
             MantenimientoProductos.Text = "Productos";
             MantenimientoProductos.Click += MantenimientoProductos_Click;
             // 
@@ -444,7 +443,7 @@
             MantenimientoCategoria.IconColor = Color.White;
             MantenimientoCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoCategoria.Name = "MantenimientoCategoria";
-            MantenimientoCategoria.Size = new Size(338, 34);
+            MantenimientoCategoria.Size = new Size(283, 26);
             MantenimientoCategoria.Text = "Categorias";
             MantenimientoCategoria.Click += MantenimientoCategoria_Click;
             // 
@@ -456,7 +455,7 @@
             MantenimientoUnidades.IconColor = Color.White;
             MantenimientoUnidades.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoUnidades.Name = "MantenimientoUnidades";
-            MantenimientoUnidades.Size = new Size(338, 34);
+            MantenimientoUnidades.Size = new Size(283, 26);
             MantenimientoUnidades.Text = "Unidades de Medida";
             MantenimientoUnidades.Click += MantenimientoUnidades_Click;
             // 
@@ -468,7 +467,7 @@
             MantenimientoProveedores.IconColor = Color.White;
             MantenimientoProveedores.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoProveedores.Name = "MantenimientoProveedores";
-            MantenimientoProveedores.Size = new Size(338, 34);
+            MantenimientoProveedores.Size = new Size(283, 26);
             MantenimientoProveedores.Text = "Proveedores";
             MantenimientoProveedores.Click += MantenimientoProveedores_Click;
             // 
@@ -480,7 +479,7 @@
             MantenimientoTipoDeMovimiento.IconColor = Color.White;
             MantenimientoTipoDeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoTipoDeMovimiento.Name = "MantenimientoTipoDeMovimiento";
-            MantenimientoTipoDeMovimiento.Size = new Size(338, 34);
+            MantenimientoTipoDeMovimiento.Size = new Size(283, 26);
             MantenimientoTipoDeMovimiento.Text = "Tipo de Movimiento";
             MantenimientoTipoDeMovimiento.Click += MantenimientoTipoDeMovimiento_Click;
             // 
@@ -494,7 +493,7 @@
             ProcesosInventario.IconColor = Color.White;
             ProcesosInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ProcesosInventario.Name = "ProcesosInventario";
-            ProcesosInventario.Size = new Size(271, 32);
+            ProcesosInventario.Size = new Size(239, 30);
             ProcesosInventario.Text = "Procesos";
             // 
             // RegistroDeMovimientoInventario
@@ -505,7 +504,7 @@
             RegistroDeMovimientoInventario.IconColor = Color.White;
             RegistroDeMovimientoInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             RegistroDeMovimientoInventario.Name = "RegistroDeMovimientoInventario";
-            RegistroDeMovimientoInventario.Size = new Size(381, 34);
+            RegistroDeMovimientoInventario.Size = new Size(319, 26);
             RegistroDeMovimientoInventario.Text = "Registro de Movimiento";
             // 
             // ConsultasInventario
@@ -518,7 +517,7 @@
             ConsultasInventario.IconColor = Color.White;
             ConsultasInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ConsultasInventario.Name = "ConsultasInventario";
-            ConsultasInventario.Size = new Size(271, 32);
+            ConsultasInventario.Size = new Size(239, 30);
             ConsultasInventario.Text = "Consultas";
             // 
             // ConsultaProducto
@@ -529,7 +528,7 @@
             ConsultaProducto.IconColor = Color.White;
             ConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ConsultaProducto.Name = "ConsultaProducto";
-            ConsultaProducto.Size = new Size(255, 34);
+            ConsultaProducto.Size = new Size(210, 26);
             ConsultaProducto.Text = "Productos";
             ConsultaProducto.Click += ConsultaProducto_Click;
             // 
@@ -541,7 +540,7 @@
             ConsultaProveedor.IconColor = Color.White;
             ConsultaProveedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ConsultaProveedor.Name = "ConsultaProveedor";
-            ConsultaProveedor.Size = new Size(255, 34);
+            ConsultaProveedor.Size = new Size(210, 26);
             ConsultaProveedor.Text = "Proveedores";
             ConsultaProveedor.Click += ConsultaProveedor_Click;
             // 
@@ -555,7 +554,7 @@
             ResportesInventario.IconColor = Color.White;
             ResportesInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ResportesInventario.Name = "ResportesInventario";
-            ResportesInventario.Size = new Size(271, 32);
+            ResportesInventario.Size = new Size(239, 30);
             ResportesInventario.Text = "Reportes";
             // 
             // StockAnualInventario
@@ -566,7 +565,7 @@
             StockAnualInventario.IconColor = Color.White;
             StockAnualInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             StockAnualInventario.Name = "StockAnualInventario";
-            StockAnualInventario.Size = new Size(320, 34);
+            StockAnualInventario.Size = new Size(267, 26);
             StockAnualInventario.Text = "Stock Anual";
             // 
             // EntradasSalidasInventario
@@ -577,7 +576,7 @@
             EntradasSalidasInventario.IconColor = Color.White;
             EntradasSalidasInventario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             EntradasSalidasInventario.Name = "EntradasSalidasInventario";
-            EntradasSalidasInventario.Size = new Size(320, 34);
+            EntradasSalidasInventario.Size = new Size(267, 26);
             EntradasSalidasInventario.Text = "Entradas y Salidas";
             // 
             // DropMenu_CuentasXcobrar
@@ -585,7 +584,7 @@
             DropMenu_CuentasXcobrar.ImageScalingSize = new Size(24, 24);
             DropMenu_CuentasXcobrar.Items.AddRange(new ToolStripItem[] { MantenimientoCXC, ProcesoCXC, ConsultasCXC, ReportesCXC });
             DropMenu_CuentasXcobrar.Name = "DropMenu_CuentasXcobrar";
-            DropMenu_CuentasXcobrar.Size = new Size(260, 132);
+            DropMenu_CuentasXcobrar.Size = new Size(230, 152);
             // 
             // MantenimientoCXC
             // 
@@ -597,7 +596,7 @@
             MantenimientoCXC.IconColor = Color.White;
             MantenimientoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MantenimientoCXC.Name = "MantenimientoCXC";
-            MantenimientoCXC.Size = new Size(259, 32);
+            MantenimientoCXC.Size = new Size(229, 30);
             MantenimientoCXC.Text = "Mantenimiento";
             // 
             // ClientesCXC
@@ -609,7 +608,7 @@
             ClientesCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ClientesCXC.IconSize = 50;
             ClientesCXC.Name = "ClientesCXC";
-            ClientesCXC.Size = new Size(346, 34);
+            ClientesCXC.Size = new Size(293, 30);
             ClientesCXC.Text = "Clientes";
             ClientesCXC.Click += ClientesCXC_Click;
             // 
@@ -621,7 +620,7 @@
             CondiciondePagoCXC.IconColor = Color.White;
             CondiciondePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CondiciondePagoCXC.Name = "CondiciondePagoCXC";
-            CondiciondePagoCXC.Size = new Size(346, 34);
+            CondiciondePagoCXC.Size = new Size(293, 30);
             CondiciondePagoCXC.Text = "Condiciones de Pago";
             CondiciondePagoCXC.Click += CondiciondePagoCXC_Click;
             // 
@@ -633,7 +632,7 @@
             MetododePagoCXC.IconColor = Color.White;
             MetododePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             MetododePagoCXC.Name = "MetododePagoCXC";
-            MetododePagoCXC.Size = new Size(346, 34);
+            MetododePagoCXC.Size = new Size(293, 30);
             MetododePagoCXC.Text = "Metodos de Pago";
             MetododePagoCXC.Click += MetododePagoCXC_Click;
             // 
@@ -647,7 +646,7 @@
             ProcesoCXC.IconColor = Color.White;
             ProcesoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ProcesoCXC.Name = "ProcesoCXC";
-            ProcesoCXC.Size = new Size(259, 32);
+            ProcesoCXC.Size = new Size(229, 30);
             ProcesoCXC.Text = "Procesos";
             // 
             // RegistrodePagoCXC
@@ -658,7 +657,7 @@
             RegistrodePagoCXC.IconColor = Color.White;
             RegistrodePagoCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             RegistrodePagoCXC.Name = "RegistrodePagoCXC";
-            RegistrodePagoCXC.Size = new Size(306, 34);
+            RegistrodePagoCXC.Size = new Size(258, 30);
             RegistrodePagoCXC.Text = "Registro de Pago";
             // 
             // ConsultasCXC
@@ -671,7 +670,7 @@
             ConsultasCXC.IconColor = Color.White;
             ConsultasCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ConsultasCXC.Name = "ConsultasCXC";
-            ConsultasCXC.Size = new Size(259, 32);
+            ConsultasCXC.Size = new Size(229, 30);
             ConsultasCXC.Text = "Consultas";
             // 
             // ConsultaCliente
@@ -682,7 +681,7 @@
             ConsultaCliente.IconColor = Color.White;
             ConsultaCliente.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ConsultaCliente.Name = "ConsultaCliente";
-            ConsultaCliente.Size = new Size(203, 34);
+            ConsultaCliente.Size = new Size(168, 26);
             ConsultaCliente.Text = "Clientes";
             ConsultaCliente.Click += ConsultaCliente_Click;
             // 
@@ -696,7 +695,7 @@
             ReportesCXC.IconColor = Color.White;
             ReportesCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ReportesCXC.Name = "ReportesCXC";
-            ReportesCXC.Size = new Size(259, 32);
+            ReportesCXC.Size = new Size(229, 30);
             ReportesCXC.Text = "Reportes";
             // 
             // CXC
@@ -707,7 +706,7 @@
             CXC.IconColor = Color.White;
             CXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CXC.Name = "CXC";
-            CXC.Size = new Size(455, 34);
+            CXC.Size = new Size(382, 26);
             CXC.Text = "Cuentas por Cobrar";
             // 
             // EstadodeCuentaCXC
@@ -718,7 +717,7 @@
             EstadodeCuentaCXC.IconColor = Color.White;
             EstadodeCuentaCXC.IconFont = FontAwesome.Sharp.IconFont.Solid;
             EstadodeCuentaCXC.Name = "EstadodeCuentaCXC";
-            EstadodeCuentaCXC.Size = new Size(455, 34);
+            EstadodeCuentaCXC.Size = new Size(382, 26);
             EstadodeCuentaCXC.Text = "Estado de Cuenta";
             // 
             // CuentasVencidasCXC
@@ -729,7 +728,7 @@
             CuentasVencidasCXC.IconColor = Color.White;
             CuentasVencidasCXC.IconFont = FontAwesome.Sharp.IconFont.Auto;
             CuentasVencidasCXC.Name = "CuentasVencidasCXC";
-            CuentasVencidasCXC.Size = new Size(455, 34);
+            CuentasVencidasCXC.Size = new Size(382, 26);
             CuentasVencidasCXC.Text = "Cuentas Vencidas";
             // 
             // ResumendeDeudaporCliente
@@ -740,15 +739,15 @@
             ResumendeDeudaporCliente.IconColor = Color.White;
             ResumendeDeudaporCliente.IconFont = FontAwesome.Sharp.IconFont.Auto;
             ResumendeDeudaporCliente.Name = "ResumendeDeudaporCliente";
-            ResumendeDeudaporCliente.Size = new Size(455, 34);
+            ResumendeDeudaporCliente.Size = new Size(382, 26);
             ResumendeDeudaporCliente.Text = "Resumen de deuda por Cliente";
             // 
             // MenuPrincipal
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(233, 233, 233);
-            ClientSize = new Size(1205, 551);
+            ClientSize = new Size(964, 441);
             Controls.Add(panelEscritorio);
             Controls.Add(panelTitulo);
             Controls.Add(panelMenu);

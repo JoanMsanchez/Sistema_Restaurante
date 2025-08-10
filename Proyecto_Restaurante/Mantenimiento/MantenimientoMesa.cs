@@ -100,7 +100,7 @@ namespace Proyecto_Restaurante.Mantenimiento
         {
             desMesa.Clear();
             asientos.Clear();
-            activo.Checked = false;
+            activo.Checked = true;
             inactivo.Checked = false;
             rbDescripcion.Checked = false;
             rbSala.Checked = false;
