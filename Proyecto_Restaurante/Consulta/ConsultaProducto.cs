@@ -119,7 +119,8 @@ namespace Proyecto_Restaurante.Consulta
                         p.stock_minimo,
                         p.precio_costo,
                         p.precio_venta,
-                        p.estado
+                        p.estado,
+                        p.imagen_ruta
                     FROM producto p
                     INNER JOIN categoria_producto c ON p.id_categoria = c.id_categoria
                     INNER JOIN unidad_medida u ON p.id_unidad = u.id_unidad";
@@ -172,10 +173,10 @@ namespace Proyecto_Restaurante.Consulta
 
         private void AbrirMantenimiento(int id, string nombre, string descripcion,
             decimal precioCosto, decimal precioVenta, decimal stockActual, decimal stockMinimo,
-            int idCategoria, string nombreCategoria, int idUnidad, string nombreUnidad, int estado)
+            int idCategoria, string nombreCategoria, int idUnidad, string nombreUnidad, int estado, string ruta)
         {
             mantenimientoProductoForm.CargarDatosProducto(id, nombre, descripcion, precioCosto, precioVenta,
-               stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, estado);
+               stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, estado, ruta);
 
             mantenimientoProductoForm.Show();
             mantenimientoProductoForm.BringToFront();
@@ -200,9 +201,10 @@ namespace Proyecto_Restaurante.Consulta
                 decimal stockActual = Convert.ToDecimal(fila.Cells["stock_actual"].Value);
                 decimal stockMinimo = Convert.ToDecimal(fila.Cells["stock_minimo"].Value);
                 int estado = Convert.ToInt32(fila.Cells["estado"].Value);
+                string imagen = fila.Cells["imagen_ruta"].Value.ToString();
 
                 AbrirMantenimiento(id, nombre, descripcion, precioCosto, precioVenta,
-                    stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, estado);
+                    stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, estado, imagen);
             }
         }
 

@@ -16,8 +16,6 @@ namespace Proyecto_Restaurante.Mantenimiento
 {
     public partial class MantenimientoProducto : Form
     {
-
-        //Fields
         private int bordeSize = 2;
         //private int idProductoSeleccionado = -1;
 
@@ -117,9 +115,10 @@ namespace Proyecto_Restaurante.Mantenimiento
             descripcion.Clear();
             comboCategoria.SelectedIndex = -1;
             comboUnidad.SelectedIndex = -1;
-            //comboUnidad.Text = "";
             activo.Checked = true;
             desactivo.Checked = false;
+            imagenproducto.Image = null;
+            urlImg = null;
         }
 
         private void guardar_Click(object sender, EventArgs e)
@@ -154,12 +153,6 @@ namespace Proyecto_Restaurante.Mantenimiento
                 int idCategoria = Convert.ToInt32(comboCategoria.SelectedValue);
                 int idUnidad = Convert.ToInt32(comboUnidad.SelectedValue);
 
-                //string consultaExistencia = "SELECT COUNT(*) FROM producto WHERE nombre = @nombre";
-                //SqlCommand cmdExistencia = new SqlCommand(consultaExistencia, conexion);
-                //cmdExistencia.Parameters.AddWithValue("@nombre", nombre.Text);
-                //int existe = (int)cmdExistencia.ExecuteScalar();
-                //string consulta;
-
                 SqlCommand cmd;
 
 
@@ -168,7 +161,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                     string consulta = @"UPDATE producto 
                                 SET nombre = @nombre, descripcion = @descripcion, id_categoria = @id_categoria, 
                                     id_unidad = @id_unidad, stock_actual = @stock_actual, stock_minimo = @stock_minimo, 
-                                    precio_costo = @precio_costo, precio_venta = @precio_venta, estado = @estado 
+                                    precio_costo = @precio_costo, precio_venta = @precio_venta, estado = @estado, imagen_ruta=@imagen_ruta
                                 WHERE id_producto = @id";
                     cmd = new SqlCommand(consulta, conexion);
                     cmd.Parameters.AddWithValue("@id", id_producto_seleccionado);
@@ -179,7 +172,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                     string consulta = @"INSERT INTO producto (nombre, descripcion, id_categoria, id_unidad, 
                                 stock_actual, stock_minimo, precio_costo, precio_venta, estado) 
                                 VALUES (@nombre, @descripcion, @id_categoria, @id_unidad, 
-                                @stock_actual, @stock_minimo, @precio_costo, @precio_venta, @estado)";
+                                @stock_actual, @stock_minimo, @precio_costo, @precio_venta, @estado, @imagen_ruta)";
                     cmd = new SqlCommand(consulta, conexion);
                     MessageBox.Show("Producto insertado correctamente.");
                 }
@@ -194,6 +187,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                 cmd.Parameters.AddWithValue("@precio_costo", decimal.Parse(costo.Text));
                 cmd.Parameters.AddWithValue("@precio_venta", decimal.Parse(venta.Text));
                 cmd.Parameters.AddWithValue("@estado", estadoValor);
+                cmd.Parameters.AddWithValue("@imagen_ruta", (object)urlImg ?? DBNull.Value);
 
                 cmd.ExecuteNonQuery();
                 limpiar();
@@ -219,13 +213,15 @@ namespace Proyecto_Restaurante.Mantenimiento
         private void Limpiar_Click(object sender, EventArgs e)
         {
             limpiar();
+            imagendefault();
         }
 
         private void MantenimientoProducto_Load(object sender, EventArgs e)
         {
-            BeginInvoke((Action)(() => nombre.Focus()));
+            nombre.Focus();
             CargarCategorias();
             CargarUnidades();
+            imagendefault();
         }
 
         public void CargarCategorias()
@@ -273,7 +269,9 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        public void CargarDatosProducto(int idProducto,string nombreProd,string descripcionProd,decimal precioCosto,decimal precioVenta,decimal stockActual,decimal stockMinimo,int idCategoria,string nombreCategoria,int idUnidad,string nombreUnidad,int estado)
+        public void CargarDatosProducto(int idProducto, string nombreProd, string descripcionProd,
+            decimal precioCosto, decimal precioVenta, decimal stockActual, decimal stockMinimo,
+            int idCategoria, string nombreCategoria, int idUnidad, string nombreUnidad, int estado, string imagen_ruta)
         {
             // Asegurar que los combos estén cargados
             CargarCategorias();
@@ -318,6 +316,23 @@ namespace Proyecto_Restaurante.Mantenimiento
             // Estado
             activo.Checked = (estado == 1);
             desactivo.Checked = (estado == 0);
+
+
+            string imagenPorDefecto = Path.Combine(Application.StartupPath, "Imagenes", "default.png");
+
+            urlImg = imagen_ruta;
+
+            // Si hay ruta y el archivo existe, mostrar la imagen
+            if (!string.IsNullOrEmpty(urlImg) && File.Exists(urlImg))
+            {
+                imagenproducto.ImageLocation = urlImg;
+                imagenproducto.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            else
+            {
+                imagenproducto.ImageLocation = imagenPorDefecto;
+                //imagenproducto.Image = null; // No hay imagen
+            }
         }
 
         private void txtstockActual_KeyPress(object sender, KeyPressEventArgs e)
@@ -386,6 +401,54 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 txtstockActual.Focus();
             }
+        }
+
+        private string urlImg = null;
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd = new OpenFileDialog
+            {
+                Title = "Seleccionar imagen del producto",
+                Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.bmp",
+                Multiselect = false
+            };
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                urlImg = ofd.FileName;
+                imagenproducto.ImageLocation = urlImg;
+                imagenproducto.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+
+            ofd.Dispose();
+        }
+
+        private void imagenproducto_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd = new OpenFileDialog
+            {
+                Title = "Seleccionar imagen del producto",
+                Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.bmp",
+                Multiselect = false
+            };
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                urlImg = ofd.FileName;
+                imagenproducto.ImageLocation = urlImg;
+                imagenproducto.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+
+            ofd.Dispose();
+        }
+
+        private void imagendefault()
+        {
+            imagenproducto.Image = Image.FromFile(@"C:\imagen\imagendefault.jpg");
+            imagenproducto.SizeMode = PictureBoxSizeMode.Zoom;
         }
     }
 }
