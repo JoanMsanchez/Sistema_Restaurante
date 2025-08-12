@@ -33,6 +33,7 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoMetodoPago));
             panel1 = new Panel();
             panel3 = new Panel();
             panel2 = new Panel();
@@ -51,13 +52,16 @@
             btnCerrarCategoria = new FontAwesome.Sharp.IconButton();
             btnMinimizarCategoria = new FontAwesome.Sharp.IconButton();
             label6 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVMetodoPago).BeginInit();
             panelMantenimientoMetododePago.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(DGVMetodoPago);
@@ -80,7 +84,7 @@
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(446, 195);
+            panel3.Location = new Point(460, 215);
             panel3.Name = "panel3";
             panel3.Size = new Size(143, 2);
             panel3.TabIndex = 41;
@@ -126,7 +130,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVMetodoPago.DefaultCellStyle = dataGridViewCellStyle3;
             DGVMetodoPago.EnableHeadersVisualStyles = false;
-            DGVMetodoPago.Location = new Point(366, 221);
+            DGVMetodoPago.Location = new Point(368, 237);
             DGVMetodoPago.Name = "DGVMetodoPago";
             DGVMetodoPago.ReadOnly = true;
             DGVMetodoPago.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -149,7 +153,7 @@
             DGVMetodoPago.RowTemplate.DefaultCellStyle.ForeColor = Color.White;
             DGVMetodoPago.RowTemplate.DefaultCellStyle.SelectionBackColor = Color.White;
             DGVMetodoPago.RowTemplate.DefaultCellStyle.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVMetodoPago.Size = new Size(314, 166);
+            DGVMetodoPago.Size = new Size(322, 201);
             DGVMetodoPago.TabIndex = 39;
             DGVMetodoPago.CellMouseDoubleClick += DGVMetodoPago_CellMouseDoubleClick;
             // 
@@ -184,7 +188,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(406, 145);
+            label4.Location = new Point(420, 165);
             label4.Name = "label4";
             label4.Size = new Size(229, 25);
             label4.TabIndex = 36;
@@ -196,7 +200,7 @@
             buscanom.BorderStyle = BorderStyle.None;
             buscanom.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buscanom.ForeColor = Color.White;
-            buscanom.Location = new Point(446, 179);
+            buscanom.Location = new Point(460, 199);
             buscanom.Name = "buscanom";
             buscanom.Size = new Size(140, 19);
             buscanom.TabIndex = 35;
@@ -354,6 +358,16 @@
             label6.TabIndex = 2;
             label6.Text = "METODO DE PAGO";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(556, 46);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // MantenimientoMetodoPago
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -371,6 +385,7 @@
             ((System.ComponentModel.ISupportInitialize)DGVMetodoPago).EndInit();
             panelMantenimientoMetododePago.ResumeLayout(false);
             panelMantenimientoMetododePago.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -394,5 +409,6 @@
         private FontAwesome.Sharp.IconButton btnMaximizarCategoria;
         private FontAwesome.Sharp.IconButton btnCerrarCategoria;
         private FontAwesome.Sharp.IconButton btnMinimizarCategoria;
+        private PictureBox pictureBox1;
     }
 }

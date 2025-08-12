@@ -32,6 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoTipoMovimiento));
             panel1 = new Panel();
             afectastock = new TextBox();
             panel5 = new Panel();
@@ -53,13 +54,16 @@
             btnCerrarTipodeMovimiento = new FontAwesome.Sharp.IconButton();
             btnMinimizarTipodeMovimiento = new FontAwesome.Sharp.IconButton();
             label6 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVTipoMovimiento).BeginInit();
             panelTipodeMovimiento.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(afectastock);
             panel1.Controls.Add(panel5);
             panel1.Controls.Add(label1);
@@ -381,6 +385,16 @@
             label6.TabIndex = 2;
             label6.Text = "TIPO DE MOVIMIENTO";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(686, 49);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // MantenimientoTipoMovimiento
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -398,6 +412,7 @@
             ((System.ComponentModel.ISupportInitialize)DGVTipoMovimiento).EndInit();
             panelTipodeMovimiento.ResumeLayout(false);
             panelTipodeMovimiento.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -424,5 +439,6 @@
         private FontAwesome.Sharp.IconButton btnMinimizarTipodeMovimiento;
         private TextBox afectastock;
         private Panel panel5;
+        private PictureBox pictureBox1;
     }
 }

@@ -119,6 +119,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             desactivo.Checked = false;
             imagenproducto.Image = null;
             urlImg = null;
+
         }
 
         private void guardar_Click(object sender, EventArgs e)
@@ -190,7 +191,9 @@ namespace Proyecto_Restaurante.Mantenimiento
                 cmd.Parameters.AddWithValue("@imagen_ruta", (object)urlImg ?? DBNull.Value);
 
                 cmd.ExecuteNonQuery();
+
                 limpiar();
+                imagendefault();
 
                 id_producto_seleccionado = -1;
 
@@ -330,8 +333,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
             else
             {
-                imagenproducto.ImageLocation = imagenPorDefecto;
-                //imagenproducto.Image = null; // No hay imagen
+                imagendefault();
             }
         }
 

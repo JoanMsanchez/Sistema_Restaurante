@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoCliente));
             panel1 = new Panel();
             comboCondicion = new ComboBox();
             label1 = new Label();
@@ -53,12 +54,15 @@
             btnCerrarMetodo = new FontAwesome.Sharp.IconButton();
             btnMinimizarMetodo = new FontAwesome.Sharp.IconButton();
             label6 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             panelMantenimientoCliente.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(comboCondicion);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(guardar);
@@ -118,7 +122,7 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(76, 387);
+            guardar.Location = new Point(31, 387);
             guardar.Name = "guardar";
             guardar.Size = new Size(154, 52);
             guardar.TabIndex = 69;
@@ -137,7 +141,7 @@
             Limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             Limpiar.IconSize = 35;
             Limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            Limpiar.Location = new Point(258, 387);
+            Limpiar.Location = new Point(191, 387);
             Limpiar.Name = "Limpiar";
             Limpiar.Size = new Size(143, 52);
             Limpiar.TabIndex = 68;
@@ -171,7 +175,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(397, 271);
+            label8.Location = new Point(389, 319);
             label8.Name = "label8";
             label8.Size = new Size(88, 25);
             label8.TabIndex = 66;
@@ -183,7 +187,7 @@
             activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = SystemColors.ControlLightLight;
-            activo.Location = new Point(485, 258);
+            activo.Location = new Point(477, 306);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 64;
@@ -196,7 +200,7 @@
             desactivo.AutoSize = true;
             desactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             desactivo.ForeColor = SystemColors.ControlLightLight;
-            desactivo.Location = new Point(485, 287);
+            desactivo.Location = new Point(477, 335);
             desactivo.Name = "desactivo";
             desactivo.Size = new Size(109, 24);
             desactivo.TabIndex = 65;
@@ -208,7 +212,7 @@
             direccion.BackColor = Color.FromArgb(255, 161, 43);
             direccion.Font = new Font("Verdana", 9F, FontStyle.Bold);
             direccion.ForeColor = Color.White;
-            direccion.Location = new Point(370, 114);
+            direccion.Location = new Point(371, 189);
             direccion.Multiline = true;
             direccion.Name = "direccion";
             direccion.Size = new Size(252, 111);
@@ -219,7 +223,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(437, 84);
+            label5.Location = new Point(449, 161);
             label5.Name = "label5";
             label5.Size = new Size(118, 25);
             label5.TabIndex = 62;
@@ -401,6 +405,16 @@
             label6.TabIndex = 1;
             label6.Text = "CLIENTE";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(525, 50);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // MantenimientoCliente
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -418,6 +432,7 @@
             panel1.PerformLayout();
             panelMantenimientoCliente.ResumeLayout(false);
             panelMantenimientoCliente.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -450,5 +465,6 @@
         private FontAwesome.Sharp.IconButton btnMaximizarMetodo;
         private FontAwesome.Sharp.IconButton btnCerrarMetodo;
         private FontAwesome.Sharp.IconButton btnMinimizarMetodo;
+        private PictureBox pictureBox1;
     }
 }

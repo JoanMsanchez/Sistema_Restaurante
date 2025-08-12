@@ -28,12 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoProducto));
             panelProducto = new Panel();
             btnMaximizarProducto = new FontAwesome.Sharp.IconButton();
             btnCerrarProducto = new FontAwesome.Sharp.IconButton();
             btnMinimizarProducto = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
+            pictureBox1 = new PictureBox();
             panel1 = new Panel();
+            label11 = new Label();
             imagenproducto = new PictureBox();
             label10 = new Label();
             label9 = new Label();
@@ -62,8 +65,8 @@
             panel3 = new Panel();
             nombre = new TextBox();
             label3 = new Label();
-            label11 = new Label();
             panelProducto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)imagenproducto).BeginInit();
             SuspendLayout();
@@ -79,7 +82,7 @@
             panelProducto.Location = new Point(0, 0);
             panelProducto.Margin = new Padding(2);
             panelProducto.Name = "panelProducto";
-            panelProducto.Size = new Size(849, 58);
+            panelProducto.Size = new Size(841, 58);
             panelProducto.TabIndex = 0;
             panelProducto.MouseDown += panelProducto_MouseDown;
             // 
@@ -93,7 +96,7 @@
             btnMaximizarProducto.IconColor = Color.OldLace;
             btnMaximizarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarProducto.IconSize = 20;
-            btnMaximizarProducto.Location = new Point(781, 0);
+            btnMaximizarProducto.Location = new Point(773, 0);
             btnMaximizarProducto.Margin = new Padding(2);
             btnMaximizarProducto.Name = "btnMaximizarProducto";
             btnMaximizarProducto.Size = new Size(36, 20);
@@ -111,7 +114,7 @@
             btnCerrarProducto.IconColor = Color.OldLace;
             btnCerrarProducto.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarProducto.IconSize = 20;
-            btnCerrarProducto.Location = new Point(813, 0);
+            btnCerrarProducto.Location = new Point(805, 0);
             btnCerrarProducto.Margin = new Padding(2);
             btnCerrarProducto.Name = "btnCerrarProducto";
             btnCerrarProducto.Size = new Size(36, 20);
@@ -129,7 +132,7 @@
             btnMinimizarProducto.IconColor = Color.OldLace;
             btnMinimizarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarProducto.IconSize = 20;
-            btnMinimizarProducto.Location = new Point(747, 0);
+            btnMinimizarProducto.Location = new Point(739, 0);
             btnMinimizarProducto.Margin = new Padding(2);
             btnMinimizarProducto.Name = "btnMinimizarProducto";
             btnMinimizarProducto.Size = new Size(36, 20);
@@ -148,8 +151,19 @@
             label1.TabIndex = 1;
             label1.Text = "PRODUCTO";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(706, -10);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 56;
+            pictureBox1.TabStop = false;
+            // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(label11);
             panel1.Controls.Add(imagenproducto);
             panel1.Controls.Add(label10);
@@ -183,13 +197,24 @@
             panel1.Location = new Point(0, 58);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(849, 548);
+            panel1.Size = new Size(841, 603);
             panel1.TabIndex = 1;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.ForeColor = Color.White;
+            label11.Location = new Point(641, 332);
+            label11.Name = "label11";
+            label11.Size = new Size(98, 25);
+            label11.TabIndex = 55;
+            label11.Text = "Imagen";
             // 
             // imagenproducto
             // 
             imagenproducto.InitialImage = null;
-            imagenproducto.Location = new Point(532, 305);
+            imagenproducto.Location = new Point(534, 360);
             imagenproducto.Name = "imagenproducto";
             imagenproducto.Size = new Size(293, 231);
             imagenproducto.SizeMode = PictureBoxSizeMode.Zoom;
@@ -260,7 +285,7 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(53, 446);
+            guardar.Location = new Point(18, 539);
             guardar.Name = "guardar";
             guardar.Size = new Size(148, 52);
             guardar.TabIndex = 49;
@@ -279,7 +304,7 @@
             Limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             Limpiar.IconSize = 35;
             Limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            Limpiar.Location = new Point(221, 446);
+            Limpiar.Location = new Point(172, 539);
             Limpiar.Name = "Limpiar";
             Limpiar.Size = new Size(143, 52);
             Limpiar.TabIndex = 48;
@@ -348,7 +373,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(601, 200);
+            label8.Location = new Point(582, 273);
             label8.Name = "label8";
             label8.Size = new Size(88, 25);
             label8.TabIndex = 41;
@@ -360,7 +385,7 @@
             activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = SystemColors.ControlLightLight;
-            activo.Location = new Point(695, 186);
+            activo.Location = new Point(676, 259);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 39;
@@ -373,7 +398,7 @@
             desactivo.AutoSize = true;
             desactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             desactivo.ForeColor = SystemColors.ControlLightLight;
-            desactivo.Location = new Point(693, 216);
+            desactivo.Location = new Point(674, 289);
             desactivo.Name = "desactivo";
             desactivo.Size = new Size(109, 24);
             desactivo.TabIndex = 40;
@@ -477,7 +502,7 @@
             descripcion.BackColor = Color.FromArgb(255, 161, 43);
             descripcion.Font = new Font("Verdana", 9F, FontStyle.Bold);
             descripcion.ForeColor = Color.White;
-            descripcion.Location = new Point(573, 73);
+            descripcion.Location = new Point(554, 146);
             descripcion.Multiline = true;
             descripcion.Name = "descripcion";
             descripcion.Size = new Size(252, 111);
@@ -488,7 +513,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(630, 43);
+            label2.Location = new Point(611, 114);
             label2.Name = "label2";
             label2.Size = new Size(144, 25);
             label2.TabIndex = 24;
@@ -526,23 +551,12 @@
             label3.TabIndex = 5;
             label3.Text = "Nombre";
             // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.ForeColor = Color.White;
-            label11.Location = new Point(630, 268);
-            label11.Name = "label11";
-            label11.Size = new Size(98, 25);
-            label11.TabIndex = 55;
-            label11.Text = "Imagen";
-            // 
             // MantenimientoProducto
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(849, 606);
+            ClientSize = new Size(841, 661);
             Controls.Add(panel1);
             Controls.Add(panelProducto);
             Margin = new Padding(2);
@@ -552,6 +566,7 @@
             Load += MantenimientoProducto_Load;
             panelProducto.ResumeLayout(false);
             panelProducto.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)imagenproducto).EndInit();
@@ -595,5 +610,6 @@
         protected Label label9;
         private PictureBox imagenproducto;
         private Label label11;
+        private PictureBox pictureBox1;
     }
 }

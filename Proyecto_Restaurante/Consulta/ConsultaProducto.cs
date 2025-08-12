@@ -147,6 +147,8 @@ namespace Proyecto_Restaurante.Consulta
                     dataGridView1.Columns["id_unidad"].Visible = false;
                 if (dataGridView1.Columns.Contains("id_producto"))
                     dataGridView1.Columns["id_producto"].Visible = false;
+                if (dataGridView1.Columns.Contains("imagen_ruta"))
+                    dataGridView1.Columns["imagen_ruta"].Visible = false;
 
                 // Cambiar encabezados
                 dataGridView1.Columns["No"].HeaderText = "#";

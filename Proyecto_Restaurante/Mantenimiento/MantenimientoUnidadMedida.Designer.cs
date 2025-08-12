@@ -181,7 +181,7 @@
             limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             limpiar.IconSize = 35;
             limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            limpiar.Location = new Point(173, 260);
+            limpiar.Location = new Point(173, 290);
             limpiar.Name = "limpiar";
             limpiar.Size = new Size(140, 56);
             limpiar.TabIndex = 38;
@@ -200,7 +200,7 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(10, 260);
+            guardar.Location = new Point(22, 290);
             guardar.Name = "guardar";
             guardar.Size = new Size(145, 56);
             guardar.TabIndex = 37;

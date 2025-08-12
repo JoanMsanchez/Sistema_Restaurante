@@ -32,6 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoCondicionPago));
             panel1 = new Panel();
             panel6 = new Panel();
             busDias = new RadioButton();
@@ -60,15 +61,18 @@
             btnCerrarCondicion = new FontAwesome.Sharp.IconButton();
             btnMinimizarCondicion = new FontAwesome.Sharp.IconButton();
             label6 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             panel6.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVCondiconPago).BeginInit();
             panelMantenimientoCondicion.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(panel6);
             panel1.Controls.Add(diascredito);
             panel1.Controls.Add(panel5);
@@ -478,6 +482,16 @@
             label6.TabIndex = 2;
             label6.Text = "CONDICION DE PAGO";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(761, 49);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // MantenimientoCondicionPago
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -499,6 +513,7 @@
             ((System.ComponentModel.ISupportInitialize)DGVCondiconPago).EndInit();
             panelMantenimientoCondicion.ResumeLayout(false);
             panelMantenimientoCondicion.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -532,5 +547,6 @@
         private FontAwesome.Sharp.IconButton btnMaximizarCondicion;
         private FontAwesome.Sharp.IconButton btnCerrarCondicion;
         private FontAwesome.Sharp.IconButton btnMinimizarCondicion;
+        private PictureBox pictureBox1;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoProveedor));
             panelMantenimientoProveedor = new Panel();
             btnMaximizarProveedor = new FontAwesome.Sharp.IconButton();
             btnCerrarProveedor = new FontAwesome.Sharp.IconButton();
@@ -51,8 +52,10 @@
             panel3 = new Panel();
             nombre = new TextBox();
             label3 = new Label();
+            pictureBox1 = new PictureBox();
             panelMantenimientoProveedor.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panelMantenimientoProveedor
@@ -137,6 +140,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(guardar);
             panel1.Controls.Add(Limpiar);
             panel1.Controls.Add(btnConsultaProveedor);
@@ -172,7 +176,7 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(70, 371);
+            guardar.Location = new Point(26, 371);
             guardar.Name = "guardar";
             guardar.Size = new Size(148, 52);
             guardar.TabIndex = 52;
@@ -191,7 +195,7 @@
             Limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             Limpiar.IconSize = 35;
             Limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            Limpiar.Location = new Point(252, 371);
+            Limpiar.Location = new Point(180, 371);
             Limpiar.Name = "Limpiar";
             Limpiar.Size = new Size(143, 52);
             Limpiar.TabIndex = 51;
@@ -261,7 +265,7 @@
             direccion.BackColor = Color.FromArgb(255, 161, 43);
             direccion.Font = new Font("Verdana", 9F, FontStyle.Bold);
             direccion.ForeColor = Color.White;
-            direccion.Location = new Point(350, 80);
+            direccion.Location = new Point(360, 158);
             direccion.Multiline = true;
             direccion.Name = "direccion";
             direccion.Size = new Size(252, 111);
@@ -272,7 +276,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(416, 50);
+            label5.Location = new Point(426, 128);
             label5.Name = "label5";
             label5.Size = new Size(118, 25);
             label5.TabIndex = 33;
@@ -374,6 +378,16 @@
             label3.TabIndex = 24;
             label3.Text = "Nombre";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(501, -9);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 53;
+            pictureBox1.TabStop = false;
+            // 
             // MantenimientoProveedor
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -391,6 +405,7 @@
             panelMantenimientoProveedor.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -419,5 +434,6 @@
         private FontAwesome.Sharp.IconButton guardar;
         private FontAwesome.Sharp.IconButton Limpiar;
         private FontAwesome.Sharp.IconButton btnConsultaProveedor;
+        private PictureBox pictureBox1;
     }
 }

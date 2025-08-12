@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoEmpleado));
             label2 = new Label();
             label3 = new Label();
@@ -56,7 +56,6 @@
             panel4 = new Panel();
             panel3 = new Panel();
             panel2 = new Panel();
-            pictureBox1 = new PictureBox();
             buscanombre = new RadioButton();
             buscausuario = new RadioButton();
             panelEmpleado = new Panel();
@@ -67,11 +66,12 @@
             btnCerrarCategoria = new FontAwesome.Sharp.IconButton();
             btnMinimizarCategoria = new FontAwesome.Sharp.IconButton();
             label8 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVEmpleado).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelEmpleado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label2
@@ -79,7 +79,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(10, 133);
+            label2.Location = new Point(11, 144);
             label2.Name = "label2";
             label2.Size = new Size(98, 25);
             label2.TabIndex = 1;
@@ -90,7 +90,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(10, 175);
+            label3.Location = new Point(11, 186);
             label3.Name = "label3";
             label3.Size = new Size(138, 25);
             label3.TabIndex = 2;
@@ -101,7 +101,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(273, 136);
+            label5.Location = new Point(274, 147);
             label5.Name = "label5";
             label5.Size = new Size(101, 25);
             label5.TabIndex = 4;
@@ -112,7 +112,7 @@
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.White;
-            label6.Location = new Point(539, 138);
+            label6.Location = new Point(540, 149);
             label6.Name = "label6";
             label6.Size = new Size(104, 25);
             label6.TabIndex = 5;
@@ -124,7 +124,7 @@
             contrasena.BorderStyle = BorderStyle.None;
             contrasena.Font = new Font("Verdana", 9F, FontStyle.Bold);
             contrasena.ForeColor = Color.White;
-            contrasena.Location = new Point(154, 182);
+            contrasena.Location = new Point(155, 193);
             contrasena.Name = "contrasena";
             contrasena.Size = new Size(153, 19);
             contrasena.TabIndex = 9;
@@ -137,7 +137,7 @@
             nombre.BorderStyle = BorderStyle.None;
             nombre.Font = new Font("Verdana", 9F, FontStyle.Bold);
             nombre.ForeColor = Color.White;
-            nombre.Location = new Point(380, 142);
+            nombre.Location = new Point(381, 153);
             nombre.Name = "nombre";
             nombre.Size = new Size(153, 19);
             nombre.TabIndex = 10;
@@ -149,7 +149,7 @@
             apellido.BorderStyle = BorderStyle.None;
             apellido.Font = new Font("Verdana", 9F, FontStyle.Bold);
             apellido.ForeColor = Color.White;
-            apellido.Location = new Point(649, 142);
+            apellido.Location = new Point(650, 153);
             apellido.Name = "apellido";
             apellido.Size = new Size(153, 19);
             apellido.TabIndex = 11;
@@ -185,7 +185,7 @@
             login.BorderStyle = BorderStyle.None;
             login.Font = new Font("Verdana", 9F, FontStyle.Bold);
             login.ForeColor = Color.White;
-            login.Location = new Point(114, 142);
+            login.Location = new Point(115, 153);
             login.Name = "login";
             login.Size = new Size(153, 19);
             login.TabIndex = 8;
@@ -202,7 +202,7 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(595, 234);
+            guardar.Location = new Point(591, 271);
             guardar.Name = "guardar";
             guardar.Size = new Size(148, 52);
             guardar.TabIndex = 25;
@@ -221,7 +221,7 @@
             Limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             Limpiar.IconSize = 35;
             Limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            Limpiar.Location = new Point(750, 234);
+            Limpiar.Location = new Point(745, 271);
             Limpiar.Name = "Limpiar";
             Limpiar.Size = new Size(143, 52);
             Limpiar.TabIndex = 24;
@@ -234,7 +234,7 @@
             label7.AutoSize = true;
             label7.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(324, 191);
+            label7.Location = new Point(325, 202);
             label7.Name = "label7";
             label7.Size = new Size(88, 25);
             label7.TabIndex = 22;
@@ -266,6 +266,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 161, 43);
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(panel7);
             panel1.Controls.Add(DGVEmpleado);
             panel1.Controls.Add(panel6);
@@ -273,7 +274,6 @@
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(panel2);
-            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(login);
             panel1.Controls.Add(label7);
@@ -301,7 +301,7 @@
             // 
             panel7.Controls.Add(activo);
             panel7.Controls.Add(desactivo);
-            panel7.Location = new Point(418, 171);
+            panel7.Location = new Point(419, 182);
             panel7.Name = "panel7";
             panel7.Size = new Size(131, 67);
             panel7.TabIndex = 28;
@@ -310,46 +310,46 @@
             // 
             DGVEmpleado.AllowUserToAddRows = false;
             DGVEmpleado.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = Color.White;
-            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            DGVEmpleado.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = Color.White;
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            DGVEmpleado.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             DGVEmpleado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVEmpleado.BackgroundColor = Color.FromArgb(255, 161, 43);
             DGVEmpleado.BorderStyle = BorderStyle.None;
             DGVEmpleado.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.White;
-            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            DGVEmpleado.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            DGVEmpleado.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             DGVEmpleado.ColumnHeadersHeight = 25;
             DGVEmpleado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            DGVEmpleado.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = Color.White;
+            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
+            DGVEmpleado.DefaultCellStyle = dataGridViewCellStyle7;
             DGVEmpleado.EnableHeadersVisualStyles = false;
-            DGVEmpleado.Location = new Point(189, 309);
+            DGVEmpleado.Location = new Point(190, 340);
             DGVEmpleado.Name = "DGVEmpleado";
             DGVEmpleado.ReadOnly = true;
             DGVEmpleado.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = Color.White;
-            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            DGVEmpleado.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle8.ForeColor = Color.White;
+            dataGridViewCellStyle8.SelectionBackColor = Color.White;
+            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(255, 161, 43);
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            DGVEmpleado.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             DGVEmpleado.RowHeadersVisible = false;
             DGVEmpleado.RowHeadersWidth = 51;
             DGVEmpleado.Size = new Size(707, 307);
@@ -369,7 +369,7 @@
             // 
             panel5.BackColor = Color.White;
             panel5.ForeColor = Color.White;
-            panel5.Location = new Point(150, 203);
+            panel5.Location = new Point(151, 214);
             panel5.Name = "panel5";
             panel5.Size = new Size(158, 2);
             panel5.TabIndex = 21;
@@ -378,7 +378,7 @@
             // 
             panel4.BackColor = Color.White;
             panel4.ForeColor = Color.White;
-            panel4.Location = new Point(644, 163);
+            panel4.Location = new Point(645, 174);
             panel4.Name = "panel4";
             panel4.Size = new Size(158, 2);
             panel4.TabIndex = 21;
@@ -387,7 +387,7 @@
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(375, 163);
+            panel3.Location = new Point(376, 174);
             panel3.Name = "panel3";
             panel3.Size = new Size(158, 2);
             panel3.TabIndex = 21;
@@ -396,20 +396,10 @@
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(110, 162);
+            panel2.Location = new Point(111, 173);
             panel2.Name = "panel2";
             panel2.Size = new Size(158, 2);
             panel2.TabIndex = 20;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(781, 57);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(115, 79);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 26;
-            pictureBox1.TabStop = false;
             // 
             // buscanombre
             // 
@@ -570,6 +560,16 @@
             label8.TabIndex = 0;
             label8.Text = "EMPLEADO";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(766, 50);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // MantenimientoEmpleado
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -587,9 +587,9 @@
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DGVEmpleado).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelEmpleado.ResumeLayout(false);
             panelEmpleado.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -617,7 +617,6 @@
         private Label label7;
         private FontAwesome.Sharp.IconButton btnCerrarEmpleado;
         private FontAwesome.Sharp.IconButton guardar;
-        private PictureBox pictureBox1;
         private Panel panel2;
         private Panel panel6;
         private Panel panel5;
@@ -632,5 +631,6 @@
         private FontAwesome.Sharp.IconButton btnMaximizarEmpleado;
         private FontAwesome.Sharp.IconButton btnMinimizarEmpleado;
         private Panel panel7;
+        private PictureBox pictureBox1;
     }
 }

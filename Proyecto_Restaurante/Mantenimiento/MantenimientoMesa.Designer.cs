@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoMesa));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoMesa));
             panelMesa = new Panel();
             btnMaximizarMesa = new FontAwesome.Sharp.IconButton();
             btnCerrarMesa = new FontAwesome.Sharp.IconButton();
@@ -43,7 +43,6 @@
             rbAsientos = new RadioButton();
             rbSala = new RadioButton();
             rbDescripcion = new RadioButton();
-            pictureBox1 = new PictureBox();
             boxSala = new ComboBox();
             label7 = new Label();
             fecha = new TextBox();
@@ -62,11 +61,12 @@
             inactivo = new RadioButton();
             panel3 = new Panel();
             label4 = new Label();
+            pictureBox1 = new PictureBox();
             panelMesa.SuspendLayout();
             panel2.SuspendLayout();
             panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DGVMesa).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panelMesa
@@ -151,8 +151,8 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(panel4);
             panel2.Controls.Add(pictureBox1);
+            panel2.Controls.Add(panel4);
             panel2.Controls.Add(boxSala);
             panel2.Controls.Add(label7);
             panel2.Controls.Add(fecha);
@@ -226,16 +226,6 @@
             rbDescripcion.TabStop = true;
             rbDescripcion.Text = "Descripción";
             rbDescripcion.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(777, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(115, 79);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 76;
-            pictureBox1.TabStop = false;
             // 
             // boxSala
             // 
@@ -496,6 +486,16 @@
             label4.TabIndex = 61;
             label4.Text = "Buscar";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(745, -6);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // MantenimientoMesa
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -514,8 +514,8 @@
             panel2.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)DGVMesa).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -545,10 +545,10 @@
         private Label label7;
         private TextBox fecha;
         private Label label6;
-        private PictureBox pictureBox1;
         private Panel panel4;
         private RadioButton rbAsientos;
         private RadioButton rbSala;
         private RadioButton rbDescripcion;
+        private PictureBox pictureBox1;
     }
 }

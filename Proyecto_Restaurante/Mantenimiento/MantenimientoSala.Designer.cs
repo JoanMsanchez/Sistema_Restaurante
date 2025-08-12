@@ -33,6 +33,7 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoSala));
             panel1 = new Panel();
             fecha = new TextBox();
             label2 = new Label();
@@ -52,13 +53,16 @@
             btnCerrarSala = new FontAwesome.Sharp.IconButton();
             btnMinimizarSala = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DGVSala).BeginInit();
             panelSala.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(fecha);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(limpiar);
@@ -85,7 +89,7 @@
             fecha.BorderStyle = BorderStyle.None;
             fecha.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             fecha.ForeColor = Color.WhiteSmoke;
-            fecha.Location = new Point(502, 129);
+            fecha.Location = new Point(486, 130);
             fecha.Name = "fecha";
             fecha.ReadOnly = true;
             fecha.Size = new Size(147, 19);
@@ -370,6 +374,16 @@
             label1.TabIndex = 1;
             label1.Text = "SALA";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(655, 42);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // MantenimientoSala
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -388,6 +402,7 @@
             ((System.ComponentModel.ISupportInitialize)DGVSala).EndInit();
             panelSala.ResumeLayout(false);
             panelSala.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -412,5 +427,6 @@
         private FontAwesome.Sharp.IconButton guardar;
         private Label label2;
         private TextBox fecha;
+        private PictureBox pictureBox1;
     }
 }
