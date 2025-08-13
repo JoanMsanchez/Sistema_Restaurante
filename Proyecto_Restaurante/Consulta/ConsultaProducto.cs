@@ -16,6 +16,7 @@ namespace Proyecto_Restaurante.Consulta
 {
     public partial class ConsultaProductos : Form
     {
+
         //Fields
         private int bordeSize = 2;
 
@@ -25,15 +26,22 @@ namespace Proyecto_Restaurante.Consulta
         private MantenimientoProducto mantenimientoProductoForm;
 
 
+        public ConsultaProductos(MantenimientoProducto mantenimientoProducto)
+        {
+            InitializeComponent();
+            llenar_tabla_datagridview();
+            this.mantenimientoProductoForm = mantenimientoProducto;
+            this.Padding = new Padding(bordeSize); //Border size
+            this.BackColor = Color.FromArgb(255, 161, 43); //Border color
+        }
+
         public ConsultaProductos()
         {
             InitializeComponent();
             llenar_tabla_datagridview();
-            //this.mantenimientoProductoForm = mantenimientoProducto;
-            this.Padding = new Padding(bordeSize); //Border size
-            this.BackColor = Color.FromArgb(255, 161, 43); //Border color
-            this.mantenimientoProductoForm = null; // <- clave: sin mantenimiento
-
+            this.mantenimientoProductoForm = null; // clave
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = Color.FromArgb(255, 161, 43);
         }
 
         //Drag Form
@@ -44,8 +52,8 @@ namespace Proyecto_Restaurante.Consulta
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
 
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelConsultaProducto_MouseDown(object sender, MouseEventArgs e)
         {

@@ -1,4 +1,5 @@
-﻿namespace Proyecto_Restaurante.Proceso
+﻿
+namespace Proyecto_Restaurante.Proceso
 {
     partial class ProcesoRegistroMovimiento
     {
@@ -29,12 +30,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProcesoRegistroMovimiento));
-            panel1 = new Panel();
-            panelTipodeMovimiento = new Panel();
-            btnMaximizarTipodeMovimiento = new FontAwesome.Sharp.IconButton();
-            btnCerrarTipodeMovimiento = new FontAwesome.Sharp.IconButton();
-            btnMinimizarTipodeMovimiento = new FontAwesome.Sharp.IconButton();
-            label6 = new Label();
             panel2 = new Panel();
             panel5 = new Panel();
             panel4 = new Panel();
@@ -60,94 +55,15 @@
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            panelTipodeMovimiento.SuspendLayout();
+            panelMovimiento = new Panel();
+            btnMaximizar = new FontAwesome.Sharp.IconButton();
+            btnCerrar = new FontAwesome.Sharp.IconButton();
+            btnMinimizar = new FontAwesome.Sharp.IconButton();
+            label6 = new Label();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelMovimiento.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.Location = new Point(0, 59);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(250, 125);
-            panel1.TabIndex = 0;
-            // 
-            // panelTipodeMovimiento
-            // 
-            panelTipodeMovimiento.BackColor = Color.White;
-            panelTipodeMovimiento.Controls.Add(btnMaximizarTipodeMovimiento);
-            panelTipodeMovimiento.Controls.Add(panel1);
-            panelTipodeMovimiento.Controls.Add(btnCerrarTipodeMovimiento);
-            panelTipodeMovimiento.Controls.Add(btnMinimizarTipodeMovimiento);
-            panelTipodeMovimiento.Controls.Add(label6);
-            panelTipodeMovimiento.Dock = DockStyle.Top;
-            panelTipodeMovimiento.Location = new Point(0, 0);
-            panelTipodeMovimiento.Margin = new Padding(2);
-            panelTipodeMovimiento.Name = "panelTipodeMovimiento";
-            panelTipodeMovimiento.Size = new Size(805, 56);
-            panelTipodeMovimiento.TabIndex = 2;
-            // 
-            // btnMaximizarTipodeMovimiento
-            // 
-            btnMaximizarTipodeMovimiento.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMaximizarTipodeMovimiento.BackColor = Color.CornflowerBlue;
-            btnMaximizarTipodeMovimiento.FlatAppearance.BorderSize = 0;
-            btnMaximizarTipodeMovimiento.FlatStyle = FlatStyle.Flat;
-            btnMaximizarTipodeMovimiento.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
-            btnMaximizarTipodeMovimiento.IconColor = Color.OldLace;
-            btnMaximizarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnMaximizarTipodeMovimiento.IconSize = 20;
-            btnMaximizarTipodeMovimiento.Location = new Point(1366, 0);
-            btnMaximizarTipodeMovimiento.Margin = new Padding(2);
-            btnMaximizarTipodeMovimiento.Name = "btnMaximizarTipodeMovimiento";
-            btnMaximizarTipodeMovimiento.Size = new Size(36, 20);
-            btnMaximizarTipodeMovimiento.TabIndex = 12;
-            btnMaximizarTipodeMovimiento.UseVisualStyleBackColor = false;
-            // 
-            // btnCerrarTipodeMovimiento
-            // 
-            btnCerrarTipodeMovimiento.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCerrarTipodeMovimiento.BackColor = Color.Tomato;
-            btnCerrarTipodeMovimiento.FlatAppearance.BorderSize = 0;
-            btnCerrarTipodeMovimiento.FlatStyle = FlatStyle.Flat;
-            btnCerrarTipodeMovimiento.IconChar = FontAwesome.Sharp.IconChar.X;
-            btnCerrarTipodeMovimiento.IconColor = Color.OldLace;
-            btnCerrarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            btnCerrarTipodeMovimiento.IconSize = 20;
-            btnCerrarTipodeMovimiento.Location = new Point(1398, 0);
-            btnCerrarTipodeMovimiento.Margin = new Padding(2);
-            btnCerrarTipodeMovimiento.Name = "btnCerrarTipodeMovimiento";
-            btnCerrarTipodeMovimiento.Size = new Size(36, 20);
-            btnCerrarTipodeMovimiento.TabIndex = 13;
-            btnCerrarTipodeMovimiento.UseVisualStyleBackColor = false;
-            // 
-            // btnMinimizarTipodeMovimiento
-            // 
-            btnMinimizarTipodeMovimiento.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMinimizarTipodeMovimiento.BackColor = Color.Turquoise;
-            btnMinimizarTipodeMovimiento.FlatAppearance.BorderSize = 0;
-            btnMinimizarTipodeMovimiento.FlatStyle = FlatStyle.Flat;
-            btnMinimizarTipodeMovimiento.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
-            btnMinimizarTipodeMovimiento.IconColor = Color.OldLace;
-            btnMinimizarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnMinimizarTipodeMovimiento.IconSize = 20;
-            btnMinimizarTipodeMovimiento.Location = new Point(1332, 0);
-            btnMinimizarTipodeMovimiento.Margin = new Padding(2);
-            btnMinimizarTipodeMovimiento.Name = "btnMinimizarTipodeMovimiento";
-            btnMinimizarTipodeMovimiento.Size = new Size(36, 20);
-            btnMinimizarTipodeMovimiento.TabIndex = 11;
-            btnMinimizarTipodeMovimiento.UseVisualStyleBackColor = false;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.ForeColor = Color.FromArgb(255, 161, 43);
-            label6.Location = new Point(12, 9);
-            label6.Name = "label6";
-            label6.Size = new Size(484, 36);
-            label6.TabIndex = 2;
-            label6.Text = "REGISTRO DE MOVIMIENTO";
             // 
             // panel2
             // 
@@ -178,35 +94,39 @@
             panel2.Controls.Add(label1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(805, 457);
+            panel2.Size = new Size(1006, 571);
             panel2.TabIndex = 3;
             // 
             // panel5
             // 
             panel5.BackColor = Color.White;
             panel5.ForeColor = Color.White;
-            panel5.Location = new Point(218, 280);
+            panel5.Location = new Point(272, 350);
+            panel5.Margin = new Padding(4);
             panel5.Name = "panel5";
-            panel5.Size = new Size(158, 2);
+            panel5.Size = new Size(198, 2);
             panel5.TabIndex = 24;
             // 
             // panel4
             // 
             panel4.BackColor = Color.White;
             panel4.ForeColor = Color.White;
-            panel4.Location = new Point(28, 280);
+            panel4.Location = new Point(35, 350);
+            panel4.Margin = new Padding(4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(158, 2);
+            panel4.Size = new Size(198, 2);
             panel4.TabIndex = 24;
             // 
             // panel3
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(141, 122);
+            panel3.Location = new Point(176, 152);
+            panel3.Margin = new Padding(4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(158, 2);
+            panel3.Size = new Size(198, 2);
             panel3.TabIndex = 73;
             // 
             // btnConsultaProducto
@@ -221,10 +141,10 @@
             btnConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnConsultaProducto.IconSize = 30;
             btnConsultaProducto.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConsultaProducto.Location = new Point(315, 85);
+            btnConsultaProducto.Location = new Point(394, 106);
             btnConsultaProducto.Margin = new Padding(2);
             btnConsultaProducto.Name = "btnConsultaProducto";
-            btnConsultaProducto.Size = new Size(39, 43);
+            btnConsultaProducto.Size = new Size(49, 54);
             btnConsultaProducto.TabIndex = 72;
             btnConsultaProducto.UseVisualStyleBackColor = false;
             btnConsultaProducto.Click += btnConsultaProducto_Click;
@@ -234,17 +154,19 @@
             comboProveedor.BackColor = Color.FromArgb(255, 161, 43);
             comboProveedor.FlatStyle = FlatStyle.Flat;
             comboProveedor.FormattingEnabled = true;
-            comboProveedor.Location = new Point(286, 303);
+            comboProveedor.Location = new Point(358, 379);
+            comboProveedor.Margin = new Padding(4);
             comboProveedor.Name = "comboProveedor";
-            comboProveedor.Size = new Size(151, 28);
+            comboProveedor.Size = new Size(188, 33);
             comboProveedor.TabIndex = 71;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(662, 49);
+            pictureBox1.Location = new Point(828, 61);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.Size = new Size(179, 120);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 70;
             pictureBox1.TabStop = false;
@@ -260,9 +182,10 @@
             limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             limpiar.IconSize = 35;
             limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            limpiar.Location = new Point(586, 391);
+            limpiar.Location = new Point(732, 489);
+            limpiar.Margin = new Padding(4);
             limpiar.Name = "limpiar";
-            limpiar.Size = new Size(140, 56);
+            limpiar.Size = new Size(175, 70);
             limpiar.TabIndex = 69;
             limpiar.Text = "     Limpiar";
             limpiar.UseVisualStyleBackColor = true;
@@ -279,21 +202,24 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(435, 391);
+            guardar.Location = new Point(544, 489);
+            guardar.Margin = new Padding(4);
             guardar.Name = "guardar";
-            guardar.Size = new Size(145, 56);
+            guardar.Size = new Size(181, 70);
             guardar.TabIndex = 68;
             guardar.Text = "     Guardar";
             guardar.UseVisualStyleBackColor = true;
+            guardar.Click += guardar_Click;
             // 
             // inactivo
             // 
             inactivo.AutoSize = true;
             inactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             inactivo.ForeColor = Color.White;
-            inactivo.Location = new Point(596, 310);
+            inactivo.Location = new Point(745, 388);
+            inactivo.Margin = new Padding(4);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(109, 24);
+            inactivo.Size = new Size(130, 29);
             inactivo.TabIndex = 67;
             inactivo.Text = "Inactivo";
             inactivo.UseVisualStyleBackColor = true;
@@ -304,9 +230,10 @@
             activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(596, 280);
+            activo.Location = new Point(745, 350);
+            activo.Margin = new Padding(4);
             activo.Name = "activo";
-            activo.Size = new Size(90, 24);
+            activo.Size = new Size(108, 29);
             activo.TabIndex = 66;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -317,51 +244,57 @@
             label9.AutoSize = true;
             label9.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label9.ForeColor = Color.White;
-            label9.Location = new Point(506, 296);
+            label9.Location = new Point(632, 370);
+            label9.Margin = new Padding(4, 0, 4, 0);
             label9.Name = "label9";
-            label9.Size = new Size(88, 25);
+            label9.Size = new Size(103, 29);
             label9.TabIndex = 65;
             label9.Text = "Estado";
             // 
             // observaciones
             // 
             observaciones.BackColor = Color.FromArgb(255, 161, 43);
-            observaciones.Location = new Point(491, 187);
+            observaciones.Location = new Point(614, 234);
+            observaciones.Margin = new Padding(4);
             observaciones.Multiline = true;
             observaciones.Name = "observaciones";
-            observaciones.Size = new Size(214, 80);
+            observaciones.Size = new Size(266, 99);
             observaciones.TabIndex = 14;
             // 
             // fecha
             // 
             fecha.BackColor = Color.FromArgb(255, 161, 43);
-            fecha.Location = new Point(148, 354);
+            fecha.Location = new Point(185, 442);
+            fecha.Margin = new Padding(4);
             fecha.Name = "fecha";
-            fecha.Size = new Size(151, 27);
+            fecha.Size = new Size(188, 31);
             fecha.TabIndex = 13;
             // 
             // txtstockatual
             // 
             txtstockatual.BackColor = Color.FromArgb(255, 161, 43);
-            txtstockatual.Location = new Point(229, 253);
+            txtstockatual.Location = new Point(286, 316);
+            txtstockatual.Margin = new Padding(4);
             txtstockatual.Name = "txtstockatual";
-            txtstockatual.Size = new Size(125, 27);
+            txtstockatual.Size = new Size(155, 31);
             txtstockatual.TabIndex = 11;
             // 
             // txtcantidad
             // 
             txtcantidad.BackColor = Color.FromArgb(255, 161, 43);
-            txtcantidad.Location = new Point(56, 253);
+            txtcantidad.Location = new Point(70, 316);
+            txtcantidad.Margin = new Padding(4);
             txtcantidad.Name = "txtcantidad";
-            txtcantidad.Size = new Size(123, 27);
+            txtcantidad.Size = new Size(153, 31);
             txtcantidad.TabIndex = 10;
             // 
             // producto
             // 
             producto.BackColor = Color.FromArgb(255, 161, 43);
-            producto.Location = new Point(148, 94);
+            producto.Location = new Point(185, 118);
+            producto.Margin = new Padding(4);
             producto.Name = "producto";
-            producto.Size = new Size(151, 27);
+            producto.Size = new Size(188, 31);
             producto.TabIndex = 9;
             // 
             // comboTipoMovimiento
@@ -369,9 +302,10 @@
             comboTipoMovimiento.BackColor = Color.FromArgb(255, 161, 43);
             comboTipoMovimiento.FlatStyle = FlatStyle.Flat;
             comboTipoMovimiento.FormattingEnabled = true;
-            comboTipoMovimiento.Location = new Point(286, 156);
+            comboTipoMovimiento.Location = new Point(358, 195);
+            comboTipoMovimiento.Margin = new Padding(4);
             comboTipoMovimiento.Name = "comboTipoMovimiento";
-            comboTipoMovimiento.Size = new Size(151, 28);
+            comboTipoMovimiento.Size = new Size(188, 33);
             comboTipoMovimiento.TabIndex = 8;
             // 
             // label8
@@ -379,9 +313,10 @@
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(510, 159);
+            label8.Location = new Point(638, 199);
+            label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(176, 25);
+            label8.Size = new Size(209, 29);
             label8.TabIndex = 6;
             label8.Text = "Observaciones";
             // 
@@ -390,9 +325,10 @@
             label7.AutoSize = true;
             label7.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(62, 356);
+            label7.Location = new Point(78, 445);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(77, 25);
+            label7.Size = new Size(92, 29);
             label7.TabIndex = 5;
             label7.Text = "Fecha";
             // 
@@ -401,9 +337,10 @@
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label5.ForeColor = Color.White;
-            label5.Location = new Point(28, 301);
+            label5.Location = new Point(35, 376);
+            label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(252, 25);
+            label5.Size = new Size(298, 29);
             label5.TabIndex = 4;
             label5.Text = "Proveedor (opcional)";
             // 
@@ -412,9 +349,10 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(218, 225);
+            label4.Location = new Point(272, 281);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(149, 25);
+            label4.Size = new Size(177, 29);
             label4.TabIndex = 3;
             label4.Text = "Stock actual";
             // 
@@ -423,9 +361,10 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(62, 225);
+            label3.Location = new Point(78, 281);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(110, 25);
+            label3.Size = new Size(132, 29);
             label3.TabIndex = 2;
             label3.Text = "Cantidad";
             // 
@@ -434,9 +373,10 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(28, 159);
+            label2.Location = new Point(35, 199);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(233, 25);
+            label2.Size = new Size(275, 29);
             label2.TabIndex = 1;
             label2.Text = "Tipo de Movimiento";
             // 
@@ -445,38 +385,127 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(28, 94);
+            label1.Location = new Point(35, 118);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(114, 25);
+            label1.Size = new Size(134, 29);
             label1.TabIndex = 0;
             label1.Text = "Producto";
             // 
+            // panelMovimiento
+            // 
+            panelMovimiento.Controls.Add(btnMaximizar);
+            panelMovimiento.Controls.Add(btnCerrar);
+            panelMovimiento.Controls.Add(btnMinimizar);
+            panelMovimiento.Controls.Add(label6);
+            panelMovimiento.Dock = DockStyle.Top;
+            panelMovimiento.Location = new Point(0, 0);
+            panelMovimiento.Name = "panelMovimiento";
+            panelMovimiento.Size = new Size(1006, 68);
+            panelMovimiento.TabIndex = 4;
+            panelMovimiento.MouseDown += panelMovimiento_MouseDown;
+            // 
+            // btnMaximizar
+            // 
+            btnMaximizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximizar.BackColor = Color.CornflowerBlue;
+            btnMaximizar.FlatAppearance.BorderSize = 0;
+            btnMaximizar.FlatStyle = FlatStyle.Flat;
+            btnMaximizar.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+            btnMaximizar.IconColor = Color.OldLace;
+            btnMaximizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMaximizar.IconSize = 20;
+            btnMaximizar.Location = new Point(922, 0);
+            btnMaximizar.Margin = new Padding(2);
+            btnMaximizar.Name = "btnMaximizar";
+            btnMaximizar.Size = new Size(45, 25);
+            btnMaximizar.TabIndex = 12;
+            btnMaximizar.UseVisualStyleBackColor = false;
+            btnMaximizar.Click += btnMaximizar_Click;
+            // 
+            // btnCerrar
+            // 
+            btnCerrar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCerrar.BackColor = Color.Tomato;
+            btnCerrar.FlatAppearance.BorderSize = 0;
+            btnCerrar.FlatStyle = FlatStyle.Flat;
+            btnCerrar.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnCerrar.IconColor = Color.OldLace;
+            btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            btnCerrar.IconSize = 20;
+            btnCerrar.Location = new Point(960, 0);
+            btnCerrar.Margin = new Padding(2);
+            btnCerrar.Name = "btnCerrar";
+            btnCerrar.Size = new Size(45, 25);
+            btnCerrar.TabIndex = 13;
+            btnCerrar.UseVisualStyleBackColor = false;
+            btnCerrar.Click += btnCerrar_Click;
+            // 
+            // btnMinimizar
+            // 
+            btnMinimizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimizar.BackColor = Color.Turquoise;
+            btnMinimizar.FlatAppearance.BorderSize = 0;
+            btnMinimizar.FlatStyle = FlatStyle.Flat;
+            btnMinimizar.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            btnMinimizar.IconColor = Color.OldLace;
+            btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMinimizar.IconSize = 20;
+            btnMinimizar.Location = new Point(878, 0);
+            btnMinimizar.Margin = new Padding(2);
+            btnMinimizar.Name = "btnMinimizar";
+            btnMinimizar.Size = new Size(45, 25);
+            btnMinimizar.TabIndex = 11;
+            btnMinimizar.UseVisualStyleBackColor = false;
+            btnMinimizar.Click += btnMinimizar_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.FromArgb(255, 161, 43);
+            label6.Location = new Point(13, 9);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(798, 44);
+            label6.TabIndex = 2;
+            label6.Text = "REGISTRO MOVIMIENTO INVENTARIO";
+            // 
             // ProcesoRegistroMovimiento
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(805, 457);
-            Controls.Add(panelTipodeMovimiento);
+            ClientSize = new Size(1006, 571);
+            Controls.Add(panelMovimiento);
             Controls.Add(panel2);
+            Margin = new Padding(4);
             Name = "ProcesoRegistroMovimiento";
             Text = "ProcesoRegistroMovimiento";
             Load += ProcesoRegistroMovimiento_Load;
-            panelTipodeMovimiento.ResumeLayout(false);
-            panelTipodeMovimiento.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panelMovimiento.ResumeLayout(false);
+            panelMovimiento.PerformLayout();
             ResumeLayout(false);
         }
 
-        #endregion
+        private void btnMinimizarSala_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
-        private Panel panel1;
-        private Panel panelTipodeMovimiento;
-        private FontAwesome.Sharp.IconButton btnMaximizarTipodeMovimiento;
-        private FontAwesome.Sharp.IconButton btnCerrarTipodeMovimiento;
-        private FontAwesome.Sharp.IconButton btnMinimizarTipodeMovimiento;
-        private Label label6;
+        private void btnCerrarSala_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void btnMaximizarSala_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
         private Panel panel2;
         private Label label2;
         private Label label1;
@@ -502,5 +531,10 @@
         private Panel panel3;
         private Panel panel5;
         private Panel panel4;
+        private Panel panelMovimiento;
+        private Label label6;
+        private FontAwesome.Sharp.IconButton btnMaximizar;
+        private FontAwesome.Sharp.IconButton btnCerrar;
+        private FontAwesome.Sharp.IconButton btnMinimizar;
     }
 }
