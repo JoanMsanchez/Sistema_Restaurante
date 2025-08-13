@@ -14,6 +14,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 {
     public partial class MantenimientoSala : Form
     {
+        private MenuPrincipal menuPrincipal;
         private int id_sala_seleccionada = -1;
 
         //Fields
@@ -21,12 +22,13 @@ namespace Proyecto_Restaurante.Mantenimiento
 
 
         //Constructor
-        public MantenimientoSala()
+        public MantenimientoSala(MenuPrincipal menu = null)
         {
             InitializeComponent();
+            menuPrincipal = menu; // guarda la referencia (puede ser null)
             llenar_tabla_datagridview();
-            this.Padding = new Padding(bordeSize); //Border size
-            this.BackColor = Color.FromArgb(255, 161, 43); //Border color
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = Color.FromArgb(255, 161, 43);
         }
 
         //Drag Form
@@ -35,8 +37,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
         private void panelSala_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
@@ -171,27 +173,35 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 if (id_sala_seleccionada != -1)
                 {
-                    // MODIFICAR
-                    string consulta = "INSERT INTO sala (descripcion, fecha, estado) VALUES (@descripcion, @fecha, @estado)";
+                    // MODIFICAR (corregido: UPDATE + WHERE)
+                    string consulta = "UPDATE sala SET descripcion = @descripcion, fecha = @fecha, estado = @estado WHERE id_sala = @id";
                     cmd = new SqlCommand(consulta, conexion);
-                    cmd.Parameters.AddWithValue("@fecha", DateTime.Parse(fecha.Text));
-                    cmd.Parameters.AddWithValue("@id", id_sala_seleccionada);
                     cmd.Parameters.AddWithValue("@descripcion", descripcion.Text.Trim());
+                    cmd.Parameters.AddWithValue("@fecha", DateTime.Parse(fecha.Text));
                     cmd.Parameters.AddWithValue("@estado", estado);
+                    cmd.Parameters.AddWithValue("@id", id_sala_seleccionada);
 
                     cmd.ExecuteNonQuery();
+
+                    // >>> NUEVO: refrescar el MenuPrincipal
+                    menuPrincipal?.InicializarPlanoSalas();
+
                     MessageBox.Show("Sala modificada correctamente.");
                 }
                 else
                 {
-                    // INSERTAR (incluye fecha)
+                    // INSERTAR
                     string consulta = "INSERT INTO sala (descripcion, fecha, estado) VALUES (@descripcion, @fecha, @estado)";
                     cmd = new SqlCommand(consulta, conexion);
                     cmd.Parameters.AddWithValue("@descripcion", descripcion.Text.Trim());
-                    cmd.Parameters.AddWithValue("@fecha", fechaActual); // Puedes usar .ToString("yyyy-MM-dd") también si prefieres
+                    cmd.Parameters.AddWithValue("@fecha", fechaActual);
                     cmd.Parameters.AddWithValue("@estado", estado);
 
                     cmd.ExecuteNonQuery();
+
+                    // >>> NUEVO: refrescar el MenuPrincipal
+                    menuPrincipal?.InicializarPlanoSalas();
+
                     MessageBox.Show("Sala registrada correctamente.");
                 }
 

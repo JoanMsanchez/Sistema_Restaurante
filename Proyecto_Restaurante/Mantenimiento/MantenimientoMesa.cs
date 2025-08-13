@@ -15,18 +15,20 @@ namespace Proyecto_Restaurante.Mantenimiento
 
     public partial class MantenimientoMesa : Form
     {
+        private MenuPrincipal menuPrincipal;
+        private int id_mesa_seleccionada = -1;
 
         //Fields
         private int bordeSize = 2;
 
-        private int id_mesa_seleccionada = -1;
         //Constructor
-        public MantenimientoMesa()
+        public MantenimientoMesa(MenuPrincipal menu = null)
         {
             InitializeComponent();
+            menuPrincipal = menu; // guarda la referencia (puede venir null)
             llenar_tabla_datagridview();
-            this.Padding = new Padding(bordeSize); //Border size
-            this.BackColor = Color.FromArgb(255, 161, 43); //Border color
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = Color.FromArgb(255, 161, 43);
         }
 
         //Drag Form
@@ -35,8 +37,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelMesa_MouseDown(object sender, MouseEventArgs e)
         {
@@ -179,16 +181,18 @@ namespace Proyecto_Restaurante.Mantenimiento
                 // Validaciones
                 if (string.IsNullOrWhiteSpace(desMesa.Text) ||
                     string.IsNullOrWhiteSpace(asientos.Text) ||
-                    boxSala.SelectedIndex == -1 ||
+                    boxSala.SelectedValue == null ||
                     (!activo.Checked && !inactivo.Checked))
                 {
-                    MessageBox.Show("Por favor, complete todos los campos requeridos.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Por favor, complete todos los campos requeridos.", "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (!int.TryParse(asientos.Text, out int numeroAsientos))
                 {
-                    MessageBox.Show("El número de asientos debe ser un número válido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("El número de asientos debe ser un número válido.", "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -200,36 +204,52 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 conexion.Open();
 
-                SqlCommand cmd;
-
                 if (id_mesa_seleccionada != -1)
                 {
                     // MODIFICAR
-                    string consulta = "UPDATE mesa SET descripcion = @descripcion, id_sala = @id_sala, asientos = @asientos, fecha = @fecha, estado = @estado WHERE id_mesa = @id_mesa";
-                    cmd = new SqlCommand(consulta, conexion);
-                    cmd.Parameters.AddWithValue("@descripcion", desMesa.Text.Trim());
-                    cmd.Parameters.AddWithValue("@id_sala", idSalaSeleccionada);
-                    cmd.Parameters.AddWithValue("@asientos", numeroAsientos);
-                    cmd.Parameters.AddWithValue("@fecha", fechaActual);
-                    cmd.Parameters.AddWithValue("@estado", estado);
-                    cmd.Parameters.AddWithValue("@id_mesa", id_mesa_seleccionada);
+                    string sql = @"UPDATE mesa 
+                           SET descripcion = @descripcion,
+                               id_sala     = @id_sala,
+                               asientos    = @asientos,
+                               fecha       = @fecha,
+                               estado      = @estado
+                           WHERE id_mesa  = @id_mesa;";
+                    using (SqlCommand cmd = new SqlCommand(sql, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@descripcion", desMesa.Text.Trim());
+                        cmd.Parameters.AddWithValue("@id_sala", idSalaSeleccionada);
+                        cmd.Parameters.AddWithValue("@asientos", numeroAsientos);
+                        cmd.Parameters.AddWithValue("@fecha", fechaActual);
+                        cmd.Parameters.AddWithValue("@estado", estado);
+                        cmd.Parameters.AddWithValue("@id_mesa", id_mesa_seleccionada);
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Refrescar el MenuPrincipal
+                    menuPrincipal?.InicializarPlanoSalas();
+
                     MessageBox.Show("Mesa modificada correctamente.");
                 }
                 else
                 {
                     // INSERTAR
-                    string consulta = "INSERT INTO mesa (descripcion, id_sala, asientos, fecha, estado) " +
-                                      "VALUES (@descripcion, @id_sala, @asientos, @fecha, @estado)";
-                    cmd = new SqlCommand(consulta, conexion);
-                    cmd.Parameters.AddWithValue("@descripcion", desMesa.Text.Trim());
-                    cmd.Parameters.AddWithValue("@id_sala", idSalaSeleccionada);
-                    cmd.Parameters.AddWithValue("@asientos", numeroAsientos);
-                    cmd.Parameters.AddWithValue("@fecha", fechaActual);
-                    cmd.Parameters.AddWithValue("@estado", estado);
+                    string sql = @"INSERT INTO mesa (descripcion, id_sala, asientos, fecha, estado)
+                           VALUES (@descripcion, @id_sala, @asientos, @fecha, @estado);";
+                    using (SqlCommand cmd = new SqlCommand(sql, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@descripcion", desMesa.Text.Trim());
+                        cmd.Parameters.AddWithValue("@id_sala", idSalaSeleccionada);
+                        cmd.Parameters.AddWithValue("@asientos", numeroAsientos);
+                        cmd.Parameters.AddWithValue("@fecha", fechaActual);
+                        cmd.Parameters.AddWithValue("@estado", estado);
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Refrescar el MenuPrincipal
+                    menuPrincipal?.InicializarPlanoSalas();
+
                     MessageBox.Show("Mesa registrada correctamente.");
                 }
 
@@ -243,7 +263,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
             finally
             {
-                conexion.Close();
+                if (conexion.State == ConnectionState.Open) conexion.Close();
             }
         }
 

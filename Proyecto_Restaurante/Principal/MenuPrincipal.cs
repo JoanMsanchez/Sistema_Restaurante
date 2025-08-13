@@ -10,11 +10,146 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
 using Proyecto_Restaurante.Consulta;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
     public partial class MenuPrincipal : Form
     {
+        // ====== Salas/Mesas: campos y utilidades ======
+
+        // Usa el mismo connection string que usas en tus mantenimientos
+        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        // private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+
+        // Método público para iniciar/recargar el plano de salas
+        public void InicializarPlanoSalas()
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                // 1) Limpiar las pestañas actuales
+                tabSalas.TabPages.Clear();
+
+                // 2) Traer salas activas
+                DataTable dtSalas = new DataTable();
+                using (var con = new SqlConnection(CS))
+                using (var da = new SqlDataAdapter(
+                    @"SELECT id_sala, descripcion, estado 
+              FROM sala 
+              WHERE estado = 1 
+              ORDER BY descripcion;", con))
+                {
+                    da.Fill(dtSalas);
+                }
+
+                // 3) Traer mesas (si quieres solo activas, agrega WHERE estado = 1)
+                DataTable dtMesas = new DataTable();
+                using (var con = new SqlConnection(CS))
+                using (var da = new SqlDataAdapter(
+                    @"SELECT id_mesa, id_sala, descripcion, asientos, estado 
+              FROM mesa 
+              ORDER BY descripcion;", con))
+                {
+                    da.Fill(dtMesas);
+                }
+
+                // 4) Crear pestañas por sala y botones por mesa
+                foreach (DataRow s in dtSalas.Rows)
+                {
+                    int idSala = (int)s["id_sala"];
+                    string nombreSala = Convert.ToString(s["descripcion"]);
+
+                    var page = new TabPage(nombreSala) { ToolTipText = $"Sala #{idSala}" };
+
+                    var flow = new FlowLayoutPanel
+                    {
+                        Dock = DockStyle.Fill,
+                        AutoScroll = true,
+                        WrapContents = true,
+                        FlowDirection = FlowDirection.LeftToRight,
+                        Padding = new Padding(10)
+                    };
+                    page.Controls.Add(flow);
+
+                    DataRow[] mesasDeSala = dtMesas.Select($"id_sala = {idSala}");
+                    if (mesasDeSala.Length == 0)
+                    {
+                        flow.Controls.Add(new Label
+                        {
+                            AutoSize = true,
+                            Font = new Font("Segoe UI", 10, FontStyle.Italic),
+                            Text = "No hay mesas registradas en esta sala.",
+                            Margin = new Padding(10)
+                        });
+                    }
+                    else
+                    {
+                        foreach (DataRow m in mesasDeSala)
+                        {
+                            int idMesa = (int)m["id_mesa"];
+                            string desc = Convert.ToString(m["descripcion"]);
+                            int asientos = Convert.ToInt32(m["asientos"]);
+                            int estadoMesa = Convert.ToInt32(m["estado"]); // 1 activo, 0 inactivo
+
+                            var btn = CrearBotonMesa(idMesa, desc, asientos, estadoMesa);
+                            flow.Controls.Add(btn);
+                        }
+                    }
+
+                    tabSalas.TabPages.Add(page);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando salas/mesas: " + ex.Message, "MenuPrincipal",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private Button CrearBotonMesa(int idMesa, string descripcion, int asientos, int estado)
+        {
+            var btn = new Button
+            {
+                Tag = idMesa,
+                Width = 150,
+                Height = 110,
+                Margin = new Padding(8),
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Text = $"{descripcion}\nAsientos: {asientos}",
+                BackColor = (estado == 1) ? Color.FromArgb(46, 204, 113) : Color.Gray,
+                ForeColor = Color.White,
+                Cursor = Cursors.Hand
+            };
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Click += Mesa_Click;
+            return btn;
+        }
+
+        private void Mesa_Click(object sender, EventArgs e)
+        {
+            if (sender is Button b && b.Tag is int idMesa)
+            {
+                // TODO: Abrir tu formulario de pedidos/detalle de mesa
+                // new TomarPedidoForm(idMesa).ShowDialog();
+
+                MessageBox.Show($"Mesa seleccionada: #{idMesa}", "Mesa",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        // ====== /Salas/Mesas ======
+
+
         //Fields
         private int bordeSize = 2;
 
@@ -270,14 +405,19 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         private void MantenimientoMesas_Click(object sender, EventArgs e)
         {
-            MantenimientoMesa mesa = new MantenimientoMesa();
-            mesa.Show();
+            var f = new MantenimientoMesa(this);
+            f.ShowDialog();
         }
 
         private void MantenimientoSala_Click(object sender, EventArgs e)
         {
-            MantenimientoSala sala = new MantenimientoSala();
-            sala.Show();
+            var f = new MantenimientoSala(this);
+            f.ShowDialog();
+        }
+
+        private void MenuPrincipal_Load(object sender, EventArgs e)
+        {
+            InicializarPlanoSalas();
         }
     }
 }
