@@ -162,7 +162,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                     string consulta = @"UPDATE producto 
                                 SET nombre = @nombre, descripcion = @descripcion, id_categoria = @id_categoria, 
                                     id_unidad = @id_unidad, stock_actual = @stock_actual, stock_minimo = @stock_minimo, 
-                                    precio_costo = @precio_costo, precio_venta = @precio_venta, estado = @estado, imagen_ruta=@imagen_ruta
+                                    precio_costo = @precio_costo, precio_venta = @precio_venta, estado = @estado, imagen_ruta = @imagen_ruta
                                 WHERE id_producto = @id";
                     cmd = new SqlCommand(consulta, conexion);
                     cmd.Parameters.AddWithValue("@id", id_producto_seleccionado);
@@ -171,7 +171,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                 else
                 {
                     string consulta = @"INSERT INTO producto (nombre, descripcion, id_categoria, id_unidad, 
-                                stock_actual, stock_minimo, precio_costo, precio_venta, estado) 
+                                stock_actual, stock_minimo, precio_costo, precio_venta, estado, imagen_ruta) 
                                 VALUES (@nombre, @descripcion, @id_categoria, @id_unidad, 
                                 @stock_actual, @stock_minimo, @precio_costo, @precio_venta, @estado, @imagen_ruta)";
                     cmd = new SqlCommand(consulta, conexion);
