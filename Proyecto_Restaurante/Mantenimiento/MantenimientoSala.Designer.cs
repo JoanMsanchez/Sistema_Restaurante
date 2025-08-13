@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoSala));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoSala));
             panel1 = new Panel();
+            pictureBox1 = new PictureBox();
             fecha = new TextBox();
             label2 = new Label();
             limpiar = new FontAwesome.Sharp.IconButton();
@@ -53,11 +54,10 @@
             btnCerrarSala = new FontAwesome.Sharp.IconButton();
             btnMinimizarSala = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
-            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DGVSala).BeginInit();
             panelSala.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -83,6 +83,16 @@
             panel1.Size = new Size(799, 472);
             panel1.TabIndex = 0;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(655, 42);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // fecha
             // 
             fecha.BackColor = Color.FromArgb(255, 161, 43);
@@ -100,7 +110,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(514, 102);
+            label2.Location = new Point(499, 102);
             label2.Name = "label2";
             label2.Size = new Size(77, 25);
             label2.TabIndex = 52;
@@ -374,16 +384,6 @@
             label1.TabIndex = 1;
             label1.Text = "SALA";
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(655, 42);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 40;
-            pictureBox1.TabStop = false;
-            // 
             // MantenimientoSala
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -399,10 +399,10 @@
             Shown += MantenimientoSala_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)DGVSala).EndInit();
             panelSala.ResumeLayout(false);
             panelSala.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 

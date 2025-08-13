@@ -16,8 +16,8 @@ namespace Proyecto_Restaurante.Proceso
 
         // Ajusta tu cadena:
         private readonly SqlConnection conexion =
-          new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-          //new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+          //new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+          new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         //Fields
         private int bordeSize = 2;
@@ -100,7 +100,7 @@ namespace Proyecto_Restaurante.Proceso
 
             // Fecha solo display (no editable)
             fecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            fecha.Enabled = false;
+            //fecha.Enabled = true;
             fecha.TabStop = false;
 
             txtstockatual.ReadOnly = true;
