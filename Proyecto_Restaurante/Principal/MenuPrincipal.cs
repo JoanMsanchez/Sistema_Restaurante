@@ -15,6 +15,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Proyecto_Restaurante.Proceso;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
@@ -23,8 +24,9 @@ namespace Proyecto_Restaurante.Mantenimiento
         // ====== Salas/Mesas: campos y utilidades ======
 
         // Usa el mismo connection string que usas en tus mantenimientos
-        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        // private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+
+        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
         // Método público para iniciar/recargar el plano de salas
         public void InicializarPlanoSalas()
@@ -348,10 +350,10 @@ namespace Proyecto_Restaurante.Mantenimiento
         {
             MantenimientoProducto mp = new MantenimientoProducto();
 
-            mp.Show();
-            mp.Hide();
+            //mp.Show();
+            //mp.Hide();
 
-            ConsultaProductos consulta = new ConsultaProductos(mp);
+            ConsultaProductos consulta = new ConsultaProductos();
             consulta.Show();
         }
 
@@ -418,6 +420,12 @@ namespace Proyecto_Restaurante.Mantenimiento
         private void MenuPrincipal_Load(object sender, EventArgs e)
         {
             InicializarPlanoSalas();
+        }
+
+        private void RegistroDeMovimientoInventario_Click(object sender, EventArgs e)
+        {
+            ProcesoRegistroMovimiento regmov = new ProcesoRegistroMovimiento();
+            regmov.Show();
         }
     }
 }

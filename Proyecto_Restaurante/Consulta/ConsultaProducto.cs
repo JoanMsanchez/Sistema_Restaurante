@@ -24,13 +24,16 @@ namespace Proyecto_Restaurante.Consulta
 
         private MantenimientoProducto mantenimientoProductoForm;
 
-        public ConsultaProductos(MantenimientoProducto mantenimientoProducto)
+
+        public ConsultaProductos()
         {
             InitializeComponent();
             llenar_tabla_datagridview();
-            this.mantenimientoProductoForm = mantenimientoProducto;
+            //this.mantenimientoProductoForm = mantenimientoProducto;
             this.Padding = new Padding(bordeSize); //Border size
             this.BackColor = Color.FromArgb(255, 161, 43); //Border color
+            this.mantenimientoProductoForm = null; // <- clave: sin mantenimiento
+
         }
 
         //Drag Form
@@ -41,8 +44,8 @@ namespace Proyecto_Restaurante.Consulta
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
 
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         private void panelConsultaProducto_MouseDown(object sender, MouseEventArgs e)
         {
@@ -185,6 +188,12 @@ namespace Proyecto_Restaurante.Consulta
             this.Close(); // cerrar la ventana de consulta
         }
 
+
+
+        public int SelectedId { get; private set; }
+        public string SelectedNombre { get; private set; }
+        public decimal SelectedStock { get; private set; }
+
         private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -205,8 +214,23 @@ namespace Proyecto_Restaurante.Consulta
                 int estado = Convert.ToInt32(fila.Cells["estado"].Value);
                 string imagen = fila.Cells["imagen_ruta"].Value.ToString();
 
-                AbrirMantenimiento(id, nombre, descripcion, precioCosto, precioVenta,
-                    stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, estado, imagen);
+                if (this.mantenimientoProductoForm != null)
+                {
+                    // === MODO MANTENIMIENTO (como ya lo hacías) ===
+                    AbrirMantenimiento(id, nombre, descripcion, precioCosto, precioVenta,
+                        stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, estado, imagen);
+                    // AbrirMantenimiento ya hace Close();
+                }
+                else
+                {
+                    // === MODO SELECTOR (para Registro de Movimiento) ===
+                    SelectedId = id;
+                    SelectedNombre = nombre;
+                    SelectedStock = stockActual;
+
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
         }
 

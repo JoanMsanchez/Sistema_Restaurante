@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -103,7 +104,8 @@ namespace Proyecto_Restaurante.Mantenimiento
             nomMovimiento.Clear();
             activo.Checked = true;
             inactivo.Checked = false;
-            afectastock.Clear();
+            entrada.Checked = true;
+            salida.Checked = false;
             buscanom.Clear();
         }
         private void limpiar_Click(object sender, EventArgs e)
@@ -156,7 +158,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 // Validaciones básicas
                 if (string.IsNullOrWhiteSpace(nomMovimiento.Text) ||
-                    (string.IsNullOrWhiteSpace(afectastock.Text)) ||
+                    (!entrada.Checked && !salida.Checked) ||
                     (!activo.Checked && !inactivo.Checked))
                 {
                     MessageBox.Show("Por favor, complete todos los campos requeridos.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -165,13 +167,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 conexion.Open();
 
-                int afectastockm;
-                if (!int.TryParse(afectastock.Text.Trim(), out afectastockm))
-                {
-                    MessageBox.Show("El valor de 'Afecta Stock' debe ser un número válido.", "Error de entrada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
 
+                int tipostock = entrada.Checked ? 1 : -1;
                 int estado = activo.Checked ? 1 : 0;
 
                 SqlCommand cmd;
@@ -194,7 +191,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 // Parámetros comunes
                 cmd.Parameters.AddWithValue("@descripcion", nomMovimiento.Text.Trim());
-                cmd.Parameters.AddWithValue("@afecta_stock", afectastockm);
+                cmd.Parameters.AddWithValue("@afecta_stock", tipostock);
                 cmd.Parameters.AddWithValue("@estado", estado);
 
                 cmd.ExecuteNonQuery();
@@ -218,11 +215,6 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 e.Handled = true;
                 MessageBox.Show("Solo se permiten letras en el nombre del movimiento.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
-            {
-                afectastock.Focus();
             }
         }
 
@@ -280,9 +272,14 @@ namespace Proyecto_Restaurante.Mantenimiento
                 id_tipomovimiento_seleccionada = Convert.ToInt32(fila.Cells["id_tipo_mov"].Value); // guardamos el id
 
                 nomMovimiento.Text = fila.Cells["descripcion"].Value.ToString();
-                afectastock.Text = fila.Cells["afecta_stock"].Value.ToString();
+                //afectastock.Text = fila.Cells["afecta_stock"].Value.ToString();
 
-                //int afectastock = Convert.ToInt32(fila.Cells["afecta_stock"].Value);
+                int tipostock = Convert.ToInt32(fila.Cells["afecta_stock"].Value);
+                if (tipostock > 0)
+                    entrada.Checked = true;
+                else
+                    salida.Checked = true;
+
                 int estado = Convert.ToInt32(fila.Cells["estado"].Value);
                 if (estado == 1)
                     activo.Checked = true;

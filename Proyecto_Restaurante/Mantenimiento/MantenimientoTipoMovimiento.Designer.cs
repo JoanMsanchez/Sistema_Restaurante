@@ -28,14 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoTipoMovimiento));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoTipoMovimiento));
             panel1 = new Panel();
-            afectastock = new TextBox();
-            panel5 = new Panel();
+            panel4 = new Panel();
+            salida = new RadioButton();
+            entrada = new RadioButton();
+            pictureBox1 = new PictureBox();
             label1 = new Label();
             nomMovimiento = new TextBox();
             panel2 = new Panel();
@@ -54,18 +56,17 @@
             btnCerrarTipodeMovimiento = new FontAwesome.Sharp.IconButton();
             btnMinimizarTipodeMovimiento = new FontAwesome.Sharp.IconButton();
             label6 = new Label();
-            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DGVTipoMovimiento).BeginInit();
             panelTipodeMovimiento.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(panel4);
             panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(afectastock);
-            panel1.Controls.Add(panel5);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(nomMovimiento);
             panel1.Controls.Add(panel2);
@@ -82,29 +83,53 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(829, 490);
+            panel1.Size = new Size(831, 492);
             panel1.TabIndex = 0;
             // 
-            // afectastock
+            // panel4
             // 
-            afectastock.BackColor = Color.FromArgb(255, 161, 43);
-            afectastock.BorderStyle = BorderStyle.None;
-            afectastock.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            afectastock.ForeColor = Color.WhiteSmoke;
-            afectastock.Location = new Point(257, 188);
-            afectastock.Name = "afectastock";
-            afectastock.Size = new Size(147, 19);
-            afectastock.TabIndex = 63;
-            afectastock.KeyPress += afectastock_KeyPress;
+            panel4.Controls.Add(salida);
+            panel4.Controls.Add(entrada);
+            panel4.Location = new Point(259, 168);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(163, 67);
+            panel4.TabIndex = 66;
             // 
-            // panel5
+            // salida
             // 
-            panel5.BackColor = Color.White;
-            panel5.ForeColor = Color.White;
-            panel5.Location = new Point(254, 208);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(150, 2);
-            panel5.TabIndex = 62;
+            salida.AutoSize = true;
+            salida.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
+            salida.ForeColor = Color.White;
+            salida.Location = new Point(3, 37);
+            salida.Name = "salida";
+            salida.Size = new Size(132, 24);
+            salida.TabIndex = 1;
+            salida.Text = "Salida (-1)";
+            salida.UseVisualStyleBackColor = true;
+            // 
+            // entrada
+            // 
+            entrada.AutoSize = true;
+            entrada.Checked = true;
+            entrada.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
+            entrada.ForeColor = Color.White;
+            entrada.Location = new Point(3, 7);
+            entrada.Name = "entrada";
+            entrada.Size = new Size(155, 24);
+            entrada.TabIndex = 0;
+            entrada.TabStop = true;
+            entrada.Text = "Entrada (+1)";
+            entrada.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(686, 49);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
             // 
             // label1
             // 
@@ -123,7 +148,7 @@
             nomMovimiento.BorderStyle = BorderStyle.None;
             nomMovimiento.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nomMovimiento.ForeColor = Color.WhiteSmoke;
-            nomMovimiento.Location = new Point(312, 98);
+            nomMovimiento.Location = new Point(174, 100);
             nomMovimiento.Name = "nomMovimiento";
             nomMovimiento.Size = new Size(147, 19);
             nomMovimiento.TabIndex = 61;
@@ -133,7 +158,7 @@
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(309, 118);
+            panel2.Location = new Point(171, 120);
             panel2.Name = "panel2";
             panel2.Size = new Size(150, 2);
             panel2.TabIndex = 59;
@@ -145,9 +170,9 @@
             label2.ForeColor = Color.White;
             label2.Location = new Point(24, 94);
             label2.Name = "label2";
-            label2.Size = new Size(282, 25);
+            label2.Size = new Size(144, 25);
             label2.TabIndex = 53;
-            label2.Text = "Nombre del movimiento";
+            label2.Text = "Descripción";
             // 
             // limpiar
             // 
@@ -317,7 +342,7 @@
             panelTipodeMovimiento.Location = new Point(0, 0);
             panelTipodeMovimiento.Margin = new Padding(2);
             panelTipodeMovimiento.Name = "panelTipodeMovimiento";
-            panelTipodeMovimiento.Size = new Size(829, 54);
+            panelTipodeMovimiento.Size = new Size(831, 54);
             panelTipodeMovimiento.TabIndex = 1;
             // 
             // btnMaximizarTipodeMovimiento
@@ -330,7 +355,7 @@
             btnMaximizarTipodeMovimiento.IconColor = Color.OldLace;
             btnMaximizarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarTipodeMovimiento.IconSize = 20;
-            btnMaximizarTipodeMovimiento.Location = new Point(761, 0);
+            btnMaximizarTipodeMovimiento.Location = new Point(763, 0);
             btnMaximizarTipodeMovimiento.Margin = new Padding(2);
             btnMaximizarTipodeMovimiento.Name = "btnMaximizarTipodeMovimiento";
             btnMaximizarTipodeMovimiento.Size = new Size(36, 20);
@@ -348,7 +373,7 @@
             btnCerrarTipodeMovimiento.IconColor = Color.OldLace;
             btnCerrarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarTipodeMovimiento.IconSize = 20;
-            btnCerrarTipodeMovimiento.Location = new Point(793, 0);
+            btnCerrarTipodeMovimiento.Location = new Point(795, 0);
             btnCerrarTipodeMovimiento.Margin = new Padding(2);
             btnCerrarTipodeMovimiento.Name = "btnCerrarTipodeMovimiento";
             btnCerrarTipodeMovimiento.Size = new Size(36, 20);
@@ -366,7 +391,7 @@
             btnMinimizarTipodeMovimiento.IconColor = Color.OldLace;
             btnMinimizarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarTipodeMovimiento.IconSize = 20;
-            btnMinimizarTipodeMovimiento.Location = new Point(727, 0);
+            btnMinimizarTipodeMovimiento.Location = new Point(729, 0);
             btnMinimizarTipodeMovimiento.Margin = new Padding(2);
             btnMinimizarTipodeMovimiento.Name = "btnMinimizarTipodeMovimiento";
             btnMinimizarTipodeMovimiento.Size = new Size(36, 20);
@@ -385,22 +410,12 @@
             label6.TabIndex = 2;
             label6.Text = "TIPO DE MOVIMIENTO";
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(686, 49);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 40;
-            pictureBox1.TabStop = false;
-            // 
             // MantenimientoTipoMovimiento
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(829, 490);
+            ClientSize = new Size(831, 492);
             Controls.Add(panelTipodeMovimiento);
             Controls.Add(panel1);
             Name = "MantenimientoTipoMovimiento";
@@ -409,10 +424,12 @@
             Shown += MantenimientoTipoMovimiento_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)DGVTipoMovimiento).EndInit();
             panelTipodeMovimiento.ResumeLayout(false);
             panelTipodeMovimiento.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -437,8 +454,9 @@
         private FontAwesome.Sharp.IconButton btnMaximizarTipodeMovimiento;
         private FontAwesome.Sharp.IconButton btnCerrarTipodeMovimiento;
         private FontAwesome.Sharp.IconButton btnMinimizarTipodeMovimiento;
-        private TextBox afectastock;
-        private Panel panel5;
         private PictureBox pictureBox1;
+        private Panel panel4;
+        private RadioButton salida;
+        private RadioButton entrada;
     }
 }
