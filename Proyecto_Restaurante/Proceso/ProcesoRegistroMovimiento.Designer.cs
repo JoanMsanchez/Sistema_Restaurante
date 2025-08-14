@@ -31,28 +31,19 @@ namespace Proyecto_Restaurante.Proceso
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProcesoRegistroMovimiento));
             panel2 = new Panel();
-            panel5 = new Panel();
-            panel4 = new Panel();
-            panel3 = new Panel();
-            btnConsultaProducto = new FontAwesome.Sharp.IconButton();
-            comboProveedor = new ComboBox();
+            dgvLineas = new DataGridView();
+            comboProducto = new ComboBox();
             pictureBox1 = new PictureBox();
-            limpiar = new FontAwesome.Sharp.IconButton();
-            guardar = new FontAwesome.Sharp.IconButton();
+            btnLimpiar = new FontAwesome.Sharp.IconButton();
+            btnGuardar = new FontAwesome.Sharp.IconButton();
             inactivo = new RadioButton();
             activo = new RadioButton();
             label9 = new Label();
             observaciones = new TextBox();
             fecha = new TextBox();
-            txtstockatual = new TextBox();
-            txtcantidad = new TextBox();
-            producto = new TextBox();
             comboTipoMovimiento = new ComboBox();
             label8 = new Label();
             label7 = new Label();
-            label5 = new Label();
-            label4 = new Label();
-            label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             panelMovimiento = new Panel();
@@ -61,6 +52,7 @@ namespace Proyecto_Restaurante.Proceso
             btnCerrar = new FontAwesome.Sharp.IconButton();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvLineas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelMovimiento.SuspendLayout();
             SuspendLayout();
@@ -68,152 +60,122 @@ namespace Proyecto_Restaurante.Proceso
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(255, 161, 43);
-            panel2.Controls.Add(panel5);
-            panel2.Controls.Add(panel4);
-            panel2.Controls.Add(panel3);
-            panel2.Controls.Add(btnConsultaProducto);
-            panel2.Controls.Add(comboProveedor);
+            panel2.Controls.Add(dgvLineas);
+            panel2.Controls.Add(comboProducto);
             panel2.Controls.Add(pictureBox1);
-            panel2.Controls.Add(limpiar);
-            panel2.Controls.Add(guardar);
+            panel2.Controls.Add(btnLimpiar);
+            panel2.Controls.Add(btnGuardar);
             panel2.Controls.Add(inactivo);
             panel2.Controls.Add(activo);
             panel2.Controls.Add(label9);
             panel2.Controls.Add(observaciones);
             panel2.Controls.Add(fecha);
-            panel2.Controls.Add(txtstockatual);
-            panel2.Controls.Add(txtcantidad);
-            panel2.Controls.Add(producto);
             panel2.Controls.Add(comboTipoMovimiento);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(label7);
-            panel2.Controls.Add(label5);
-            panel2.Controls.Add(label4);
-            panel2.Controls.Add(label3);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(label1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(805, 457);
+            panel2.Size = new Size(1169, 712);
             panel2.TabIndex = 3;
             // 
-            // panel5
+            // dgvLineas
             // 
-            panel5.BackColor = Color.White;
-            panel5.ForeColor = Color.White;
-            panel5.Location = new Point(229, 280);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(125, 2);
-            panel5.TabIndex = 24;
+            dgvLineas.AllowUserToAddRows = false;
+            dgvLineas.AllowUserToDeleteRows = false;
+            dgvLineas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvLineas.Location = new Point(56, 210);
+            dgvLineas.Name = "dgvLineas";
+            dgvLineas.RowHeadersVisible = false;
+            dgvLineas.RowHeadersWidth = 62;
+            dgvLineas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvLineas.Size = new Size(497, 233);
+            dgvLineas.TabIndex = 76;
+            dgvLineas.CellContentClick += dgvLineas_CellContentClick;
+            dgvLineas.CellValidating += dgvLineas_CellValidating;
             // 
-            // panel4
+            // comboProducto
             // 
-            panel4.BackColor = Color.White;
-            panel4.ForeColor = Color.White;
-            panel4.Location = new Point(52, 280);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(127, 2);
-            panel4.TabIndex = 24;
-            // 
-            // panel3
-            // 
-            panel3.BackColor = Color.White;
-            panel3.ForeColor = Color.White;
-            panel3.Location = new Point(141, 122);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(158, 2);
-            panel3.TabIndex = 73;
-            // 
-            // btnConsultaProducto
-            // 
-            btnConsultaProducto.BackColor = Color.FromArgb(255, 161, 43);
-            btnConsultaProducto.FlatAppearance.BorderSize = 0;
-            btnConsultaProducto.FlatStyle = FlatStyle.Flat;
-            btnConsultaProducto.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnConsultaProducto.ForeColor = Color.White;
-            btnConsultaProducto.IconChar = FontAwesome.Sharp.IconChar.Search;
-            btnConsultaProducto.IconColor = SystemColors.ControlLightLight;
-            btnConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnConsultaProducto.IconSize = 30;
-            btnConsultaProducto.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConsultaProducto.Location = new Point(315, 85);
-            btnConsultaProducto.Margin = new Padding(2);
-            btnConsultaProducto.Name = "btnConsultaProducto";
-            btnConsultaProducto.Size = new Size(39, 43);
-            btnConsultaProducto.TabIndex = 72;
-            btnConsultaProducto.UseVisualStyleBackColor = false;
-            btnConsultaProducto.Click += btnConsultaProducto_Click;
-            // 
-            // comboProveedor
-            // 
-            comboProveedor.BackColor = Color.FromArgb(255, 161, 43);
-            comboProveedor.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboProveedor.FlatStyle = FlatStyle.Flat;
-            comboProveedor.Font = new Font("Verdana", 10.2F);
-            comboProveedor.ForeColor = Color.White;
-            comboProveedor.FormattingEnabled = true;
-            comboProveedor.Location = new Point(286, 303);
-            comboProveedor.Name = "comboProveedor";
-            comboProveedor.Size = new Size(151, 28);
-            comboProveedor.TabIndex = 71;
+            comboProducto.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboProducto.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboProducto.BackColor = Color.FromArgb(255, 161, 43);
+            comboProducto.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboProducto.FlatStyle = FlatStyle.Flat;
+            comboProducto.Font = new Font("Verdana", 10.2F);
+            comboProducto.ForeColor = Color.White;
+            comboProducto.FormattingEnabled = true;
+            comboProducto.Location = new Point(177, 111);
+            comboProducto.Margin = new Padding(4);
+            comboProducto.Name = "comboProducto";
+            comboProducto.Size = new Size(272, 33);
+            comboProducto.TabIndex = 74;
+            comboProducto.SelectionChangeCommitted += comboProducto_SelectionChangeCommitted;
+            comboProducto.KeyDown += comboProducto_KeyDown;
+            comboProducto.MouseDoubleClick += comboProducto_MouseDoubleClick;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(662, 49);
+            pictureBox1.Location = new Point(977, 76);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.Size = new Size(179, 120);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 70;
             pictureBox1.TabStop = false;
             // 
-            // limpiar
+            // btnLimpiar
             // 
-            limpiar.FlatAppearance.BorderSize = 0;
-            limpiar.FlatStyle = FlatStyle.Flat;
-            limpiar.Font = new Font("Verdana", 12F, FontStyle.Bold);
-            limpiar.ForeColor = Color.White;
-            limpiar.IconChar = FontAwesome.Sharp.IconChar.Broom;
-            limpiar.IconColor = Color.White;
-            limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            limpiar.IconSize = 35;
-            limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            limpiar.Location = new Point(586, 391);
-            limpiar.Name = "limpiar";
-            limpiar.Size = new Size(140, 56);
-            limpiar.TabIndex = 69;
-            limpiar.Text = "     Limpiar";
-            limpiar.UseVisualStyleBackColor = true;
-            limpiar.Click += limpiar_Click;
+            btnLimpiar.FlatAppearance.BorderSize = 0;
+            btnLimpiar.FlatStyle = FlatStyle.Flat;
+            btnLimpiar.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            btnLimpiar.ForeColor = Color.White;
+            btnLimpiar.IconChar = FontAwesome.Sharp.IconChar.Broom;
+            btnLimpiar.IconColor = Color.White;
+            btnLimpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnLimpiar.IconSize = 35;
+            btnLimpiar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnLimpiar.Location = new Point(787, 577);
+            btnLimpiar.Margin = new Padding(4);
+            btnLimpiar.Name = "btnLimpiar";
+            btnLimpiar.Size = new Size(175, 70);
+            btnLimpiar.TabIndex = 69;
+            btnLimpiar.Text = "     Limpiar";
+            btnLimpiar.UseVisualStyleBackColor = true;
+            btnLimpiar.Click += btnLimpiar_Click;
             // 
-            // guardar
+            // btnGuardar
             // 
-            guardar.FlatAppearance.BorderSize = 0;
-            guardar.FlatStyle = FlatStyle.Flat;
-            guardar.Font = new Font("Verdana", 12F, FontStyle.Bold);
-            guardar.ForeColor = Color.White;
-            guardar.IconChar = FontAwesome.Sharp.IconChar.FileUpload;
-            guardar.IconColor = Color.White;
-            guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            guardar.IconSize = 35;
-            guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(435, 391);
-            guardar.Name = "guardar";
-            guardar.Size = new Size(145, 56);
-            guardar.TabIndex = 68;
-            guardar.Text = "     Guardar";
-            guardar.UseVisualStyleBackColor = true;
-            guardar.Click += guardar_Click;
+            btnGuardar.FlatAppearance.BorderSize = 0;
+            btnGuardar.FlatStyle = FlatStyle.Flat;
+            btnGuardar.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            btnGuardar.ForeColor = Color.White;
+            btnGuardar.IconChar = FontAwesome.Sharp.IconChar.FileUpload;
+            btnGuardar.IconColor = Color.White;
+            btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnGuardar.IconSize = 35;
+            btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGuardar.Location = new Point(587, 578);
+            btnGuardar.Margin = new Padding(4);
+            btnGuardar.Name = "btnGuardar";
+            btnGuardar.Size = new Size(181, 70);
+            btnGuardar.TabIndex = 68;
+            btnGuardar.Text = "     Guardar";
+            btnGuardar.UseVisualStyleBackColor = true;
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // inactivo
             // 
             inactivo.AutoSize = true;
             inactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             inactivo.ForeColor = Color.White;
-            inactivo.Location = new Point(596, 310);
+            inactivo.Location = new Point(734, 330);
+            inactivo.Margin = new Padding(4);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(109, 24);
+            inactivo.Size = new Size(130, 29);
             inactivo.TabIndex = 67;
             inactivo.Text = "Inactivo";
             inactivo.UseVisualStyleBackColor = true;
@@ -224,9 +186,10 @@ namespace Proyecto_Restaurante.Proceso
             activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(596, 280);
+            activo.Location = new Point(734, 292);
+            activo.Margin = new Padding(4);
             activo.Name = "activo";
-            activo.Size = new Size(90, 24);
+            activo.Size = new Size(108, 29);
             activo.TabIndex = 66;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -237,9 +200,10 @@ namespace Proyecto_Restaurante.Proceso
             label9.AutoSize = true;
             label9.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label9.ForeColor = Color.White;
-            label9.Location = new Point(506, 296);
+            label9.Location = new Point(621, 312);
+            label9.Margin = new Padding(4, 0, 4, 0);
             label9.Name = "label9";
-            label9.Size = new Size(88, 25);
+            label9.Size = new Size(103, 29);
             label9.TabIndex = 65;
             label9.Text = "Estado";
             // 
@@ -248,10 +212,11 @@ namespace Proyecto_Restaurante.Proceso
             observaciones.BackColor = Color.FromArgb(255, 161, 43);
             observaciones.Font = new Font("Verdana", 10.2F);
             observaciones.ForeColor = Color.White;
-            observaciones.Location = new Point(491, 187);
+            observaciones.Location = new Point(32, 509);
+            observaciones.Margin = new Padding(4);
             observaciones.Multiline = true;
             observaciones.Name = "observaciones";
-            observaciones.Size = new Size(214, 80);
+            observaciones.Size = new Size(266, 99);
             observaciones.TabIndex = 14;
             // 
             // fecha
@@ -260,45 +225,12 @@ namespace Proyecto_Restaurante.Proceso
             fecha.BorderStyle = BorderStyle.None;
             fecha.Font = new Font("Verdana", 10.2F);
             fecha.ForeColor = Color.White;
-            fecha.Location = new Point(141, 360);
+            fecha.Location = new Point(961, 244);
+            fecha.Margin = new Padding(4);
             fecha.Name = "fecha";
             fecha.ReadOnly = true;
-            fecha.Size = new Size(151, 21);
+            fecha.Size = new Size(189, 25);
             fecha.TabIndex = 13;
-            // 
-            // txtstockatual
-            // 
-            txtstockatual.BackColor = Color.FromArgb(255, 161, 43);
-            txtstockatual.BorderStyle = BorderStyle.None;
-            txtstockatual.Font = new Font("Verdana", 10.2F);
-            txtstockatual.ForeColor = Color.White;
-            txtstockatual.Location = new Point(229, 256);
-            txtstockatual.Name = "txtstockatual";
-            txtstockatual.Size = new Size(125, 21);
-            txtstockatual.TabIndex = 11;
-            // 
-            // txtcantidad
-            // 
-            txtcantidad.BackColor = Color.FromArgb(255, 161, 43);
-            txtcantidad.BorderStyle = BorderStyle.None;
-            txtcantidad.Font = new Font("Verdana", 10.2F);
-            txtcantidad.ForeColor = Color.White;
-            txtcantidad.Location = new Point(56, 256);
-            txtcantidad.Name = "txtcantidad";
-            txtcantidad.Size = new Size(123, 21);
-            txtcantidad.TabIndex = 10;
-            // 
-            // producto
-            // 
-            producto.BackColor = Color.FromArgb(255, 161, 43);
-            producto.BorderStyle = BorderStyle.None;
-            producto.Font = new Font("Verdana", 10.2F);
-            producto.ForeColor = Color.White;
-            producto.Location = new Point(148, 98);
-            producto.Name = "producto";
-            producto.ReadOnly = true;
-            producto.Size = new Size(151, 21);
-            producto.TabIndex = 9;
             // 
             // comboTipoMovimiento
             // 
@@ -308,19 +240,22 @@ namespace Proyecto_Restaurante.Proceso
             comboTipoMovimiento.Font = new Font("Verdana", 10.2F);
             comboTipoMovimiento.ForeColor = Color.White;
             comboTipoMovimiento.FormattingEnabled = true;
-            comboTipoMovimiento.Location = new Point(286, 156);
+            comboTipoMovimiento.Location = new Point(793, 111);
+            comboTipoMovimiento.Margin = new Padding(4);
             comboTipoMovimiento.Name = "comboTipoMovimiento";
-            comboTipoMovimiento.Size = new Size(151, 28);
+            comboTipoMovimiento.Size = new Size(188, 33);
             comboTipoMovimiento.TabIndex = 8;
+            comboTipoMovimiento.SelectedIndexChanged += comboTipoMovimiento_SelectedIndexChanged;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(510, 159);
+            label8.Location = new Point(56, 474);
+            label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(176, 25);
+            label8.Size = new Size(209, 29);
             label8.TabIndex = 6;
             label8.Text = "Observaciones";
             // 
@@ -329,53 +264,22 @@ namespace Proyecto_Restaurante.Proceso
             label7.AutoSize = true;
             label7.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(62, 356);
+            label7.Location = new Point(1022, 200);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(77, 25);
+            label7.Size = new Size(92, 29);
             label7.TabIndex = 5;
             label7.Text = "Fecha";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Verdana", 12F, FontStyle.Bold);
-            label5.ForeColor = Color.White;
-            label5.Location = new Point(28, 301);
-            label5.Name = "label5";
-            label5.Size = new Size(252, 25);
-            label5.TabIndex = 4;
-            label5.Text = "Proveedor (opcional)";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
-            label4.ForeColor = Color.White;
-            label4.Location = new Point(218, 225);
-            label4.Name = "label4";
-            label4.Size = new Size(149, 25);
-            label4.TabIndex = 3;
-            label4.Text = "Stock actual";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
-            label3.ForeColor = Color.White;
-            label3.Location = new Point(62, 225);
-            label3.Name = "label3";
-            label3.Size = new Size(110, 25);
-            label3.TabIndex = 2;
-            label3.Text = "Cantidad";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(28, 159);
+            label2.Location = new Point(498, 118);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(233, 25);
+            label2.Size = new Size(275, 29);
             label2.TabIndex = 1;
             label2.Text = "Tipo de Movimiento";
             // 
@@ -384,9 +288,10 @@ namespace Proyecto_Restaurante.Proceso
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(28, 94);
+            label1.Location = new Point(35, 118);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(114, 25);
+            label1.Size = new Size(134, 29);
             label1.TabIndex = 0;
             label1.Text = "Producto";
             // 
@@ -401,18 +306,18 @@ namespace Proyecto_Restaurante.Proceso
             panelMovimiento.Location = new Point(0, 0);
             panelMovimiento.Margin = new Padding(2);
             panelMovimiento.Name = "panelMovimiento";
-            panelMovimiento.Size = new Size(805, 56);
+            panelMovimiento.Size = new Size(1169, 70);
             panelMovimiento.TabIndex = 4;
-            panelMovimiento.MouseDown += panelMovimiento_MouseDown;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(255, 161, 43);
-            label6.Location = new Point(12, 10);
+            label6.Location = new Point(15, 12);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(656, 36);
+            label6.Size = new Size(798, 44);
             label6.TabIndex = 2;
             label6.Text = "REGISTRO MOVIMIENTO INVENTARIO";
             // 
@@ -426,13 +331,12 @@ namespace Proyecto_Restaurante.Proceso
             btnMaximizar.IconColor = Color.OldLace;
             btnMaximizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizar.IconSize = 20;
-            btnMaximizar.Location = new Point(738, 0);
+            btnMaximizar.Location = new Point(1085, 0);
             btnMaximizar.Margin = new Padding(2);
             btnMaximizar.Name = "btnMaximizar";
-            btnMaximizar.Size = new Size(36, 20);
+            btnMaximizar.Size = new Size(45, 25);
             btnMaximizar.TabIndex = 12;
             btnMaximizar.UseVisualStyleBackColor = false;
-            btnMaximizar.Click += btnMaximizar_Click;
             // 
             // btnCerrar
             // 
@@ -444,13 +348,12 @@ namespace Proyecto_Restaurante.Proceso
             btnCerrar.IconColor = Color.OldLace;
             btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrar.IconSize = 20;
-            btnCerrar.Location = new Point(768, 0);
+            btnCerrar.Location = new Point(1123, 0);
             btnCerrar.Margin = new Padding(2);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(36, 20);
+            btnCerrar.Size = new Size(45, 25);
             btnCerrar.TabIndex = 13;
             btnCerrar.UseVisualStyleBackColor = false;
-            btnCerrar.Click += btnCerrar_Click;
             // 
             // btnMinimizar
             // 
@@ -462,27 +365,28 @@ namespace Proyecto_Restaurante.Proceso
             btnMinimizar.IconColor = Color.OldLace;
             btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizar.IconSize = 20;
-            btnMinimizar.Location = new Point(702, 0);
+            btnMinimizar.Location = new Point(1041, 0);
             btnMinimizar.Margin = new Padding(2);
             btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(36, 20);
+            btnMinimizar.Size = new Size(45, 25);
             btnMinimizar.TabIndex = 11;
             btnMinimizar.UseVisualStyleBackColor = false;
-            btnMinimizar.Click += btnMinimizar_Click;
             // 
             // ProcesoRegistroMovimiento
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(805, 457);
+            ClientSize = new Size(1169, 712);
             Controls.Add(panelMovimiento);
             Controls.Add(panel2);
+            Margin = new Padding(4);
             Name = "ProcesoRegistroMovimiento";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ProcesoRegistroMovimiento";
             Load += ProcesoRegistroMovimiento_Load;
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvLineas).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelMovimiento.ResumeLayout(false);
             panelMovimiento.PerformLayout();
@@ -510,30 +414,21 @@ namespace Proyecto_Restaurante.Proceso
         private Label label1;
         private TextBox observaciones;
         private TextBox fecha;
-        private TextBox txtstockatual;
-        private TextBox txtcantidad;
-        private TextBox producto;
         private ComboBox comboTipoMovimiento;
         private Label label8;
         private Label label7;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private FontAwesome.Sharp.IconButton limpiar;
-        private FontAwesome.Sharp.IconButton guardar;
+        private FontAwesome.Sharp.IconButton btnLimpiar;
+        private FontAwesome.Sharp.IconButton btnGuardar;
         private RadioButton inactivo;
         private RadioButton activo;
         private Label label9;
         private PictureBox pictureBox1;
-        private ComboBox comboProveedor;
-        private FontAwesome.Sharp.IconButton btnConsultaProducto;
-        private Panel panel3;
-        private Panel panel5;
-        private Panel panel4;
         private Panel panelMovimiento;
         private Label label6;
         private FontAwesome.Sharp.IconButton btnMaximizar;
         private FontAwesome.Sharp.IconButton btnCerrar;
         private FontAwesome.Sharp.IconButton btnMinimizar;
+        private ComboBox comboProducto;
+        private DataGridView dgvLineas;
     }
 }
