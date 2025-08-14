@@ -18,7 +18,8 @@ namespace Proyecto_Restaurante.Proceso
 
         // ===== Conexión (ajusta si usas otro servidor/BD) =====
         private readonly SqlConnection conexion =
-            new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+            // new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+            new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         // (Opcional) barra de título personalizada
         [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")] private extern static void ReleaseCapture();
@@ -34,11 +35,11 @@ namespace Proyecto_Restaurante.Proceso
         private void ProcesoRegistroMovimiento_Load(object sender, EventArgs e)
         {
             CargarTiposMovimiento();
-            CargarProductos();
+            //CargarProductos();
 
             // Fecha solo display (la BD guardará GETDATE())
             fecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            fecha.Enabled = false;
+            //fecha.Enabled = false;
             fecha.TabStop = false;
 
             // Estado (Activo=1 / Inactivo=0)
@@ -46,23 +47,10 @@ namespace Proyecto_Restaurante.Proceso
             inactivo.Checked = false;
 
             comboTipoMovimiento.SelectedIndex = -1;
-            comboProducto.SelectedIndex = -1;
-
-            // Queremos escribir en el combo para filtrar
-            comboProducto.DropDownStyle = ComboBoxStyle.DropDown;
 
             // ===== Eventos (desuscribe y vuelve a suscribir una sola vez) =====
             comboTipoMovimiento.SelectedIndexChanged -= comboTipoMovimiento_SelectedIndexChanged;
             comboTipoMovimiento.SelectedIndexChanged += comboTipoMovimiento_SelectedIndexChanged;
-
-            comboProducto.TextUpdate -= comboProducto_TextUpdate;
-            comboProducto.TextUpdate += comboProducto_TextUpdate;
-
-            comboProducto.SelectionChangeCommitted -= comboProducto_SelectionChangeCommitted;
-            comboProducto.SelectionChangeCommitted += comboProducto_SelectionChangeCommitted;
-
-            comboProducto.MouseDoubleClick -= comboProducto_MouseDoubleClick;
-            comboProducto.MouseDoubleClick += comboProducto_MouseDoubleClick;
 
             dgvLineas.CellContentClick -= dgvLineas_CellContentClick;
             dgvLineas.CellContentClick += dgvLineas_CellContentClick;
@@ -77,6 +65,52 @@ namespace Proyecto_Restaurante.Proceso
             btnLimpiar.Click += btnLimpiar_Click;
         }
 
+
+
+        private void InsertarLinea(int idProd, string nombre, decimal stock)
+        {
+            // ¿Ya está en el grid?
+            foreach (DataGridViewRow r in dgvLineas.Rows)
+            {
+                if (r.DataBoundItem is DataRowView drv && (int)drv["id_producto"] == idProd)
+                {
+                    dgvLineas.CurrentCell = r.Cells["Cantidad"];
+                    dgvLineas.BeginEdit(true);
+                    return;
+                }
+            }
+
+            var nueva = dtLineas.NewRow();
+            nueva["id_producto"] = idProd;
+            nueva["Nombre"] = nombre;
+            nueva["Stock"] = stock;
+            nueva["Cantidad"] = 1m;
+            dtLineas.Rows.Add(nueva);
+
+            RecalcularSecuenciaGrid();
+
+            // Enfocar cantidad de la última fila
+            int last = dgvLineas.Rows.Count - 1;
+            if (last >= 0)
+            {
+                dgvLineas.CurrentCell = dgvLineas.Rows[last].Cells["Cantidad"];
+                dgvLineas.BeginEdit(true);
+            }
+        }
+
+        private void btnConsultaProducto_Click(object sender, EventArgs e)
+        {
+            using (var consulta = new Proyecto_Restaurante.Consulta.ConsultaProductos())
+            {
+                if (consulta.ShowDialog(this) == DialogResult.OK)
+                {
+                    // Viene del mismo form de consulta que ya usas
+                    InsertarLinea(consulta.SelectedId, consulta.SelectedNombre, consulta.SelectedStock);
+                }
+            }
+        }
+
+
         // ==================== CARGA COMBOS ====================
         private void CargarTiposMovimiento()
         {
@@ -89,24 +123,6 @@ namespace Proyecto_Restaurante.Proceso
                 comboTipoMovimiento.DataSource = dt;
                 comboTipoMovimiento.DisplayMember = "descripcion";
                 comboTipoMovimiento.ValueMember = "id_tipo_mov";
-            }
-        }
-
-        private void CargarProductos()
-        {
-            using (var da = new SqlDataAdapter(
-                "SELECT id_producto, nombre, stock_actual FROM producto WHERE estado = 1 ORDER BY nombre",
-                conexion))
-            {
-                _dtProductos = new DataTable();
-                da.Fill(_dtProductos);
-                _dvProductos = new DataView(_dtProductos);
-
-                comboProducto.DataSource = _dvProductos;
-                comboProducto.DisplayMember = "nombre";
-                comboProducto.ValueMember = "id_producto";
-                comboProducto.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                comboProducto.AutoCompleteSource = AutoCompleteSource.ListItems;
             }
         }
 
@@ -153,90 +169,6 @@ namespace Proyecto_Restaurante.Proceso
                     drv["No"] = i + 1;
         }
 
-        // ==================== BÚSQUEDA EN COMBO ====================
-        private void comboProducto_TextUpdate(object sender, EventArgs e)
-        {
-            if (_dvProductos == null) return;
-
-            string texto = comboProducto.Text?.Trim() ?? string.Empty;
-            _dvProductos.RowFilter = string.IsNullOrEmpty(texto)
-                ? string.Empty
-                : $"nombre LIKE '%{EscapeLike(texto)}%'";
-
-            comboProducto.DroppedDown = true;
-            comboProducto.SelectionStart = comboProducto.Text.Length;
-            comboProducto.SelectionLength = 0;
-        }
-
-        private void comboProducto_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            AgregarProductoSeleccionado();                         // agrega al DGV
-            if (_dvProductos != null) _dvProductos.RowFilter = ""; // limpia filtro
-            if (comboProducto.SelectedItem is DataRowView r)
-                comboProducto.Text = r["nombre"].ToString();
-        }
-
-        private string EscapeLike(string value)
-        {
-            return value
-                .Replace("'", "''")
-                .Replace("[", "[[]")
-                .Replace("%", "[%]")
-                .Replace("_", "[_]")
-                .Replace("]", "[]]")
-                .Replace("*", "[*]");
-        }
-
-        // ==================== AGREGAR PRODUCTO ====================
-        private void comboProducto_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left) AgregarProductoSeleccionado();
-        }
-
-        private void comboProducto_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                AgregarProductoSeleccionado();
-                e.SuppressKeyPress = true;
-            }
-        }
-
-        private void AgregarProductoSeleccionado()
-        {
-            if (comboProducto.SelectedIndex < 0 || !(comboProducto.SelectedItem is DataRowView row)) return;
-
-            int idProd = Convert.ToInt32(row["id_producto"]);
-            string nombre = row["nombre"].ToString();
-            decimal stock = Convert.ToDecimal(row["stock_actual"]);
-
-            // Evitar duplicados por ID
-            foreach (DataGridViewRow r in dgvLineas.Rows)
-            {
-                if (r.DataBoundItem is DataRowView drv && (int)drv["id_producto"] == idProd)
-                {
-                    dgvLineas.CurrentCell = r.Cells["Cantidad"];
-                    dgvLineas.BeginEdit(true);
-                    return;
-                }
-            }
-
-            var nueva = dtLineas.NewRow();
-            nueva["id_producto"] = idProd;
-            nueva["Nombre"] = nombre;
-            nueva["Stock"] = stock;
-            nueva["Cantidad"] = 1m;
-            dtLineas.Rows.Add(nueva);
-
-            RecalcularSecuenciaGrid();
-
-            int last = dgvLineas.Rows.Count - 1;
-            if (last >= 0)
-            {
-                dgvLineas.CurrentCell = dgvLineas.Rows[last].Cells["Cantidad"];
-                dgvLineas.BeginEdit(true);
-            }
-        }
 
         // ==================== QUITAR (robusto) ====================
         private void dgvLineas_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -414,7 +346,10 @@ namespace Proyecto_Restaurante.Proceso
         }
 
         // ==================== LIMPIAR ====================
-        private void btnLimpiar_Click(object sender, EventArgs e) => Limpiar();
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar();
+        }
 
         private void Limpiar()
         {
@@ -423,8 +358,6 @@ namespace Proyecto_Restaurante.Proceso
             comboTipoMovimiento.SelectedIndex = -1;
 
             if (_dvProductos != null) _dvProductos.RowFilter = string.Empty;
-            comboProducto.SelectedIndex = -1;
-            comboProducto.Text = string.Empty;
 
             dtLineas.Rows.Clear();
             RecalcularSecuenciaGrid();
@@ -437,6 +370,56 @@ namespace Proyecto_Restaurante.Proceso
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+
+        private CancellationTokenSource _cts; // para debounce
+
+        private void buscar_TextChanged(object sender, EventArgs e)
+        {
+            string query = buscar.Text.Trim();
+            BuscarSugerencias(buscar.Text);
+            BuscarSugerencias(query);              // TOP 20
+        }
+
+
+        private void BuscarSugerencias(string q)
+        {
+            if (string.IsNullOrWhiteSpace(q)) { listSugerencia.Visible = false; return; }
+
+            using (var da = new SqlDataAdapter(
+                "SELECT TOP 20 id_producto, nombre, stock_actual " +
+                "FROM producto WHERE estado=1 AND nombre LIKE @q ORDER BY nombre", conexion))
+            {
+                da.SelectCommand.Parameters.AddWithValue("@q", "%" + q + "%");
+
+                var dt = new DataTable();
+                da.Fill(dt);
+
+                listSugerencia.DisplayMember = "nombre";
+                listSugerencia.ValueMember = "id_producto";
+                listSugerencia.DataSource = dt;
+                listSugerencia.Visible = dt.Rows.Count > 0;
+            }
+        }
+        private void SeleccionarSugerencia()
+        {
+            if (!listSugerencia.Visible || listSugerencia.SelectedItem is not DataRowView r) return;
+
+            int idProd = Convert.ToInt32(r["id_producto"]);
+            string nombre = r["nombre"].ToString();
+            decimal stock = Convert.ToDecimal(r["stock_actual"]);
+
+            InsertarLinea(idProd, nombre, stock);
+
+            buscar.Clear();
+            listSugerencia.Visible = false;
+            buscar.Focus();
+        }
+
+        private void listSugerencia_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            SeleccionarSugerencia();
         }
     }
 }
