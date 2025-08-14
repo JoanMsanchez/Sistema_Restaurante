@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MantenimientoCliente));
             panel1 = new Panel();
+            pictureBox1 = new PictureBox();
             comboCondicion = new ComboBox();
             label1 = new Label();
             guardar = new FontAwesome.Sharp.IconButton();
@@ -54,10 +55,9 @@
             btnCerrarMetodo = new FontAwesome.Sharp.IconButton();
             btnMinimizarMetodo = new FontAwesome.Sharp.IconButton();
             label6 = new Label();
-            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
-            panelMantenimientoCliente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelMantenimientoCliente.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -88,9 +88,20 @@
             panel1.Size = new Size(668, 469);
             panel1.TabIndex = 0;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(525, 50);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 40;
+            pictureBox1.TabStop = false;
+            // 
             // comboCondicion
             // 
             comboCondicion.BackColor = Color.FromArgb(255, 161, 43);
+            comboCondicion.DropDownStyle = ComboBoxStyle.DropDownList;
             comboCondicion.FlatStyle = FlatStyle.Flat;
             comboCondicion.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboCondicion.ForeColor = Color.White;
@@ -405,16 +416,6 @@
             label6.TabIndex = 1;
             label6.Text = "CLIENTE";
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(525, 50);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 40;
-            pictureBox1.TabStop = false;
-            // 
             // MantenimientoCliente
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -430,9 +431,9 @@
             Shown += MantenimientoCliente_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelMantenimientoCliente.ResumeLayout(false);
             panelMantenimientoCliente.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 

@@ -74,7 +74,8 @@ namespace Proyecto_Restaurante.Mantenimiento
                         AutoScroll = true,
                         WrapContents = true,
                         FlowDirection = FlowDirection.LeftToRight,
-                        Padding = new Padding(10)
+                        Padding = new Padding(10),
+                        BackColor = Color.OldLace
                     };
                     page.Controls.Add(flow);
 
@@ -84,9 +85,10 @@ namespace Proyecto_Restaurante.Mantenimiento
                         flow.Controls.Add(new Label
                         {
                             AutoSize = true,
-                            Font = new Font("Segoe UI", 10, FontStyle.Italic),
+                            Font = new Font("Verdana", 10, FontStyle.Bold),
                             Text = "No hay mesas registradas en esta sala.",
-                            Margin = new Padding(10)
+                            Margin = new Padding(10),
+                            BackColor =  Color.OldLace
                         });
                     }
                     else
@@ -145,7 +147,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                 // TODO: Abrir tu formulario de pedidos/detalle de mesa
                 // new TomarPedidoForm(idMesa).ShowDialog();
 
-                MessageBox.Show($"Mesa seleccionada: #{idMesa}", "Mesa",
+                MessageBox.Show("Mesa seleccionada", "Mesa",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
