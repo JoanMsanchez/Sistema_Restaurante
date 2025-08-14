@@ -51,7 +51,7 @@ namespace Proyecto_Restaurante.Proceso
             // Queremos escribir en el combo para filtrar
             comboProducto.DropDownStyle = ComboBoxStyle.DropDown;
 
-            // ===== Eventos (desuscribe por si el diseñador los añadió, y vuelve a suscribir una sola vez) =====
+            // ===== Eventos (desuscribe y vuelve a suscribir una sola vez) =====
             comboTipoMovimiento.SelectedIndexChanged -= comboTipoMovimiento_SelectedIndexChanged;
             comboTipoMovimiento.SelectedIndexChanged += comboTipoMovimiento_SelectedIndexChanged;
 
@@ -63,10 +63,6 @@ namespace Proyecto_Restaurante.Proceso
 
             comboProducto.MouseDoubleClick -= comboProducto_MouseDoubleClick;
             comboProducto.MouseDoubleClick += comboProducto_MouseDoubleClick;
-
-            // (Opcional) ENTER para agregar
-            // comboProducto.KeyDown -= comboProducto_KeyDown;
-            // comboProducto.KeyDown += comboProducto_KeyDown;
 
             dgvLineas.CellContentClick -= dgvLineas_CellContentClick;
             dgvLineas.CellContentClick += dgvLineas_CellContentClick;
@@ -264,7 +260,7 @@ namespace Proyecto_Restaurante.Proceso
             // Eliminar del DataTable origen (¡no por índice!)
             DataRow dataRow = drv.Row;
             if (dataRow != null && dataRow.Table != null && dataRow.RowState != DataRowState.Detached)
-                dataRow.Delete();   // marca como eliminada (o usa dtLineas.Rows.Remove(drv.Row))
+                dataRow.Delete();   // marca como eliminada
 
             // Renumerar cuando el grid termine de refrescarse (evita reentradas e índices viejos)
             BeginInvoke(new Action(RecalcularSecuenciaGrid));
@@ -302,6 +298,10 @@ namespace Proyecto_Restaurante.Proceso
             try
             {
                 conexion.Open();
+
+                int totalInsertados = 0;
+                int totalActualizados = 0;
+
                 using (var tx = conexion.BeginTransaction())
                 {
                     // 1) Revalidar afecta_stock
@@ -339,7 +339,7 @@ namespace Proyecto_Restaurante.Proceso
                                 throw new InvalidOperationException($"Stock insuficiente para el producto ID {idProd}.");
                         }
 
-                        // INSERT movimiento (fecha = GETDATE(); id_proveedor = NULL)
+                        // 3) INSERT movimiento (fecha = GETDATE(); id_proveedor = NULL)
                         using (var cmdIns = new SqlCommand(@"
                             INSERT INTO movimiento_inventario
                                 (id_producto, id_tipo_mov, cantidad, fecha, id_proveedor, observaciones, estado)
@@ -359,10 +359,14 @@ namespace Proyecto_Restaurante.Proceso
                                 cmdIns.Parameters.Add("@observaciones", SqlDbType.VarChar, -1).Value = obs;
 
                             cmdIns.Parameters.Add("@estado", SqlDbType.Bit).Value = estadoBit;
-                            cmdIns.ExecuteNonQuery();
+
+                            int rowsIns = cmdIns.ExecuteNonQuery();
+                            if (rowsIns != 1)
+                                throw new InvalidOperationException("No se insertó el movimiento.");
+                            totalInsertados += rowsIns;
                         }
 
-                        // UPDATE stock
+                        // 4) UPDATE stock
                         using (var cmdUpd = new SqlCommand(@"
                             UPDATE producto
                             SET stock_actual = stock_actual + (@cantidad * @afecta)
@@ -374,15 +378,29 @@ namespace Proyecto_Restaurante.Proceso
                             cmdUpd.Parameters.Add("@afecta", SqlDbType.Int).Value = afectaBD;
                             cmdUpd.Parameters.Add("@id_producto", SqlDbType.Int).Value = idProd;
 
-                            int rows = cmdUpd.ExecuteNonQuery();
-                            if (rows != 1) throw new Exception("No se actualizó el stock.");
+                            int rowsUpd = cmdUpd.ExecuteNonQuery();
+                            if (rowsUpd != 1)
+                                throw new InvalidOperationException("No se actualizó el stock del producto.");
+                            totalActualizados += rowsUpd;
                         }
                     }
 
                     tx.Commit();
                 }
 
-                MessageBox.Show("Movimientos registrados y stock actualizado.");
+                // Si por algún motivo no se afectó nada, avisa
+                if (totalInsertados <= 0 || totalActualizados <= 0)
+                {
+                    MessageBox.Show(
+                        $"No se afectaron filas. Revise la BD/tabla/condiciones.\nBD conectada: {conexion.Database}",
+                        "Sin cambios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                MessageBox.Show(
+                    $"OK. Movimientos insertados: {totalInsertados}. Productos actualizados: {totalActualizados}.\nBD: {conexion.Database}",
+                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 Limpiar();
             }
             catch (Exception ex)
@@ -422,6 +440,7 @@ namespace Proyecto_Restaurante.Proceso
         }
     }
 }
+
 
 
 
