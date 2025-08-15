@@ -216,7 +216,7 @@
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Margin = new Padding(4, 4, 4, 4);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(181, 124);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -282,7 +282,7 @@
             btnCerrar.IconColor = Color.OldLace;
             btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrar.IconSize = 20;
-            btnCerrar.Location = new Point(899, 0);
+            btnCerrar.Location = new Point(898, 0);
             btnCerrar.Margin = new Padding(2);
             btnCerrar.Name = "btnCerrar";
             btnCerrar.Size = new Size(45, 25);
@@ -300,7 +300,7 @@
             btnMinimizar.IconColor = Color.OldLace;
             btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizar.IconSize = 20;
-            btnMinimizar.Location = new Point(813, 0);
+            btnMinimizar.Location = new Point(819, 0);
             btnMinimizar.Margin = new Padding(2);
             btnMinimizar.Name = "btnMinimizar";
             btnMinimizar.Size = new Size(45, 25);
@@ -373,7 +373,7 @@
             tabPage2.Margin = new Padding(2);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(2);
-            tabPage2.Size = new Size(934, 445);
+            tabPage2.Size = new Size(935, 445);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "tabPage2";
             tabPage2.UseVisualStyleBackColor = true;

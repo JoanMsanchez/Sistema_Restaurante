@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Proyecto_Restaurante.Mantenimiento;
 
@@ -15,30 +11,48 @@ namespace Proyecto_Restaurante.Consulta
 {
     public partial class ConsultaCliente : Form
     {
-        //Fields
         private int bordeSize = 2;
-        private int idProductoSeleccionado = -1;
 
+        // Cadena de conexión: usa la misma
+        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
 
-        //Constructor
-        public ConsultaCliente()
+        // === MODO INTEGRADO ===
+        private readonly bool _selectorMode = false;             // true → devuelve SelectedId/SelectedCondicionId (para ProcesoFacturacion)
+        private MantenimientoCliente mantenimientoClienteForm;    // para modo mantenimiento
+
+        // Valores devueltos en modo selector
+        public int SelectedId { get; private set; } = -1;
+        public int SelectedCondicionId { get; private set; } = -1;
+
+        // Constructores
+        public ConsultaCliente(MantenimientoCliente mantenimientoForm = null, bool selectorMode = false)
         {
             InitializeComponent();
+            this._selectorMode = selectorMode;
+            this.mantenimientoClienteForm = mantenimientoForm;
+
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = Color.FromArgb(255, 161, 43);
+
+            // Eventos de UI (drag)
+            this.panelConsultaCliente.MouseDown += panelConsultaCliente_MouseDown;
+
+            // Cargar datos
             llenar_tabla_datagridview();
-            this.Padding = new Padding(bordeSize); //Border size
-            this.BackColor = Color.FromArgb(255, 161, 43); //Border color
+
+            // Hook de doble click del grid
+            this.DGVConsultaCliente.CellMouseDoubleClick += DGVConsultaCliente_CellMouseDoubleClick;
+            this.buscar.TextChanged += buscar_TextChanged;
+            this.buscaNombre.CheckedChanged += buscaNombre_CheckedChanged;
+            this.buscaCondicion.CheckedChanged += buscaCondicion_CheckedChanged;
         }
 
-        //Drag Form
+        // Drag Form
         [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
-
 
         private void panelConsultaCliente_MouseDown(object sender, MouseEventArgs e)
         {
@@ -46,85 +60,32 @@ namespace Proyecto_Restaurante.Consulta
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-        //Overridden methods
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_NCCALCSIZE = 0x0083;
-            if (m.Msg == WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
-            {
-                return;
-            }
-            base.WndProc(ref m);
-        }
-
-        //Event methods
-        private void Producto_Resize(object sender, EventArgs e)
-        {
-            AdjustForm();
-        }
-
-        //Private methods
-        private void AdjustForm()
-        {
-            switch (this.WindowState)
-            {
-                case FormWindowState.Maximized:
-                    this.Padding = new Padding(0, 8, 8, 0);
-                    break;
-                case FormWindowState.Normal:
-                    if (this.Padding.Top != bordeSize)
-                        this.Padding = new Padding(bordeSize);
-                    break;
-
-            }
-        }
-
-        private void btnMinimizarCategoria_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void btnMaximizarCategoria_Click(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Normal)
-                this.WindowState = FormWindowState.Maximized;
-            else
-                this.WindowState = FormWindowState.Normal;
-        }
-
-        private void btnCerrarCategoria_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
+        // ===== Datos =====
         public void llenar_tabla_datagridview()
         {
             try
             {
                 string query = @"
-            SELECT c.id_cliente, c.nombre, c.telefono, c.email, c.direccion,
-                   c.id_condicion,
-                   co.descripcion AS condicion,
-                   CASE WHEN c.estado = 1 THEN 'Activo' ELSE 'Inactivo' END AS estadoCliente
-            FROM cliente c
-            INNER JOIN condicion co ON c.id_condicion = co.id_condicion";
+                    SELECT c.id_cliente, c.nombre, c.telefono, c.email, c.direccion,
+                           c.id_condicion,
+                           co.descripcion AS condicion,
+                           CASE WHEN c.estado = 1 THEN 'Activo' ELSE 'Inactivo' END AS estadoCliente
+                    FROM cliente c
+                    INNER JOIN condicion co ON c.id_condicion = co.id_condicion
+                    ORDER BY c.nombre;";
 
-                SqlDataAdapter adapter = new SqlDataAdapter(query, conexion);
-                DataTable dt = new DataTable();
+                using var con = new SqlConnection(CS);
+                using var da = new SqlDataAdapter(query, con);
+                var dt = new DataTable();
 
-                conexion.Open();
-                adapter.Fill(dt);
-                // Agregar columna de números secuenciales
-                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
-                dt.Columns.Add(columnaSecuencia);
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    dt.Rows[i]["No"] = i + 1;
-                }
+                con.Open();
+                da.Fill(dt);
+
+                // Secuencia
+                var colNo = new DataColumn("No", typeof(int));
+                dt.Columns.Add(colNo);
+                for (int i = 0; i < dt.Rows.Count; i++) dt.Rows[i]["No"] = i + 1;
                 dt.Columns["No"].SetOrdinal(0);
-
-                dt.Columns["No"].SetOrdinal(0); // Colocar "No" al inicio
-                conexion.Close();
 
                 DGVConsultaCliente.DataSource = dt;
                 DGVConsultaCliente.Columns["id_cliente"].Visible = false;
@@ -132,42 +93,36 @@ namespace Proyecto_Restaurante.Consulta
                 DGVConsultaCliente.Columns["condicion"].HeaderText = "Condición";
                 DGVConsultaCliente.Columns["estadoCliente"].HeaderText = "Estado";
                 DGVConsultaCliente.Columns["No"].HeaderText = "#";
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar clientes: " + ex.Message);
             }
-            finally
-            {
-                if (conexion.State == ConnectionState.Open)
-                    conexion.Close();
-            }
         }
+
         private void buscar_TextChanged(object sender, EventArgs e)
         {
             try
             {
                 if (!buscaNombre.Checked && !buscaCondicion.Checked)
                 {
-                    MessageBox.Show("Seleccione un criterio de búsqueda");
+                    // opcional: UX
                     return;
                 }
 
-                conexion.Open();
+                using var con = new SqlConnection(CS);
+                con.Open();
 
                 string consulta = @"
-            SELECT 
-                c.id_cliente, c.nombre, c.telefono, c.email, c.direccion,
-                c.id_condicion,
-                co.descripcion AS condicion,
-                CASE WHEN c.estado = 1 THEN 'Activo' ELSE 'Inactivo' END AS estadoCliente
-            FROM cliente c
-            INNER JOIN condicion co ON c.id_condicion = co.id_condicion
-            WHERE 1=1";
+                    SELECT c.id_cliente, c.nombre, c.telefono, c.email, c.direccion,
+                           c.id_condicion, co.descripcion AS condicion,
+                           CASE WHEN c.estado = 1 THEN 'Activo' ELSE 'Inactivo' END AS estadoCliente
+                    FROM cliente c
+                    INNER JOIN condicion co ON c.id_condicion = co.id_condicion
+                    WHERE 1=1";
 
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = conexion;
+                using var cmd = new SqlCommand();
+                cmd.Connection = con;
 
                 if (buscaNombre.Checked)
                 {
@@ -182,29 +137,22 @@ namespace Proyecto_Restaurante.Consulta
 
                 cmd.CommandText = consulta;
 
-                SqlDataAdapter adaptador = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
+                using var adaptador = new SqlDataAdapter(cmd);
+                var dt = new DataTable();
                 adaptador.Fill(dt);
 
-                // Agregar columna de números secuenciales
-                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
-                dt.Columns.Add(columnaSecuencia);
-
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    dt.Rows[i]["No"] = i + 1;
-                }
-
-                dt.Columns["No"].SetOrdinal(0); // Colocar la columna "No" al inicio
+                // Secuencia
+                var colNo = new DataColumn("No", typeof(int));
+                dt.Columns.Add(colNo);
+                for (int i = 0; i < dt.Rows.Count; i++) dt.Rows[i]["No"] = i + 1;
+                dt.Columns["No"].SetOrdinal(0);
 
                 DGVConsultaCliente.DataSource = dt;
 
-                // Ocultar columna id_cliente
                 if (DGVConsultaCliente.Columns.Contains("id_cliente"))
                     DGVConsultaCliente.Columns["id_cliente"].Visible = false;
-                    DGVConsultaCliente.Columns["id_condicion"].Visible = false;
+                DGVConsultaCliente.Columns["id_condicion"].Visible = false;
 
-                // Ajustar encabezados
                 DGVConsultaCliente.Columns["No"].HeaderText = "#";
                 DGVConsultaCliente.Columns["nombre"].HeaderText = "Nombre";
                 DGVConsultaCliente.Columns["telefono"].HeaderText = "Teléfono";
@@ -216,11 +164,6 @@ namespace Proyecto_Restaurante.Consulta
             catch (Exception ex)
             {
                 MessageBox.Show("Error al buscar: " + ex.Message);
-            }
-            finally
-            {
-                if (conexion.State == ConnectionState.Open)
-                    conexion.Close();
             }
         }
 
@@ -236,42 +179,46 @@ namespace Proyecto_Restaurante.Consulta
             buscar.Clear();
         }
 
-        private MantenimientoCliente mantenimientoClienteForm;
-
-        public ConsultaCliente(MantenimientoCliente mantenimientoForm = null)
-        {
-            InitializeComponent();
-            llenar_tabla_datagridview();
-            mantenimientoClienteForm = mantenimientoForm;
-        }
-
-
+        // ===== Doble click: selector o mantenimiento =====
         private void DGVConsultaCliente_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            var fila = DGVConsultaCliente.Rows[e.RowIndex];
+
+            int idCliente = Convert.ToInt32(fila.Cells["id_cliente"].Value);
+            string nombre = Convert.ToString(fila.Cells["nombre"].Value);
+            string telefono = Convert.ToString(fila.Cells["telefono"].Value);
+            string email = Convert.ToString(fila.Cells["email"].Value);
+            string direccion = Convert.ToString(fila.Cells["direccion"].Value);
+            int idCondicion = Convert.ToInt32(fila.Cells["id_condicion"].Value);
+            string estadoStr = Convert.ToString(fila.Cells["estadoCliente"].Value);
+            int estado = estadoStr == "Activo" ? 1 : 0;
+
+            if (_selectorMode)
             {
-                DataGridViewRow fila = DGVConsultaCliente.Rows[e.RowIndex];
-
-                int idCliente = Convert.ToInt32(fila.Cells["id_cliente"].Value);
-                string nombre = fila.Cells["nombre"].Value.ToString();
-                string telefono = fila.Cells["telefono"].Value.ToString();
-                string email = fila.Cells["email"].Value.ToString();
-                string direccion = fila.Cells["direccion"].Value.ToString();
-                int idCondicion = Convert.ToInt32(fila.Cells["id_condicion"].Value); // ← importante
-                string estadoStr = fila.Cells["estadoCliente"].Value.ToString();
-                int estado = estadoStr == "Activo" ? 1 : 0;
-
-                if (mantenimientoClienteForm == null || mantenimientoClienteForm.IsDisposed)
-                {
-                    mantenimientoClienteForm = new MantenimientoCliente();
-                }
-
-                mantenimientoClienteForm.Show();
-                mantenimientoClienteForm.BringToFront();
-                mantenimientoClienteForm.CargarDatosCliente(idCliente, nombre, telefono, email, direccion, idCondicion, estado);
-
+                // === MODO SELECTOR (para ProcesoFacturacion) ===
+                this.SelectedId = idCliente;
+                this.SelectedCondicionId = idCondicion;
+                this.DialogResult = DialogResult.OK;
                 this.Close();
+                return;
             }
+
+            // === MODO MANTENIMIENTO ===
+            if (mantenimientoClienteForm == null || mantenimientoClienteForm.IsDisposed)
+                mantenimientoClienteForm = new MantenimientoCliente();
+
+            mantenimientoClienteForm.Show();
+            mantenimientoClienteForm.BringToFront();
+            mantenimientoClienteForm.CargarDatosCliente(idCliente, nombre, telefono, email, direccion, idCondicion, estado);
+            this.Close();
         }
+
+        // Botones de la barra (si los tienes)
+        private void btnMinimizarCategoria_Click(object sender, EventArgs e) => this.WindowState = FormWindowState.Minimized;
+        private void btnMaximizarCategoria_Click(object sender, EventArgs e) =>
+            this.WindowState = (this.WindowState == FormWindowState.Normal) ? FormWindowState.Maximized : FormWindowState.Normal;
+        private void btnCerrarCategoria_Click(object sender, EventArgs e) => this.Close();
     }
 }

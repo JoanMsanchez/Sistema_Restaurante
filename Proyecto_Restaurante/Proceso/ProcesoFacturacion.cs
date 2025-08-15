@@ -6,6 +6,8 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+// Si tu ConsultaCliente está en este namespace:
+using Proyecto_Restaurante.Consulta;
 
 namespace Proyecto_Restaurante.Proceso
 {
@@ -47,20 +49,26 @@ namespace Proyecto_Restaurante.Proceso
             this.Shown += ProcesoFacturacion_Shown;
         }
 
+        // Si el Designer aún llama a este handler viejo, lo puenteamos:
+        private void ProcesoFacturacion_Shown_1(object sender, EventArgs e) => ProcesoFacturacion_Shown(sender, e);
+
         // ===== Arranque =====
         private void ProcesoFacturacion_Load(object sender, EventArgs e)
         {
             Text = $"ProcesoFacturación - Mesa #{_idMesa}";
             ConfigurarGridDetalle();
             WireEventosUI();
+            CargarSalaMesaLabel();
         }
 
         private void ProcesoFacturacion_Shown(object sender, EventArgs e)
         {
             CargarCombos();
-            AbrirOCrearOrden();   // crea/obtiene orden abierta y fija _autopago
+            AbrirOCrearOrden();    // crea/obtiene orden abierta y fija _autopago y _idEmpleado
+            CargarEmpleadoLabel(); // llena lbEmpleado
+            CargarCabeceraVisual(); // fechas / saldo / (cliente + condición si ya existía)
             CargarDetalle();
-            ResetCatalogo();      // <— reemplaza RefrescarCatalogo()
+            ResetCatalogo();       // catálogo con scroll infinito
             RecalcularTotales();
         }
 
@@ -84,13 +92,22 @@ namespace Proyecto_Restaurante.Proceso
             if (btnGuardar != null) btnGuardar.Click += (_, __) => GuardarCabecera();
             if (btnPrecuenta != null) btnPrecuenta.Click += (_, __) => MostrarPrecuenta();
             if (btnProcesar != null) btnProcesar.Click += (_, __) => Procesar();
+            if (btnCancelar != null) btnCancelar.Click += BtnCancelar_Click;
 
             // Condición
             if (cmbCondicion != null) cmbCondicion.SelectedIndexChanged += (_, __) => CambiarCondicionUI();
 
-            // Cambiar mesa / Buscar cliente
-            if (btnCambiarMesa != null) btnCambiarMesa.Click += BtnCambiarMesa_Click;
+            // Buscar cliente (abre consulta en modo selector)
             if (btnBuscarCliente != null) btnBuscarCliente.Click += BtnBuscarCliente_Click;
+
+            // Si cambia el cliente (combo o por la consulta), aplicar su condición y desactivar el combo
+            if (cmbCliente != null) cmbCliente.SelectedValueChanged += (_, __) =>
+            {
+                if (int.TryParse(Convert.ToString(cmbCliente.SelectedValue), out int idCli) && idCli > 0)
+                    AplicarCondicionDeCliente(idCli);
+                else
+                    cmbCondicion.Enabled = true; // si vuelve a (Consumidor Final), permitir elegir manualmente (opcional)
+            };
         }
 
         private void ConfigurarGridDetalle()
@@ -101,6 +118,7 @@ namespace Proyecto_Restaurante.Proceso
             g.AllowUserToResizeRows = false;
             g.RowHeadersVisible = false;
             g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            g.ReadOnly = true; // ← NO editable
             g.Columns.Clear();
 
             g.Columns.Add(new DataGridViewTextBoxColumn { Name = "colIdDet", HeaderText = "IdDet", DataPropertyName = "IdDetalle", Visible = false });
@@ -135,9 +153,7 @@ namespace Proyecto_Restaurante.Proceso
             g.Columns.Add(new DataGridViewButtonColumn { Name = "colQuitar", HeaderText = "", Text = "X", UseColumnTextForButtonValue = true, Width = 42 });
 
             g.DataSource = _lineas;
-            g.CellClick += Dgv_CellClick;
-            g.CellEndEdit += Dgv_CellEndEdit;
-            g.EditingControlShowing += Dgv_EditingControlShowing;
+            g.CellClick += Dgv_CellClick;     // botón quitar funciona aunque sea ReadOnly
             g.DataError += (s, e) => e.ThrowException = false;
         }
 
@@ -235,9 +251,9 @@ namespace Proyecto_Restaurante.Proceso
                 {
                     con.Open();
 
-                    // Buscar orden abierta
+                    // Buscar orden abierta (traemos también id_empleado)
                     var sel = new SqlCommand(
-                        "SELECT TOP 1 o.id_orden, c.autopago " +
+                        "SELECT TOP 1 o.id_orden, c.autopago, o.id_empleado " +
                         "FROM orden o JOIN condicion c ON c.id_condicion=o.id_condicion " +
                         "WHERE o.id_mesa=@m AND o.procesada=0 AND o.estado=1 ORDER BY o.id_orden DESC;", con);
                     sel.Parameters.AddWithValue("@m", _idMesa);
@@ -248,6 +264,7 @@ namespace Proyecto_Restaurante.Proceso
                         {
                             _idOrden = rd.GetInt32(0);
                             _autopago = rd.GetBoolean(1);
+                            _idEmpleado = rd.GetInt32(2); // empleado que atiende esta orden
                             cmbMetodoPago.Enabled = _autopago;
                             return;
                         }
@@ -276,6 +293,100 @@ namespace Proyecto_Restaurante.Proceso
                 }
             }
             catch (Exception ex) { MessageBox.Show("Error al abrir/crear orden: " + ex.Message); }
+        }
+
+        private void CargarEmpleadoLabel()
+        {
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+
+                // Intento 1: desde la orden (nombre completo con CONCAT maneja NULLs)
+                string nombreCompleto = null;
+                using (var cmd = new SqlCommand(@"
+                    SELECT LTRIM(RTRIM(CONCAT(e.nombre,' ',e.apellidos)))
+                    FROM orden o
+                    JOIN empleado e ON e.id_empleado = o.id_empleado
+                    WHERE o.id_orden = @o;", con))
+                {
+                    cmd.Parameters.AddWithValue("@o", _idOrden);
+                    var o = cmd.ExecuteScalar();
+                    if (o != null && o != DBNull.Value) nombreCompleto = Convert.ToString(o);
+                }
+
+                // Intento 2: por _idEmpleado en caso de que no haya orden o campos distintos
+                if (string.IsNullOrWhiteSpace(nombreCompleto))
+                {
+                    using var cmd2 = new SqlCommand(
+                        "SELECT LTRIM(RTRIM(CONCAT(nombre,' ',apellidos))) FROM empleado WHERE id_empleado=@id", con);
+                    cmd2.Parameters.AddWithValue("@id", _idEmpleado);
+                    var o2 = cmd2.ExecuteScalar();
+                    if (o2 != null && o2 != DBNull.Value) nombreCompleto = Convert.ToString(o2);
+                }
+
+                if (lbEmpleado != null)
+                    lbEmpleado.Text = string.IsNullOrWhiteSpace(nombreCompleto) ? "(Empleado desconocido)" : nombreCompleto;
+            }
+            catch
+            {
+                if (lbEmpleado != null) lbEmpleado.Text = "(Empleado desconocido)";
+            }
+        }
+
+        private void CargarCabeceraVisual()
+        {
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                var cmd = new SqlCommand(@"
+                    SELECT fecha_hora, fecha_vencimiento, ISNULL(saldo_pendiente,0),
+                           id_cliente, id_condicion
+                    FROM orden WHERE id_orden=@o;", con);
+                cmd.Parameters.AddWithValue("@o", _idOrden);
+                using var rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    var fcrea = rd.GetDateTime(0);
+                    DateTime? fven = rd.IsDBNull(1) ? (DateTime?)null : rd.GetDateTime(1);
+                    var saldo = rd.GetDecimal(2);
+                    int? idCli = rd.IsDBNull(3) ? (int?)null : rd.GetInt32(3);
+                    int idCond = rd.GetInt32(4);
+
+                    // Fechas
+                    if (dtpFechaCreacion != null)
+                    {
+                        dtpFechaCreacion.Format = DateTimePickerFormat.Custom;
+                        dtpFechaCreacion.CustomFormat = "dd/MM/yyyy";
+                        dtpFechaCreacion.Value = fcrea;
+                        dtpFechaCreacion.Enabled = false;
+                    }
+                    if (dtpFechaVencimiento != null)
+                    {
+                        dtpFechaVencimiento.Format = DateTimePickerFormat.Custom;
+                        dtpFechaVencimiento.CustomFormat = "dd/MM/yyyy";
+                        dtpFechaVencimiento.Value = fven ?? DateTime.Now;
+                        dtpFechaVencimiento.Enabled = false;
+                    }
+                    if (txtSaldoPendiente != null)
+                        txtSaldoPendiente.Text = saldo.ToString("N2");
+
+                    // Cliente y condición en UI (si la orden ya existía)
+                    if (idCli.HasValue && cmbCliente != null)
+                        cmbCliente.SelectedValue = idCli.Value;
+
+                    if (cmbCondicion != null)
+                    {
+                        SetCondicionFromId(idCond);
+                        cmbCondicion.Enabled = false; // la condición de la orden/cliente NO editable
+                    }
+                }
+            }
+            catch
+            {
+                // visual opcional
+            }
         }
 
         private void CargarDetalle()
@@ -399,54 +510,6 @@ namespace Proyecto_Restaurante.Proceso
             CargarDetalle();
         }
 
-        private void Dgv_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            if (dgvDetalle.CurrentCell?.OwningColumn?.Name == "colCant" && e.Control is TextBox tb)
-            {
-                tb.KeyPress -= SoloDecimal;
-                tb.KeyPress += SoloDecimal;
-            }
-        }
-        private void SoloDecimal(object sender, KeyPressEventArgs e)
-        {
-            if (char.IsControl(e.KeyChar)) return;
-            var tb = (TextBox)sender;
-            bool yaP = tb.Text.Contains(".");
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.') e.Handled = true;
-            if (e.KeyChar == '.' && (yaP || tb.SelectionStart == 0)) e.Handled = true;
-        }
-
-        private void Dgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || dgvDetalle.Columns[e.ColumnIndex].Name != "colCant") return;
-
-            var lin = (Linea)dgvDetalle.Rows[e.RowIndex].DataBoundItem;
-            if (lin.Cantidad < 0) lin.Cantidad = 0;
-
-            try
-            {
-                using (var con = new SqlConnection(CS))
-                {
-                    con.Open();
-                    using var tx = con.BeginTransaction();
-
-                    var up = new SqlCommand(@"
-                        UPDATE detalle_orden
-                           SET cantidad=@c, subtotal=ROUND(@c*precio_unitario,2)
-                         WHERE id_detalle=@d AND estado=1;", con, tx);
-                    up.Parameters.AddWithValue("@c", lin.Cantidad);
-                    up.Parameters.AddWithValue("@d", lin.IdDetalle);
-                    up.ExecuteNonQuery();
-
-                    RecalcularTotalOrden(con, tx);
-                    tx.Commit();
-                }
-            }
-            catch (Exception ex) { MessageBox.Show("No se pudo actualizar la cantidad: " + ex.Message); }
-
-            CargarDetalle();
-        }
-
         // ===== Totales & cabecera =====
         private void RecalcularTotalOrden(SqlConnection cn, SqlTransaction tx)
         {
@@ -461,8 +524,10 @@ namespace Proyecto_Restaurante.Proceso
         private void RecalcularTotales()
         {
             decimal sub = _lineas.Sum(l => l.Subtotal);
-            if (lblSubTotal != null) lblSubTotal.Text = $"Sub-Total: {sub:C2}";
-            if (lblTotal != null) lblTotal.Text = $"TOTAL: {sub:C2}";
+
+            // Solo números (sin prefijos “TOTAL:”), en TextBox si existen
+            if (txtSubTotal != null) txtSubTotal.Text = sub.ToString("N2");
+            if (txtTotal != null) txtTotal.Text = sub.ToString("N2");
         }
 
         private void GuardarCabecera()
@@ -487,10 +552,39 @@ namespace Proyecto_Restaurante.Proceso
 
         private void CambiarCondicionUI()
         {
-            if (cmbCondicion.SelectedItem is DataRowView rv)
+            if (cmbCondicion?.SelectedItem is DataRowView rv)
             {
                 _autopago = rv.Row.Field<bool>("autopago");
-                if (cmbMetodoPago != null) cmbMetodoPago.Enabled = _autopago;
+                int dias = rv.Row.Field<int>("dias_credito");
+
+                // Método de pago
+                if (cmbMetodoPago != null)
+                {
+                    cmbMetodoPago.Enabled = _autopago;
+                    if (!_autopago)
+                    {
+                        cmbMetodoPago.SelectedIndex = -1;
+                        cmbMetodoPago.Text = "No aplica";
+                    }
+                }
+
+                // Vista previa de vencimiento si es crédito
+                if (dtpFechaVencimiento != null)
+                {
+                    dtpFechaVencimiento.Format = DateTimePickerFormat.Custom;
+                    dtpFechaVencimiento.CustomFormat = "dd/MM/yyyy";
+
+                    if (_autopago)
+                    {
+                        dtpFechaVencimiento.Enabled = false;
+                    }
+                    else
+                    {
+                        dtpFechaVencimiento.Enabled = false; // solo visual; se graba al procesar
+                        var baseDate = dtpFechaCreacion != null ? dtpFechaCreacion.Value.Date : DateTime.Now.Date;
+                        dtpFechaVencimiento.Value = baseDate.AddDays(dias);
+                    }
+                }
             }
         }
 
@@ -498,7 +592,9 @@ namespace Proyecto_Restaurante.Proceso
         {
             var texto = string.Join(Environment.NewLine,
                 _lineas.Select(l => $"{l.Nombre} x {l.Cantidad:N2} = {l.Subtotal:C2}"));
-            MessageBox.Show(texto + Environment.NewLine + Environment.NewLine + (lblTotal?.Text ?? ""), "Precuenta");
+            MessageBox.Show(texto + Environment.NewLine + Environment.NewLine +
+                            $"Total: {(txtTotal != null ? txtTotal.Text : (_lineas.Sum(x => x.Subtotal)).ToString("N2"))}",
+                            "Precuenta");
         }
 
         private void Procesar()
@@ -566,6 +662,38 @@ namespace Proyecto_Restaurante.Proceso
             catch (Exception ex) { MessageBox.Show("Error al procesar: " + ex.Message); }
         }
 
+        // ===== Cancelar todo =====
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            if (_idOrden <= 0) { Close(); return; }
+            if (MessageBox.Show("¿Cancelar y limpiar toda la orden?", "Confirmar",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                using var tx = con.BeginTransaction();
+
+                // Anular líneas y anular orden (libera mesa)
+                using (var cmd = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_orden=@o", con, tx))
+                { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
+
+                using (var cmd = new SqlCommand("UPDATE orden SET estado=0, procesada=1, saldo_pendiente=0 WHERE id_orden=@o", con, tx))
+                { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
+
+                tx.Commit();
+
+                MessageBox.Show("Orden cancelada.");
+                this.DialogResult = DialogResult.OK; // refresca colores en MenuPrincipal
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo cancelar: " + ex.Message);
+            }
+        }
+
         // ===== Catálogo con scroll infinito =====
         private void ResetCatalogo()
         {
@@ -629,95 +757,108 @@ namespace Proyecto_Restaurante.Proceso
             finally { _loading = false; }
         }
 
-        // ===== Cambiar Mesa / Buscar Cliente =====
-        private void BtnCambiarMesa_Click(object sender, EventArgs e)
-        {
-            int? nueva = ElegirMesaLibre();
-            if (!nueva.HasValue || nueva.Value == _idMesa) return;
-
-            try
-            {
-                using (var con = new SqlConnection(CS))
-                {
-                    con.Open();
-                    var up = new SqlCommand("UPDATE orden SET id_mesa=@m WHERE id_orden=@o", con);
-                    up.Parameters.AddWithValue("@m", nueva.Value);
-                    up.Parameters.AddWithValue("@o", _idOrden);
-                    up.ExecuteNonQuery();
-                }
-
-                _idMesa = nueva.Value;
-                this.Text = $"ProcesoFacturación - Mesa #{_idMesa}";
-                MessageBox.Show("Mesa cambiada correctamente.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No se pudo cambiar la mesa: " + ex.Message);
-            }
-        }
-
-        // Wrappers por si el Diseñador apunta a estos nombres (evita errores de “no existe en el contexto”)
-        private void btnCambiarMesa_Click(object sender, EventArgs e) => BtnCambiarMesa_Click(sender, e);
-        private void btnBuscarCliente_Click(object sender, EventArgs e) => BtnBuscarCliente_Click(sender, e);
-
-        private int? ElegirMesaLibre()
-        {
-            DataTable dt = new DataTable();
-            using (var con = new SqlConnection(CS))
-            {
-                con.Open();
-                using var da = new SqlDataAdapter(@"
-                    SELECT m.id_mesa, s.descripcion + ' - ' + m.descripcion AS nombre
-                    FROM mesa m
-                    JOIN sala s ON s.id_sala = m.id_sala
-                    WHERE m.estado = 1
-                      AND NOT EXISTS (
-                        SELECT 1 FROM orden o
-                        WHERE o.id_mesa = m.id_mesa AND o.procesada = 0 AND o.estado = 1
-                      )
-                    ORDER BY s.descripcion, m.descripcion;", con);
-                da.Fill(dt);
-            }
-            if (dt.Rows.Count == 0) { MessageBox.Show("No hay mesas libres."); return null; }
-
-            using var f = new Form { Width = 420, Height = 150, Text = "Cambiar a mesa…" };
-            var cb = new ComboBox { Left = 20, Top = 20, Width = 360, DropDownStyle = ComboBoxStyle.DropDownList };
-            cb.DisplayMember = "nombre"; cb.ValueMember = "id_mesa"; cb.DataSource = dt;
-            var ok = new Button { Text = "Aceptar", Left = 220, Width = 75, Top = 60, DialogResult = DialogResult.OK };
-            var cancel = new Button { Text = "Cancelar", Left = 305, Width = 75, Top = 60, DialogResult = DialogResult.Cancel };
-            f.Controls.Add(cb); f.Controls.Add(ok); f.Controls.Add(cancel); f.AcceptButton = ok; f.CancelButton = cancel;
-
-            return f.ShowDialog(this) == DialogResult.OK ? (int?)cb.SelectedValue : null;
-        }
-
+        // ===== Buscar Cliente (abre ConsultaCliente en modo SELECTOR) =====
         private void BtnBuscarCliente_Click(object sender, EventArgs e)
         {
-            string criterio = Microsoft.VisualBasic.Interaction.InputBox(
-                "Nombre del cliente:", "Buscar cliente", "").Trim();
-            if (string.IsNullOrEmpty(criterio)) return;
-
             try
             {
-                using (var con = new SqlConnection(CS))
+                using (var frm = new ConsultaCliente(mantenimientoForm: null, selectorMode: true))
                 {
-                    con.Open();
-                    var cmd = new SqlCommand(
-                        "SELECT TOP 1 id_cliente FROM cliente WHERE estado=1 AND nombre LIKE @q ORDER BY nombre", con);
-                    cmd.Parameters.AddWithValue("@q", "%" + criterio + "%");
-                    var id = cmd.ExecuteScalar();
-                    if (id != null) cmbCliente.SelectedValue = (int)id;
-                    else MessageBox.Show("No se encontró un cliente con ese nombre.");
+                    var r = frm.ShowDialog(this);
+                    if (r == DialogResult.OK && frm.SelectedId > 0)
+                    {
+                        int idCliente = frm.SelectedId;
+                        cmbCliente.SelectedValue = idCliente;  // dispara SelectedValueChanged
+
+                        if (frm.SelectedCondicionId > 0)
+                        {
+                            SetCondicionFromId(frm.SelectedCondicionId);
+                            cmbCondicion.Enabled = false;        // desactivar edición
+                            CambiarCondicionUI();                 // aplica autopago / No aplica / vencimiento
+                        }
+                        else
+                        {
+                            // safety: si la consulta no envió la condición, la buscamos
+                            AplicarCondicionDeCliente(idCliente);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al buscar cliente: " + ex.Message);
+                MessageBox.Show("No se pudo abrir la consulta de clientes: " + ex.Message);
             }
         }
-        private void ProcesoFacturacion_Shown_1(object sender, EventArgs e)
+
+        // ===== Helpers condición =====
+        private void SetCondicionFromId(int idCond)
         {
-            // Reutiliza el handler nuevo para no duplicar lógica
-            ProcesoFacturacion_Shown(sender, e);
+            if (cmbCondicion?.DataSource is DataTable dt)
+            {
+                // validar que exista el id en el DataSource
+                var found = dt.AsEnumerable().Any(r => r.Field<int>("id_condicion") == idCond);
+                if (!found)
+                {
+                    // recargar por seguridad
+                    using var con = new SqlConnection(CS);
+                    con.Open();
+                    dt.Clear();
+                    new SqlDataAdapter("SELECT id_condicion, descripcion, autopago, dias_credito FROM condicion WHERE estado=1 ORDER BY descripcion", con).Fill(dt);
+                }
+                cmbCondicion.SelectedValue = idCond;
+            }
+            else
+            {
+                cmbCondicion.SelectedValue = idCond;
+            }
         }
+
+        private void AplicarCondicionDeCliente(int idCliente)
+        {
+            if (idCliente <= 0) return;
+
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                using var cmd = new SqlCommand("SELECT id_condicion FROM cliente WHERE id_cliente=@id", con);
+                cmd.Parameters.AddWithValue("@id", idCliente);
+                var obj = cmd.ExecuteScalar();
+
+                if (obj != null && obj != DBNull.Value)
+                {
+                    int idCond = Convert.ToInt32(obj);
+                    SetCondicionFromId(idCond);
+                    cmbCondicion.Enabled = false; // ← desactivar edición
+                    CambiarCondicionUI();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo aplicar la condición del cliente: " + ex.Message);
+            }
+        }
+
+        // ===== Sala-Mesa label =====
+        private void CargarSalaMesaLabel()
+        {
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                var cmd = new SqlCommand(
+                    "SELECT s.descripcion AS sala, m.descripcion AS mesa " +
+                    "FROM mesa m JOIN sala s ON s.id_sala = m.id_sala WHERE m.id_mesa=@m", con);
+                cmd.Parameters.AddWithValue("@m", _idMesa);
+                using var rd = cmd.ExecuteReader();
+                if (rd.Read() && lbSalaMesa != null)
+                {
+                    lbSalaMesa.Text = $"{rd.GetString(0)} - {rd.GetString(1)}";
+                }
+            }
+            catch { /* solo visual */ }
+        }
+
+        private void Titulo_Paint(object sender, PaintEventArgs e) { }
     }
 }
