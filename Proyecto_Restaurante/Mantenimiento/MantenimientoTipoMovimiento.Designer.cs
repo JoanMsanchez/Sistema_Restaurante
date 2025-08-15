@@ -82,17 +82,19 @@
             panel1.Controls.Add(DGVTipoMovimiento);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(831, 492);
+            panel1.Size = new Size(1039, 615);
             panel1.TabIndex = 0;
             // 
             // panel4
             // 
             panel4.Controls.Add(salida);
             panel4.Controls.Add(entrada);
-            panel4.Location = new Point(259, 168);
+            panel4.Location = new Point(324, 210);
+            panel4.Margin = new Padding(4, 4, 4, 4);
             panel4.Name = "panel4";
-            panel4.Size = new Size(163, 67);
+            panel4.Size = new Size(204, 84);
             panel4.TabIndex = 66;
             // 
             // salida
@@ -100,9 +102,10 @@
             salida.AutoSize = true;
             salida.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             salida.ForeColor = Color.White;
-            salida.Location = new Point(3, 37);
+            salida.Location = new Point(4, 46);
+            salida.Margin = new Padding(4, 4, 4, 4);
             salida.Name = "salida";
-            salida.Size = new Size(132, 24);
+            salida.Size = new Size(163, 29);
             salida.TabIndex = 1;
             salida.Text = "Salida (-1)";
             salida.UseVisualStyleBackColor = true;
@@ -113,9 +116,10 @@
             entrada.Checked = true;
             entrada.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             entrada.ForeColor = Color.White;
-            entrada.Location = new Point(3, 7);
+            entrada.Location = new Point(4, 9);
+            entrada.Margin = new Padding(4, 4, 4, 4);
             entrada.Name = "entrada";
-            entrada.Size = new Size(155, 24);
+            entrada.Size = new Size(191, 29);
             entrada.TabIndex = 0;
             entrada.TabStop = true;
             entrada.Text = "Entrada (+1)";
@@ -124,9 +128,10 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(686, 49);
+            pictureBox1.Location = new Point(858, 61);
+            pictureBox1.Margin = new Padding(4, 4, 4, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.Size = new Size(179, 120);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 40;
             pictureBox1.TabStop = false;
@@ -136,9 +141,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(24, 185);
+            label1.Location = new Point(30, 231);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(229, 25);
+            label1.Size = new Size(272, 29);
             label1.TabIndex = 65;
             label1.Text = "Operación de Stock";
             // 
@@ -148,9 +154,10 @@
             nomMovimiento.BorderStyle = BorderStyle.None;
             nomMovimiento.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nomMovimiento.ForeColor = Color.WhiteSmoke;
-            nomMovimiento.Location = new Point(174, 100);
+            nomMovimiento.Location = new Point(218, 125);
+            nomMovimiento.Margin = new Padding(4, 4, 4, 4);
             nomMovimiento.Name = "nomMovimiento";
-            nomMovimiento.Size = new Size(147, 19);
+            nomMovimiento.Size = new Size(184, 22);
             nomMovimiento.TabIndex = 61;
             nomMovimiento.KeyPress += nomMovimiento_KeyPress;
             // 
@@ -158,9 +165,10 @@
             // 
             panel2.BackColor = Color.White;
             panel2.ForeColor = Color.White;
-            panel2.Location = new Point(171, 120);
+            panel2.Location = new Point(214, 150);
+            panel2.Margin = new Padding(4, 4, 4, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(150, 2);
+            panel2.Size = new Size(188, 2);
             panel2.TabIndex = 59;
             // 
             // label2
@@ -168,9 +176,10 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(24, 94);
+            label2.Location = new Point(30, 118);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(144, 25);
+            label2.Size = new Size(169, 29);
             label2.TabIndex = 53;
             label2.Text = "Descripción";
             // 
@@ -185,9 +194,10 @@
             limpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             limpiar.IconSize = 35;
             limpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            limpiar.Location = new Point(176, 382);
+            limpiar.Location = new Point(220, 478);
+            limpiar.Margin = new Padding(4, 4, 4, 4);
             limpiar.Name = "limpiar";
-            limpiar.Size = new Size(140, 56);
+            limpiar.Size = new Size(175, 70);
             limpiar.TabIndex = 64;
             limpiar.Text = "     Limpiar";
             limpiar.UseVisualStyleBackColor = true;
@@ -204,9 +214,10 @@
             guardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             guardar.IconSize = 35;
             guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            guardar.Location = new Point(25, 382);
+            guardar.Location = new Point(31, 478);
+            guardar.Margin = new Padding(4, 4, 4, 4);
             guardar.Name = "guardar";
-            guardar.Size = new Size(145, 56);
+            guardar.Size = new Size(181, 70);
             guardar.TabIndex = 63;
             guardar.Text = "     Guardar";
             guardar.UseVisualStyleBackColor = true;
@@ -218,9 +229,10 @@
             buscanom.BorderStyle = BorderStyle.None;
             buscanom.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             buscanom.ForeColor = Color.WhiteSmoke;
-            buscanom.Location = new Point(504, 238);
+            buscanom.Location = new Point(630, 298);
+            buscanom.Margin = new Padding(4, 4, 4, 4);
             buscanom.Name = "buscanom";
-            buscanom.Size = new Size(147, 19);
+            buscanom.Size = new Size(184, 22);
             buscanom.TabIndex = 62;
             buscanom.TextChanged += buscanom_TextChanged;
             // 
@@ -228,9 +240,10 @@
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(504, 260);
+            panel3.Location = new Point(630, 325);
+            panel3.Margin = new Padding(4, 4, 4, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(150, 2);
+            panel3.Size = new Size(188, 2);
             panel3.TabIndex = 60;
             // 
             // label4
@@ -238,9 +251,10 @@
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(460, 210);
+            label4.Location = new Point(575, 262);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(250, 25);
+            label4.Size = new Size(295, 29);
             label4.TabIndex = 58;
             label4.Text = "Buscar por Condición";
             // 
@@ -249,9 +263,10 @@
             inactivo.AutoSize = true;
             inactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             inactivo.ForeColor = Color.White;
-            inactivo.Location = new Point(114, 290);
+            inactivo.Location = new Point(142, 362);
+            inactivo.Margin = new Padding(4, 4, 4, 4);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(109, 24);
+            inactivo.Size = new Size(130, 29);
             inactivo.TabIndex = 57;
             inactivo.Text = "Inactivo";
             inactivo.UseVisualStyleBackColor = true;
@@ -262,9 +277,10 @@
             activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(114, 260);
+            activo.Location = new Point(142, 325);
+            activo.Margin = new Padding(4, 4, 4, 4);
             activo.Name = "activo";
-            activo.Size = new Size(90, 24);
+            activo.Size = new Size(108, 29);
             activo.TabIndex = 56;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -275,9 +291,10 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(24, 268);
+            label3.Location = new Point(30, 335);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(88, 25);
+            label3.Size = new Size(103, 29);
             label3.TabIndex = 55;
             label3.Text = "Estado";
             // 
@@ -313,7 +330,8 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVTipoMovimiento.DefaultCellStyle = dataGridViewCellStyle3;
             DGVTipoMovimiento.EnableHeadersVisualStyles = false;
-            DGVTipoMovimiento.Location = new Point(334, 268);
+            DGVTipoMovimiento.Location = new Point(418, 335);
+            DGVTipoMovimiento.Margin = new Padding(4, 4, 4, 4);
             DGVTipoMovimiento.Name = "DGVTipoMovimiento";
             DGVTipoMovimiento.ReadOnly = true;
             DGVTipoMovimiento.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -327,7 +345,7 @@
             DGVTipoMovimiento.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DGVTipoMovimiento.RowHeadersVisible = false;
             DGVTipoMovimiento.RowHeadersWidth = 51;
-            DGVTipoMovimiento.Size = new Size(484, 188);
+            DGVTipoMovimiento.Size = new Size(605, 235);
             DGVTipoMovimiento.TabIndex = 54;
             DGVTipoMovimiento.CellMouseDoubleClick += DGVTipoMovimiento_CellMouseDoubleClick;
             // 
@@ -342,7 +360,7 @@
             panelTipodeMovimiento.Location = new Point(0, 0);
             panelTipodeMovimiento.Margin = new Padding(2);
             panelTipodeMovimiento.Name = "panelTipodeMovimiento";
-            panelTipodeMovimiento.Size = new Size(831, 54);
+            panelTipodeMovimiento.Size = new Size(1039, 68);
             panelTipodeMovimiento.TabIndex = 1;
             // 
             // btnMaximizarTipodeMovimiento
@@ -355,10 +373,10 @@
             btnMaximizarTipodeMovimiento.IconColor = Color.OldLace;
             btnMaximizarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarTipodeMovimiento.IconSize = 20;
-            btnMaximizarTipodeMovimiento.Location = new Point(763, 0);
+            btnMaximizarTipodeMovimiento.Location = new Point(954, 0);
             btnMaximizarTipodeMovimiento.Margin = new Padding(2);
             btnMaximizarTipodeMovimiento.Name = "btnMaximizarTipodeMovimiento";
-            btnMaximizarTipodeMovimiento.Size = new Size(36, 20);
+            btnMaximizarTipodeMovimiento.Size = new Size(45, 25);
             btnMaximizarTipodeMovimiento.TabIndex = 12;
             btnMaximizarTipodeMovimiento.UseVisualStyleBackColor = false;
             btnMaximizarTipodeMovimiento.Click += btnMaximizarTipodeMovimiento_Click;
@@ -373,10 +391,10 @@
             btnCerrarTipodeMovimiento.IconColor = Color.OldLace;
             btnCerrarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarTipodeMovimiento.IconSize = 20;
-            btnCerrarTipodeMovimiento.Location = new Point(795, 0);
+            btnCerrarTipodeMovimiento.Location = new Point(994, 0);
             btnCerrarTipodeMovimiento.Margin = new Padding(2);
             btnCerrarTipodeMovimiento.Name = "btnCerrarTipodeMovimiento";
-            btnCerrarTipodeMovimiento.Size = new Size(36, 20);
+            btnCerrarTipodeMovimiento.Size = new Size(45, 25);
             btnCerrarTipodeMovimiento.TabIndex = 13;
             btnCerrarTipodeMovimiento.UseVisualStyleBackColor = false;
             btnCerrarTipodeMovimiento.Click += btnCerrarTipodeMovimiento_Click;
@@ -391,10 +409,10 @@
             btnMinimizarTipodeMovimiento.IconColor = Color.OldLace;
             btnMinimizarTipodeMovimiento.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarTipodeMovimiento.IconSize = 20;
-            btnMinimizarTipodeMovimiento.Location = new Point(729, 0);
+            btnMinimizarTipodeMovimiento.Location = new Point(911, 0);
             btnMinimizarTipodeMovimiento.Margin = new Padding(2);
             btnMinimizarTipodeMovimiento.Name = "btnMinimizarTipodeMovimiento";
-            btnMinimizarTipodeMovimiento.Size = new Size(36, 20);
+            btnMinimizarTipodeMovimiento.Size = new Size(45, 25);
             btnMinimizarTipodeMovimiento.TabIndex = 11;
             btnMinimizarTipodeMovimiento.UseVisualStyleBackColor = false;
             btnMinimizarTipodeMovimiento.Click += btnMinimizarTipodeMovimiento_Click;
@@ -404,20 +422,22 @@
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(255, 161, 43);
-            label6.Location = new Point(10, 7);
+            label6.Location = new Point(12, 9);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(394, 36);
+            label6.Size = new Size(478, 44);
             label6.TabIndex = 2;
             label6.Text = "TIPO DE MOVIMIENTO";
             // 
             // MantenimientoTipoMovimiento
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(831, 492);
+            ClientSize = new Size(1039, 615);
             Controls.Add(panelTipodeMovimiento);
             Controls.Add(panel1);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "MantenimientoTipoMovimiento";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MantenimientoTipoMovimiento";

@@ -25,8 +25,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         // Usa el mismo connection string que usas en tus mantenimientos
 
-        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
         // Método público para iniciar/recargar el plano de salas
         public void InicializarPlanoSalas()
@@ -34,40 +34,58 @@ namespace Proyecto_Restaurante.Mantenimiento
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                // 1) Limpiar las pestañas actuales
                 tabSalas.TabPages.Clear();
 
-                // 2) Traer salas activas
+                // SIEMPRE inicializa las tablas en el MISMO alcance
                 DataTable dtSalas = new DataTable();
-                using (var con = new SqlConnection(CS))
-                using (var da = new SqlDataAdapter(
-                    @"SELECT id_sala, descripcion, estado 
-              FROM sala 
-              WHERE estado = 1 
-              ORDER BY descripcion;", con))
-                {
-                    da.Fill(dtSalas);
-                }
-
-                // 3) Traer mesas (si quieres solo activas, agrega WHERE estado = 1)
                 DataTable dtMesas = new DataTable();
+
                 using (var con = new SqlConnection(CS))
-                using (var da = new SqlDataAdapter(
-                    @"SELECT id_mesa, id_sala, descripcion, asientos, estado 
-              FROM mesa 
-              ORDER BY descripcion;", con))
                 {
-                    da.Fill(dtMesas);
+                    con.Open();
+
+                    // Salas activas
+                    using (var da = new SqlDataAdapter(
+                        @"SELECT id_sala, descripcion, estado
+                  FROM sala
+                  WHERE estado = 1
+                  ORDER BY descripcion;", con))
+                    {
+                        da.Fill(dtSalas);
+                    }
+
+                    // Mesas activas + flag de ocupación
+                    using (var da = new SqlDataAdapter(
+                        @"
+                SELECT 
+                    m.id_mesa,
+                    m.id_sala,
+                    m.descripcion,
+                    m.asientos,
+                    m.estado,
+                    CASE WHEN EXISTS (
+                        SELECT 1 FROM orden o
+                        WHERE o.id_mesa = m.id_mesa
+                          AND o.procesada = 0
+                          AND o.estado = 1
+                    ) THEN 1 ELSE 0 END AS ocupada
+                FROM mesa m
+                WHERE m.estado = 1
+                ORDER BY m.descripcion;", con))
+                    {
+                        da.Fill(dtMesas);
+                    }
                 }
 
-                // 4) Crear pestañas por sala y botones por mesa
-                foreach (DataRow s in dtSalas.Rows)
+                // Debug rápido (opcional):
+                // MessageBox.Show($"Salas: {dtSalas.Rows.Count} - Mesas: {dtMesas.Rows.Count}");
+
+                foreach (DataRow s in dtSalas.Rows) // <== ya no dará error
                 {
                     int idSala = (int)s["id_sala"];
                     string nombreSala = Convert.ToString(s["descripcion"]);
 
                     var page = new TabPage(nombreSala) { ToolTipText = $"Sala #{idSala}" };
-
                     var flow = new FlowLayoutPanel
                     {
                         Dock = DockStyle.Fill,
@@ -88,7 +106,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                             Font = new Font("Verdana", 10, FontStyle.Bold),
                             Text = "No hay mesas registradas en esta sala.",
                             Margin = new Padding(10),
-                            BackColor =  Color.OldLace
+                            BackColor = Color.OldLace
                         });
                     }
                     else
@@ -98,9 +116,9 @@ namespace Proyecto_Restaurante.Mantenimiento
                             int idMesa = (int)m["id_mesa"];
                             string desc = Convert.ToString(m["descripcion"]);
                             int asientos = Convert.ToInt32(m["asientos"]);
-                            int estadoMesa = Convert.ToInt32(m["estado"]); // 1 activo, 0 inactivo
+                            bool ocupada = Convert.ToInt32(m["ocupada"]) == 1;
 
-                            var btn = CrearBotonMesa(idMesa, desc, asientos, estadoMesa);
+                            var btn = CrearBotonMesa(idMesa, desc, asientos, ocupada);
                             flow.Controls.Add(btn);
                         }
                     }
@@ -119,7 +137,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             }
         }
 
-        private Button CrearBotonMesa(int idMesa, string descripcion, int asientos, int estado)
+        private Button CrearBotonMesa(int idMesa, string descripcion, int asientos, bool ocupada)
         {
             var btn = new Button
             {
@@ -130,13 +148,18 @@ namespace Proyecto_Restaurante.Mantenimiento
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter,
-                Text = $"{descripcion}\nAsientos: {asientos}",
-                BackColor = (estado == 1) ? Color.FromArgb(46, 204, 113) : Color.Gray,
+                // Muestra libre/ocupada en el texto
+                Text = $"{descripcion}\nAsientos: {asientos}\n{(ocupada ? "Ocupada" : "Libre")}",
+                // Color: gris si ocupada, verde si libre
+                BackColor = ocupada ? Color.Gray : Color.FromArgb(46, 204, 113),
                 ForeColor = Color.White,
                 Cursor = Cursors.Hand
             };
             btn.FlatAppearance.BorderSize = 0;
             btn.Click += Mesa_Click;
+
+            var tt = new ToolTip { IsBalloon = true };
+            tt.SetToolTip(btn, ocupada ? "Mesa ocupada" : "Mesa libre");
             return btn;
         }
 
@@ -144,11 +167,12 @@ namespace Proyecto_Restaurante.Mantenimiento
         {
             if (sender is Button b && b.Tag is int idMesa)
             {
-                // TODO: Abrir tu formulario de pedidos/detalle de mesa
-                // new TomarPedidoForm(idMesa).ShowDialog();
-
-                MessageBox.Show("Mesa seleccionada", "Mesa",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (var f = new Proyecto_Restaurante.Proceso.ProcesoFacturacion(idMesa))
+                {
+                    var r = f.ShowDialog(this);
+                    if (r == DialogResult.OK)
+                        InicializarPlanoSalas();  // ← vuelve a pintar mesa libre / ocupada
+                }
             }
         }
         // ====== /Salas/Mesas ======
@@ -428,6 +452,10 @@ namespace Proyecto_Restaurante.Mantenimiento
         {
             ProcesoRegistroMovimiento regmov = new ProcesoRegistroMovimiento();
             regmov.Show();
+        }
+
+        private void FacturacionRestaurante_Click(object sender, EventArgs e)
+        {
         }
     }
 }
