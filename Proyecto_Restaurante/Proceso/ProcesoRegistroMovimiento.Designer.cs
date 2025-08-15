@@ -36,12 +36,14 @@ namespace Proyecto_Restaurante.Proceso
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProcesoRegistroMovimiento));
             panel2 = new Panel();
+            label4 = new Label();
+            comboProveedor = new ComboBox();
             label3 = new Label();
             panel3 = new Panel();
             buscar = new TextBox();
             listSugerencia = new ListBox();
             btnConsultaProducto = new FontAwesome.Sharp.IconButton();
-            dgvLineas = new DataGridView();
+            dgvProductoselect = new DataGridView();
             pictureBox1 = new PictureBox();
             btnLimpiar = new FontAwesome.Sharp.IconButton();
             btnGuardar = new FontAwesome.Sharp.IconButton();
@@ -61,7 +63,7 @@ namespace Proyecto_Restaurante.Proceso
             btnCerrar = new FontAwesome.Sharp.IconButton();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvLineas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProductoselect).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelMovimiento.SuspendLayout();
             SuspendLayout();
@@ -69,12 +71,14 @@ namespace Proyecto_Restaurante.Proceso
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(255, 161, 43);
+            panel2.Controls.Add(label4);
+            panel2.Controls.Add(comboProveedor);
             panel2.Controls.Add(label3);
             panel2.Controls.Add(panel3);
             panel2.Controls.Add(buscar);
             panel2.Controls.Add(listSugerencia);
             panel2.Controls.Add(btnConsultaProducto);
-            panel2.Controls.Add(dgvLineas);
+            panel2.Controls.Add(dgvProductoselect);
             panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(btnLimpiar);
             panel2.Controls.Add(btnGuardar);
@@ -91,15 +95,39 @@ namespace Proyecto_Restaurante.Proceso
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(935, 623);
+            panel2.Size = new Size(935, 692);
             panel2.TabIndex = 3;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label4.ForeColor = Color.White;
+            label4.Location = new Point(485, 212);
+            label4.Name = "label4";
+            label4.Size = new Size(128, 25);
+            label4.TabIndex = 83;
+            label4.Text = "Proveedor";
+            // 
+            // comboProveedor
+            // 
+            comboProveedor.BackColor = Color.FromArgb(255, 161, 43);
+            comboProveedor.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboProveedor.FlatStyle = FlatStyle.Flat;
+            comboProveedor.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboProveedor.ForeColor = Color.White;
+            comboProveedor.FormattingEnabled = true;
+            comboProveedor.Location = new Point(619, 209);
+            comboProveedor.Name = "comboProveedor";
+            comboProveedor.Size = new Size(171, 28);
+            comboProveedor.TabIndex = 82;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(326, 294);
+            label3.Location = new Point(345, 338);
             label3.Name = "label3";
             label3.Size = new Size(268, 25);
             label3.TabIndex = 81;
@@ -159,17 +187,16 @@ namespace Proyecto_Restaurante.Proceso
             btnConsultaProducto.UseVisualStyleBackColor = false;
             btnConsultaProducto.Click += btnConsultaProducto_Click;
             // 
-            // dgvLineas
+            // dgvProductoselect
             // 
-            dgvLineas.AllowUserToAddRows = false;
-            dgvLineas.AllowUserToDeleteRows = false;
+            dgvProductoselect.AllowUserToAddRows = false;
+            dgvProductoselect.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle1.ForeColor = Color.White;
             dataGridViewCellStyle1.SelectionBackColor = Color.White;
             dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dgvLineas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvLineas.BackgroundColor = Color.FromArgb(255, 161, 43);
-            dgvLineas.BorderStyle = BorderStyle.None;
+            dgvProductoselect.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvProductoselect.BackgroundColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
@@ -177,8 +204,8 @@ namespace Proyecto_Restaurante.Proceso
             dataGridViewCellStyle2.SelectionBackColor = Color.White;
             dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvLineas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dgvLineas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProductoselect.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvProductoselect.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
@@ -186,10 +213,10 @@ namespace Proyecto_Restaurante.Proceso
             dataGridViewCellStyle3.SelectionBackColor = Color.White;
             dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dgvLineas.DefaultCellStyle = dataGridViewCellStyle3;
-            dgvLineas.Location = new Point(189, 331);
-            dgvLineas.Margin = new Padding(2);
-            dgvLineas.Name = "dgvLineas";
+            dgvProductoselect.DefaultCellStyle = dataGridViewCellStyle3;
+            dgvProductoselect.Location = new Point(204, 374);
+            dgvProductoselect.Margin = new Padding(2);
+            dgvProductoselect.Name = "dgvProductoselect";
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
@@ -197,18 +224,16 @@ namespace Proyecto_Restaurante.Proceso
             dataGridViewCellStyle4.SelectionBackColor = Color.White;
             dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dgvLineas.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dgvLineas.RowHeadersVisible = false;
-            dgvLineas.RowHeadersWidth = 62;
+            dgvProductoselect.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvProductoselect.RowHeadersVisible = false;
+            dgvProductoselect.RowHeadersWidth = 62;
             dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 161, 43);
             dataGridViewCellStyle5.ForeColor = Color.White;
             dataGridViewCellStyle5.SelectionBackColor = Color.White;
             dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dgvLineas.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            dgvLineas.Size = new Size(538, 201);
-            dgvLineas.TabIndex = 76;
-            dgvLineas.CellContentClick += dgvLineas_CellContentClick;
-            dgvLineas.CellValidating += dgvLineas_CellValidating;
+            dgvProductoselect.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dgvProductoselect.Size = new Size(538, 201);
+            dgvProductoselect.TabIndex = 76;
             // 
             // pictureBox1
             // 
@@ -231,7 +256,7 @@ namespace Proyecto_Restaurante.Proceso
             btnLimpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnLimpiar.IconSize = 35;
             btnLimpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLimpiar.Location = new Point(163, 546);
+            btnLimpiar.Location = new Point(162, 624);
             btnLimpiar.Name = "btnLimpiar";
             btnLimpiar.Size = new Size(140, 56);
             btnLimpiar.TabIndex = 69;
@@ -250,7 +275,7 @@ namespace Proyecto_Restaurante.Proceso
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnGuardar.IconSize = 35;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(12, 546);
+            btnGuardar.Location = new Point(11, 624);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(145, 56);
             btnGuardar.TabIndex = 68;
@@ -263,7 +288,7 @@ namespace Proyecto_Restaurante.Proceso
             inactivo.AutoSize = true;
             inactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             inactivo.ForeColor = Color.White;
-            inactivo.Location = new Point(720, 225);
+            inactivo.Location = new Point(729, 300);
             inactivo.Name = "inactivo";
             inactivo.Size = new Size(109, 24);
             inactivo.TabIndex = 67;
@@ -276,7 +301,7 @@ namespace Proyecto_Restaurante.Proceso
             activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(720, 195);
+            activo.Location = new Point(729, 270);
             activo.Name = "activo";
             activo.Size = new Size(90, 24);
             activo.TabIndex = 66;
@@ -289,7 +314,7 @@ namespace Proyecto_Restaurante.Proceso
             label9.AutoSize = true;
             label9.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label9.ForeColor = Color.White;
-            label9.Location = new Point(626, 208);
+            label9.Location = new Point(635, 285);
             label9.Name = "label9";
             label9.Size = new Size(88, 25);
             label9.TabIndex = 65;
@@ -300,7 +325,7 @@ namespace Proyecto_Restaurante.Proceso
             observaciones.BackColor = Color.FromArgb(255, 161, 43);
             observaciones.Font = new Font("Verdana", 10.2F);
             observaciones.ForeColor = Color.White;
-            observaciones.Location = new Point(562, 76);
+            observaciones.Location = new Point(562, 86);
             observaciones.Multiline = true;
             observaciones.Name = "observaciones";
             observaciones.Size = new Size(214, 80);
@@ -312,7 +337,7 @@ namespace Proyecto_Restaurante.Proceso
             fecha.BorderStyle = BorderStyle.None;
             fecha.Font = new Font("Verdana", 10.2F);
             fecha.ForeColor = Color.White;
-            fecha.Location = new Point(462, 224);
+            fecha.Location = new Point(168, 313);
             fecha.Name = "fecha";
             fecha.ReadOnly = true;
             fecha.Size = new Size(151, 21);
@@ -326,11 +351,10 @@ namespace Proyecto_Restaurante.Proceso
             comboTipoMovimiento.Font = new Font("Verdana", 10.2F);
             comboTipoMovimiento.ForeColor = Color.White;
             comboTipoMovimiento.FormattingEnabled = true;
-            comboTipoMovimiento.Location = new Point(251, 220);
+            comboTipoMovimiento.Location = new Point(251, 209);
             comboTipoMovimiento.Name = "comboTipoMovimiento";
-            comboTipoMovimiento.Size = new Size(162, 28);
+            comboTipoMovimiento.Size = new Size(172, 28);
             comboTipoMovimiento.TabIndex = 8;
-            comboTipoMovimiento.SelectedIndexChanged += comboTipoMovimiento_SelectedIndexChanged;
             // 
             // label8
             // 
@@ -348,7 +372,7 @@ namespace Proyecto_Restaurante.Proceso
             label7.AutoSize = true;
             label7.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(479, 196);
+            label7.Location = new Point(181, 285);
             label7.Name = "label7";
             label7.Size = new Size(77, 25);
             label7.TabIndex = 5;
@@ -359,7 +383,7 @@ namespace Proyecto_Restaurante.Proceso
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(12, 223);
+            label2.Location = new Point(12, 212);
             label2.Name = "label2";
             label2.Size = new Size(233, 25);
             label2.TabIndex = 1;
@@ -456,16 +480,17 @@ namespace Proyecto_Restaurante.Proceso
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(935, 623);
+            ClientSize = new Size(935, 692);
             Controls.Add(panelMovimiento);
             Controls.Add(panel2);
             Name = "ProcesoRegistroMovimiento";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ProcesoRegistroMovimiento";
             Load += ProcesoRegistroMovimiento_Load;
+            Shown += ProcesoRegistroMovimiento_Shown;
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvLineas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProductoselect).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelMovimiento.ResumeLayout(false);
             panelMovimiento.PerformLayout();
@@ -507,11 +532,13 @@ namespace Proyecto_Restaurante.Proceso
         private FontAwesome.Sharp.IconButton btnMaximizar;
         private FontAwesome.Sharp.IconButton btnCerrar;
         private FontAwesome.Sharp.IconButton btnMinimizar;
-        private DataGridView dgvLineas;
+        private DataGridView dgvProductoselect;
         private FontAwesome.Sharp.IconButton btnConsultaProducto;
         private TextBox buscar;
         private ListBox listSugerencia;
         private Panel panel3;
         private Label label3;
+        private Label label4;
+        private ComboBox comboProveedor;
     }
 }

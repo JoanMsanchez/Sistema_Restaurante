@@ -202,12 +202,11 @@ namespace Proyecto_Restaurante.Consulta
             this.Close(); // cerrar la ventana de consulta
         }
 
-
-
         public int SelectedId { get; private set; }
         public string SelectedNombre { get; private set; }
         public decimal SelectedStock { get; private set; }
-
+        public int SelectedProveedorId { get; private set; }
+        public string SelectedProveedorNombre { get; private set; } = "";
         private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -243,6 +242,8 @@ namespace Proyecto_Restaurante.Consulta
                     SelectedId = id;
                     SelectedNombre = nombre;
                     SelectedStock = stockActual;
+                    SelectedProveedorId = idProveedor;
+                    SelectedProveedorNombre = nombreProveedor;
 
                     this.DialogResult = DialogResult.OK;
                     this.Close();
@@ -266,28 +267,26 @@ namespace Proyecto_Restaurante.Consulta
                         c.nombre AS categoria,
                         u.id_unidad,
                         u.nombre AS unidad,
+                        po.id_proveedor,
+                        po.nombre AS proveedor,
                         p.stock_actual,
                         p.stock_minimo,
                         p.precio_costo,
                         p.precio_venta,
-                        p.estado
+                        p.estado,
+                        p.imagen_ruta
                     FROM producto p
                     INNER JOIN categoria_producto c ON p.id_categoria = c.id_categoria
                     INNER JOIN unidad_medida u ON p.id_unidad = u.id_unidad
+                    INNER JOIN proveedor po ON p.id_proveedor = po.id_proveedor
                     WHERE 1=1";
 
                 if (nombreproducto.Checked)
-                {
                     consulta += $" AND p.nombre LIKE '%{buscar.Text}%'";
-                }
                 else if (categoriaproducto.Checked)
-                {
                     consulta += $" AND c.nombre LIKE '%{buscar.Text}%'";
-                }
                 else if (unidadproducto.Checked)
-                {
                     consulta += $" AND u.nombre LIKE '%{buscar.Text}%'";
-                }
                 else
                 {
                     MessageBox.Show("Seleccione un criterio de búsqueda");
@@ -298,30 +297,31 @@ namespace Proyecto_Restaurante.Consulta
                 DataTable dt = new DataTable();
                 adaptador.Fill(dt);
 
-                DataColumn columnaSecuencia = new DataColumn("No", typeof(int));
-                dt.Columns.Add(columnaSecuencia);
-
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    dt.Rows[i]["No"] = i + 1;
-                }
-
+                if (!dt.Columns.Contains("No")) dt.Columns.Add("No", typeof(int));
+                for (int i = 0; i < dt.Rows.Count; i++) dt.Rows[i]["No"] = i + 1;
                 dt.Columns["No"].SetOrdinal(0);
+
                 dataGridView1.DataSource = dt;
 
-                // Ocultar columnas ID
-                if (dataGridView1.Columns.Contains("id_producto"))
-                    dataGridView1.Columns["id_producto"].Visible = false;
+                // Ocultar IDs como en el load
                 if (dataGridView1.Columns.Contains("id_categoria"))
                     dataGridView1.Columns["id_categoria"].Visible = false;
                 if (dataGridView1.Columns.Contains("id_unidad"))
                     dataGridView1.Columns["id_unidad"].Visible = false;
+                if (dataGridView1.Columns.Contains("id_producto"))
+                    dataGridView1.Columns["id_producto"].Visible = false;
+                if (dataGridView1.Columns.Contains("imagen_ruta"))
+                    dataGridView1.Columns["imagen_ruta"].Visible = false;
+                if (dataGridView1.Columns.Contains("id_proveedor"))
+                    dataGridView1.Columns["id_proveedor"].Visible = false;
 
+                // Headers
                 dataGridView1.Columns["No"].HeaderText = "#";
                 dataGridView1.Columns["nombre"].HeaderText = "Nombre";
                 dataGridView1.Columns["descripcion"].HeaderText = "Descripción";
                 dataGridView1.Columns["categoria"].HeaderText = "Categoría";
                 dataGridView1.Columns["unidad"].HeaderText = "Unidad";
+                dataGridView1.Columns["proveedor"].HeaderText = "Proveedor";
                 dataGridView1.Columns["stock_actual"].HeaderText = "Stock Actual";
                 dataGridView1.Columns["stock_minimo"].HeaderText = "Stock Mínimo";
                 dataGridView1.Columns["precio_costo"].HeaderText = "Costo";
