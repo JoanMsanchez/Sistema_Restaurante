@@ -115,6 +115,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             descripcion.Clear();
             comboCategoria.SelectedIndex = -1;
             comboUnidad.SelectedIndex = -1;
+            comboProveedor.SelectedIndex = -1;
             activo.Checked = true;
             desactivo.Checked = false;
             imagenproducto.Image = null;
@@ -153,29 +154,35 @@ namespace Proyecto_Restaurante.Mantenimiento
 
                 int idCategoria = Convert.ToInt32(comboCategoria.SelectedValue);
                 int idUnidad = Convert.ToInt32(comboUnidad.SelectedValue);
+                int idProveedor = Convert.ToInt32(comboProveedor.SelectedValue);
 
-                SqlCommand cmd;
 
+                SqlCommand cmd;             
 
                 if (id_producto_seleccionado > 0)
                 {
                     string consulta = @"UPDATE producto 
-                                SET nombre = @nombre, descripcion = @descripcion, id_categoria = @id_categoria, 
-                                    id_unidad = @id_unidad, stock_actual = @stock_actual, stock_minimo = @stock_minimo, 
-                                    precio_costo = @precio_costo, precio_venta = @precio_venta, estado = @estado, imagen_ruta = @imagen_ruta
-                                WHERE id_producto = @id";
+                            SET nombre=@nombre, descripcion=@descripcion, id_categoria=@id_categoria, 
+                                id_unidad=@id_unidad, id_proveedor=@id_proveedor,
+                                stock_actual=@stock_actual, stock_minimo=@stock_minimo, 
+                                precio_costo=@precio_costo, precio_venta=@precio_venta, 
+                                estado=@estado, imagen_ruta=@imagen_ruta
+                            WHERE id_producto=@id";
                     cmd = new SqlCommand(consulta, conexion);
                     cmd.Parameters.AddWithValue("@id", id_producto_seleccionado);
                     MessageBox.Show("Producto modificado correctamente.");
                 }
                 else
                 {
-                    string consulta = @"INSERT INTO producto (nombre, descripcion, id_categoria, id_unidad, 
-                                stock_actual, stock_minimo, precio_costo, precio_venta, estado, imagen_ruta) 
-                                VALUES (@nombre, @descripcion, @id_categoria, @id_unidad, 
-                                @stock_actual, @stock_minimo, @precio_costo, @precio_venta, @estado, @imagen_ruta)";
+                    string consulta = @"INSERT INTO producto
+                            (nombre, descripcion, id_categoria, id_unidad, id_proveedor,
+                             stock_actual, stock_minimo, precio_costo, precio_venta, estado, imagen_ruta)
+                            VALUES
+                            (@nombre, @descripcion, @id_categoria, @id_unidad, @id_proveedor,
+                             @stock_actual, @stock_minimo, @precio_costo, @precio_venta, @estado, @imagen_ruta)";
                     cmd = new SqlCommand(consulta, conexion);
                     MessageBox.Show("Producto insertado correctamente.");
+
                 }
 
                 //SqlCommand cmd = new SqlCommand(consulta, conexion);
@@ -183,6 +190,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                 cmd.Parameters.AddWithValue("@descripcion", descripcion.Text);
                 cmd.Parameters.AddWithValue("@id_categoria", idCategoria);
                 cmd.Parameters.AddWithValue("@id_unidad", idUnidad);
+                cmd.Parameters.AddWithValue("@id_proveedor", idProveedor);
                 cmd.Parameters.AddWithValue("@stock_actual", decimal.Parse(txtstockActual.Text));
                 cmd.Parameters.AddWithValue("@stock_minimo", decimal.Parse(txtstockMinimo.Text));
                 cmd.Parameters.AddWithValue("@precio_costo", decimal.Parse(costo.Text));
@@ -224,6 +232,7 @@ namespace Proyecto_Restaurante.Mantenimiento
             nombre.Focus();
             CargarCategorias();
             CargarUnidades();
+            CargarProveedores();
             imagendefault();
         }
 
@@ -274,7 +283,7 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         public void CargarDatosProducto(int idProducto, string nombreProd, string descripcionProd,
             decimal precioCosto, decimal precioVenta, decimal stockActual, decimal stockMinimo,
-            int idCategoria, string nombreCategoria, int idUnidad, string nombreUnidad, int estado, string imagen_ruta)
+            int idCategoria, string nombreCategoria, int idUnidad, string nombreUnidad, int idProveedor, string nombreProveedor, int estado, string imagen_ruta)
         {
             // Asegurar que los combos estén cargados
             CargarCategorias();
@@ -283,9 +292,11 @@ namespace Proyecto_Restaurante.Mantenimiento
             // Forzar refresco de los bindings
             comboCategoria.BindingContext = new BindingContext();
             comboUnidad.BindingContext = new BindingContext();
+            comboProveedor.BindingContext = new BindingContext();
 
             comboCategoria.SelectedValue = idCategoria;
             comboUnidad.SelectedValue = idUnidad;
+            comboProveedor.SelectedValue = idProveedor;
 
             // ID y textos
             this.id_producto_seleccionado = idProducto;
@@ -452,5 +463,33 @@ namespace Proyecto_Restaurante.Mantenimiento
             imagenproducto.Image = Image.FromFile(@"C:\imagen\imagendefault.jpg");
             imagenproducto.SizeMode = PictureBoxSizeMode.Zoom;
         }
+
+        private void comboProveedor_MouseEnter(object sender, EventArgs e)
+        {
+            ComboBox cb = sender as ComboBox;
+            if (cb != null && cb.Items.Count > 0 && !cb.DroppedDown)
+            {
+                cb.DroppedDown = true;  // Abre el desplegable
+            }
+        }
+
+        public void CargarProveedores()
+        {
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT id_proveedor, nombre FROM proveedor WHERE estado = 1", conexion);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                comboProveedor.DataSource = dt;
+                comboProveedor.DisplayMember = "nombre";
+                comboProveedor.ValueMember = "id_proveedor";
+                comboProveedor.SelectedIndex = -1;  // No seleccionar ninguno por defecto
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar proveedores: " + ex.Message);
+            }
+        }
+
     }
 }

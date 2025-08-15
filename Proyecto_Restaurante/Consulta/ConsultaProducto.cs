@@ -126,6 +126,8 @@ namespace Proyecto_Restaurante.Consulta
                         c.nombre AS categoria,
                         u.id_unidad,
                         u.nombre AS unidad,
+                        po.id_proveedor,
+                        po.nombre AS proveedor,
                         p.stock_actual,
                         p.stock_minimo,
                         p.precio_costo,
@@ -134,7 +136,8 @@ namespace Proyecto_Restaurante.Consulta
                         p.imagen_ruta
                     FROM producto p
                     INNER JOIN categoria_producto c ON p.id_categoria = c.id_categoria
-                    INNER JOIN unidad_medida u ON p.id_unidad = u.id_unidad";
+                    INNER JOIN unidad_medida u ON p.id_unidad = u.id_unidad
+                    INNER JOIN proveedor po ON p.id_proveedor = po.id_proveedor";
 
                 SqlDataAdapter adaptador = new SqlDataAdapter(consulta, conexion);
                 DataTable dt = new DataTable();
@@ -160,6 +163,8 @@ namespace Proyecto_Restaurante.Consulta
                     dataGridView1.Columns["id_producto"].Visible = false;
                 if (dataGridView1.Columns.Contains("imagen_ruta"))
                     dataGridView1.Columns["imagen_ruta"].Visible = false;
+                if (dataGridView1.Columns.Contains("id_proveedor"))
+                    dataGridView1.Columns["id_proveedor"].Visible = false;
 
                 // Cambiar encabezados
                 dataGridView1.Columns["No"].HeaderText = "#";
@@ -167,6 +172,7 @@ namespace Proyecto_Restaurante.Consulta
                 dataGridView1.Columns["descripcion"].HeaderText = "Descripción";
                 dataGridView1.Columns["categoria"].HeaderText = "Categoría";
                 dataGridView1.Columns["unidad"].HeaderText = "Unidad";
+                dataGridView1.Columns["proveedor"].HeaderText = "Proveedor";
                 dataGridView1.Columns["stock_actual"].HeaderText = "Stock Actual";
                 dataGridView1.Columns["stock_minimo"].HeaderText = "Stock Mínimo";
                 dataGridView1.Columns["precio_costo"].HeaderText = "Costo";
@@ -186,10 +192,10 @@ namespace Proyecto_Restaurante.Consulta
 
         private void AbrirMantenimiento(int id, string nombre, string descripcion,
             decimal precioCosto, decimal precioVenta, decimal stockActual, decimal stockMinimo,
-            int idCategoria, string nombreCategoria, int idUnidad, string nombreUnidad, int estado, string ruta)
+            int idCategoria, string nombreCategoria, int idUnidad, string nombreUnidad, int idProveedor, string nombreProveedor, int estado, string ruta)
         {
             mantenimientoProductoForm.CargarDatosProducto(id, nombre, descripcion, precioCosto, precioVenta,
-               stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, estado, ruta);
+               stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, idProveedor, nombreProveedor, estado, ruta);
 
             mantenimientoProductoForm.Show();
             mantenimientoProductoForm.BringToFront();
@@ -214,6 +220,8 @@ namespace Proyecto_Restaurante.Consulta
                 int idCategoria = Convert.ToInt32(fila.Cells["id_categoria"].Value);
                 string nombreCategoria = fila.Cells["categoria"].Value.ToString();
                 int idUnidad = Convert.ToInt32(fila.Cells["id_unidad"].Value);
+                string nombreProveedor = fila.Cells["proveedor"].Value.ToString();
+                int idProveedor = Convert.ToInt32(fila.Cells["id_proveedor"].Value);
                 string nombreUnidad = fila.Cells["unidad"].Value.ToString();
                 decimal precioCosto = Convert.ToDecimal(fila.Cells["precio_costo"].Value);
                 decimal precioVenta = Convert.ToDecimal(fila.Cells["precio_venta"].Value);
@@ -226,7 +234,7 @@ namespace Proyecto_Restaurante.Consulta
                 {
                     // === MODO MANTENIMIENTO (como ya lo hacías) ===
                     AbrirMantenimiento(id, nombre, descripcion, precioCosto, precioVenta,
-                        stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, estado, imagen);
+                        stockActual, stockMinimo, idCategoria, nombreCategoria, idUnidad, nombreUnidad, idProveedor, nombreProveedor, estado, imagen);
                     // AbrirMantenimiento ya hace Close();
                 }
                 else

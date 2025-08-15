@@ -36,6 +36,8 @@
             label1 = new Label();
             pictureBox1 = new PictureBox();
             panel1 = new Panel();
+            label12 = new Label();
+            comboProveedor = new ComboBox();
             label11 = new Label();
             imagenproducto = new PictureBox();
             label10 = new Label();
@@ -82,7 +84,7 @@
             panelProducto.Location = new Point(0, 0);
             panelProducto.Margin = new Padding(2);
             panelProducto.Name = "panelProducto";
-            panelProducto.Size = new Size(841, 58);
+            panelProducto.Size = new Size(848, 58);
             panelProducto.TabIndex = 0;
             panelProducto.MouseDown += panelProducto_MouseDown;
             // 
@@ -96,7 +98,7 @@
             btnMaximizarProducto.IconColor = Color.OldLace;
             btnMaximizarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarProducto.IconSize = 20;
-            btnMaximizarProducto.Location = new Point(773, 0);
+            btnMaximizarProducto.Location = new Point(780, 0);
             btnMaximizarProducto.Margin = new Padding(2);
             btnMaximizarProducto.Name = "btnMaximizarProducto";
             btnMaximizarProducto.Size = new Size(36, 20);
@@ -114,7 +116,7 @@
             btnCerrarProducto.IconColor = Color.OldLace;
             btnCerrarProducto.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarProducto.IconSize = 20;
-            btnCerrarProducto.Location = new Point(805, 0);
+            btnCerrarProducto.Location = new Point(812, 0);
             btnCerrarProducto.Margin = new Padding(2);
             btnCerrarProducto.Name = "btnCerrarProducto";
             btnCerrarProducto.Size = new Size(36, 20);
@@ -132,7 +134,7 @@
             btnMinimizarProducto.IconColor = Color.OldLace;
             btnMinimizarProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarProducto.IconSize = 20;
-            btnMinimizarProducto.Location = new Point(739, 0);
+            btnMinimizarProducto.Location = new Point(746, 0);
             btnMinimizarProducto.Margin = new Padding(2);
             btnMinimizarProducto.Name = "btnMinimizarProducto";
             btnMinimizarProducto.Size = new Size(36, 20);
@@ -163,6 +165,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(label12);
+            panel1.Controls.Add(comboProveedor);
             panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(label11);
             panel1.Controls.Add(imagenproducto);
@@ -197,8 +201,33 @@
             panel1.Location = new Point(0, 58);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(841, 603);
+            panel1.Size = new Size(848, 603);
             panel1.TabIndex = 1;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            label12.ForeColor = Color.White;
+            label12.Location = new Point(175, 375);
+            label12.Name = "label12";
+            label12.Size = new Size(128, 25);
+            label12.TabIndex = 58;
+            label12.Text = "Proveedor";
+            // 
+            // comboProveedor
+            // 
+            comboProveedor.BackColor = Color.FromArgb(255, 161, 43);
+            comboProveedor.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboProveedor.FlatStyle = FlatStyle.Flat;
+            comboProveedor.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboProveedor.ForeColor = Color.White;
+            comboProveedor.FormattingEnabled = true;
+            comboProveedor.Location = new Point(156, 403);
+            comboProveedor.Name = "comboProveedor";
+            comboProveedor.Size = new Size(175, 28);
+            comboProveedor.TabIndex = 57;
+            comboProveedor.MouseEnter += comboProveedor_MouseEnter;
             // 
             // label11
             // 
@@ -556,7 +585,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(841, 661);
+            ClientSize = new Size(848, 661);
             Controls.Add(panel1);
             Controls.Add(panelProducto);
             Margin = new Padding(2);
@@ -611,5 +640,7 @@
         private PictureBox imagenproducto;
         private Label label11;
         private PictureBox pictureBox1;
+        protected Label label12;
+        private ComboBox comboProveedor;
     }
 }
