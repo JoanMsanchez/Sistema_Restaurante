@@ -330,6 +330,7 @@
             // 
             // btnCancelar
             // 
+            btnCancelar.FlatAppearance.BorderSize = 0;
             btnCancelar.FlatStyle = FlatStyle.Flat;
             btnCancelar.Font = new Font("Verdana", 12F, FontStyle.Bold);
             btnCancelar.ForeColor = Color.White;
@@ -348,6 +349,7 @@
             // 
             // btnGuardar
             // 
+            btnGuardar.FlatAppearance.BorderSize = 0;
             btnGuardar.FlatStyle = FlatStyle.Flat;
             btnGuardar.Font = new Font("Verdana", 12F, FontStyle.Bold);
             btnGuardar.ForeColor = Color.White;
@@ -366,6 +368,7 @@
             // 
             // btnPrecuenta
             // 
+            btnPrecuenta.FlatAppearance.BorderSize = 0;
             btnPrecuenta.FlatStyle = FlatStyle.Flat;
             btnPrecuenta.Font = new Font("Verdana", 12F, FontStyle.Bold);
             btnPrecuenta.ForeColor = Color.White;
@@ -382,6 +385,7 @@
             // 
             // btnProcesar
             // 
+            btnProcesar.FlatAppearance.BorderSize = 0;
             btnProcesar.FlatStyle = FlatStyle.Flat;
             btnProcesar.Font = new Font("Verdana", 12F, FontStyle.Bold);
             btnProcesar.ForeColor = Color.White;

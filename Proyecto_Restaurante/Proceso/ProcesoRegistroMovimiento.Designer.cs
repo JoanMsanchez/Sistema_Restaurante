@@ -29,13 +29,9 @@ namespace Proyecto_Restaurante.Proceso
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProcesoRegistroMovimiento));
             panel2 = new Panel();
+            dgvProductoselect = new DataGridView();
             label4 = new Label();
             comboProveedor = new ComboBox();
             label3 = new Label();
@@ -43,7 +39,6 @@ namespace Proyecto_Restaurante.Proceso
             buscar = new TextBox();
             listSugerencia = new ListBox();
             btnConsultaProducto = new FontAwesome.Sharp.IconButton();
-            dgvProductoselect = new DataGridView();
             pictureBox1 = new PictureBox();
             btnLimpiar = new FontAwesome.Sharp.IconButton();
             btnGuardar = new FontAwesome.Sharp.IconButton();
@@ -71,6 +66,7 @@ namespace Proyecto_Restaurante.Proceso
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(255, 161, 43);
+            panel2.Controls.Add(dgvProductoselect);
             panel2.Controls.Add(label4);
             panel2.Controls.Add(comboProveedor);
             panel2.Controls.Add(label3);
@@ -78,7 +74,6 @@ namespace Proyecto_Restaurante.Proceso
             panel2.Controls.Add(buscar);
             panel2.Controls.Add(listSugerencia);
             panel2.Controls.Add(btnConsultaProducto);
-            panel2.Controls.Add(dgvProductoselect);
             panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(btnLimpiar);
             panel2.Controls.Add(btnGuardar);
@@ -97,6 +92,19 @@ namespace Proyecto_Restaurante.Proceso
             panel2.Name = "panel2";
             panel2.Size = new Size(935, 692);
             panel2.TabIndex = 3;
+            // 
+            // dgvProductoselect
+            // 
+            dgvProductoselect.AllowUserToAddRows = false;
+            dgvProductoselect.BackgroundColor = Color.White;
+            dgvProductoselect.BorderStyle = BorderStyle.None;
+            dgvProductoselect.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProductoselect.Location = new Point(181, 384);
+            dgvProductoselect.Name = "dgvProductoselect";
+            dgvProductoselect.RowHeadersVisible = false;
+            dgvProductoselect.RowHeadersWidth = 51;
+            dgvProductoselect.Size = new Size(619, 234);
+            dgvProductoselect.TabIndex = 84;
             // 
             // label4
             // 
@@ -163,7 +171,7 @@ namespace Proyecto_Restaurante.Proceso
             listSugerencia.FormattingEnabled = true;
             listSugerencia.Location = new Point(132, 132);
             listSugerencia.Name = "listSugerencia";
-            listSugerencia.Size = new Size(186, 40);
+            listSugerencia.Size = new Size(186, 60);
             listSugerencia.TabIndex = 78;
             listSugerencia.MouseDoubleClick += listSugerencia_MouseDoubleClick;
             // 
@@ -186,54 +194,6 @@ namespace Proyecto_Restaurante.Proceso
             btnConsultaProducto.TabIndex = 77;
             btnConsultaProducto.UseVisualStyleBackColor = false;
             btnConsultaProducto.Click += btnConsultaProducto_Click;
-            // 
-            // dgvProductoselect
-            // 
-            dgvProductoselect.AllowUserToAddRows = false;
-            dgvProductoselect.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = Color.White;
-            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dgvProductoselect.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvProductoselect.BackgroundColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.White;
-            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvProductoselect.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dgvProductoselect.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dgvProductoselect.DefaultCellStyle = dataGridViewCellStyle3;
-            dgvProductoselect.Location = new Point(204, 374);
-            dgvProductoselect.Margin = new Padding(2);
-            dgvProductoselect.Name = "dgvProductoselect";
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = Color.White;
-            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dgvProductoselect.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dgvProductoselect.RowHeadersVisible = false;
-            dgvProductoselect.RowHeadersWidth = 62;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 161, 43);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = Color.White;
-            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(255, 161, 43);
-            dgvProductoselect.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            dgvProductoselect.Size = new Size(538, 201);
-            dgvProductoselect.TabIndex = 76;
             // 
             // pictureBox1
             // 
@@ -532,7 +492,6 @@ namespace Proyecto_Restaurante.Proceso
         private FontAwesome.Sharp.IconButton btnMaximizar;
         private FontAwesome.Sharp.IconButton btnCerrar;
         private FontAwesome.Sharp.IconButton btnMinimizar;
-        private DataGridView dgvProductoselect;
         private FontAwesome.Sharp.IconButton btnConsultaProducto;
         private TextBox buscar;
         private ListBox listSugerencia;
@@ -540,5 +499,6 @@ namespace Proyecto_Restaurante.Proceso
         private Label label3;
         private Label label4;
         private ComboBox comboProveedor;
+        private DataGridView dgvProductoselect;
     }
 }

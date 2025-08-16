@@ -464,6 +464,7 @@ namespace Proyecto_Restaurante.Proceso
         public ProcesoRegistroMovimiento()
         {
             InitializeComponent();
+
             // NO suscribo Load aquí; usa el del Designer si ya lo tienes.
         }
 
