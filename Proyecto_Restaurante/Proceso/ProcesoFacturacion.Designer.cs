@@ -427,7 +427,7 @@
             label12.AutoSize = true;
             label12.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label12.ForeColor = Color.White;
-            label12.Location = new Point(34, 22);
+            label12.Location = new Point(25, 56);
             label12.Name = "label12";
             label12.Size = new Size(136, 25);
             label12.TabIndex = 15;
@@ -439,7 +439,7 @@
             txtCondicionPago.BorderStyle = BorderStyle.None;
             txtCondicionPago.Font = new Font("Verdana", 10.2F);
             txtCondicionPago.ForeColor = Color.White;
-            txtCondicionPago.Location = new Point(909, 29);
+            txtCondicionPago.Location = new Point(905, 55);
             txtCondicionPago.Name = "txtCondicionPago";
             txtCondicionPago.Size = new Size(154, 21);
             txtCondicionPago.TabIndex = 14;
@@ -450,7 +450,7 @@
             txtCreacion.BorderStyle = BorderStyle.None;
             txtCreacion.Font = new Font("Verdana", 10.2F);
             txtCreacion.ForeColor = Color.White;
-            txtCreacion.Location = new Point(361, 62);
+            txtCreacion.Location = new Point(352, 96);
             txtCreacion.Name = "txtCreacion";
             txtCreacion.ReadOnly = true;
             txtCreacion.Size = new Size(125, 21);
@@ -461,7 +461,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label8.ForeColor = Color.WhiteSmoke;
-            label8.Location = new Point(231, 58);
+            label8.Location = new Point(222, 92);
             label8.Margin = new Padding(2, 0, 2, 0);
             label8.Name = "label8";
             label8.Size = new Size(109, 25);
@@ -473,7 +473,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.WhiteSmoke;
-            label3.Location = new Point(673, 25);
+            label3.Location = new Point(669, 51);
             label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
             label3.Size = new Size(219, 25);
@@ -485,7 +485,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.WhiteSmoke;
-            label2.Location = new Point(700, 78);
+            label2.Location = new Point(696, 104);
             label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
             label2.Size = new Size(192, 25);
@@ -497,7 +497,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label1.ForeColor = Color.WhiteSmoke;
-            label1.Location = new Point(251, 22);
+            label1.Location = new Point(242, 56);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new Size(89, 25);
@@ -512,7 +512,7 @@
             cmbMetodoPago.Font = new Font("Verdana", 10.2F);
             cmbMetodoPago.ForeColor = Color.White;
             cmbMetodoPago.FormattingEnabled = true;
-            cmbMetodoPago.Location = new Point(909, 75);
+            cmbMetodoPago.Location = new Point(905, 101);
             cmbMetodoPago.Margin = new Padding(2);
             cmbMetodoPago.Name = "cmbMetodoPago";
             cmbMetodoPago.Size = new Size(154, 28);
@@ -526,7 +526,7 @@
             btnBuscarCliente.IconColor = Color.White;
             btnBuscarCliente.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnBuscarCliente.IconSize = 30;
-            btnBuscarCliente.Location = new Point(572, 17);
+            btnBuscarCliente.Location = new Point(563, 51);
             btnBuscarCliente.Margin = new Padding(2);
             btnBuscarCliente.Name = "btnBuscarCliente";
             btnBuscarCliente.Size = new Size(41, 33);
@@ -541,7 +541,7 @@
             cmbCliente.Font = new Font("Verdana", 10.2F);
             cmbCliente.ForeColor = Color.White;
             cmbCliente.FormattingEnabled = true;
-            cmbCliente.Location = new Point(361, 20);
+            cmbCliente.Location = new Point(352, 54);
             cmbCliente.Margin = new Padding(2);
             cmbCliente.Name = "cmbCliente";
             cmbCliente.Size = new Size(207, 28);
@@ -553,7 +553,7 @@
             lbEmpleado.FlatStyle = FlatStyle.Flat;
             lbEmpleado.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lbEmpleado.ForeColor = Color.White;
-            lbEmpleado.Location = new Point(24, 58);
+            lbEmpleado.Location = new Point(15, 92);
             lbEmpleado.Margin = new Padding(2, 0, 2, 0);
             lbEmpleado.Name = "lbEmpleado";
             lbEmpleado.Size = new Size(158, 30);
@@ -565,10 +565,10 @@
             lbSalaMesa.BackColor = Color.FromArgb(255, 161, 43);
             lbSalaMesa.Font = new Font("Verdana", 12F, FontStyle.Bold);
             lbSalaMesa.ForeColor = Color.White;
-            lbSalaMesa.Location = new Point(24, 97);
+            lbSalaMesa.Location = new Point(25, 9);
             lbSalaMesa.Margin = new Padding(2, 0, 2, 0);
             lbSalaMesa.Name = "lbSalaMesa";
-            lbSalaMesa.Size = new Size(316, 30);
+            lbSalaMesa.Size = new Size(452, 30);
             lbSalaMesa.TabIndex = 0;
             // 
             // ProcesoFacturacion

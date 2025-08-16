@@ -36,7 +36,6 @@ namespace Proyecto_Restaurante.Mantenimiento
             {
                 tabSalas.TabPages.Clear();
 
-                // SIEMPRE inicializa las tablas en el MISMO alcance
                 DataTable dtSalas = new DataTable();
                 DataTable dtMesas = new DataTable();
 
@@ -44,7 +43,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                 {
                     con.Open();
 
-                    // Salas activas
+                    // Cargar salas activas
                     using (var da = new SqlDataAdapter(
                         @"SELECT id_sala, descripcion, estado
                   FROM sala
@@ -54,7 +53,7 @@ namespace Proyecto_Restaurante.Mantenimiento
                         da.Fill(dtSalas);
                     }
 
-                    // Mesas activas + flag de ocupación
+                    // Cargar mesas activas + verificar si tiene productos asociados
                     using (var da = new SqlDataAdapter(
                         @"
                 SELECT 
@@ -64,10 +63,13 @@ namespace Proyecto_Restaurante.Mantenimiento
                     m.asientos,
                     m.estado,
                     CASE WHEN EXISTS (
-                        SELECT 1 FROM orden o
+                        SELECT 1 
+                        FROM orden o
+                        JOIN detalle_orden d ON o.id_orden = d.id_orden
                         WHERE o.id_mesa = m.id_mesa
                           AND o.procesada = 0
                           AND o.estado = 1
+                          AND d.estado = 1
                     ) THEN 1 ELSE 0 END AS ocupada
                 FROM mesa m
                 WHERE m.estado = 1
@@ -77,10 +79,8 @@ namespace Proyecto_Restaurante.Mantenimiento
                     }
                 }
 
-                // Debug rápido (opcional):
-                // MessageBox.Show($"Salas: {dtSalas.Rows.Count} - Mesas: {dtMesas.Rows.Count}");
-
-                foreach (DataRow s in dtSalas.Rows) // <== ya no dará error
+                // Iterar sobre las salas y mesas
+                foreach (DataRow s in dtSalas.Rows)
                 {
                     int idSala = (int)s["id_sala"];
                     string nombreSala = Convert.ToString(s["descripcion"]);
@@ -148,7 +148,6 @@ namespace Proyecto_Restaurante.Mantenimiento
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter,
-                // Muestra libre/ocupada en el texto
                 Text = $"{descripcion}\nAsientos: {asientos}\n{(ocupada ? "Ocupada" : "Libre")}",
                 // Color: gris si ocupada, verde si libre
                 BackColor = ocupada ? Color.Gray : Color.FromArgb(46, 204, 113),

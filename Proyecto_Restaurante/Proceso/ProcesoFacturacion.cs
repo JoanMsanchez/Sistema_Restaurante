@@ -284,26 +284,6 @@ namespace Proyecto_Restaurante.Proceso
                     }
 
                     // Crear nueva
-                    /*int idCond = (int)cmbCondicion.SelectedValue;
-                    object idCli = (object?)cmbCliente.SelectedValue ?? DBNull.Value;
-
-                    var ins = new SqlCommand(@"
-                        INSERT INTO orden(id_cliente, id_mesa, id_empleado, id_condicion, fecha_hora,
-                                          fecha_vencimiento, total, saldo_pendiente, procesada, estado)
-                        VALUES (@cli, @mesa, @emp, @cond, GETDATE(), NULL, 0, 0, 0, 1);
-                        SELECT CAST(SCOPE_IDENTITY() AS int);", con);
-                    ins.Parameters.AddWithValue("@cli", idCli ?? DBNull.Value);
-                    ins.Parameters.AddWithValue("@mesa", _idMesa);
-                    ins.Parameters.AddWithValue("@emp", _idEmpleado);
-                    ins.Parameters.AddWithValue("@cond", idCond);
-
-                    _idOrden = (int)ins.ExecuteScalar();
-
-                    var ap = new SqlCommand("SELECT autopago FROM condicion WHERE id_condicion=@c", con);
-                    ap.Parameters.AddWithValue("@c", idCond);
-                    _autopago = Convert.ToBoolean(ap.ExecuteScalar());
-                    cmbMetodoPago.Enabled = _autopago;*/
-
                     if (_idCondicionActual <= 0)
                     {
                         // intenta obtener desde el cliente seleccionado
