@@ -15,8 +15,8 @@ namespace Proyecto_Restaurante.Proceso
     public partial class ProcesoFacturacion : Form
     {
         // Connection string
-        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
         private readonly MenuPrincipal _menu; // NUEVO
 
@@ -119,8 +119,8 @@ namespace Proyecto_Restaurante.Proceso
             {
                 if (int.TryParse(Convert.ToString(cmbCliente.SelectedValue), out int idCli) && idCli > 0)
                     AplicarCondicionDeCliente(idCli);
-               // else
-                    //cmbCondicion.Enabled = true; // si vuelve a (Consumidor Final), permitir elegir manualmente (opcional)
+                // else
+                //cmbCondicion.Enabled = true; // si vuelve a (Consumidor Final), permitir elegir manualmente (opcional)
             };
         }
 
@@ -379,7 +379,7 @@ namespace Proyecto_Restaurante.Proceso
                     int? idCli = rd.IsDBNull(3) ? (int?)null : rd.GetInt32(3);
                     int idCond = rd.GetInt32(4);
 
-                    if (txtCreacion != null) {txtCreacion.Text = fcrea.ToString("dd/MM/yyyy"); }
+                    if (txtCreacion != null) { txtCreacion.Text = fcrea.ToString("dd/MM/yyyy"); }
                     if (txtVence != null)
                     {
                         //txtVence.ReadOnly = true;
@@ -958,5 +958,10 @@ namespace Proyecto_Restaurante.Proceso
         }
 
         private void Titulo_Paint(object sender, PaintEventArgs e) { }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

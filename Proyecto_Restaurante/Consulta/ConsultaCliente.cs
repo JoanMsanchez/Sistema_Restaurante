@@ -14,8 +14,8 @@ namespace Proyecto_Restaurante.Consulta
         private int bordeSize = 2;
 
         // Cadena de conexión: usa la misma
-        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
 
         // === MODO INTEGRADO ===
