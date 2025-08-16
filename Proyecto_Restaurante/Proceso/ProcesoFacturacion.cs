@@ -8,19 +8,28 @@ using System.Linq;
 using System.Windows.Forms;
 // Si tu ConsultaCliente está en este namespace:
 using Proyecto_Restaurante.Consulta;
+using Proyecto_Restaurante.Mantenimiento;
 
 namespace Proyecto_Restaurante.Proceso
 {
     public partial class ProcesoFacturacion : Form
     {
         // Connection string
-        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+
+        private readonly MenuPrincipal _menu; // NUEVO
+
 
         // Estado
         private int _idMesa;
         private int _idOrden = -1;
         private int _idEmpleado = 1; // TODO: setear desde login
         private bool _autopago = false;
+        private int _idCondicionActual = -1;     // ← NUEVO: ID de condición actual (sin combo)
+        private int _diasCreditoActual = 0;      // ← NUEVO: días de crédito de la condición
+        private const decimal ITBIS_RATE = 0.18m; // 18%
+
 
         // Scroll infinito catálogo
         private int _page = 0;
@@ -41,10 +50,11 @@ namespace Proyecto_Restaurante.Proceso
         private readonly BindingList<Linea> _lineas = new BindingList<Linea>();
 
         // ===== Ctor =====
-        public ProcesoFacturacion(int idMesa)
+        public ProcesoFacturacion(int idMesa, MenuPrincipal menu = null)
         {
             InitializeComponent();
             _idMesa = idMesa;
+            _menu = menu;                    // para refrescar colores/estado de mesas
             this.Load += ProcesoFacturacion_Load;
             this.Shown += ProcesoFacturacion_Shown;
         }
@@ -59,11 +69,16 @@ namespace Proyecto_Restaurante.Proceso
             ConfigurarGridDetalle();
             WireEventosUI();
             CargarSalaMesaLabel();
+            txtITEBIS.Text = "0.00";
         }
 
         private void ProcesoFacturacion_Shown(object sender, EventArgs e)
         {
             CargarCombos();
+
+            // Selección por defecto: Consumidor Final (+ su condición) ANTES de abrir/crear la orden
+            SeleccionarClienteConsumidorFinal();
+
             AbrirOCrearOrden();    // crea/obtiene orden abierta y fija _autopago y _idEmpleado
             CargarEmpleadoLabel(); // llena lbEmpleado
             CargarCabeceraVisual(); // fechas / saldo / (cliente + condición si ya existía)
@@ -95,7 +110,6 @@ namespace Proyecto_Restaurante.Proceso
             if (btnCancelar != null) btnCancelar.Click += BtnCancelar_Click;
 
             // Condición
-            if (cmbCondicion != null) cmbCondicion.SelectedIndexChanged += (_, __) => CambiarCondicionUI();
 
             // Buscar cliente (abre consulta en modo selector)
             if (btnBuscarCliente != null) btnBuscarCliente.Click += BtnBuscarCliente_Click;
@@ -105,8 +119,8 @@ namespace Proyecto_Restaurante.Proceso
             {
                 if (int.TryParse(Convert.ToString(cmbCliente.SelectedValue), out int idCli) && idCli > 0)
                     AplicarCondicionDeCliente(idCli);
-                else
-                    cmbCondicion.Enabled = true; // si vuelve a (Consumidor Final), permitir elegir manualmente (opcional)
+               // else
+                    //cmbCondicion.Enabled = true; // si vuelve a (Consumidor Final), permitir elegir manualmente (opcional)
             };
         }
 
@@ -127,7 +141,7 @@ namespace Proyecto_Restaurante.Proceso
             g.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colCant",
-                HeaderText = "Cant.",
+                HeaderText = "Cantidad",
                 DataPropertyName = "Cantidad",
                 Width = 70,
                 DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleRight, Format = "N2" }
@@ -169,14 +183,13 @@ namespace Proyecto_Restaurante.Proceso
                     // Clientes
                     var dtCli = new DataTable();
                     new SqlDataAdapter("SELECT id_cliente, nombre FROM cliente WHERE estado=1 ORDER BY nombre", con).Fill(dtCli);
-                    var cf = dtCli.NewRow(); cf["id_cliente"] = DBNull.Value; cf["nombre"] = "(Consumidor Final)";
-                    dtCli.Rows.InsertAt(cf, 0);
                     cmbCliente.DisplayMember = "nombre"; cmbCliente.ValueMember = "id_cliente"; cmbCliente.DataSource = dtCli;
 
+
                     // Condiciones
-                    var dtCon = new DataTable();
-                    new SqlDataAdapter("SELECT id_condicion, descripcion, autopago, dias_credito FROM condicion WHERE estado=1 ORDER BY descripcion", con).Fill(dtCon);
-                    cmbCondicion.DisplayMember = "descripcion"; cmbCondicion.ValueMember = "id_condicion"; cmbCondicion.DataSource = dtCon;
+                    //var dtCon = new DataTable();
+                    //new SqlDataAdapter("SELECT id_condicion, descripcion, autopago, dias_credito FROM condicion WHERE estado=1 ORDER BY descripcion", con).Fill(dtCon);
+                    //cmbCondicion.DisplayMember = "descripcion"; cmbCondicion.ValueMember = "id_condicion"; cmbCondicion.DataSource = dtCon;
 
                     // Métodos de pago
                     var dtMet = new DataTable();
@@ -271,7 +284,7 @@ namespace Proyecto_Restaurante.Proceso
                     }
 
                     // Crear nueva
-                    int idCond = (int)cmbCondicion.SelectedValue;
+                    /*int idCond = (int)cmbCondicion.SelectedValue;
                     object idCli = (object?)cmbCliente.SelectedValue ?? DBNull.Value;
 
                     var ins = new SqlCommand(@"
@@ -289,7 +302,39 @@ namespace Proyecto_Restaurante.Proceso
                     var ap = new SqlCommand("SELECT autopago FROM condicion WHERE id_condicion=@c", con);
                     ap.Parameters.AddWithValue("@c", idCond);
                     _autopago = Convert.ToBoolean(ap.ExecuteScalar());
+                    cmbMetodoPago.Enabled = _autopago;*/
+
+                    if (_idCondicionActual <= 0)
+                    {
+                        // intenta obtener desde el cliente seleccionado
+                        using var cmdCli = new SqlCommand("SELECT id_condicion FROM cliente WHERE id_cliente=@c", con);
+                        cmdCli.Parameters.AddWithValue("@c", (object?)cmbCliente.SelectedValue ?? DBNull.Value);
+                        var obj = cmdCli.ExecuteScalar();
+                        if (obj != null && obj != DBNull.Value)
+                        {
+                            _idCondicionActual = Convert.ToInt32(obj);
+                            SetCondicionInterna(_idCondicionActual); // carga autopago/dias/descripcion
+                        }
+                    }
+
+                    var ins = new SqlCommand(@"
+                        INSERT INTO orden(id_cliente, id_mesa, id_empleado, id_condicion, fecha_hora,
+                                          fecha_vencimiento, total, saldo_pendiente, procesada, estado)
+                        VALUES (@cli, @mesa, @emp, @cond, GETDATE(), NULL, 0, 0, 0, 1);
+                        SELECT CAST(SCOPE_IDENTITY() AS int);", con);
+                    ins.Parameters.AddWithValue("@cli", (object?)cmbCliente.SelectedValue ?? DBNull.Value);
+                    ins.Parameters.AddWithValue("@mesa", _idMesa);
+                    ins.Parameters.AddWithValue("@emp", _idEmpleado);
+                    ins.Parameters.AddWithValue("@cond", _idCondicionActual);
+
+                    _idOrden = (int)ins.ExecuteScalar();
+
+                    // auto/No auto pago desde condición
+                    using var ap = new SqlCommand("SELECT autopago FROM condicion WHERE id_condicion=@c", con);
+                    ap.Parameters.AddWithValue("@c", _idCondicionActual);
+                    _autopago = Convert.ToBoolean(ap.ExecuteScalar());
                     cmbMetodoPago.Enabled = _autopago;
+
                 }
             }
             catch (Exception ex) { MessageBox.Show("Error al abrir/crear orden: " + ex.Message); }
@@ -354,20 +399,11 @@ namespace Proyecto_Restaurante.Proceso
                     int? idCli = rd.IsDBNull(3) ? (int?)null : rd.GetInt32(3);
                     int idCond = rd.GetInt32(4);
 
-                    // Fechas
-                    if (dtpFechaCreacion != null)
+                    if (txtCreacion != null) {txtCreacion.Text = fcrea.ToString("dd/MM/yyyy"); }
+                    if (txtVence != null)
                     {
-                        dtpFechaCreacion.Format = DateTimePickerFormat.Custom;
-                        dtpFechaCreacion.CustomFormat = "dd/MM/yyyy";
-                        dtpFechaCreacion.Value = fcrea;
-                        dtpFechaCreacion.Enabled = false;
-                    }
-                    if (dtpFechaVencimiento != null)
-                    {
-                        dtpFechaVencimiento.Format = DateTimePickerFormat.Custom;
-                        dtpFechaVencimiento.CustomFormat = "dd/MM/yyyy";
-                        dtpFechaVencimiento.Value = fven ?? DateTime.Now;
-                        dtpFechaVencimiento.Enabled = false;
+                        //txtVence.ReadOnly = true;
+                        txtVence.Text = (fven ?? DateTime.Now.Date).ToString("dd/MM/yyyy"); // ← NUEVO: default HOY
                     }
                     if (txtSaldoPendiente != null)
                         txtSaldoPendiente.Text = saldo.ToString("N2");
@@ -376,11 +412,8 @@ namespace Proyecto_Restaurante.Proceso
                     if (idCli.HasValue && cmbCliente != null)
                         cmbCliente.SelectedValue = idCli.Value;
 
-                    if (cmbCondicion != null)
-                    {
-                        SetCondicionFromId(idCond);
-                        cmbCondicion.Enabled = false; // la condición de la orden/cliente NO editable
-                    }
+                    SetCondicionInterna(idCond);
+                    MostrarCondicionEnTextBox(idCond); // pinta el TextBox con la descripción
                 }
             }
             catch
@@ -513,23 +546,28 @@ namespace Proyecto_Restaurante.Proceso
         // ===== Totales & cabecera =====
         private void RecalcularTotalOrden(SqlConnection cn, SqlTransaction tx)
         {
-            var tot = new SqlCommand(@"
+            var cmd = new SqlCommand(@"
                 UPDATE orden
-                   SET total = (SELECT ISNULL(SUM(subtotal),0) FROM detalle_orden WHERE id_orden=@o AND estado=1)
+                   SET total = ROUND(
+                        (SELECT ISNULL(SUM(subtotal),0)
+                           FROM detalle_orden
+                          WHERE id_orden=@o AND estado=1) * (1 + @rate), 2)
                  WHERE id_orden=@o;", cn, tx);
-            tot.Parameters.AddWithValue("@o", _idOrden);
-            tot.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@o", _idOrden);
+            cmd.Parameters.AddWithValue("@rate", ITBIS_RATE);
+            cmd.ExecuteNonQuery();
         }
 
         private void RecalcularTotales()
         {
             decimal sub = _lineas.Sum(l => l.Subtotal);
+            decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
+            decimal tot = sub + itbis;
 
-            // Solo números (sin prefijos “TOTAL:”), en TextBox si existen
             if (txtSubTotal != null) txtSubTotal.Text = sub.ToString("N2");
-            if (txtTotal != null) txtTotal.Text = sub.ToString("N2");
+            if (txtITEBIS != null) txtITEBIS.Text = itbis.ToString("N2");
+            if (txtTotal != null) txtTotal.Text = tot.ToString("N2");
         }
-
         private void GuardarCabecera()
         {
             try
@@ -539,62 +577,59 @@ namespace Proyecto_Restaurante.Proceso
                     con.Open();
                     var up = new SqlCommand("UPDATE orden SET id_cliente=@cli, id_condicion=@con WHERE id_orden=@o", con);
                     up.Parameters.AddWithValue("@cli", (object?)cmbCliente.SelectedValue ?? DBNull.Value);
-                    up.Parameters.AddWithValue("@con", (int)cmbCondicion.SelectedValue);
+                    up.Parameters.AddWithValue("@con", _idCondicionActual);     // ← SIN combo
                     up.Parameters.AddWithValue("@o", _idOrden);
                     up.ExecuteNonQuery();
                 }
 
                 MessageBox.Show("Orden guardada.");
                 CambiarCondicionUI();
+
+                _menu?.InicializarPlanoSalas();
+                (this.Owner as MenuPrincipal)?.InicializarPlanoSalas();
             }
             catch (Exception ex) { MessageBox.Show("Error al guardar: " + ex.Message); }
         }
 
         private void CambiarCondicionUI()
         {
-            if (cmbCondicion?.SelectedItem is DataRowView rv)
+            // Método de pago
+            if (cmbMetodoPago != null)
             {
-                _autopago = rv.Row.Field<bool>("autopago");
-                int dias = rv.Row.Field<int>("dias_credito");
-
-                // Método de pago
-                if (cmbMetodoPago != null)
+                cmbMetodoPago.Enabled = _autopago;
+                if (!_autopago)
                 {
-                    cmbMetodoPago.Enabled = _autopago;
-                    if (!_autopago)
-                    {
-                        cmbMetodoPago.SelectedIndex = -1;
-                        cmbMetodoPago.Text = "No aplica";
-                    }
+                    cmbMetodoPago.SelectedIndex = -1;
+                    cmbMetodoPago.Text = "No aplica";
                 }
+            }
 
-                // Vista previa de vencimiento si es crédito
-                if (dtpFechaVencimiento != null)
-                {
-                    dtpFechaVencimiento.Format = DateTimePickerFormat.Custom;
-                    dtpFechaVencimiento.CustomFormat = "dd/MM/yyyy";
+            // Vencimiento
+            if (txtCreacion != null && txtVence != null)
+            {
+                if (!DateTime.TryParseExact(txtCreacion.Text, "dd/MM/yyyy", null,
+                    System.Globalization.DateTimeStyles.None, out DateTime baseDate))
+                    baseDate = DateTime.Now.Date;
 
-                    if (_autopago)
-                    {
-                        dtpFechaVencimiento.Enabled = false;
-                    }
-                    else
-                    {
-                        dtpFechaVencimiento.Enabled = false; // solo visual; se graba al procesar
-                        var baseDate = dtpFechaCreacion != null ? dtpFechaCreacion.Value.Date : DateTime.Now.Date;
-                        dtpFechaVencimiento.Value = baseDate.AddDays(dias);
-                    }
-                }
+                txtVence.Text = baseDate.AddDays(_diasCreditoActual).ToString("dd/MM/yyyy");
             }
         }
 
         private void MostrarPrecuenta()
         {
-            var texto = string.Join(Environment.NewLine,
-                _lineas.Select(l => $"{l.Nombre} x {l.Cantidad:N2} = {l.Subtotal:C2}"));
-            MessageBox.Show(texto + Environment.NewLine + Environment.NewLine +
-                            $"Total: {(txtTotal != null ? txtTotal.Text : (_lineas.Sum(x => x.Subtotal)).ToString("N2"))}",
-                            "Precuenta");
+            var lineas = string.Join(Environment.NewLine,
+            _lineas.Select(l => $"{l.Nombre} x {l.Cantidad:N2} = {l.Subtotal:C2}"));
+
+            decimal sub = _lineas.Sum(l => l.Subtotal);
+            decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
+            decimal tot = sub + itbis;
+
+            MessageBox.Show(
+                lineas + Environment.NewLine + Environment.NewLine +
+                $"Subtotal: {sub:C2}" + Environment.NewLine +
+                $"ITBIS (18%): {itbis:C2}" + Environment.NewLine +
+                $"Total: {tot:C2}",
+                "Precuenta");
         }
 
         private void Procesar()
@@ -637,17 +672,13 @@ namespace Proyecto_Restaurante.Proceso
                     }
                     else
                     {
-                        int dias;
-                        using (var cmdD = new SqlCommand("SELECT dias_credito FROM condicion WHERE id_condicion=@c", con, tx))
-                        { cmdD.Parameters.AddWithValue("@c", (int)cmbCondicion.SelectedValue); dias = Convert.ToInt32(cmdD.ExecuteScalar()); }
-
                         var up = new SqlCommand(@"
                             UPDATE orden
                                SET fecha_vencimiento = CAST(DATEADD(day,@d,GETDATE()) AS date),
                                    saldo_pendiente   = total,
                                    procesada         = 1
                              WHERE id_orden=@o;", con, tx);
-                        up.Parameters.AddWithValue("@d", dias);
+                        up.Parameters.AddWithValue("@d", _diasCreditoActual);
                         up.Parameters.AddWithValue("@o", _idOrden);
                         up.ExecuteNonQuery();
                     }
@@ -685,6 +716,11 @@ namespace Proyecto_Restaurante.Proceso
                 tx.Commit();
 
                 MessageBox.Show("Orden cancelada.");
+
+                _menu?.InicializarPlanoSalas(); //nuevo
+                (this.Owner as MenuPrincipal)?.InicializarPlanoSalas();
+
+
                 this.DialogResult = DialogResult.OK; // refresca colores en MenuPrincipal
                 this.Close();
             }
@@ -772,8 +808,7 @@ namespace Proyecto_Restaurante.Proceso
 
                         if (frm.SelectedCondicionId > 0)
                         {
-                            SetCondicionFromId(frm.SelectedCondicionId);
-                            cmbCondicion.Enabled = false;        // desactivar edición
+                            SetCondicionInterna(frm.SelectedCondicionId);
                             CambiarCondicionUI();                 // aplica autopago / No aplica / vencimiento
                         }
                         else
@@ -791,7 +826,7 @@ namespace Proyecto_Restaurante.Proceso
         }
 
         // ===== Helpers condición =====
-        private void SetCondicionFromId(int idCond)
+        /*private void SetCondicionFromId(int idCond)
         {
             if (cmbCondicion?.DataSource is DataTable dt)
             {
@@ -811,6 +846,43 @@ namespace Proyecto_Restaurante.Proceso
             {
                 cmbCondicion.SelectedValue = idCond;
             }
+        }*/
+
+
+        private void SetCondicionInterna(int idCond)
+        {
+            _idCondicionActual = idCond;
+
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                using var cmd = new SqlCommand(
+                    "SELECT descripcion, autopago, dias_credito FROM condicion WHERE id_condicion=@c", con);
+                cmd.Parameters.AddWithValue("@c", idCond);
+                using var rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    string desc = rd.IsDBNull(0) ? "" : rd.GetString(0);
+                    _autopago = !rd.IsDBNull(1) && rd.GetBoolean(1);
+                    _diasCreditoActual = rd.IsDBNull(2) ? 0 : rd.GetInt32(2);
+
+                    if (txtCondicionPago != null)
+                    {
+                        txtCondicionPago.ReadOnly = true;
+                        txtCondicionPago.Text = desc;
+                    }
+                }
+            }
+            catch
+            {
+                _autopago = false;
+                _diasCreditoActual = 0;
+                if (txtCondicionPago != null) txtCondicionPago.Text = "";
+            }
+
+            // Refrescar la UI dependiente
+            CambiarCondicionUI();
         }
 
         private void AplicarCondicionDeCliente(int idCliente)
@@ -828,8 +900,7 @@ namespace Proyecto_Restaurante.Proceso
                 if (obj != null && obj != DBNull.Value)
                 {
                     int idCond = Convert.ToInt32(obj);
-                    SetCondicionFromId(idCond);
-                    cmbCondicion.Enabled = false; // ← desactivar edición
+                    SetCondicionInterna(idCond); // fija variables y TextBox
                     CambiarCondicionUI();
                 }
             }
@@ -837,6 +908,25 @@ namespace Proyecto_Restaurante.Proceso
             {
                 MessageBox.Show("No se pudo aplicar la condición del cliente: " + ex.Message);
             }
+        }
+
+        private void MostrarCondicionEnTextBox(int idCond) // NUEVO
+        {
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                using var cmd = new SqlCommand(
+                    "SELECT descripcion FROM condicion WHERE id_condicion=@c", con);
+                cmd.Parameters.AddWithValue("@c", idCond);
+                var desc = Convert.ToString(cmd.ExecuteScalar()) ?? "";
+                if (txtCondicionPago != null)
+                {
+                    txtCondicionPago.ReadOnly = true;
+                    txtCondicionPago.Text = desc;
+                }
+            }
+            catch { if (txtCondicionPago != null) txtCondicionPago.Text = ""; }
         }
 
         // ===== Sala-Mesa label =====
@@ -857,6 +947,34 @@ namespace Proyecto_Restaurante.Proceso
                 }
             }
             catch { /* solo visual */ }
+        }
+
+        private void SeleccionarClienteConsumidorFinal() // NUEVO
+        {
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+
+                // Ajusta el LIKE si tu nombre exacto es distinto
+                using var cmd = new SqlCommand(
+                    "SELECT TOP 1 id_cliente, id_condicion " +
+                    "FROM cliente WHERE estado=1 AND nombre LIKE '%Consumidor%Final%' " +
+                    "ORDER BY id_cliente", con);
+                using var rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    int idCli = rd.GetInt32(0);
+                    int idCond = rd.GetInt32(1);
+
+                    cmbCliente.SelectedValue = idCli;
+                    SetCondicionInterna(idCond); // fija _idCondicionActual / txt / autopago / días
+                }
+            }
+            catch
+            {
+                // si no existe, no rompe el flujo
+            }
         }
 
         private void Titulo_Paint(object sender, PaintEventArgs e) { }

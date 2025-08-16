@@ -14,7 +14,9 @@ namespace Proyecto_Restaurante.Consulta
         private int bordeSize = 2;
 
         // Cadena de conexión: usa la misma
-        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+
 
         // === MODO INTEGRADO ===
         private readonly bool _selectorMode = false;             // true → devuelve SelectedId/SelectedCondicionId (para ProcesoFacturacion)
@@ -182,7 +184,7 @@ namespace Proyecto_Restaurante.Consulta
         // ===== Doble click: selector o mantenimiento =====
         private void DGVConsultaCliente_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0 || DGVConsultaCliente.Rows.Count == 0) return;
 
             var fila = DGVConsultaCliente.Rows[e.RowIndex];
 
