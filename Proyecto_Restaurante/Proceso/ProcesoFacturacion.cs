@@ -6,6 +6,8 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+
 // Si tu ConsultaCliente está en este namespace:
 using Proyecto_Restaurante.Consulta;
 using Proyecto_Restaurante.Mantenimiento;
@@ -15,11 +17,15 @@ namespace Proyecto_Restaurante.Proceso
     public partial class ProcesoFacturacion : Form
     {
         // Connection string
-        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
         private readonly MenuPrincipal _menu; // NUEVO
 
+
+        private bool _ordenCreadaEnEstaSesion = false;   // true si INSERT en AbrirOCrearOrden()
+        private bool _cabeceraGuardadaEstaSesion = false; // true si se hizo GuardarCabecera()
+        private bool _ordenProcesadaEstaSesion = false;   // true si se hizo Procesar()
 
         // Estado
         private int _idMesa;
@@ -57,6 +63,8 @@ namespace Proyecto_Restaurante.Proceso
             _menu = menu;                    // para refrescar colores/estado de mesas
             this.Load += ProcesoFacturacion_Load;
             this.Shown += ProcesoFacturacion_Shown;
+            this.FormClosing += ProcesoFacturacion_FormClosing; // ← NUEVO
+
         }
 
         // Si el Designer aún llama a este handler viejo, lo puenteamos:
@@ -126,26 +134,42 @@ namespace Proyecto_Restaurante.Proceso
 
         private void ConfigurarGridDetalle()
         {
+
+
             var g = dgvDetalle;
             g.AutoGenerateColumns = false;
             g.AllowUserToAddRows = false;
             g.AllowUserToResizeRows = false;
             g.RowHeadersVisible = false;
             g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            g.ReadOnly = true; // ← NO editable
+            g.ReadOnly = true; // ← sin edición manual
             g.Columns.Clear();
 
+            // Ocultas / datos
             g.Columns.Add(new DataGridViewTextBoxColumn { Name = "colIdDet", HeaderText = "IdDet", DataPropertyName = "IdDetalle", Visible = false });
             g.Columns.Add(new DataGridViewTextBoxColumn { Name = "colIdProd", HeaderText = "Id", DataPropertyName = "IdProducto", Visible = false });
-            g.Columns.Add(new DataGridViewTextBoxColumn { Name = "colProducto", HeaderText = "Producto", DataPropertyName = "Nombre", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+
+            // Producto
+            g.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "colProducto",
+                HeaderText = "Producto",
+                DataPropertyName = "Nombre",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            // CANTIDAD (custom: [-] [N] [+] en una sola columna)
             g.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colCant",
-                HeaderText = "Cantidad",
+                HeaderText = "Cant.",
                 DataPropertyName = "Cantidad",
-                Width = 70,
-                DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleRight, Format = "N2" }
+                Width = 110,               // ancho suficiente para los 3 elementos
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleCenter, Format = "N0" }
             });
+
+            // Precio
             g.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colPrecio",
@@ -155,6 +179,8 @@ namespace Proyecto_Restaurante.Proceso
                 Width = 90,
                 DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleRight, Format = "C2" }
             });
+
+            // Subtotal
             g.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colSubtotal",
@@ -164,11 +190,21 @@ namespace Proyecto_Restaurante.Proceso
                 Width = 100,
                 DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleRight, Format = "C2" }
             });
+
+            // Botón quitar
             g.Columns.Add(new DataGridViewButtonColumn { Name = "colQuitar", HeaderText = "", Text = "X", UseColumnTextForButtonValue = true, Width = 42 });
 
             g.DataSource = _lineas;
-            g.CellClick += Dgv_CellClick;     // botón quitar funciona aunque sea ReadOnly
+
+            // Eventos (aseguramos no duplicar)
+            g.CellPainting -= dgvDetalle_CellPainting;
+            g.CellPainting += dgvDetalle_CellPainting;
+
+            g.CellClick -= dgvDetalle_CellClick;
+            g.CellClick += dgvDetalle_CellClick;
+
             g.DataError += (s, e) => e.ThrowException = false;
+
         }
 
         // ===== Combos y catálogo =====
@@ -236,7 +272,7 @@ namespace Proyecto_Restaurante.Proceso
                 Dock = DockStyle.Top,
                 Height = 50,
                 Text = nombre,
-                TextAlign = ContentAlignment.MiddleCenter,
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
                 AutoEllipsis = true
             };
 
@@ -308,6 +344,7 @@ namespace Proyecto_Restaurante.Proceso
                     ins.Parameters.AddWithValue("@cond", _idCondicionActual);
 
                     _idOrden = (int)ins.ExecuteScalar();
+                    _ordenCreadaEnEstaSesion = true;  // ← NUEVO
 
                     // auto/No auto pago desde condición
                     using var ap = new SqlCommand("SELECT autopago FROM condicion WHERE id_condicion=@c", con);
@@ -496,7 +533,7 @@ namespace Proyecto_Restaurante.Proceso
             CargarDetalle();
         }
 
-        // ===== Grid eventos =====
+        /*// ===== Grid eventos =====
         private void Dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -521,7 +558,7 @@ namespace Proyecto_Restaurante.Proceso
             catch (Exception ex) { MessageBox.Show("No se pudo quitar la línea: " + ex.Message); }
 
             CargarDetalle();
-        }
+        }*/
 
         // ===== Totales & cabecera =====
         private void RecalcularTotalOrden(SqlConnection cn, SqlTransaction tx)
@@ -804,31 +841,6 @@ namespace Proyecto_Restaurante.Proceso
                 MessageBox.Show("No se pudo abrir la consulta de clientes: " + ex.Message);
             }
         }
-
-        // ===== Helpers condición =====
-        /*private void SetCondicionFromId(int idCond)
-        {
-            if (cmbCondicion?.DataSource is DataTable dt)
-            {
-                // validar que exista el id en el DataSource
-                var found = dt.AsEnumerable().Any(r => r.Field<int>("id_condicion") == idCond);
-                if (!found)
-                {
-                    // recargar por seguridad
-                    using var con = new SqlConnection(CS);
-                    con.Open();
-                    dt.Clear();
-                    new SqlDataAdapter("SELECT id_condicion, descripcion, autopago, dias_credito FROM condicion WHERE estado=1 ORDER BY descripcion", con).Fill(dt);
-                }
-                cmbCondicion.SelectedValue = idCond;
-            }
-            else
-            {
-                cmbCondicion.SelectedValue = idCond;
-            }
-        }*/
-
-
         private void SetCondicionInterna(int idCond)
         {
             _idCondicionActual = idCond;
@@ -963,5 +975,195 @@ namespace Proyecto_Restaurante.Proceso
         {
 
         }
+
+        private void dgvDetalle_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (dgvDetalle.Columns[e.ColumnIndex].Name != "colCant") return;
+
+            e.Handled = true;
+            e.PaintBackground(e.CellBounds, true);
+
+            // Cantidad de la línea
+            var lin = (Linea)dgvDetalle.Rows[e.RowIndex].DataBoundItem;
+            int cantidad = (int)Math.Round(lin.Cantidad);
+
+            // Medidas
+            int padding = 3;
+            int btnW = 28;
+            int btnH = e.CellBounds.Height - (padding * 2);
+            int y = e.CellBounds.Y + padding;
+
+            var rectMenos = new Rectangle(e.CellBounds.X + padding, y, btnW, btnH);
+            var rectMas = new Rectangle(e.CellBounds.Right - btnW - padding, y, btnW, btnH);
+            var rectTexto = new Rectangle(rectMenos.Right + padding, y, e.CellBounds.Width - (btnW * 2) - (padding * 4), btnH);
+
+            // “Estilo POS”: botón plano con borde suave
+            ButtonRenderer.DrawButton(e.Graphics, rectMenos, "-", dgvDetalle.Font, false, PushButtonState.Normal);
+            ButtonRenderer.DrawButton(e.Graphics, rectMas, "+", dgvDetalle.Font, false, PushButtonState.Normal);
+
+            // Cantidad centrada
+            TextRenderer.DrawText(
+                e.Graphics,
+                cantidad.ToString(),
+                dgvDetalle.Font,
+                rectTexto,
+                Color.Black,
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis
+            );
+
+            // Borde de celda estándar
+            e.Paint(e.CellBounds, DataGridViewPaintParts.Border);
+        }
+
+        private void dgvDetalle_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var colName = dgvDetalle.Columns[e.ColumnIndex].Name;
+            var lin = (Linea)dgvDetalle.Rows[e.RowIndex].DataBoundItem;
+
+            // Botón X (quitar)
+            if (colName == "colQuitar")
+            {
+                // Reutiliza tu lógica o usa esta:
+                CambiarCantidad(lin.IdDetalle, -999999m); // fuerza a eliminar
+                return;
+            }
+
+            // Solo nos interesa la celda de cantidad para − / +
+            if (colName != "colCant") return;
+
+            // Calcular rectángulos igual que en el pintado
+            var cellRect = dgvDetalle.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
+
+            int padding = 3;
+            int btnW = 28;
+            int btnH = cellRect.Height - (padding * 2);
+            int y = cellRect.Y + padding;
+
+            var rectMenos = new Rectangle(cellRect.X + padding, y, btnW, btnH);
+            var rectMas = new Rectangle(cellRect.Right - btnW - padding, y, btnW, btnH);
+
+            Point p = dgvDetalle.PointToClient(Cursor.Position);
+
+            if (rectMenos.Contains(p))
+            {
+                CambiarCantidad(lin.IdDetalle, -1m);
+            }
+            else if (rectMas.Contains(p))
+            {
+                CambiarCantidad(lin.IdDetalle, +1m);
+            }
+        }
+
+        private void CambiarCantidad(int idDetalle, decimal delta)
+        {
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                using var tx = con.BeginTransaction();
+
+                // Leer cantidad y precio actuales
+                decimal cantActual, precio;
+                using (var cmd = new SqlCommand("SELECT cantidad, precio_unitario FROM detalle_orden WHERE id_detalle=@d AND estado=1", con, tx))
+                {
+                    cmd.Parameters.AddWithValue("@d", idDetalle);
+                    using var rd = cmd.ExecuteReader();
+                    if (!rd.Read()) { tx.Rollback(); return; }
+                    cantActual = rd.GetDecimal(0);
+                    precio = rd.GetDecimal(1);
+                }
+
+                var nueva = cantActual + delta;
+
+                if (nueva <= 0m)
+                {
+                    // Anulamos la línea si llega a 0
+                    using var del = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_detalle=@d", con, tx);
+                    del.Parameters.AddWithValue("@d", idDetalle);
+                    del.ExecuteNonQuery();
+                }
+                else
+                {
+                    using var up = new SqlCommand(@"
+                UPDATE detalle_orden
+                   SET cantidad=@c, subtotal = ROUND(@c * @p, 2)
+                 WHERE id_detalle=@d;", con, tx);
+                    up.Parameters.AddWithValue("@c", nueva);
+                    up.Parameters.AddWithValue("@p", precio);
+                    up.Parameters.AddWithValue("@d", idDetalle);
+                    up.ExecuteNonQuery();
+                }
+
+                // Recalcular total de la orden (usa tu método existente)
+                RecalcularTotalOrden(con, tx);
+                tx.Commit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo cambiar la cantidad: " + ex.Message);
+            }
+
+            // Refrescar visual y totales
+            CargarDetalle();
+        }
+
+        private void ProcesoFacturacion_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Si no hay orden, nada que hacer
+            if (_idOrden <= 0) return;
+
+            // Si se procesó o se guardó explícitamente en esta sesión, NO limpiar.
+            // Regla pedida: limpiar solo si el usuario NO pulsó Guardar/Procesar/Cancelar.
+            if (_ordenProcesadaEstaSesion || _cabeceraGuardadaEstaSesion) return;
+
+            // (Opcional) solo cancela si la orden fue creada en esta sesión:
+            // Así evitas cancelar una orden anterior que reabriste.
+            if (!_ordenCreadaEnEstaSesion) return;
+
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+
+                // ¿Tiene líneas activas y está sin procesar?
+                int lineasActivas = 0;
+                bool abierta = false;
+
+                using (var chk = new SqlCommand(@"
+            SELECT 
+                (SELECT COUNT(*) FROM detalle_orden WHERE id_orden=@o AND estado=1) AS lineasActivas,
+                (SELECT CASE WHEN procesada=0 AND estado=1 THEN 1 ELSE 0 END FROM orden WHERE id_orden=@o) AS abierta;", con))
+                {
+                    chk.Parameters.AddWithValue("@o", _idOrden);
+                    using var rd = chk.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        lineasActivas = rd.IsDBNull(0) ? 0 : rd.GetInt32(0);
+                        abierta = !rd.IsDBNull(1) && rd.GetInt32(1) == 1;
+                    }
+                }
+
+                if (abierta && lineasActivas > 0)
+                {
+                    using var tx = con.BeginTransaction();
+
+                    using (var cmd = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_orden=@o", con, tx))
+                    { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
+
+                    using (var cmd = new SqlCommand("UPDATE orden SET estado=0, procesada=1, saldo_pendiente=0 WHERE id_orden=@o", con, tx))
+                    { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
+
+                    tx.Commit();
+                }
+            }
+            catch
+            {
+                // Si algo falla, no bloquees el cierre.
+            }
+        }
+
     }
 }
