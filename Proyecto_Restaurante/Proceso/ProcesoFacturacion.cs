@@ -17,8 +17,8 @@ namespace Proyecto_Restaurante.Proceso
     public partial class ProcesoFacturacion : Form
     {
         // Connection string
-        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
         private readonly MenuPrincipal _menu; // NUEVO
 

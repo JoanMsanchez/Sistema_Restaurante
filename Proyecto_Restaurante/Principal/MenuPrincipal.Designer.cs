@@ -455,7 +455,7 @@
             FacturacionRestaurante.IconColor = Color.White;
             FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
             FacturacionRestaurante.Name = "FacturacionRestaurante";
-            FacturacionRestaurante.Size = new Size(270, 34);
+            FacturacionRestaurante.Size = new Size(245, 34);
             FacturacionRestaurante.Text = "Facturacion";
             FacturacionRestaurante.Click += FacturacionRestaurante_Click;
             // 
@@ -716,6 +716,7 @@
             RegistrodePagoCXC.Name = "RegistrodePagoCXC";
             RegistrodePagoCXC.Size = new Size(306, 34);
             RegistrodePagoCXC.Text = "Registro de Pago";
+            RegistrodePagoCXC.Click += RegistrodePagoCXC_Click;
             // 
             // ConsultasCXC
             // 
