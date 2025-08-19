@@ -16,6 +16,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Proyecto_Restaurante.Proceso;
+using Proyecto_Restaurante.Reportes;
 
 namespace Proyecto_Restaurante.Mantenimiento
 {
@@ -461,6 +462,18 @@ namespace Proyecto_Restaurante.Mantenimiento
         {
             ProcesoRegistroPago procesoRegistroPago = new ProcesoRegistroPago();
             procesoRegistroPago.Show();
+        }
+
+        private void StockAnualInventario_Click(object sender, EventArgs e)
+        {
+            ReporteStockActual reporteStockActual = new ReporteStockActual();
+            reporteStockActual.Show();
+        }
+
+        private void EntradasSalidasInventario_Click(object sender, EventArgs e)
+        {
+            ReporteEntradaySalida reporteEntradaySalida = new ReporteEntradaySalida();
+            reporteEntradaySalida.Show();
         }
     }
 }

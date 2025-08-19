@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using PdfSharp.Pdf.Content.Objects;
 
 namespace Proyecto_Restaurante.Proceso
 {
@@ -11,7 +12,7 @@ namespace Proyecto_Restaurante.Proceso
     {
         private const string CS =
             @"Server=DESKTOP-HUHR9O6\SQLEXPRESS;Database=SistemaRestauranteDB1;Integrated Security=True;TrustServerCertificate=True;Connect Timeout=15";
-
+            
         private const int CMD_TIMEOUT = 30;
         private const int ACTIVO = 1;
 
@@ -205,7 +206,6 @@ namespace Proyecto_Restaurante.Proceso
             cbo.BeginUpdate();
             try
             {
-                // Evitar estados inconsistentes (origen del error 'key')
                 cbo.DataSource = null;
                 cbo.Items.Clear();
 
@@ -218,7 +218,6 @@ namespace Proyecto_Restaurante.Proceso
 
                 if (preselectNone)
                 {
-                    // *** NO usar SelectedValue = null (provoca el 'key' nulo) ***
                     cbo.SelectedIndex = -1;
                     cbo.Text = string.Empty;
                 }
@@ -269,34 +268,15 @@ namespace Proyecto_Restaurante.Proceso
                     dgvOrdenesPendientes.Columns.Clear();
                 }
 
+                // Mostrar SOLO las órdenes con saldo pendiente (o nada si no hay)
                 dgvOrdenesPendientes.DataSource = _dtPendientes;
                 dgvOrdenesPendientes.Refresh();
 
                 if (_dtPendientes.Rows.Count == 0)
                 {
-                    using var cn2 = new SqlConnection(CS);
-                    cn2.Open();
-
-                    using var da2 = new SqlDataAdapter(
-                        @"SELECT TOP 50 o.id_orden,
-                                 ISNULL(c.nombre,'(sin cliente)') AS cliente,
-                                 CONVERT(varchar(10), o.fecha_hora, 103)        AS fecha_hora,
-                                 CONVERT(varchar(10), o.fecha_vencimiento, 103) AS fecha_vencimiento,
-                                 o.total, o.saldo_pendiente
-                          FROM orden o
-                          LEFT JOIN cliente c ON c.id_cliente = o.id_cliente
-                          ORDER BY o.fecha_hora DESC", cn2);
-
-                    var dtFallback = new DataTable();
-                    da2.Fill(dtFallback);
-
-                    if (dtFallback.Rows.Count > 0)
-                    {
-                        dgvOrdenesPendientes.AutoGenerateColumns = true;
-                        dgvOrdenesPendientes.Columns.Clear();
-                        dgvOrdenesPendientes.DataSource = dtFallback;
-                        MessageBox.Show("No hay órdenes con saldo pendiente. Se muestran órdenes recientes para verificar datos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    // Si no quieres mostrar mensaje, comenta la línea siguiente:
+                    MessageBox.Show("No hay órdenes con saldo pendiente para el filtro seleccionado.",
+                                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -397,13 +377,58 @@ namespace Proyecto_Restaurante.Proceso
             RecalcularTotales();
         }
 
+        // ===== Suma total YA aplicado históricamente en las órdenes seleccionadas
+        private decimal GetYaAplicadoHistoricoSeleccion()
+        {
+            decimal yaAplicado = 0m;
+
+            if (dgvDistribucion?.Rows == null) return 0m;
+
+            foreach (DataGridViewRow r in dgvDistribucion.Rows)
+            {
+                if (r.IsNewRow) continue;
+                int idOrden = Convert.ToInt32(r.Cells["colDP_IdOrden"].Value);
+
+                // 1) Buscar en el DataTable (_dtPendientes) si está cargado
+                if (_dtPendientes != null && _dtPendientes.Rows.Count > 0)
+                {
+                    var rows = _dtPendientes.Select($"id_orden = {idOrden}");
+                    if (rows.Length > 0)
+                    {
+                        decimal total = Convert.ToDecimal(rows[0]["total"]);
+                        decimal saldo = Convert.ToDecimal(rows[0]["saldo_pendiente"]);
+                        yaAplicado += (total - saldo);
+                        continue;
+                    }
+                }
+
+                // 2) Fallback: consulta directa
+                using (var cn = new SqlConnection(CS))
+                {
+                    cn.Open();
+                    using var cmd = new SqlCommand("SELECT total, saldo_pendiente FROM orden WHERE id_orden=@o", cn);
+                    cmd.Parameters.AddWithValue("@o", idOrden);
+                    using var rd = cmd.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        decimal total = rd.GetDecimal(0);
+                        decimal saldo = rd.GetDecimal(1);
+                        yaAplicado += (total - saldo);
+                    }
+                }
+            }
+
+            return yaAplicado;
+        }
+
+        // ===== Recalculadora con “Total aplicado histórico” y permiso de sobrante
         private void RecalcularTotales()
         {
             // 1) Monto digitado
             decimal total = ParseMonto(txtMontoTotal.Text);
 
-            // 2) Suma aplicada y suma de saldos de las órdenes ya seleccionadas a la derecha
-            decimal aplicado = 0m;
+            // 2) Suma aplicada AHORA y suma de saldos de las órdenes seleccionadas
+            decimal aplicadoAhora = 0m;
             decimal totalSaldosSeleccionados = 0m;
 
             foreach (DataGridViewRow r in dgvDistribucion.Rows)
@@ -411,35 +436,44 @@ namespace Proyecto_Restaurante.Proceso
                 if (r.IsNewRow) continue;
 
                 if (r.Cells["colDP_MontoAplicar"].Value != null)
-                    aplicado += ParseMonto(Convert.ToString(r.Cells["colDP_MontoAplicar"].Value));
+                    aplicadoAhora += ParseMonto(Convert.ToString(r.Cells["colDP_MontoAplicar"].Value));
 
                 if (r.Cells["colDP_SaldoPend"].Value != null)
                     totalSaldosSeleccionados += ParseMonto(Convert.ToString(r.Cells["colDP_SaldoPend"].Value));
             }
 
-            decimal diferencia = total - aplicado;
+            // 3) Ya aplicado HISTÓRICO en esas órdenes (antes de este pago)
+            decimal yaAplicadoHistorico = GetYaAplicadoHistoricoSeleccion();
 
-            // Números
-            SetTextIfExists("txtAplicado", aplicado.ToString("N2", _ci));
+            // 4) Totales compuestos
+            decimal diferencia = total - aplicadoAhora; // sobrante si > 0
+            decimal totalAplicadoHistorico = yaAplicadoHistorico + aplicadoAhora;
+
+            // 5) Números base
+            SetTextIfExists("txtAplicado", aplicadoAhora.ToString("N2", _ci));
             SetTextIfExists("txtDiferencia", diferencia.ToString("N2", _ci));
             SetTextIfExists("txtTotalCobrar", totalSaldosSeleccionados.ToString("N2", _ci));
 
-            // Espejos con RD$
-            if (txtAplicadoValor != null) txtAplicadoValor.Text = $"RD$ {aplicado.ToString("N2", _ci)}";
+            // 6) Espejos RD$
+            if (txtAplicadoValor != null) txtAplicadoValor.Text = $"RD$ {aplicadoAhora.ToString("N2", _ci)}";
             if (txtDiferenciaValor != null) txtDiferenciaValor.Text = $"RD$ {diferencia.ToString("N2", _ci)}";
             if (txtTotalCobrarValor != null) txtTotalCobrarValor.Text = $"RD$ {totalSaldosSeleccionados.ToString("N2", _ci)}";
 
-            // “Total aplicado” también con RD$
-            SetTextIfExists("txtTotalAplicado", $"RD$ {aplicado.ToString("N2", _ci)}");
+            // 7) Total aplicado HISTÓRICO (anterior + ahora)
+            SetTextIfExists("txtTotalAplicado", $"RD$ {totalAplicadoHistorico.ToString("N2", _ci)}");
 
-            btnGuardar.Enabled = aplicado > 0m
-                                 && Math.Round(diferencia, 2) == 0m
+            // 8) Permitir guardar siempre que NO se sobre-aplique (aplicado > total)
+            btnGuardar.Enabled = aplicadoAhora > 0m
+                                 && Math.Round(total - aplicadoAhora, 2) >= 0m
                                  && GetSelectedId(cboMetodoPago) > 0;
         }
 
         // ================= GUARDAR =================
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
+            err.SetError(cboMetodoPago, "");
+            err.SetError(txtMontoTotal, "");
+
             if (GetSelectedId(cboMetodoPago) <= 0) { err.SetError(cboMetodoPago, "Seleccione método de pago"); return; }
             decimal total = ParseMonto(txtMontoTotal.Text);
             if (total <= 0m) { err.SetError(txtMontoTotal, "Monto total > 0"); return; }
@@ -448,9 +482,11 @@ namespace Proyecto_Restaurante.Proceso
             foreach (DataGridViewRow r in dgvDistribucion.Rows)
                 if (!r.IsNewRow) aplicado += ParseMonto(Convert.ToString(r.Cells["colDP_MontoAplicar"].Value));
 
-            if (Math.Round(total - aplicado, 2) != 0m)
+            // No permitir sobre-aplicar (aplicar más de lo cobrado)
+            if (Math.Round(aplicado - total, 2) > 0m)
             {
-                MessageBox.Show("La suma aplicada debe ser igual al monto total.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Está aplicando más de lo cobrado. Ajuste el monto o la distribución.",
+                                "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (aplicado <= 0m)
@@ -459,25 +495,35 @@ namespace Proyecto_Restaurante.Proceso
                 return;
             }
 
+            decimal sobrante = Math.Round(total - aplicado, 2); // si > 0, es cambio/no asignado
+
             using var cn = new SqlConnection(CS);
             cn.Open();
             using var tx = cn.BeginTransaction();
 
             try
             {
+                // Encabezado del pago por el MONTO TOTAL cobrado
                 var cmdPago = new SqlCommand(
                     @"INSERT INTO pago (fecha_pago, monto_total, id_metodo_pago, nota, estado)
                       OUTPUT INSERTED.id_pago
                       VALUES (@fecha, @monto, @metodo, @nota, @estado);", cn, tx)
                 { CommandTimeout = CMD_TIMEOUT };
 
+                string notaOriginal = (txtNota?.Text ?? string.Empty).Trim();
+                string notaConSobrante = notaOriginal;
+                if (sobrante > 0m)
+                    notaConSobrante = (notaConSobrante.Length == 0 ? "" : (notaConSobrante + " | "))
+                                      + $"Sobrante (cambio) RD$ {sobrante.ToString("N2", _ci)}";
+
                 cmdPago.Parameters.AddWithValue("@fecha", GetFechaPago());
-                cmdPago.Parameters.AddWithValue("@monto", total);
+                cmdPago.Parameters.AddWithValue("@monto", total); // total cobrado (incluye sobrante)
                 cmdPago.Parameters.AddWithValue("@metodo", GetSelectedId(cboMetodoPago));
-                cmdPago.Parameters.AddWithValue("@nota", (object)(txtNota?.Text ?? string.Empty));
+                cmdPago.Parameters.AddWithValue("@nota", (object)notaConSobrante);
                 cmdPago.Parameters.AddWithValue("@estado", ACTIVO);
                 int idPago = Convert.ToInt32(cmdPago.ExecuteScalar());
 
+                // Detalle y actualización de saldos SOLO por lo aplicado
                 foreach (DataGridViewRow r in dgvDistribucion.Rows)
                 {
                     if (r.IsNewRow) continue;
@@ -508,10 +554,17 @@ namespace Proyecto_Restaurante.Proceso
                 tx.Commit();
 
                 SetTextIfExists("txtIdPago", idPago.ToString());
-                MessageBox.Show($"Pago #{idPago} registrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                string msg = $"Pago #{idPago} registrado.\n" +
+                             $"Cobrado: RD$ {total.ToString("N2", _ci)}\n" +
+                             $"Aplicado: RD$ {aplicado.ToString("N2", _ci)}\n";
+                if (sobrante > 0m) msg += $"Sobrante (cambio): RD$ {sobrante.ToString("N2", _ci)}";
+
+                MessageBox.Show(msg, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LimpiarDistribucion();
                 CargarOrdenesPendientes();
+                RecalcularTotales();
             }
             catch (Exception ex)
             {

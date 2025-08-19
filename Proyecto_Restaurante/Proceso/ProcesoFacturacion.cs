@@ -20,8 +20,7 @@ namespace Proyecto_Restaurante.Proceso
         private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
         //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
-        private readonly MenuPrincipal _menu; // NUEVO
-
+        private readonly MenuPrincipal _menu;
 
         private bool _ordenCreadaEnEstaSesion = false;   // true si INSERT en AbrirOCrearOrden()
         private bool _cabeceraGuardadaEstaSesion = false; // true si se hizo GuardarCabecera()
@@ -32,16 +31,18 @@ namespace Proyecto_Restaurante.Proceso
         private int _idOrden = -1;
         private int _idEmpleado = 1; // TODO: setear desde login
         private bool _autopago = false;
-        private int _idCondicionActual = -1;     // ← NUEVO: ID de condición actual (sin combo)
-        private int _diasCreditoActual = 0;      // ← NUEVO: días de crédito de la condición
+        private int _idCondicionActual = -1;     // ID de condición actual (sin combo)
+        private int _diasCreditoActual = 0;      // días de crédito de la condición
         private const decimal ITBIS_RATE = 0.18m; // 18%
-
 
         // Scroll infinito catálogo
         private int _page = 0;
         private const int _pageSize = 24;
         private bool _loading = false;
         private bool _hasMore = true;
+
+        // Avisos de stock bajo (evitar spam)
+        private readonly HashSet<int> _lowStockWarned = new HashSet<int>();
 
         // ===== Modelo de líneas =====
         private class Linea
@@ -60,11 +61,10 @@ namespace Proyecto_Restaurante.Proceso
         {
             InitializeComponent();
             _idMesa = idMesa;
-            _menu = menu;                    // para refrescar colores/estado de mesas
+            _menu = menu;
             this.Load += ProcesoFacturacion_Load;
             this.Shown += ProcesoFacturacion_Shown;
-            this.FormClosing += ProcesoFacturacion_FormClosing; // ← NUEVO
-
+            this.FormClosing += ProcesoFacturacion_FormClosing;
         }
 
         // Si el Designer aún llama a este handler viejo, lo puenteamos:
@@ -83,26 +83,21 @@ namespace Proyecto_Restaurante.Proceso
         private void ProcesoFacturacion_Shown(object sender, EventArgs e)
         {
             CargarCombos();
-
-            // Selección por defecto: Consumidor Final (+ su condición) ANTES de abrir/crear la orden
             SeleccionarClienteConsumidorFinal();
-
-            AbrirOCrearOrden();    // crea/obtiene orden abierta y fija _autopago y _idEmpleado
-            CargarEmpleadoLabel(); // llena lbEmpleado
-            CargarCabeceraVisual(); // fechas / saldo / (cliente + condición si ya existía)
+            AbrirOCrearOrden();
+            CargarEmpleadoLabel();
+            CargarCabeceraVisual();
             CargarDetalle();
-            ResetCatalogo();       // catálogo con scroll infinito
+            ResetCatalogo();
             RecalcularTotales();
         }
 
         // ===== UI =====
         private void WireEventosUI()
         {
-            // Filtros catálogo → reinician lista
             if (txtBuscarProd != null) txtBuscarProd.TextChanged += (_, __) => ResetCatalogo();
             if (cmbCategoria != null) cmbCategoria.SelectedIndexChanged += (_, __) => ResetCatalogo();
 
-            // Scroll infinito
             flpCatalogo.AutoScroll = true;
             flpCatalogo.Scroll += (s, e) =>
             {
@@ -111,45 +106,38 @@ namespace Proyecto_Restaurante.Proceso
                     CargarMasProductos();
             };
 
-            // Botones
             if (btnGuardar != null) btnGuardar.Click += (_, __) => GuardarCabecera();
             if (btnPrecuenta != null) btnPrecuenta.Click += (_, __) => MostrarPrecuenta();
             if (btnProcesar != null) btnProcesar.Click += (_, __) => Procesar();
             if (btnCancelar != null) btnCancelar.Click += BtnCancelar_Click;
 
-            // Condición
-
-            // Buscar cliente (abre consulta en modo selector)
             if (btnBuscarCliente != null) btnBuscarCliente.Click += BtnBuscarCliente_Click;
 
-            // Si cambia el cliente (combo o por la consulta), aplicar su condición y desactivar el combo
-            if (cmbCliente != null) cmbCliente.SelectedValueChanged += (_, __) =>
+            if (cmbCliente != null) cmbCliente.SelectionChangeCommitted += (_, __) =>
             {
-                if (int.TryParse(Convert.ToString(cmbCliente.SelectedValue), out int idCli) && idCli > 0)
+                int idCli = GetClienteIdDesdeCombo();
+                if (idCli > 0)
+                {
                     AplicarCondicionDeCliente(idCli);
-                // else
-                //cmbCondicion.Enabled = true; // si vuelve a (Consumidor Final), permitir elegir manualmente (opcional)
+                    ActualizarClienteEnOrdenSiAbierta(idCli);
+                }
             };
         }
 
         private void ConfigurarGridDetalle()
         {
-
-
             var g = dgvDetalle;
             g.AutoGenerateColumns = false;
             g.AllowUserToAddRows = false;
             g.AllowUserToResizeRows = false;
             g.RowHeadersVisible = false;
             g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            g.ReadOnly = true; // ← sin edición manual
+            g.ReadOnly = true;
             g.Columns.Clear();
 
-            // Ocultas / datos
             g.Columns.Add(new DataGridViewTextBoxColumn { Name = "colIdDet", HeaderText = "IdDet", DataPropertyName = "IdDetalle", Visible = false });
             g.Columns.Add(new DataGridViewTextBoxColumn { Name = "colIdProd", HeaderText = "Id", DataPropertyName = "IdProducto", Visible = false });
 
-            // Producto
             g.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colProducto",
@@ -158,18 +146,16 @@ namespace Proyecto_Restaurante.Proceso
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
 
-            // CANTIDAD (custom: [-] [N] [+] en una sola columna)
             g.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colCant",
                 HeaderText = "Cant.",
                 DataPropertyName = "Cantidad",
-                Width = 110,               // ancho suficiente para los 3 elementos
+                Width = 110,
                 ReadOnly = true,
                 DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleCenter, Format = "N0" }
             });
 
-            // Precio
             g.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colPrecio",
@@ -180,7 +166,6 @@ namespace Proyecto_Restaurante.Proceso
                 DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleRight, Format = "C2" }
             });
 
-            // Subtotal
             g.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "colSubtotal",
@@ -191,12 +176,10 @@ namespace Proyecto_Restaurante.Proceso
                 DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleRight, Format = "C2" }
             });
 
-            // Botón quitar
             g.Columns.Add(new DataGridViewButtonColumn { Name = "colQuitar", HeaderText = "", Text = "X", UseColumnTextForButtonValue = true, Width = 42 });
 
             g.DataSource = _lineas;
 
-            // Eventos (aseguramos no duplicar)
             g.CellPainting -= dgvDetalle_CellPainting;
             g.CellPainting += dgvDetalle_CellPainting;
 
@@ -204,7 +187,6 @@ namespace Proyecto_Restaurante.Proceso
             g.CellClick += dgvDetalle_CellClick;
 
             g.DataError += (s, e) => e.ThrowException = false;
-
         }
 
         // ===== Combos y catálogo =====
@@ -216,29 +198,26 @@ namespace Proyecto_Restaurante.Proceso
                 {
                     con.Open();
 
-                    // Clientes
                     var dtCli = new DataTable();
                     new SqlDataAdapter("SELECT id_cliente, nombre FROM cliente WHERE estado=1 ORDER BY nombre", con).Fill(dtCli);
-                    cmbCliente.DisplayMember = "nombre"; cmbCliente.ValueMember = "id_cliente"; cmbCliente.DataSource = dtCli;
+                    cmbCliente.DisplayMember = "nombre";
+                    cmbCliente.ValueMember = "id_cliente";
+                    cmbCliente.DataSource = dtCli;
+                    cmbCliente.DropDownStyle = ComboBoxStyle.DropDownList;
 
-
-                    // Condiciones
-                    //var dtCon = new DataTable();
-                    //new SqlDataAdapter("SELECT id_condicion, descripcion, autopago, dias_credito FROM condicion WHERE estado=1 ORDER BY descripcion", con).Fill(dtCon);
-                    //cmbCondicion.DisplayMember = "descripcion"; cmbCondicion.ValueMember = "id_condicion"; cmbCondicion.DataSource = dtCon;
-
-                    // Métodos de pago
                     var dtMet = new DataTable();
                     new SqlDataAdapter("SELECT id_metodo_pago, descripcion FROM metodo_pago WHERE estado=1 ORDER BY descripcion", con).Fill(dtMet);
-                    cmbMetodoPago.DisplayMember = "descripcion"; cmbMetodoPago.ValueMember = "id_metodo_pago"; cmbMetodoPago.DataSource = dtMet;
+                    cmbMetodoPago.DisplayMember = "descripcion";
+                    cmbMetodoPago.ValueMember = "id_metodo_pago";
+                    cmbMetodoPago.DataSource = dtMet;
                     cmbMetodoPago.Enabled = false;
 
-                    // Categorías
                     var dtCat = new DataTable();
                     new SqlDataAdapter("SELECT id_categoria, nombre FROM categoria_producto WHERE estado=1 ORDER BY nombre", con).Fill(dtCat);
                     var all = dtCat.NewRow(); all["id_categoria"] = DBNull.Value; all["nombre"] = "Todas";
                     dtCat.Rows.InsertAt(all, 0);
-                    cmbCategoria.DisplayMember = "nombre"; cmbCategoria.ValueMember = "id_categoria";
+                    cmbCategoria.DisplayMember = "nombre";
+                    cmbCategoria.ValueMember = "id_categoria";
                     cmbCategoria.DataSource = dtCat;
                     cmbCategoria.SelectedIndex = 0;
                 }
@@ -251,7 +230,7 @@ namespace Proyecto_Restaurante.Proceso
             var card = new Panel
             {
                 Width = 180,
-                Height = 220,   // alto suficiente para que no se corte el botón
+                Height = 220,
                 Margin = new Padding(8),
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle
@@ -291,6 +270,110 @@ namespace Proyecto_Restaurante.Proceso
             return card;
         }
 
+        // ==== Helper: id_cliente desde combo ====
+        private int GetClienteIdDesdeCombo()
+        {
+            if (cmbCliente?.SelectedValue is int sv && sv > 0) return sv;
+            if (int.TryParse(Convert.ToString(cmbCliente?.SelectedValue), out int id) && id > 0) return id;
+
+            string nombre = cmbCliente?.Text?.Trim();
+            if (!string.IsNullOrEmpty(nombre))
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                using var cmd = new SqlCommand("SELECT TOP 1 id_cliente FROM cliente WHERE estado=1 AND nombre=@n ORDER BY id_cliente", con);
+                cmd.Parameters.AddWithValue("@n", nombre);
+                var o = cmd.ExecuteScalar();
+                if (o != null && o != DBNull.Value) return Convert.ToInt32(o);
+            }
+
+            using (var con2 = new SqlConnection(CS))
+            {
+                con2.Open();
+                using var cmd2 = new SqlCommand("SELECT TOP 1 id_cliente FROM cliente WHERE estado=1 AND nombre LIKE '%Consumidor%Final%' ORDER BY id_cliente", con2);
+                var o2 = cmd2.ExecuteScalar();
+                if (o2 != null && o2 != DBNull.Value) return Convert.ToInt32(o2);
+            }
+
+            throw new Exception("No se pudo determinar el cliente seleccionado.");
+        }
+
+        // ==== Helpers de stock ====
+        private bool TryDescontarStock(SqlConnection con, SqlTransaction tx, int idProducto, decimal cantidad, out decimal stockRestante, out decimal stockMinimo, out string nombre)
+        {
+            stockRestante = 0m; stockMinimo = 0m; nombre = "";
+            // Descuenta solo si hay stock suficiente (operación atómica)
+            using (var up = new SqlCommand(@"
+                UPDATE producto
+                   SET stock_actual = stock_actual - @c
+                 WHERE id_producto = @p AND stock_actual >= @c;
+                SELECT CAST(@@ROWCOUNT AS int);", con, tx))
+            {
+                up.Parameters.AddWithValue("@p", idProducto);
+                up.Parameters.AddWithValue("@c", cantidad);
+                int rows = Convert.ToInt32(up.ExecuteScalar());
+                if (rows == 0)
+                {
+                    // Obtener stock para informar
+                    using var q = new SqlCommand("SELECT nombre, ISNULL(stock_actual,0), ISNULL(stock_minimo,0) FROM producto WHERE id_producto=@p", con, tx);
+                    q.Parameters.AddWithValue("@p", idProducto);
+                    using var rd = q.ExecuteReader();
+                    if (rd.Read())
+                    {
+                        nombre = rd.IsDBNull(0) ? "" : rd.GetString(0);
+                        stockRestante = rd.IsDBNull(1) ? 0m : rd.GetDecimal(1);
+                        stockMinimo = rd.IsDBNull(2) ? 0m : rd.GetDecimal(2);
+                    }
+                    return false;
+                }
+            }
+
+            using (var q2 = new SqlCommand("SELECT nombre, ISNULL(stock_actual,0), ISNULL(stock_minimo,0) FROM producto WHERE id_producto=@p", con, tx))
+            {
+                q2.Parameters.AddWithValue("@p", idProducto);
+                using var rd2 = q2.ExecuteReader();
+                if (rd2.Read())
+                {
+                    nombre = rd2.IsDBNull(0) ? "" : rd2.GetString(0);
+                    stockRestante = rd2.IsDBNull(1) ? 0m : rd2.GetDecimal(1);
+                    stockMinimo = rd2.IsDBNull(2) ? 0m : rd2.GetDecimal(2);
+                }
+            }
+            return true;
+        }
+
+        private void DevolverStock(SqlConnection con, SqlTransaction tx, int idProducto, decimal cantidad)
+        {
+            using var cmd = new SqlCommand("UPDATE producto SET stock_actual = stock_actual + @c WHERE id_producto=@p", con, tx);
+            cmd.Parameters.AddWithValue("@c", cantidad);
+            cmd.Parameters.AddWithValue("@p", idProducto);
+            cmd.ExecuteNonQuery();
+        }
+
+        private void VerificarYNotificarStockBajo(int idProducto)
+        {
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                using var cmd = new SqlCommand("SELECT nombre, ISNULL(stock_actual,0), ISNULL(stock_minimo,0) FROM producto WHERE id_producto=@p", con);
+                cmd.Parameters.AddWithValue("@p", idProducto);
+                using var rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    string nom = rd.IsDBNull(0) ? "" : rd.GetString(0);
+                    decimal actual = rd.IsDBNull(1) ? 0m : rd.GetDecimal(1);
+                    decimal minimo = rd.IsDBNull(2) ? 0m : rd.GetDecimal(2);
+                    if (actual < minimo && !_lowStockWarned.Contains(idProducto))
+                    {
+                        _lowStockWarned.Add(idProducto);
+                        MessageBox.Show($"Stock bajo para \"{nom}\". Actual: {actual:N2}, mínimo: {minimo:N2}.", "Aviso de stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+            catch { /* aviso opcional */ }
+        }
+
         // ===== Orden / Detalle =====
         private void AbrirOCrearOrden()
         {
@@ -300,7 +383,6 @@ namespace Proyecto_Restaurante.Proceso
                 {
                     con.Open();
 
-                    // Buscar orden abierta (traemos también id_empleado)
                     var sel = new SqlCommand(
                         "SELECT TOP 1 o.id_orden, c.autopago, o.id_empleado " +
                         "FROM orden o JOIN condicion c ON c.id_condicion=o.id_condicion " +
@@ -313,45 +395,44 @@ namespace Proyecto_Restaurante.Proceso
                         {
                             _idOrden = rd.GetInt32(0);
                             _autopago = rd.GetBoolean(1);
-                            _idEmpleado = rd.GetInt32(2); // empleado que atiende esta orden
+                            _idEmpleado = rd.GetInt32(2);
                             cmbMetodoPago.Enabled = _autopago;
                             return;
                         }
                     }
 
-                    // Crear nueva
                     if (_idCondicionActual <= 0)
                     {
-                        // intenta obtener desde el cliente seleccionado
+                        int cli = GetClienteIdDesdeCombo();
                         using var cmdCli = new SqlCommand("SELECT id_condicion FROM cliente WHERE id_cliente=@c", con);
-                        cmdCli.Parameters.AddWithValue("@c", (object?)cmbCliente.SelectedValue ?? DBNull.Value);
+                        cmdCli.Parameters.AddWithValue("@c", cli);
                         var obj = cmdCli.ExecuteScalar();
                         if (obj != null && obj != DBNull.Value)
                         {
                             _idCondicionActual = Convert.ToInt32(obj);
-                            SetCondicionInterna(_idCondicionActual); // carga autopago/dias/descripcion
+                            SetCondicionInterna(_idCondicionActual);
                         }
                     }
+
+                    int cliParaInsert = GetClienteIdDesdeCombo();
 
                     var ins = new SqlCommand(@"
                         INSERT INTO orden(id_cliente, id_mesa, id_empleado, id_condicion, fecha_hora,
                                           fecha_vencimiento, total, saldo_pendiente, procesada, estado)
                         VALUES (@cli, @mesa, @emp, @cond, GETDATE(), NULL, 0, 0, 0, 1);
                         SELECT CAST(SCOPE_IDENTITY() AS int);", con);
-                    ins.Parameters.AddWithValue("@cli", (object?)cmbCliente.SelectedValue ?? DBNull.Value);
+                    ins.Parameters.AddWithValue("@cli", cliParaInsert);
                     ins.Parameters.AddWithValue("@mesa", _idMesa);
                     ins.Parameters.AddWithValue("@emp", _idEmpleado);
                     ins.Parameters.AddWithValue("@cond", _idCondicionActual);
 
                     _idOrden = (int)ins.ExecuteScalar();
-                    _ordenCreadaEnEstaSesion = true;  // ← NUEVO
+                    _ordenCreadaEnEstaSesion = true;
 
-                    // auto/No auto pago desde condición
                     using var ap = new SqlCommand("SELECT autopago FROM condicion WHERE id_condicion=@c", con);
                     ap.Parameters.AddWithValue("@c", _idCondicionActual);
                     _autopago = Convert.ToBoolean(ap.ExecuteScalar());
                     cmbMetodoPago.Enabled = _autopago;
-
                 }
             }
             catch (Exception ex) { MessageBox.Show("Error al abrir/crear orden: " + ex.Message); }
@@ -364,7 +445,6 @@ namespace Proyecto_Restaurante.Proceso
                 using var con = new SqlConnection(CS);
                 con.Open();
 
-                // Intento 1: desde la orden (nombre completo con CONCAT maneja NULLs)
                 string nombreCompleto = null;
                 using (var cmd = new SqlCommand(@"
                     SELECT LTRIM(RTRIM(CONCAT(e.nombre,' ',e.apellidos)))
@@ -377,11 +457,9 @@ namespace Proyecto_Restaurante.Proceso
                     if (o != null && o != DBNull.Value) nombreCompleto = Convert.ToString(o);
                 }
 
-                // Intento 2: por _idEmpleado en caso de que no haya orden o campos distintos
                 if (string.IsNullOrWhiteSpace(nombreCompleto))
                 {
-                    using var cmd2 = new SqlCommand(
-                        "SELECT LTRIM(RTRIM(CONCAT(nombre,' ',apellidos))) FROM empleado WHERE id_empleado=@id", con);
+                    using var cmd2 = new SqlCommand("SELECT LTRIM(RTRIM(CONCAT(nombre,' ',apellidos))) FROM empleado WHERE id_empleado=@id", con);
                     cmd2.Parameters.AddWithValue("@id", _idEmpleado);
                     var o2 = cmd2.ExecuteScalar();
                     if (o2 != null && o2 != DBNull.Value) nombreCompleto = Convert.ToString(o2);
@@ -417,26 +495,17 @@ namespace Proyecto_Restaurante.Proceso
                     int idCond = rd.GetInt32(4);
 
                     if (txtCreacion != null) { txtCreacion.Text = fcrea.ToString("dd/MM/yyyy"); }
-                    if (txtVence != null)
-                    {
-                        //txtVence.ReadOnly = true;
-                        txtVence.Text = (fven ?? DateTime.Now.Date).ToString("dd/MM/yyyy"); // ← NUEVO: default HOY
-                    }
-                    if (txtSaldoPendiente != null)
-                        txtSaldoPendiente.Text = saldo.ToString("N2");
+                    if (txtVence != null) { txtVence.Text = (fven ?? DateTime.Now.Date).ToString("dd/MM/yyyy"); }
+                    if (txtSaldoPendiente != null) txtSaldoPendiente.Text = saldo.ToString("N2");
 
-                    // Cliente y condición en UI (si la orden ya existía)
                     if (idCli.HasValue && cmbCliente != null)
                         cmbCliente.SelectedValue = idCli.Value;
 
                     SetCondicionInterna(idCond);
-                    MostrarCondicionEnTextBox(idCond); // pinta el TextBox con la descripción
+                    MostrarCondicionEnTextBox(idCond);
                 }
             }
-            catch
-            {
-                // visual opcional
-            }
+            catch { }
         }
 
         private void CargarDetalle()
@@ -477,6 +546,8 @@ namespace Proyecto_Restaurante.Proceso
 
         private void AgregarProductoALaOrden(int idProducto, decimal cantidad)
         {
+            decimal stockRestante = 0, stockMin = 0;
+            string nombre = "";
             try
             {
                 using (var con = new SqlConnection(CS))
@@ -484,14 +555,22 @@ namespace Proyecto_Restaurante.Proceso
                     con.Open();
                     using var tx = con.BeginTransaction();
 
-                    // precio
+                    // 0) Verificar y descontar stock (atómico)
+                    if (!TryDescontarStock(con, tx, idProducto, cantidad, out stockRestante, out stockMin, out nombre))
+                    {
+                        tx.Rollback();
+                        MessageBox.Show($"No hay stock suficiente de \"{nombre}\". Disponible: {stockRestante:N2}.", "Sin stock", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    // 1) precio actual
                     var pCmd = new SqlCommand("SELECT precio_venta FROM producto WHERE id_producto=@p AND estado=1", con, tx);
                     pCmd.Parameters.AddWithValue("@p", idProducto);
                     var precioObj = pCmd.ExecuteScalar();
                     if (precioObj == null) throw new Exception("Producto inactivo o inexistente.");
                     decimal precio = Convert.ToDecimal(precioObj);
 
-                    // ¿línea activa?
+                    // 2) ¿línea activa existente?
                     int? idDet = null;
                     var sel = new SqlCommand("SELECT id_detalle FROM detalle_orden WHERE id_orden=@o AND id_producto=@p AND estado=1", con, tx);
                     sel.Parameters.AddWithValue("@o", _idOrden);
@@ -528,37 +607,17 @@ namespace Proyecto_Restaurante.Proceso
                     tx.Commit();
                 }
             }
-            catch (Exception ex) { MessageBox.Show("No se pudo agregar el producto: " + ex.Message); }
-
-            CargarDetalle();
-        }
-
-        /*// ===== Grid eventos =====
-        private void Dgv_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            if (dgvDetalle.Columns[e.ColumnIndex].Name != "colQuitar") return;
-
-            var lin = (Linea)dgvDetalle.Rows[e.RowIndex].DataBoundItem;
-            try
+            catch (Exception ex)
             {
-                using (var con = new SqlConnection(CS))
-                {
-                    con.Open();
-                    using var tx = con.BeginTransaction();
-
-                    var del = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_detalle=@d", con, tx);
-                    del.Parameters.AddWithValue("@d", lin.IdDetalle);
-                    del.ExecuteNonQuery();
-
-                    RecalcularTotalOrden(con, tx);
-                    tx.Commit();
-                }
+                MessageBox.Show("No se pudo agregar el producto: " + ex.Message);
+                return;
             }
-            catch (Exception ex) { MessageBox.Show("No se pudo quitar la línea: " + ex.Message); }
 
+            // UI & avisos
             CargarDetalle();
-        }*/
+            if (stockRestante <= 0) ResetCatalogo(); // para ocultar el producto que se quedó sin stock
+            if (stockRestante < stockMin) VerificarYNotificarStockBajo(idProducto);
+        }
 
         // ===== Totales & cabecera =====
         private void RecalcularTotalOrden(SqlConnection cn, SqlTransaction tx)
@@ -585,6 +644,7 @@ namespace Proyecto_Restaurante.Proceso
             if (txtITEBIS != null) txtITEBIS.Text = itbis.ToString("N2");
             if (txtTotal != null) txtTotal.Text = tot.ToString("N2");
         }
+
         private void GuardarCabecera()
         {
             try
@@ -593,8 +653,8 @@ namespace Proyecto_Restaurante.Proceso
                 {
                     con.Open();
                     var up = new SqlCommand("UPDATE orden SET id_cliente=@cli, id_condicion=@con WHERE id_orden=@o", con);
-                    up.Parameters.AddWithValue("@cli", (object?)cmbCliente.SelectedValue ?? DBNull.Value);
-                    up.Parameters.AddWithValue("@con", _idCondicionActual);     // ← SIN combo
+                    up.Parameters.AddWithValue("@cli", GetClienteIdDesdeCombo());
+                    up.Parameters.AddWithValue("@con", _idCondicionActual);
                     up.Parameters.AddWithValue("@o", _idOrden);
                     up.ExecuteNonQuery();
                 }
@@ -604,24 +664,29 @@ namespace Proyecto_Restaurante.Proceso
 
                 _menu?.InicializarPlanoSalas();
                 (this.Owner as MenuPrincipal)?.InicializarPlanoSalas();
+
+                _cabeceraGuardadaEstaSesion = true;
             }
             catch (Exception ex) { MessageBox.Show("Error al guardar: " + ex.Message); }
         }
 
         private void CambiarCondicionUI()
         {
-            // Método de pago
             if (cmbMetodoPago != null)
             {
                 cmbMetodoPago.Enabled = _autopago;
-                if (!_autopago)
+                if (_autopago)
+                {
+                    if (cmbMetodoPago.SelectedValue == null && cmbMetodoPago.Items.Count > 0)
+                        cmbMetodoPago.SelectedIndex = 0;
+                }
+                else
                 {
                     cmbMetodoPago.SelectedIndex = -1;
                     cmbMetodoPago.Text = "No aplica";
                 }
             }
 
-            // Vencimiento
             if (txtCreacion != null && txtVence != null)
             {
                 if (!DateTime.TryParseExact(txtCreacion.Text, "dd/MM/yyyy", null,
@@ -649,6 +714,36 @@ namespace Proyecto_Restaurante.Proceso
                 "Precuenta");
         }
 
+        // ===== Persistir cabecera dentro de la transacción de Procesar =====
+        private void PersistirClienteYCondicion(SqlConnection con, SqlTransaction tx)
+        {
+            int idCli = GetClienteIdDesdeCombo();
+
+            if (_idCondicionActual <= 0)
+                AplicarCondicionDeCliente(idCli);
+
+            using (var up = new SqlCommand(
+                "UPDATE orden SET id_cliente=@cli, id_condicion=@con WHERE id_orden=@o", con, tx))
+            {
+                up.Parameters.AddWithValue("@cli", idCli);
+                up.Parameters.AddWithValue("@con", _idCondicionActual);
+                up.Parameters.AddWithValue("@o", _idOrden);
+                up.ExecuteNonQuery();
+            }
+
+            using (var cmd = new SqlCommand(
+                "SELECT autopago, dias_credito FROM condicion WHERE id_condicion=@c", con, tx))
+            {
+                cmd.Parameters.AddWithValue("@c", _idCondicionActual);
+                using var rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    _autopago = !rd.IsDBNull(0) && rd.GetBoolean(0);
+                    _diasCreditoActual = rd.IsDBNull(1) ? 0 : rd.GetInt32(1);
+                }
+            }
+        }
+
         private void Procesar()
         {
             try
@@ -658,12 +753,16 @@ namespace Proyecto_Restaurante.Proceso
                     con.Open();
                     using var tx = con.BeginTransaction();
 
-                    // Recalcular total
+                    PersistirClienteYCondicion(con, tx);
                     RecalcularTotalOrden(con, tx);
 
                     if (_autopago)
                     {
-                        if (cmbMetodoPago.SelectedValue == null) throw new Exception("Seleccione el método de pago.");
+                        if (cmbMetodoPago?.SelectedValue == null && cmbMetodoPago != null && cmbMetodoPago.Items.Count > 0)
+                            cmbMetodoPago.SelectedIndex = 0;
+
+                        if (cmbMetodoPago?.SelectedValue == null)
+                            throw new Exception("Seleccione el método de pago.");
 
                         decimal total;
                         using (var cmdT = new SqlCommand("SELECT total FROM orden WHERE id_orden=@o", con, tx))
@@ -703,14 +802,16 @@ namespace Proyecto_Restaurante.Proceso
                     tx.Commit();
                 }
 
+                _ordenProcesadaEstaSesion = true;
+
                 MessageBox.Show("Orden procesada. ¡Mesa libre!");
-                this.DialogResult = DialogResult.OK;   // MenuPrincipal refrescará ocupación
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Error al procesar: " + ex.Message); }
         }
 
-        // ===== Cancelar todo =====
+        // ===== Cancelar todo (botón) =====
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
             if (_idOrden <= 0) { Close(); return; }
@@ -723,22 +824,31 @@ namespace Proyecto_Restaurante.Proceso
                 con.Open();
                 using var tx = con.BeginTransaction();
 
-                // Anular líneas y anular orden (libera mesa)
-                using (var cmd = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_orden=@o", con, tx))
+                // Devolver stock de cada línea activa antes de borrar
+                using (var sel = new SqlCommand("SELECT id_producto, cantidad FROM detalle_orden WHERE id_orden=@o AND estado=1", con, tx))
+                {
+                    sel.Parameters.AddWithValue("@o", _idOrden);
+                    using var rd = sel.ExecuteReader();
+                    var devolver = new List<(int p, decimal c)>();
+                    while (rd.Read()) devolver.Add((rd.GetInt32(0), rd.GetDecimal(1)));
+                    rd.Close();
+                    foreach (var it in devolver) DevolverStock(con, tx, it.p, it.c);
+                }
+
+                using (var cmd = new SqlCommand("DELETE FROM detalle_orden WHERE id_orden=@o", con, tx))
                 { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
 
-                using (var cmd = new SqlCommand("UPDATE orden SET estado=0, procesada=1, saldo_pendiente=0 WHERE id_orden=@o", con, tx))
+                using (var cmd = new SqlCommand("DELETE FROM orden WHERE id_orden=@o", con, tx))
                 { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
 
                 tx.Commit();
 
                 MessageBox.Show("Orden cancelada.");
 
-                _menu?.InicializarPlanoSalas(); //nuevo
+                _menu?.InicializarPlanoSalas();
                 (this.Owner as MenuPrincipal)?.InicializarPlanoSalas();
 
-
-                this.DialogResult = DialogResult.OK; // refresca colores en MenuPrincipal
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
@@ -772,6 +882,7 @@ namespace Proyecto_Restaurante.Proceso
                         SELECT id_producto, nombre, precio_venta, imagen_ruta
                         FROM producto
                         WHERE estado = 1
+                          AND stock_actual > 0                                  -- ← ocultar sin stock
                           AND (@cat IS NULL OR id_categoria = @cat)
                           AND (@q = '' OR nombre LIKE '%'+@q+'%' OR ISNULL(descripcion,'') LIKE '%'+@q+'%')
                         ORDER BY nombre
@@ -821,18 +932,10 @@ namespace Proyecto_Restaurante.Proceso
                     if (r == DialogResult.OK && frm.SelectedId > 0)
                     {
                         int idCliente = frm.SelectedId;
-                        cmbCliente.SelectedValue = idCliente;  // dispara SelectedValueChanged
+                        cmbCliente.SelectedValue = idCliente;
 
-                        if (frm.SelectedCondicionId > 0)
-                        {
-                            SetCondicionInterna(frm.SelectedCondicionId);
-                            CambiarCondicionUI();                 // aplica autopago / No aplica / vencimiento
-                        }
-                        else
-                        {
-                            // safety: si la consulta no envió la condición, la buscamos
-                            AplicarCondicionDeCliente(idCliente);
-                        }
+                        AplicarCondicionDeCliente(idCliente);
+                        ActualizarClienteEnOrdenSiAbierta(idCliente);
                     }
                 }
             }
@@ -841,6 +944,7 @@ namespace Proyecto_Restaurante.Proceso
                 MessageBox.Show("No se pudo abrir la consulta de clientes: " + ex.Message);
             }
         }
+
         private void SetCondicionInterna(int idCond)
         {
             _idCondicionActual = idCond;
@@ -873,7 +977,6 @@ namespace Proyecto_Restaurante.Proceso
                 if (txtCondicionPago != null) txtCondicionPago.Text = "";
             }
 
-            // Refrescar la UI dependiente
             CambiarCondicionUI();
         }
 
@@ -892,7 +995,7 @@ namespace Proyecto_Restaurante.Proceso
                 if (obj != null && obj != DBNull.Value)
                 {
                     int idCond = Convert.ToInt32(obj);
-                    SetCondicionInterna(idCond); // fija variables y TextBox
+                    SetCondicionInterna(idCond);
                     CambiarCondicionUI();
                 }
             }
@@ -902,14 +1005,13 @@ namespace Proyecto_Restaurante.Proceso
             }
         }
 
-        private void MostrarCondicionEnTextBox(int idCond) // NUEVO
+        private void MostrarCondicionEnTextBox(int idCond)
         {
             try
             {
                 using var con = new SqlConnection(CS);
                 con.Open();
-                using var cmd = new SqlCommand(
-                    "SELECT descripcion FROM condicion WHERE id_condicion=@c", con);
+                using var cmd = new SqlCommand("SELECT descripcion FROM condicion WHERE id_condicion=@c", con);
                 cmd.Parameters.AddWithValue("@c", idCond);
                 var desc = Convert.ToString(cmd.ExecuteScalar()) ?? "";
                 if (txtCondicionPago != null)
@@ -921,7 +1023,22 @@ namespace Proyecto_Restaurante.Proceso
             catch { if (txtCondicionPago != null) txtCondicionPago.Text = ""; }
         }
 
-        // ===== Sala-Mesa label =====
+        private void ActualizarClienteEnOrdenSiAbierta(int idCli)
+        {
+            if (_idOrden <= 0) return;
+            try
+            {
+                using var con = new SqlConnection(CS);
+                con.Open();
+                using var up = new SqlCommand("UPDATE orden SET id_cliente=@cli, id_condicion=@con WHERE id_orden=@o", con);
+                up.Parameters.AddWithValue("@cli", idCli);
+                up.Parameters.AddWithValue("@con", _idCondicionActual);
+                up.Parameters.AddWithValue("@o", _idOrden);
+                up.ExecuteNonQuery();
+            }
+            catch { }
+        }
+
         private void CargarSalaMesaLabel()
         {
             try
@@ -941,18 +1058,14 @@ namespace Proyecto_Restaurante.Proceso
             catch { /* solo visual */ }
         }
 
-        private void SeleccionarClienteConsumidorFinal() // NUEVO
+        private void SeleccionarClienteConsumidorFinal()
         {
             try
             {
                 using var con = new SqlConnection(CS);
                 con.Open();
-
-                // Ajusta el LIKE si tu nombre exacto es distinto
                 using var cmd = new SqlCommand(
-                    "SELECT TOP 1 id_cliente, id_condicion " +
-                    "FROM cliente WHERE estado=1 AND nombre LIKE '%Consumidor%Final%' " +
-                    "ORDER BY id_cliente", con);
+                    "SELECT TOP 1 id_cliente, id_condicion FROM cliente WHERE estado=1 AND nombre LIKE '%Consumidor%Final%' ORDER BY id_cliente", con);
                 using var rd = cmd.ExecuteReader();
                 if (rd.Read())
                 {
@@ -960,21 +1073,14 @@ namespace Proyecto_Restaurante.Proceso
                     int idCond = rd.GetInt32(1);
 
                     cmbCliente.SelectedValue = idCli;
-                    SetCondicionInterna(idCond); // fija _idCondicionActual / txt / autopago / días
+                    SetCondicionInterna(idCond);
                 }
             }
-            catch
-            {
-                // si no existe, no rompe el flujo
-            }
+            catch { }
         }
 
         private void Titulo_Paint(object sender, PaintEventArgs e) { }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
 
         private void dgvDetalle_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -984,11 +1090,9 @@ namespace Proyecto_Restaurante.Proceso
             e.Handled = true;
             e.PaintBackground(e.CellBounds, true);
 
-            // Cantidad de la línea
             var lin = (Linea)dgvDetalle.Rows[e.RowIndex].DataBoundItem;
             int cantidad = (int)Math.Round(lin.Cantidad);
 
-            // Medidas
             int padding = 3;
             int btnW = 28;
             int btnH = e.CellBounds.Height - (padding * 2);
@@ -998,11 +1102,9 @@ namespace Proyecto_Restaurante.Proceso
             var rectMas = new Rectangle(e.CellBounds.Right - btnW - padding, y, btnW, btnH);
             var rectTexto = new Rectangle(rectMenos.Right + padding, y, e.CellBounds.Width - (btnW * 2) - (padding * 4), btnH);
 
-            // “Estilo POS”: botón plano con borde suave
             ButtonRenderer.DrawButton(e.Graphics, rectMenos, "-", dgvDetalle.Font, false, PushButtonState.Normal);
             ButtonRenderer.DrawButton(e.Graphics, rectMas, "+", dgvDetalle.Font, false, PushButtonState.Normal);
 
-            // Cantidad centrada
             TextRenderer.DrawText(
                 e.Graphics,
                 cantidad.ToString(),
@@ -1012,7 +1114,6 @@ namespace Proyecto_Restaurante.Proceso
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis
             );
 
-            // Borde de celda estándar
             e.Paint(e.CellBounds, DataGridViewPaintParts.Border);
         }
 
@@ -1023,18 +1124,14 @@ namespace Proyecto_Restaurante.Proceso
             var colName = dgvDetalle.Columns[e.ColumnIndex].Name;
             var lin = (Linea)dgvDetalle.Rows[e.RowIndex].DataBoundItem;
 
-            // Botón X (quitar)
             if (colName == "colQuitar")
             {
-                // Reutiliza tu lógica o usa esta:
                 CambiarCantidad(lin.IdDetalle, -999999m); // fuerza a eliminar
                 return;
             }
 
-            // Solo nos interesa la celda de cantidad para − / +
             if (colName != "colCant") return;
 
-            // Calcular rectángulos igual que en el pintado
             var cellRect = dgvDetalle.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
 
             int padding = 3;
@@ -1065,103 +1162,121 @@ namespace Proyecto_Restaurante.Proceso
                 con.Open();
                 using var tx = con.BeginTransaction();
 
-                // Leer cantidad y precio actuales
+                // Leer producto, cantidad y precio actuales
+                int idProd;
                 decimal cantActual, precio;
-                using (var cmd = new SqlCommand("SELECT cantidad, precio_unitario FROM detalle_orden WHERE id_detalle=@d AND estado=1", con, tx))
+                using (var cmd = new SqlCommand("SELECT id_producto, cantidad, precio_unitario FROM detalle_orden WHERE id_detalle=@d AND estado=1", con, tx))
                 {
                     cmd.Parameters.AddWithValue("@d", idDetalle);
                     using var rd = cmd.ExecuteReader();
                     if (!rd.Read()) { tx.Rollback(); return; }
-                    cantActual = rd.GetDecimal(0);
-                    precio = rd.GetDecimal(1);
+                    idProd = rd.GetInt32(0);
+                    cantActual = rd.GetDecimal(1);
+                    precio = rd.GetDecimal(2);
                 }
 
                 var nueva = cantActual + delta;
 
-                if (nueva <= 0m)
+                if (delta > 0m)
                 {
-                    // Anulamos la línea si llega a 0
-                    using var del = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_detalle=@d", con, tx);
-                    del.Parameters.AddWithValue("@d", idDetalle);
-                    del.ExecuteNonQuery();
-                }
-                else
-                {
+                    // Aumentar cantidad → requiere descontar stock = delta
+                    if (!TryDescontarStock(con, tx, idProd, delta, out decimal restante, out decimal min, out string nombre))
+                    {
+                        tx.Rollback();
+                        MessageBox.Show($"No hay stock suficiente de \"{nombre}\". Disponible: {restante:N2}.", "Sin stock", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
                     using var up = new SqlCommand(@"
-                UPDATE detalle_orden
-                   SET cantidad=@c, subtotal = ROUND(@c * @p, 2)
-                 WHERE id_detalle=@d;", con, tx);
+                        UPDATE detalle_orden
+                           SET cantidad=@c, subtotal = ROUND(@c * @p, 2)
+                         WHERE id_detalle=@d;", con, tx);
                     up.Parameters.AddWithValue("@c", nueva);
                     up.Parameters.AddWithValue("@p", precio);
                     up.Parameters.AddWithValue("@d", idDetalle);
                     up.ExecuteNonQuery();
-                }
 
-                // Recalcular total de la orden (usa tu método existente)
-                RecalcularTotalOrden(con, tx);
-                tx.Commit();
+                    RecalcularTotalOrden(con, tx);
+                    tx.Commit();
+
+                    if (restante <= 0) ResetCatalogo();
+                    if (restante < min) VerificarYNotificarStockBajo(idProd);
+                }
+                else
+                {
+                    // Disminuir cantidad → devolver stock
+                    decimal devolver = Math.Min(cantActual, -delta); // si delta=-999999 devuelve cantActual
+                    if (nueva <= 0m)
+                    {
+                        // Quitar línea
+                        using var del = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_detalle=@d", con, tx);
+                        del.Parameters.AddWithValue("@d", idDetalle);
+                        del.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        using var up = new SqlCommand(@"
+                            UPDATE detalle_orden
+                               SET cantidad=@c, subtotal = ROUND(@c * @p, 2)
+                             WHERE id_detalle=@d;", con, tx);
+                        up.Parameters.AddWithValue("@c", nueva);
+                        up.Parameters.AddWithValue("@p", precio);
+                        up.Parameters.AddWithValue("@d", idDetalle);
+                        up.ExecuteNonQuery();
+                    }
+
+                    DevolverStock(con, tx, idProd, devolver);
+                    RecalcularTotalOrden(con, tx);
+                    tx.Commit();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("No se pudo cambiar la cantidad: " + ex.Message);
             }
 
-            // Refrescar visual y totales
             CargarDetalle();
         }
 
         private void ProcesoFacturacion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Si no hay orden, nada que hacer
             if (_idOrden <= 0) return;
 
-            // Si se procesó o se guardó explícitamente en esta sesión, NO limpiar.
-            // Regla pedida: limpiar solo si el usuario NO pulsó Guardar/Procesar/Cancelar.
             if (_ordenProcesadaEstaSesion || _cabeceraGuardadaEstaSesion) return;
 
-            // (Opcional) solo cancela si la orden fue creada en esta sesión:
-            // Así evitas cancelar una orden anterior que reabriste.
             if (!_ordenCreadaEnEstaSesion) return;
 
             try
             {
                 using var con = new SqlConnection(CS);
                 con.Open();
+                using var tx = con.BeginTransaction();
 
-                // ¿Tiene líneas activas y está sin procesar?
-                int lineasActivas = 0;
-                bool abierta = false;
-
-                using (var chk = new SqlCommand(@"
-            SELECT 
-                (SELECT COUNT(*) FROM detalle_orden WHERE id_orden=@o AND estado=1) AS lineasActivas,
-                (SELECT CASE WHEN procesada=0 AND estado=1 THEN 1 ELSE 0 END FROM orden WHERE id_orden=@o) AS abierta;", con))
+                // Devolver stock de líneas activas
+                using (var sel = new SqlCommand("SELECT id_producto, cantidad FROM detalle_orden WHERE id_orden=@o AND estado=1", con, tx))
                 {
-                    chk.Parameters.AddWithValue("@o", _idOrden);
-                    using var rd = chk.ExecuteReader();
-                    if (rd.Read())
-                    {
-                        lineasActivas = rd.IsDBNull(0) ? 0 : rd.GetInt32(0);
-                        abierta = !rd.IsDBNull(1) && rd.GetInt32(1) == 1;
-                    }
+                    sel.Parameters.AddWithValue("@o", _idOrden);
+                    using var rd = sel.ExecuteReader();
+                    var devolver = new List<(int p, decimal c)>();
+                    while (rd.Read()) devolver.Add((rd.GetInt32(0), rd.GetDecimal(1)));
+                    rd.Close();
+                    foreach (var it in devolver) DevolverStock(con, tx, it.p, it.c);
                 }
 
-                if (abierta && lineasActivas > 0)
-                {
-                    using var tx = con.BeginTransaction();
+                using (var cmd = new SqlCommand("DELETE FROM detalle_orden WHERE id_orden=@o", con, tx))
+                { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
 
-                    using (var cmd = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_orden=@o", con, tx))
-                    { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
+                using (var cmd = new SqlCommand("DELETE FROM orden WHERE id_orden=@o", con, tx))
+                { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
 
-                    using (var cmd = new SqlCommand("UPDATE orden SET estado=0, procesada=1, saldo_pendiente=0 WHERE id_orden=@o", con, tx))
-                    { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
+                tx.Commit();
 
-                    tx.Commit();
-                }
+                _menu?.InicializarPlanoSalas();
+                (this.Owner as MenuPrincipal)?.InicializarPlanoSalas();
             }
             catch
             {
-                // Si algo falla, no bloquees el cierre.
+                // no bloquear el cierre
             }
         }
 

@@ -624,6 +624,7 @@
             StockAnualInventario.Name = "StockAnualInventario";
             StockAnualInventario.Size = new Size(320, 34);
             StockAnualInventario.Text = "Stock Anual";
+            StockAnualInventario.Click += StockAnualInventario_Click;
             // 
             // EntradasSalidasInventario
             // 
@@ -635,6 +636,7 @@
             EntradasSalidasInventario.Name = "EntradasSalidasInventario";
             EntradasSalidasInventario.Size = new Size(320, 34);
             EntradasSalidasInventario.Text = "Entradas y Salidas";
+            EntradasSalidasInventario.Click += EntradasSalidasInventario_Click;
             // 
             // DropMenu_CuentasXcobrar
             // 

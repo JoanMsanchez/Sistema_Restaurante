@@ -546,9 +546,9 @@ namespace Proyecto_Restaurante.Proceso
             label12.Location = new Point(31, 132);
             label12.Margin = new Padding(4, 0, 4, 0);
             label12.Name = "label12";
-            label12.Size = new Size(161, 29);
+            label12.Size = new Size(144, 29);
             label12.TabIndex = 15;
-            label12.Text = "Enmpleado";
+            label12.Text = "Empleado";
             // 
             // txtCondicionPago
             // 

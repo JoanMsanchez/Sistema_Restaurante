@@ -31,8 +31,14 @@
             dgvReporteProducto = new DataGridView();
             pdf = new FontAwesome.Sharp.IconButton();
             panel1 = new Panel();
+            panel2 = new Panel();
+            label1 = new Label();
+            btnMaximizarUnidadMedida = new FontAwesome.Sharp.IconButton();
+            btnCerrarUnidadMedida = new FontAwesome.Sharp.IconButton();
+            btnMinimizarUnidadMedida = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)dgvReporteProducto).BeginInit();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // dgvReporteProducto
@@ -42,13 +48,14 @@
             dgvReporteProducto.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvReporteProducto.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvReporteProducto.EnableHeadersVisualStyles = false;
-            dgvReporteProducto.Location = new Point(63, 99);
+            dgvReporteProducto.Location = new Point(78, 168);
+            dgvReporteProducto.Margin = new Padding(4, 4, 4, 4);
             dgvReporteProducto.Name = "dgvReporteProducto";
             dgvReporteProducto.ReadOnly = true;
             dgvReporteProducto.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dgvReporteProducto.RowHeadersVisible = false;
             dgvReporteProducto.RowHeadersWidth = 51;
-            dgvReporteProducto.Size = new Size(702, 307);
+            dgvReporteProducto.Size = new Size(886, 408);
             dgvReporteProducto.TabIndex = 0;
             // 
             // pdf
@@ -61,9 +68,10 @@
             pdf.IconChar = FontAwesome.Sharp.IconChar.None;
             pdf.IconColor = Color.Black;
             pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            pdf.Location = new Point(667, 448);
+            pdf.Location = new Point(842, 610);
+            pdf.Margin = new Padding(4, 4, 4, 4);
             pdf.Name = "pdf";
-            pdf.Size = new Size(98, 52);
+            pdf.Size = new Size(122, 65);
             pdf.TabIndex = 1;
             pdf.Text = "PDF";
             pdf.UseVisualStyleBackColor = true;
@@ -71,26 +79,107 @@
             // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.Controls.Add(dgvReporteProducto);
             panel1.Controls.Add(pdf);
-            panel1.Location = new Point(1, 1);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(826, 539);
+            panel1.Size = new Size(1040, 698);
             panel1.TabIndex = 2;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.White;
+            panel2.Controls.Add(btnMaximizarUnidadMedida);
+            panel2.Controls.Add(btnCerrarUnidadMedida);
+            panel2.Controls.Add(btnMinimizarUnidadMedida);
+            panel2.Controls.Add(label1);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1040, 68);
+            panel2.TabIndex = 3;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(255, 161, 43);
+            label1.Location = new Point(13, 9);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(593, 44);
+            label1.TabIndex = 2;
+            label1.Text = "REPORTE DE STOCK ACTUAL";
+            // 
+            // btnMaximizarUnidadMedida
+            // 
+            btnMaximizarUnidadMedida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximizarUnidadMedida.BackColor = Color.CornflowerBlue;
+            btnMaximizarUnidadMedida.FlatAppearance.BorderSize = 0;
+            btnMaximizarUnidadMedida.FlatStyle = FlatStyle.Flat;
+            btnMaximizarUnidadMedida.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+            btnMaximizarUnidadMedida.IconColor = Color.OldLace;
+            btnMaximizarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMaximizarUnidadMedida.IconSize = 20;
+            btnMaximizarUnidadMedida.Location = new Point(953, 2);
+            btnMaximizarUnidadMedida.Margin = new Padding(2);
+            btnMaximizarUnidadMedida.Name = "btnMaximizarUnidadMedida";
+            btnMaximizarUnidadMedida.Size = new Size(45, 25);
+            btnMaximizarUnidadMedida.TabIndex = 15;
+            btnMaximizarUnidadMedida.UseVisualStyleBackColor = false;
+            // 
+            // btnCerrarUnidadMedida
+            // 
+            btnCerrarUnidadMedida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCerrarUnidadMedida.BackColor = Color.Tomato;
+            btnCerrarUnidadMedida.FlatAppearance.BorderSize = 0;
+            btnCerrarUnidadMedida.FlatStyle = FlatStyle.Flat;
+            btnCerrarUnidadMedida.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnCerrarUnidadMedida.IconColor = Color.OldLace;
+            btnCerrarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            btnCerrarUnidadMedida.IconSize = 20;
+            btnCerrarUnidadMedida.Location = new Point(993, 2);
+            btnCerrarUnidadMedida.Margin = new Padding(2);
+            btnCerrarUnidadMedida.Name = "btnCerrarUnidadMedida";
+            btnCerrarUnidadMedida.Size = new Size(45, 25);
+            btnCerrarUnidadMedida.TabIndex = 16;
+            btnCerrarUnidadMedida.UseVisualStyleBackColor = false;
+            // 
+            // btnMinimizarUnidadMedida
+            // 
+            btnMinimizarUnidadMedida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimizarUnidadMedida.BackColor = Color.Turquoise;
+            btnMinimizarUnidadMedida.FlatAppearance.BorderSize = 0;
+            btnMinimizarUnidadMedida.FlatStyle = FlatStyle.Flat;
+            btnMinimizarUnidadMedida.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            btnMinimizarUnidadMedida.IconColor = Color.OldLace;
+            btnMinimizarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMinimizarUnidadMedida.IconSize = 20;
+            btnMinimizarUnidadMedida.Location = new Point(909, 2);
+            btnMinimizarUnidadMedida.Margin = new Padding(2);
+            btnMinimizarUnidadMedida.Name = "btnMinimizarUnidadMedida";
+            btnMinimizarUnidadMedida.Size = new Size(45, 25);
+            btnMinimizarUnidadMedida.TabIndex = 14;
+            btnMinimizarUnidadMedida.UseVisualStyleBackColor = false;
             // 
             // ReporteStockActual
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(832, 543);
+            ClientSize = new Size(1040, 698);
+            Controls.Add(panel2);
             Controls.Add(panel1);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "ReporteStockActual";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ReporteStockActual";
             ((System.ComponentModel.ISupportInitialize)dgvReporteProducto).EndInit();
             panel1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -99,5 +188,10 @@
         private DataGridView dgvReporteProducto;
         private FontAwesome.Sharp.IconButton pdf;
         private Panel panel1;
+        private Panel panel2;
+        private Label label1;
+        private FontAwesome.Sharp.IconButton btnMaximizarUnidadMedida;
+        private FontAwesome.Sharp.IconButton btnCerrarUnidadMedida;
+        private FontAwesome.Sharp.IconButton btnMinimizarUnidadMedida;
     }
 }
