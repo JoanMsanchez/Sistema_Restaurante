@@ -76,7 +76,7 @@ namespace Proyecto_Restaurante.Proceso
             tlpMain.SuspendLayout();
             grpCatalogo.SuspendLayout();
             grpDetalle.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvDetalle).BeginInit();
+            ((ISupportInitialize)dgvDetalle).BeginInit();
             Titulo.SuspendLayout();
             panelFacturacion.SuspendLayout();
             SuspendLayout();
@@ -692,13 +692,13 @@ namespace Proyecto_Restaurante.Proceso
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ProcesoFacturacion";
             Shown += ProcesoFacturacion_Shown_1;
-            Validating += this.ProcesoFacturacion_Validating;
+            Validating += ProcesoFacturacion_Validating;
             tlpMain.ResumeLayout(false);
             grpCatalogo.ResumeLayout(false);
             grpCatalogo.PerformLayout();
             grpDetalle.ResumeLayout(false);
             grpDetalle.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvDetalle).EndInit();
+            ((ISupportInitialize)dgvDetalle).EndInit();
             Titulo.ResumeLayout(false);
             Titulo.PerformLayout();
             panelFacturacion.ResumeLayout(false);
