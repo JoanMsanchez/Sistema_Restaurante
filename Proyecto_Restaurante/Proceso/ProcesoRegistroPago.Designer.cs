@@ -47,7 +47,6 @@
             btnCancelar = new FontAwesome.Sharp.IconButton();
             btnGuardar = new FontAwesome.Sharp.IconButton();
             btnAplicarAuto = new FontAwesome.Sharp.IconButton();
-            btnRecibo = new FontAwesome.Sharp.IconButton();
             txtTotalCobrarValor = new TextBox();
             label11 = new Label();
             observaciones = new TextBox();
@@ -261,7 +260,6 @@
             panel3.Controls.Add(btnCancelar);
             panel3.Controls.Add(btnGuardar);
             panel3.Controls.Add(btnAplicarAuto);
-            panel3.Controls.Add(btnRecibo);
             panel3.Controls.Add(txtTotalCobrarValor);
             panel3.Controls.Add(label11);
             panel3.Controls.Add(observaciones);
@@ -304,7 +302,7 @@
             btnLimpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnLimpiar.IconSize = 35;
             btnLimpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLimpiar.Location = new Point(686, 804);
+            btnLimpiar.Location = new Point(685, 804);
             btnLimpiar.Margin = new Padding(2);
             btnLimpiar.Name = "btnLimpiar";
             btnLimpiar.Size = new Size(154, 60);
@@ -324,7 +322,7 @@
             btnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnCancelar.IconSize = 35;
             btnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCancelar.Location = new Point(209, 805);
+            btnCancelar.Location = new Point(218, 807);
             btnCancelar.Margin = new Padding(2);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(169, 60);
@@ -343,7 +341,7 @@
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnGuardar.IconSize = 35;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(27, 804);
+            btnGuardar.Location = new Point(26, 804);
             btnGuardar.Margin = new Padding(2);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(165, 60);
@@ -360,30 +358,13 @@
             btnAplicarAuto.IconChar = FontAwesome.Sharp.IconChar.None;
             btnAplicarAuto.IconColor = Color.White;
             btnAplicarAuto.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnAplicarAuto.Location = new Point(393, 805);
+            btnAplicarAuto.Location = new Point(537, 805);
             btnAplicarAuto.Margin = new Padding(2);
             btnAplicarAuto.Name = "btnAplicarAuto";
             btnAplicarAuto.Size = new Size(126, 60);
             btnAplicarAuto.TabIndex = 33;
             btnAplicarAuto.Text = "Aplicar";
             btnAplicarAuto.UseVisualStyleBackColor = true;
-            // 
-            // btnRecibo
-            // 
-            btnRecibo.FlatAppearance.BorderSize = 0;
-            btnRecibo.FlatStyle = FlatStyle.Flat;
-            btnRecibo.Font = new Font("Verdana", 12F, FontStyle.Bold);
-            btnRecibo.ForeColor = Color.White;
-            btnRecibo.IconChar = FontAwesome.Sharp.IconChar.None;
-            btnRecibo.IconColor = Color.White;
-            btnRecibo.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnRecibo.Location = new Point(546, 805);
-            btnRecibo.Margin = new Padding(2);
-            btnRecibo.Name = "btnRecibo";
-            btnRecibo.Size = new Size(114, 60);
-            btnRecibo.TabIndex = 32;
-            btnRecibo.Text = "Recibo";
-            btnRecibo.UseVisualStyleBackColor = true;
             // 
             // txtTotalCobrarValor
             // 
@@ -784,7 +765,6 @@
         private FontAwesome.Sharp.IconButton btnCancelar;
         private FontAwesome.Sharp.IconButton btnGuardar;
         private FontAwesome.Sharp.IconButton btnAplicarAuto;
-        private FontAwesome.Sharp.IconButton btnRecibo;
         private TextBox txtTotalAplicado;
         private TextBox txtDiferenciaValor;
         private TextBox txtAplicadoValor;

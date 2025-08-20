@@ -5,7 +5,14 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using PdfSharp.Pdf.Content.Objects;
+using System.IO;
+using System.Diagnostics;
+using System.Drawing;
+
+// PDF (MigraDoc / PDFsharp)
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Tables;
+using MigraDoc.Rendering;
 
 namespace Proyecto_Restaurante.Proceso
 {
@@ -17,9 +24,17 @@ namespace Proyecto_Restaurante.Proceso
         private const int CMD_TIMEOUT = 30;
         private const int ACTIVO = 1;
 
+        // Carpeta destino de PDFs de recibo
+        private const string RECIBOS_FOLDER = @"C:\imagen\PDF";
+        // Ruta del logo
+        private const string LOGO_PATH = @"C:\imagen\LOGONEGRO.png";
+
         private DataTable _dtPendientes;
         private readonly CultureInfo _ci = new CultureInfo("es-DO");
         private readonly ErrorProvider err = new ErrorProvider();
+
+        // Estética
+        private int bordeSize = 2;
 
         public ProcesoRegistroPago()
         {
@@ -52,15 +67,13 @@ namespace Proyecto_Restaurante.Proceso
             CargarCombos();
             CargarOrdenesPendientes();
             RecalcularTotales();
-            this.Padding = new Padding(bordeSize); //Border size
-            this.BackColor = Color.FromArgb(255, 161, 43); //Border color
+
+            // Estética del formulario
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = System.Drawing.Color.FromArgb(255, 161, 43);
         }
 
-        //Fields
-        private int bordeSize = 2;
-
-
-        //Drag Form
+        // ================= Drag / bordes =================
         [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
 
@@ -73,24 +86,18 @@ namespace Proyecto_Restaurante.Proceso
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-        //Overridden methods
         protected override void WndProc(ref Message m)
         {
             const int WM_NCCALCSIZE = 0x0083;
-            if (m.Msg == WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
-            {
-                return;
-            }
+            if (m.Msg == WM_NCCALCSIZE && m.WParam.ToInt32() == 1) return;
             base.WndProc(ref m);
         }
 
-        //Event methods
         private void Producto_Resize(object sender, EventArgs e)
         {
             AdjustForm();
         }
 
-        //Private methods
         private void AdjustForm()
         {
             switch (this.WindowState)
@@ -102,27 +109,15 @@ namespace Proyecto_Restaurante.Proceso
                     if (this.Padding.Top != bordeSize)
                         this.Padding = new Padding(bordeSize);
                     break;
-
             }
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
+        private void btnMinimizar_Click(object sender, EventArgs e) => this.WindowState = FormWindowState.Minimized;
         private void btnMaximizar_Click(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Normal)
-                this.WindowState = FormWindowState.Maximized;
-            else
-                this.WindowState = FormWindowState.Normal;
+            this.WindowState = (this.WindowState == FormWindowState.Normal) ? FormWindowState.Maximized : FormWindowState.Normal;
         }
-
-        private void btnCerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        private void btnCerrar_Click(object sender, EventArgs e) => this.Close();
 
         private void PrepEspejo(TextBox tb)
         {
@@ -339,13 +334,11 @@ namespace Proyecto_Restaurante.Proceso
                     dgvOrdenesPendientes.Columns.Clear();
                 }
 
-                // Mostrar SOLO las órdenes con saldo pendiente (o nada si no hay)
                 dgvOrdenesPendientes.DataSource = _dtPendientes;
                 dgvOrdenesPendientes.Refresh();
 
                 if (_dtPendientes.Rows.Count == 0)
                 {
-                    // Si no quieres mostrar mensaje, comenta la línea siguiente:
                     MessageBox.Show("No hay órdenes con saldo pendiente para el filtro seleccionado.",
                                     "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -533,7 +526,7 @@ namespace Proyecto_Restaurante.Proceso
             // 7) Total aplicado HISTÓRICO (anterior + ahora)
             SetTextIfExists("txtTotalAplicado", $"RD$ {totalAplicadoHistorico.ToString("N2", _ci)}");
 
-            // 8) Permitir guardar siempre que NO se sobre-aplique (aplicado > total)
+            // 8) Permitir guardar
             btnGuardar.Enabled = aplicadoAhora > 0m
                                  && Math.Round(total - aplicadoAhora, 2) >= 0m
                                  && GetSelectedId(cboMetodoPago) > 0;
@@ -553,7 +546,6 @@ namespace Proyecto_Restaurante.Proceso
             foreach (DataGridViewRow r in dgvDistribucion.Rows)
                 if (!r.IsNewRow) aplicado += ParseMonto(Convert.ToString(r.Cells["colDP_MontoAplicar"].Value));
 
-            // No permitir sobre-aplicar (aplicar más de lo cobrado)
             if (Math.Round(aplicado - total, 2) > 0m)
             {
                 MessageBox.Show("Está aplicando más de lo cobrado. Ajuste el monto o la distribución.",
@@ -622,17 +614,39 @@ namespace Proyecto_Restaurante.Proceso
                     cmdUpd.ExecuteNonQuery();
                 }
 
+                // Confirmar transacción ANTES de generar el PDF
                 tx.Commit();
 
+                // Guardar id en UI (si existe ese textbox)
                 SetTextIfExists("txtIdPago", idPago.ToString());
 
+                // ========= GENERAR Y ABRIR RECIBO INMEDIATAMENTE =========
+                try
+                {
+                    string pdf = CrearReciboPdf(idPago);
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo { FileName = pdf, UseShellExecute = true });
+                    }
+                    catch
+                    {
+                        Process.Start(pdf);
+                    }
+                }
+                catch (Exception exPdf)
+                {
+                    MessageBox.Show("El pago fue guardado, pero ocurrió un error generando el recibo PDF.\n\nDetalle: " + exPdf.Message,
+                        "Recibo PDF", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                // Mensaje de éxito
                 string msg = $"Pago #{idPago} registrado.\n" +
                              $"Cobrado: RD$ {total.ToString("N2", _ci)}\n" +
                              $"Aplicado: RD$ {aplicado.ToString("N2", _ci)}\n";
                 if (sobrante > 0m) msg += $"Sobrante (cambio): RD$ {sobrante.ToString("N2", _ci)}";
-
                 MessageBox.Show(msg, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // Refrescar UI
                 LimpiarDistribucion();
                 CargarOrdenesPendientes();
                 RecalcularTotales();
@@ -642,6 +656,210 @@ namespace Proyecto_Restaurante.Proceso
                 tx.Rollback();
                 MessageBox.Show("Error al guardar el pago (consulta): " + ex.Message, "Timeout/Consulta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // ================== RECIBO (PDF) ==================
+        private string RD(decimal v) => "RD$ " + v.ToString("N2", _ci);
+
+        private string CrearReciboPdf(int idPago)
+        {
+            // ===== 1) Consultas: encabezado y detalle =====
+            DateTime fechaPago = DateTime.Now;
+            decimal montoTotal = 0m;
+            string metodoDesc = "(Sin método)";
+            string nota = "";
+
+            var detalle = new System.Collections.Generic.List<(int idOrden, string cliente, decimal aplicado, decimal saldoRestante)>();
+
+            using (var cn = new SqlConnection(CS))
+            {
+                cn.Open();
+
+                // Encabezado
+                using (var cmd = new SqlCommand(@"
+                    SELECT p.fecha_pago, p.monto_total, ISNULL(p.nota,''), ISNULL(mp.descripcion,'(Sin método)')
+                    FROM pago p
+                    LEFT JOIN metodo_pago mp ON mp.id_metodo_pago = p.id_metodo_pago
+                    WHERE p.id_pago = @id", cn))
+                {
+                    cmd.Parameters.AddWithValue("@id", idPago);
+                    using var rd = cmd.ExecuteReader();
+                    if (!rd.Read())
+                        throw new Exception($"No existe el pago #{idPago}.");
+
+                    fechaPago = rd.GetDateTime(0);
+                    montoTotal = rd.GetDecimal(1);
+                    nota = rd.IsDBNull(2) ? "" : rd.GetString(2);
+                    metodoDesc = rd.IsDBNull(3) ? "(Sin método)" : rd.GetString(3);
+                }
+
+                // Detalle por orden
+                using (var cmd = new SqlCommand(@"
+                    SELECT dp.id_orden,
+                           ISNULL(c.nombre,'(sin cliente)') AS cliente,
+                           dp.monto_aplicado,
+                           ISNULL(o.saldo_pendiente,0) AS saldo_restante
+                    FROM detalle_pago dp
+                    JOIN orden o       ON o.id_orden = dp.id_orden
+                    LEFT JOIN cliente c ON c.id_cliente = o.id_cliente
+                    WHERE dp.id_pago = @id
+                    ORDER BY dp.id_orden", cn))
+                {
+                    cmd.Parameters.AddWithValue("@id", idPago);
+                    using var rd = cmd.ExecuteReader();
+                    while (rd.Read())
+                    {
+                        int idOrden = rd.GetInt32(0);
+                        string cliente = rd.IsDBNull(1) ? "(sin cliente)" : rd.GetString(1);
+                        decimal aplicado = rd.IsDBNull(2) ? 0m : rd.GetDecimal(2);
+                        decimal saldoRest = rd.IsDBNull(3) ? 0m : rd.GetDecimal(3);
+                        detalle.Add((idOrden, cliente, aplicado, saldoRest));
+                    }
+                }
+            }
+
+            decimal aplicadoTotal = detalle.Sum(d => d.aplicado);
+            decimal sobrante = Math.Max(0m, montoTotal - aplicadoTotal);
+
+            string clienteMostrar = "(Varios clientes)";
+            var distintos = detalle.Select(d => d.cliente).Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
+            if (distintos.Count == 1) clienteMostrar = distintos[0];
+
+            string usuario = FindControl<TextBox>("txtEmpleado")?.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(usuario)) usuario = Environment.UserName;
+
+            // ===== 2) Documento PDF (MigraDoc) =====
+            var doc = new Document();
+            doc.Info.Title = $"Recibo #{idPago}";
+            doc.UseCmykColor = false;
+
+            var normal = doc.Styles["Normal"];
+            normal.Font.Name = "Arial";
+            normal.Font.Size = 10;
+
+            var h1 = doc.Styles.AddStyle("H1", "Normal");
+            h1.Font.Size = 16; h1.Font.Bold = true; h1.ParagraphFormat.SpaceAfter = 6;
+
+            var small = doc.Styles.AddStyle("Small", "Normal");
+            small.Font.Size = 9; small.ParagraphFormat.SpaceAfter = 1.5;
+
+            var sec = doc.AddSection();
+            sec.PageSetup.PageFormat = PageFormat.Letter;
+            sec.PageSetup.LeftMargin = Unit.FromCentimeter(1.6);
+            sec.PageSetup.RightMargin = Unit.FromCentimeter(1.6);
+            sec.PageSetup.TopMargin = Unit.FromCentimeter(1.6);
+            sec.PageSetup.BottomMargin = Unit.FromCentimeter(1.6);
+
+            // ===== Encabezado: título IZQ + logo DER =====
+            var head = sec.AddTable();
+            head.Borders.Visible = false;
+            head.AddColumn(Unit.FromCentimeter(12.5)); // texto
+            head.AddColumn(Unit.FromCentimeter(5.0));  // logo
+
+            var hr = head.AddRow();
+
+            // Texto
+            var pTitle = hr.Cells[0].AddParagraph("RECIBO DE PAGO");
+            pTitle.Style = "H1";
+            var pSub = hr.Cells[0].AddParagraph($"Recibo #{idPago} • {fechaPago:dd/MM/yyyy HH:mm} • Usuario: {usuario}");
+            pSub.Style = "Small";
+
+            // Logo (derecha, alto mayor)
+            if (File.Exists(LOGO_PATH))
+            {
+                var pLogo = hr.Cells[1].AddParagraph();
+                pLogo.Format.Alignment = ParagraphAlignment.Right;
+                var img = pLogo.AddImage(LOGO_PATH);
+                img.LockAspectRatio = true;
+                img.Height = Unit.FromCentimeter(3.2);
+            }
+
+            sec.AddParagraph().AddLineBreak();
+
+            // ===== Meta (cliente/método/nota + totales a la derecha) =====
+            var meta = sec.AddTable();
+            meta.Borders.Visible = false;
+            meta.AddColumn(Unit.FromCentimeter(9.5));
+            meta.AddColumn(Unit.FromCentimeter(8.0));
+            var mr = meta.AddRow();
+
+            // Izquierda
+            mr.Cells[0].AddParagraph($"Cliente: {clienteMostrar}");
+            mr.Cells[0].AddParagraph($"Método de pago: {metodoDesc}");
+            if (!string.IsNullOrWhiteSpace(nota))
+                mr.Cells[0].AddParagraph($"Nota: {nota}");
+
+            // Derecha (totales con tab stop a la derecha)
+            var cTot = mr.Cells[1];
+            Unit anchoCaja = cTot.Column.Width;
+            var tabRight = anchoCaja - Unit.FromMillimeter(2);
+            var indent = Unit.FromMillimeter(2);
+
+            Paragraph t1 = cTot.AddParagraph();
+            t1.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
+            t1.Format.LeftIndent = indent; t1.Format.RightIndent = indent;
+            t1.AddText("Monto cobrado:"); t1.AddTab(); t1.AddText(RD(montoTotal));
+
+            Paragraph t2 = cTot.AddParagraph();
+            t2.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
+            t2.Format.LeftIndent = indent; t2.Format.RightIndent = indent;
+            t2.AddText("Aplicado:"); t2.AddTab(); t2.AddText(RD(aplicadoTotal));
+
+            Paragraph t3 = cTot.AddParagraph();
+            t3.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
+            t3.Format.LeftIndent = indent; t3.Format.RightIndent = indent;
+            t3.Format.Font.Bold = true; t3.Format.SpaceBefore = 2;
+            t3.AddText("Sobrante (cambio):"); t3.AddTab(); t3.AddText(RD(sobrante));
+
+            sec.AddParagraph().AddLineBreak();
+
+            // ===== Tabla de detalle por orden =====
+            var tbl = sec.AddTable();
+            tbl.Borders.Color = Colors.Gainsboro;
+            tbl.Borders.Width = 0.75;
+            tbl.Rows.LeftIndent = 0;
+
+            tbl.AddColumn(Unit.FromCentimeter(2.5)); // Orden
+            tbl.AddColumn(Unit.FromCentimeter(8.5)); // Cliente
+            tbl.AddColumn(Unit.FromCentimeter(3.5)); // Aplicado
+            tbl.AddColumn(Unit.FromCentimeter(3.5)); // Saldo restante
+
+            var th = tbl.AddRow();
+            th.Shading.Color = Colors.WhiteSmoke;
+            th.HeadingFormat = true;
+            th.Format.Font.Bold = true;
+            th.Cells[0].AddParagraph("Orden").Format.Alignment = ParagraphAlignment.Left;
+            th.Cells[1].AddParagraph("Cliente");
+            th.Cells[2].AddParagraph("Aplicado").Format.Alignment = ParagraphAlignment.Right;
+            th.Cells[3].AddParagraph("Saldo restante").Format.Alignment = ParagraphAlignment.Right;
+
+            if (detalle.Count == 0)
+            {
+                var r = tbl.AddRow();
+                r.Cells[0].MergeRight = 3;
+                r.Cells[0].AddParagraph("Sin distribución (no hay líneas de detalle).").Format.Alignment = ParagraphAlignment.Center;
+            }
+            else
+            {
+                foreach (var d in detalle)
+                {
+                    var r = tbl.AddRow();
+                    r.Cells[0].AddParagraph(d.idOrden.ToString());
+                    r.Cells[1].AddParagraph(d.cliente);
+                    r.Cells[2].AddParagraph(RD(d.aplicado)).Format.Alignment = ParagraphAlignment.Right;
+                    r.Cells[3].AddParagraph(RD(d.saldoRestante)).Format.Alignment = ParagraphAlignment.Right;
+                }
+            }
+
+            // ===== Render y guardar =====
+            var renderer = new PdfDocumentRenderer(true); // unicode
+            renderer.Document = doc;
+            renderer.RenderDocument();
+
+            Directory.CreateDirectory(RECIBOS_FOLDER);
+            string file = Path.Combine(RECIBOS_FOLDER, $"Recibo_Pago_{idPago}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
+            renderer.PdfDocument.Save(file);
+            return file;
         }
 
         // ================= HELPERS =================

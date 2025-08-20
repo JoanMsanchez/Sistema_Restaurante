@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
-
+// PDF
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Tables;
+using MigraDoc.Rendering;
+using PdfSharp.Pdf;
 // Si tu ConsultaCliente está en este namespace:
 using Proyecto_Restaurante.Consulta;
 using Proyecto_Restaurante.Mantenimiento;
@@ -71,7 +79,7 @@ namespace Proyecto_Restaurante.Proceso
             this.Shown += ProcesoFacturacion_Shown;
             this.FormClosing += ProcesoFacturacion_FormClosing;
             this.Padding = new Padding(bordeSize);
-            this.BackColor = Color.FromArgb(255, 161, 43);
+            this.BackColor = System.Drawing.Color.FromArgb(255, 161, 43);
         }
 
         //Fields
@@ -81,6 +89,7 @@ namespace Proyecto_Restaurante.Proceso
         [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
 
+        // (respetamos tu firma actual para no alterar comportamiento)
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int lParam, int wParam);
 
@@ -298,8 +307,8 @@ namespace Proyecto_Restaurante.Proceso
                 Width = 180,
                 Height = 220,
                 Margin = new Padding(8),
-                BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle
+                BackColor = System.Drawing.Color.White,
+                BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
             };
 
             var pic = new PictureBox
@@ -307,7 +316,7 @@ namespace Proyecto_Restaurante.Proceso
                 Dock = DockStyle.Top,
                 Height = 120,
                 SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.White
+                BackColor = System.Drawing.Color.White
             };
             if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
                 pic.ImageLocation = imagePath;
@@ -994,20 +1003,242 @@ namespace Proyecto_Restaurante.Proceso
 
         private void MostrarPrecuenta()
         {
-            var lineas = string.Join(Environment.NewLine,
-            _lineas.Select(l => $"{l.Nombre} x {l.Cantidad:N2} = {l.Subtotal:C2}"));
+            try
+            {
+                string html = ConstruirHtmlPrecuenta();
 
+                using (var frm = new Form())
+                {
+                    frm.Text = "Precuenta / Vista previa";
+                    frm.StartPosition = FormStartPosition.CenterParent;
+                    frm.Width = 820;
+                    frm.Height = 1000;
+                    frm.MinimizeBox = false;
+                    frm.MaximizeBox = true;
+
+                    // Sin barra de herramientas: solo vista previa
+                    var wb = new WebBrowser
+                    {
+                        Dock = DockStyle.Fill,
+                        AllowWebBrowserDrop = false,
+                        ScriptErrorsSuppressed = true
+                    };
+                    wb.DocumentText = html;
+
+                    frm.Controls.Add(wb);
+                    frm.ShowDialog(this);
+                }
+            }
+            catch
+            {
+                // Fallback: tu precuenta original
+                var lineas = string.Join(Environment.NewLine,
+                    _lineas.Select(l => $"{l.Nombre} x {l.Cantidad:N2} = {l.Subtotal:C2}"));
+
+                decimal sub = _lineas.Sum(l => l.Subtotal);
+                decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
+                decimal tot = sub + itbis;
+
+                MessageBox.Show(
+                    lineas + Environment.NewLine + Environment.NewLine +
+                    $"Subtotal: {sub:C2}" + Environment.NewLine +
+                    $"ITBIS (18%): {itbis:C2}" + Environment.NewLine +
+                    $"Total: {tot:C2}",
+                    "Precuenta");
+            }
+        }
+
+        private string ConstruirHtmlPrecuenta()
+        {
+            // Datos de cabecera
+            string cliente = (cmbCliente?.Text ?? "Consumidor Final").Trim();
+            string condicion = (txtCondicionPago?.Text ?? "").Trim();
+            string empleado = (lbEmpleado?.Text ?? "").Trim();
+            string salaMesa = (lbSalaMesa?.Text ?? $"Mesa #{_idMesa}").Trim();
+            string fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+
+            // Totales
             decimal sub = _lineas.Sum(l => l.Subtotal);
             decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
             decimal tot = sub + itbis;
 
-            MessageBox.Show(
-                lineas + Environment.NewLine + Environment.NewLine +
-                $"Subtotal: {sub:C2}" + Environment.NewLine +
-                $"ITBIS (18%): {itbis:C2}" + Environment.NewLine +
-                $"Total: {tot:C2}",
-                "Precuenta");
+            // Logo opcional
+            string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logo_precuenta.png");
+            string logoTag = "";
+            if (File.Exists(logoPath))
+            {
+                var b64 = Convert.ToBase64String(File.ReadAllBytes(logoPath));
+                logoTag = $"<img src=\"data:image/png;base64,{b64}\" style=\"height:60px;object-fit:contain;\" />";
+            }
+
+            // Filas de detalle
+            var sbRows = new StringBuilder();
+            int i = 1;
+            foreach (var l in _lineas)
+            {
+                sbRows.Append("<tr>")
+                      .Append($"<td style='text-align:center'>{i++}</td>")
+                      .Append($"<td>{HtmlEncode(l.Nombre)}</td>")
+                      .Append($"<td style='text-align:center'>{l.Cantidad:N2}</td>")
+                      .Append($"<td style='text-align:right'>{l.Precio:C2}</td>")
+                      .Append($"<td style='text-align:right'>{l.Subtotal:C2}</td>")
+                      .Append("</tr>");
+            }
+
+            // HTML (sin botones y con totales separados)
+            var html = $@"
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>Precuenta - Orden {_idOrden}</title>
+<style>
+    * {{ box-sizing: border-box; }}
+    body {{
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f6f8;
+        color: #1f2937;
+    }}
+    .ticket {{
+        max-width: 760px;
+        margin: 24px auto;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        overflow: hidden;
+    }}
+    .header {{
+        padding: 18px 22px;
+        background: #fff3e6;
+        border-bottom: 1px solid #f1f5f9;
+    }}
+    .title {{ font-weight: 700; font-size: 20px; color: #111827; }}
+    .sub {{ color: #6b7280; font-size: 12px; margin-top: 2px; }}
+    .meta {{
+        padding: 16px 22px 0 22px;
+        font-size: 13px; color: #374151;
+    }}
+    .meta b {{ color: #111827; }}
+    .meta .row {{ margin: 2px 0; }}
+    .badge {{
+        display: inline-block; padding: 2px 8px; border-radius: 999px;
+        background: #fff7ed; color: #9a3412; font-size: 11px; border: 1px solid #fed7aa;
+        margin-left: 8px; vertical-align: middle;
+    }}
+    .logo-wrap {{ float:left; margin-right: 16px; }}
+    .head-text {{ overflow:hidden; }}
+    .table-wrap {{ padding: 8px 22px 22px 22px; clear:both; }}
+    table.items {{
+        width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;
+    }}
+    table.items thead th {{
+        background: #f9fafb; color: #111827; font-weight: 700; font-size: 13px;
+        text-align: left; padding: 10px 12px; border-bottom: 1px solid #e5e7eb;
+    }}
+    table.items tbody td {{
+        font-size: 13px; padding: 10px 12px; border-bottom: 1px solid #f3f4f6;
+    }}
+    table.items tbody tr:nth-child(even) {{ background: #fcfcfd; }}
+
+    table.two-col {{ width: 100%; border-collapse: separate; border-spacing: 18px 0; }}
+    table.two-col td {{ vertical-align: top; }}
+
+    .box {{
+        border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; background: #ffffff;
+    }}
+    .box h4 {{ margin: 0 0 6px 0; font-size: 16px; }}
+    .muted {{ font-size:12px; color:#6b7280; }}
+
+    table.totals {{ width:100%; border-collapse: collapse; }}
+    table.totals td {{ padding: 6px 0; font-size: 14px; color: #111827; }}
+    table.totals td.num {{ text-align: right; white-space: nowrap; }}
+    table.totals tr.grand td {{ font-weight: 800; font-size: 16px; border-top: 1px solid #e5e7eb; padding-top: 10px; }}
+
+    .footnote {{ padding: 10px 22px 18px 22px; color: #6b7280; font-size: 12px; border-top: 1px dashed #e5e7eb; }}
+</style>
+</head>
+<body>
+    <div class='ticket'>
+        <div class='header'>
+            <div class='logo-wrap'>{logoTag}</div>
+            <div class='head-text'>
+                <div class='title'>Precuenta <span class='badge'>Documento no fiscal</span></div>
+                <div class='sub'>Orden #{_idOrden} &nbsp;•&nbsp; {HtmlEncode(salaMesa)} &nbsp;•&nbsp; {fecha}</div>
+            </div>
+            <div style='clear:both'></div>
+        </div>
+
+        <div class='meta'>
+            <div class='row'><b>Cliente:</b> {HtmlEncode(cliente)}</div>
+            <div class='row'><b>Condición:</b> {HtmlEncode(condicion)}</div>
+            <div class='row'><b>Atendido por:</b> {HtmlEncode(empleado)}</div>
+            <div class='row'><b>ITBIS:</b> {(ITBIS_RATE * 100):N0}%</div>
+        </div>
+
+        <div class='table-wrap'>
+            <table class='items'>
+                <thead>
+                    <tr>
+                        <th style='width:52px;text-align:center'>#</th>
+                        <th>Producto</th>
+                        <th style='width:90px;text-align:center'>Cant.</th>
+                        <th style='width:110px;text-align:right'>Precio</th>
+                        <th style='width:120px;text-align:right'>Importe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {(sbRows.Length > 0 ? sbRows.ToString() : "<tr><td colspan='5' style='text-align:center;color:#6b7280'>Sin artículos</td></tr>")}
+                </tbody>
+            </table>
+        </div>
+
+        <table class='two-col'>
+            <colgroup>
+                <col />
+                <col style='width:280px' />
+            </colgroup>
+            <tr>
+                <td>
+                    <div class='box'>
+                        <h4>Observaciones</h4>
+                        <div class='muted'>Revise su pedido antes de procesar el pago. Los precios incluyen impuestos según aplique.</div>
+                    </div>
+                </td>
+                <td>
+                    <div class='box'>
+                        <table class='totals'>
+                            <tr>
+                                <td>Sub-Total:</td>
+                                <td class='num'>{sub:C2}</td>
+                            </tr>
+                            <tr>
+                                <td>ITBIS {(ITBIS_RATE * 100):N0}%:</td>
+                                <td class='num'>{itbis:C2}</td>
+                            </tr>
+                            <tr class='grand'>
+                                <td>Total:</td>
+                                <td class='num'>{tot:C2}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class='footnote'>
+            Esta es una precuenta de cortesía y no constituye comprobante fiscal. Para factura final, solicítela al camarero(a).
+        </div>
+    </div>
+</body>
+</html>";
+
+            return html;
         }
+
+        private static string HtmlEncode(string s)
+            => string.IsNullOrEmpty(s) ? "" : s.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "&quot;");
 
         // ===== Persistir cabecera dentro de la transacción de Procesar =====
         private void PersistirClienteYCondicion(SqlConnection con, SqlTransaction tx)
@@ -1087,11 +1318,11 @@ namespace Proyecto_Restaurante.Proceso
                     else
                     {
                         var up = new SqlCommand(@"
-                            UPDATE orden
-                               SET fecha_vencimiento = CAST(DATEADD(day,@d,GETDATE()) AS date),
-                                   saldo_pendiente   = total,
-                                   procesada         = 1
-                             WHERE id_orden=@o;", con, tx);
+                    UPDATE orden
+                       SET fecha_vencimiento = CAST(DATEADD(day,@d,GETDATE()) AS date),
+                           saldo_pendiente   = total,
+                           procesada         = 1
+                     WHERE id_orden=@o;", con, tx);
                         up.Parameters.AddWithValue("@d", _diasCreditoActual);
                         up.Parameters.AddWithValue("@o", _idOrden);
                         up.ExecuteNonQuery();
@@ -1102,12 +1333,233 @@ namespace Proyecto_Restaurante.Proceso
 
                 _ordenProcesadaEstaSesion = true;
 
+                // ===== Generar y ABRIR la factura PDF =====
+                try
+                {
+                    string pdfPath = CrearFacturaPdfParaOrdenActual();
+
+                    // Intento principal (NET Core / 5+): abrir con el visor predeterminado
+                    try
+                    {
+                        var psi = new ProcessStartInfo
+                        {
+                            FileName = pdfPath,
+                            UseShellExecute = true
+                        };
+                        Process.Start(psi);
+                    }
+                    catch
+                    {
+                        // Fallback (NET Framework clásico)
+                        try { Process.Start(pdfPath); } catch { /* ignorar */ }
+                    }
+                }
+                catch (Exception exPdf)
+                {
+                    MessageBox.Show("La orden se procesó, pero no se pudo generar/abrir la factura PDF.\n\nDetalle: " + exPdf.Message,
+                        "Factura PDF", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
                 MessageBox.Show("Orden procesada. ¡Mesa libre!");
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Error al procesar: " + ex.Message); }
         }
+
+        // ====== Generación de FACTURA en PDF ======
+        private string CrearFacturaPdfParaOrdenActual()
+        {
+            // ===== Datos de cabecera (mismos que la precuenta) =====
+            string cliente = (cmbCliente?.Text ?? "Consumidor Final").Trim();
+            string condicion = (txtCondicionPago?.Text ?? "").Trim();
+            string empleado = (lbEmpleado?.Text ?? "").Trim();
+            string salaMesa = (lbSalaMesa?.Text ?? $"Mesa #{_idMesa}").Trim();
+            string fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+            string metodo = _autopago ? (cmbMetodoPago?.Text ?? "") : "Crédito / a plazo";
+
+            decimal sub = _lineas.Sum(l => l.Subtotal);
+            decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
+            decimal tot = sub + itbis;
+
+            // ===== Documento =====
+            var doc = new Document();
+            doc.Info.Title = $"Factura - Orden #{_idOrden}";
+            doc.UseCmykColor = false;
+
+            // Estilos básicos
+            var normal = doc.Styles["Normal"];
+            normal.Font.Name = "Arial";
+            normal.Font.Size = 10;
+
+            var styleH1 = doc.Styles.AddStyle("H1", "Normal");
+            styleH1.Font.Size = 16;
+            styleH1.Font.Bold = true;
+            styleH1.ParagraphFormat.SpaceAfter = 6;
+
+            var styleSmall = doc.Styles.AddStyle("Small", "Normal");
+            styleSmall.Font.Size = 9;
+            styleSmall.ParagraphFormat.SpaceAfter = 1.5;
+
+            var sec = doc.AddSection();
+            sec.PageSetup.PageFormat = PageFormat.Letter;
+            sec.PageSetup.LeftMargin = Unit.FromCentimeter(1.6);
+            sec.PageSetup.RightMargin = Unit.FromCentimeter(1.6);
+            sec.PageSetup.TopMargin = Unit.FromCentimeter(1.6);
+            sec.PageSetup.BottomMargin = Unit.FromCentimeter(1.6);
+
+            // ===== Encabezado (título IZQ + logo DER más grande) =====
+            string logoPath = @"C:\imagen\LOGONEGRO.png";
+            if (!File.Exists(logoPath))
+                logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logo_precuenta.png");
+
+            var head = sec.AddTable();
+            head.Borders.Visible = false;
+            head.AddColumn(Unit.FromCentimeter(12.5)); // Texto IZQ
+            head.AddColumn(Unit.FromCentimeter(5.0));  // Logo DER
+
+            var hr = head.AddRow();
+
+            // Texto (izquierda)
+            var pTitle = hr.Cells[0].AddParagraph("Factura");
+            pTitle.Style = "H1";
+            var pSub = hr.Cells[0].AddParagraph($"Orden #{_idOrden} • {salaMesa} • {fecha}");
+            pSub.Style = "Small";
+
+            // Logo (derecha)
+            if (File.Exists(logoPath))
+            {
+                var pLogo = hr.Cells[1].AddParagraph();
+                pLogo.Format.Alignment = ParagraphAlignment.Right;
+                var img = pLogo.AddImage(logoPath);
+                img.LockAspectRatio = true;
+                img.Height = Unit.FromCentimeter(3.2);
+            }
+
+            sec.AddParagraph().AddLineBreak();
+
+            // ===== Meta info =====
+            var meta = sec.AddTable();
+            meta.Borders.Visible = false;
+            meta.AddColumn(Unit.FromCentimeter(8.5));
+            meta.AddColumn(Unit.FromCentimeter(9.0));
+            var mr = meta.AddRow();
+            mr.Cells[0].AddParagraph($"Cliente: {cliente}");
+            mr.Cells[0].AddParagraph($"Condición: {condicion}");
+            mr.Cells[1].AddParagraph($"Atendido por: {empleado}");
+            mr.Cells[1].AddParagraph($"ITBIS: {(ITBIS_RATE * 100):N0}%");
+            if (!string.IsNullOrWhiteSpace(metodo))
+                mr.Cells[1].AddParagraph($"Método de pago: {metodo}");
+
+            sec.AddParagraph().AddLineBreak();
+
+            // ===== Detalle =====
+            var tbl = sec.AddTable();
+            tbl.Borders.Color = Colors.Gainsboro;
+            tbl.Borders.Width = 0.75;
+            tbl.Rows.LeftIndent = 0;
+
+            // Anchos para no exceder el ancho útil
+            tbl.AddColumn(Unit.FromCentimeter(1.1)); // #
+            tbl.AddColumn(Unit.FromCentimeter(8.8)); // Producto
+            tbl.AddColumn(Unit.FromCentimeter(2.2)); // Cant.
+            tbl.AddColumn(Unit.FromCentimeter(3.0)); // Precio
+            tbl.AddColumn(Unit.FromCentimeter(3.0)); // Importe
+
+            var h = tbl.AddRow();
+            h.Shading.Color = Colors.WhiteSmoke;
+            h.HeadingFormat = true;
+            h.Format.Font.Bold = true;
+            h.Cells[0].AddParagraph("#").Format.Alignment = ParagraphAlignment.Center;
+            h.Cells[1].AddParagraph("Producto");
+            h.Cells[2].AddParagraph("Cant.").Format.Alignment = ParagraphAlignment.Center;
+            h.Cells[3].AddParagraph("Precio").Format.Alignment = ParagraphAlignment.Right;
+            h.Cells[4].AddParagraph("Importe").Format.Alignment = ParagraphAlignment.Right;
+
+            int idx = 1;
+            foreach (var l in _lineas)
+            {
+                var r = tbl.AddRow();
+                r.Cells[0].AddParagraph(idx.ToString()).Format.Alignment = ParagraphAlignment.Center;
+                r.Cells[1].AddParagraph(l.Nombre);
+                r.Cells[2].AddParagraph(l.Cantidad.ToString("N2")).Format.Alignment = ParagraphAlignment.Center;
+                r.Cells[3].AddParagraph(l.Precio.ToString("C2")).Format.Alignment = ParagraphAlignment.Right;
+                r.Cells[4].AddParagraph(l.Subtotal.ToString("C2")).Format.Alignment = ParagraphAlignment.Right;
+                idx++;
+            }
+
+            sec.AddParagraph().AddLineBreak();
+
+            // ===== Observaciones + Totales (lado a lado) =====
+            var two = sec.AddTable();
+            two.Borders.Visible = false;
+            two.AddColumn(Unit.FromCentimeter(10.5));
+            two.AddColumn(Unit.FromCentimeter(6.0));
+
+            var row2 = two.AddRow();
+
+            // Observaciones
+            var cObs = row2.Cells[0];
+            cObs.Borders.Color = Colors.Gainsboro;
+            cObs.Borders.Width = 0.75;
+            cObs.Shading.Color = Colors.White;
+            var pObsT = cObs.AddParagraph("Observaciones");
+            pObsT.Format.Font.Bold = true;
+            pObsT.Format.SpaceAfter = 2;
+            cObs.AddParagraph("Revise su pedido antes de procesar el pago. Los precios incluyen impuestos según aplique.")
+                .Format.Font.Size = 9;
+
+            // Totales
+            var cTot = row2.Cells[1];
+            cTot.Borders.Color = Colors.Gainsboro;
+            cTot.Borders.Width = 0.75;
+            cTot.Shading.Color = Colors.White;
+
+            var padTop = cTot.AddParagraph(" ");
+            padTop.Format.SpaceAfter = 2;
+
+            Unit anchoCaja = cTot.Column.Width;
+            var tabRight = anchoCaja - Unit.FromMillimeter(2);
+            var indent = Unit.FromMillimeter(2);
+
+            Paragraph p1 = cTot.AddParagraph();
+            p1.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
+            p1.Format.LeftIndent = indent;
+            p1.Format.RightIndent = indent;
+            p1.AddText("Sub-Total:"); p1.AddTab(); p1.AddText(sub.ToString("C2"));
+
+            Paragraph p2 = cTot.AddParagraph();
+            p2.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
+            p2.Format.LeftIndent = indent;
+            p2.Format.RightIndent = indent;
+            p2.AddText($"ITBIS {(ITBIS_RATE * 100):N0}%:"); p2.AddTab(); p2.AddText(itbis.ToString("C2"));
+
+            Paragraph p3 = cTot.AddParagraph();
+            p3.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
+            p3.Format.LeftIndent = indent;
+            p3.Format.RightIndent = indent;
+            p3.Format.SpaceBefore = 3;
+            p3.Format.Font.Bold = true;
+            p3.AddText("Total:"); p3.AddTab(); p3.AddText(tot.ToString("C2"));
+
+            var padBottom = cTot.AddParagraph(" ");
+            padBottom.Format.SpaceBefore = 2;
+
+            // ===== Render y guardado =====
+            var renderer = new PdfDocumentRenderer(true); // unicode = true
+            renderer.Document = doc;
+            renderer.RenderDocument();
+
+            // >>>>> Carpeta destino solicitada <<<<<
+            string folder = @"C:\imagen\PDF";
+            Directory.CreateDirectory(folder);
+
+            string file = Path.Combine(folder, $"Factura_Orden_{_idOrden}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
+            renderer.PdfDocument.Save(file);
+            return file;
+        }
+
+
 
         // ===== Cancelar todo (botón) =====
         private void BtnCancelar_Click(object sender, EventArgs e)
@@ -1417,7 +1869,7 @@ namespace Proyecto_Restaurante.Proceso
                 cantidad.ToString(),
                 dgvDetalle.Font,
                 rectTexto,
-                Color.Black,
+                System.Drawing.Color.Black,
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis
             );
 
