@@ -82,7 +82,7 @@ namespace Proyecto_Restaurante.Proceso
         private extern static void ReleaseCapture();
 
         [DllImport("User32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int lParam, int wParam);
 
         private void panelFacturacion_MouseDown(object sender, MouseEventArgs e)
         {
@@ -119,27 +119,19 @@ namespace Proyecto_Restaurante.Proceso
                     if (this.Padding.Top != bordeSize)
                         this.Padding = new Padding(bordeSize);
                     break;
-
             }
         }
 
-        private void btnMinimizar_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
+        private void btnMinimizar_Click(object sender, EventArgs e) => this.WindowState = FormWindowState.Minimized;
 
         private void btnMaximizar_Click(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Normal)
-                this.WindowState = FormWindowState.Maximized;
-            else
-                this.WindowState = FormWindowState.Normal;
+            this.WindowState = (this.WindowState == FormWindowState.Normal)
+                ? FormWindowState.Maximized
+                : FormWindowState.Normal;
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        private void btnCerrar_Click(object sender, EventArgs e) => this.Close();
 
         // Si el Designer aún llama a este handler viejo, lo puenteamos:
         private void ProcesoFacturacion_Shown_1(object sender, EventArgs e) => ProcesoFacturacion_Shown(sender, e);
@@ -424,8 +416,7 @@ namespace Proyecto_Restaurante.Proceso
             cmd.ExecuteNonQuery();
         }
 
-        // --------- NUEVO: soporte a proveedor + agrupación estable ----------
-        // Obtiene proveedor del producto si no se pasó (si tu tabla producto no tiene id_proveedor, este método devuelve null)
+        // --------- soporte a proveedor + agrupación estable ----------
         private int? GetProveedorDeProducto(SqlConnection con, SqlTransaction tx, int idProducto)
         {
             using var cmd = new SqlCommand("SELECT TOP 1 id_proveedor FROM producto WHERE id_producto=@p", con, tx);
@@ -442,15 +433,12 @@ namespace Proyecto_Restaurante.Proceso
         {
             if (cantidad <= 0m) return;
 
-            // 1) Clave estable SIN corchetes (evita comodines de LIKE)
-            //    Ej: {ORD:123|P:45|T:1}
+            // Clave estable para poder identificar por orden
             string clave = $"{{ORD:{_idOrden}|P:{idProducto}|T:{idTipoMov}}}";
             string obsFinal = $"{clave} {observaciones ?? ""}".Trim();
 
-            // 2) Resolver proveedor si no viene
             int? prov = idProveedor ?? GetProveedorDeProducto(con, tx, idProducto);
 
-            // 3) Buscar una fila existente cuyo INICIO sea exactamente la clave
             int? idMov = null;
             using (var sel = new SqlCommand(@"
         SELECT TOP (1) id_movimiento
@@ -470,7 +458,6 @@ namespace Proyecto_Restaurante.Proceso
 
             if (idMov.HasValue)
             {
-                // 4) Acumular cantidad y completar proveedor si estaba nulo
                 using var up = new SqlCommand(@"
             UPDATE movimiento_inventario
                SET cantidad = cantidad + @c,
@@ -483,7 +470,6 @@ namespace Proyecto_Restaurante.Proceso
             }
             else
             {
-                // 5) Insert único (con la clave al inicio)
                 using var ins = new SqlCommand(@"
             INSERT INTO movimiento_inventario
                 (id_producto, id_tipo_mov, cantidad, fecha, id_proveedor, observaciones, estado)
@@ -498,11 +484,7 @@ namespace Proyecto_Restaurante.Proceso
             }
         }
 
-        // ====== NUEVO: posteo diferido por DELTA al Guardar/Procesar ======
-        /// <summary>
-        /// Registra solo la diferencia entre lo ya asentado (salidas - devoluciones)
-        /// y la cantidad actual del detalle por producto.
-        /// </summary>
+        // ====== posteo diferido por DELTA al Guardar/Procesar ======
         private void PostearMovimientosDelta(SqlConnection con, SqlTransaction tx)
         {
             // 1) Cantidades actuales del detalle por producto
@@ -548,14 +530,14 @@ namespace Proyecto_Restaurante.Proceso
                     // faltan salidas
                     decimal delta = cantDeseada - netoAsentado;
                     RegistrarMovInventario(con, tx, idProd, TIPO_SALIDA_VENTA, delta,
-                        $"Salida por venta - Orden #{_idOrden}");
+                        "Salida por venta");
                 }
                 else if (cantDeseada < netoAsentado)
                 {
                     // sobran salidas → devoluciones por la diferencia
                     decimal delta = netoAsentado - cantDeseada;
                     RegistrarMovInventario(con, tx, idProd, TIPO_DEVOLUCION_CLIENTE, delta,
-                        $"Devolución cliente (Guardar/Procesar) - Orden #{_idOrden}");
+                        "Entrada por devolucion");
                 }
             }
 
@@ -602,8 +584,53 @@ namespace Proyecto_Restaurante.Proceso
                     if (netoAsentado > 0m)
                     {
                         RegistrarMovInventario(con, tx, idProd, TIPO_DEVOLUCION_CLIENTE, netoAsentado,
-                            $"Devolución cliente (Guardar/Procesar) - Orden #{_idOrden}");
+                            "Entrada por devolucion");
                     }
+                }
+            }
+        }
+
+        // ==== NUEVO: revertir movimientos al cancelar (dejar kardex en cero) ====
+        private void RevertirMovimientosDeOrdenACero(SqlConnection con, SqlTransaction tx)
+        {
+            // prefijo correcto (abre con una sola llave literal)
+            string prefOrden = $"{{ORD:{_idOrden}|P:";
+
+            var porRevertir = new List<(int idProd, decimal neto)>();
+            using (var cmd = new SqlCommand(@"
+                SELECT id_producto,
+                       COALESCE(SUM(CASE WHEN id_tipo_mov = @tOut THEN cantidad END), 0)
+                     - COALESCE(SUM(CASE WHEN id_tipo_mov = @tIn  THEN cantidad END), 0) AS neto
+                  FROM movimiento_inventario
+                 WHERE estado = 1
+                   AND LEFT(CAST(observaciones AS nvarchar(4000)), LEN(@pref)) = @pref
+                 GROUP BY id_producto;", con, tx))
+            {
+                cmd.Parameters.AddWithValue("@tOut", TIPO_SALIDA_VENTA);
+                cmd.Parameters.AddWithValue("@tIn", TIPO_DEVOLUCION_CLIENTE);
+                cmd.Parameters.AddWithValue("@pref", prefOrden);
+
+                using var rd = cmd.ExecuteReader();
+                while (rd.Read())
+                    porRevertir.Add((rd.GetInt32(0), rd.GetDecimal(1)));
+            }
+
+            foreach (var item in porRevertir)
+            {
+                int idProd = item.idProd;
+                decimal neto = item.neto;
+
+                if (neto > 0m)
+                {
+                    // Entra lo que había salido
+                    RegistrarMovInventario(con, tx, idProd, TIPO_DEVOLUCION_CLIENTE, neto,
+                        "Entrada por devolucion");
+                }
+                else if (neto < 0m)
+                {
+                    // Sale lo que había entrado (caso poco común)
+                    RegistrarMovInventario(con, tx, idProd, TIPO_SALIDA_VENTA, -neto,
+                        "Salida por venta");
                 }
             }
         }
@@ -1106,10 +1133,14 @@ namespace Proyecto_Restaurante.Proceso
                     foreach (var it in devolver)
                     {
                         DevolverStock(con, tx, it.p, it.c);
-                        // *** YA NO se registran movimientos aquí ***
+                        // No asentamos movimientos aquí; los revierte el helper de abajo.
                     }
                 }
 
+                // ← NUEVO: dejar en CERO los movimientos asentados de esta orden
+                RevertirMovimientosDeOrdenACero(con, tx);
+
+                // Borrar detalle y orden
                 using (var cmd = new SqlCommand("DELETE FROM detalle_orden WHERE id_orden=@o", con, tx))
                 { cmd.Parameters.AddWithValue("@o", _idOrden); cmd.ExecuteNonQuery(); }
 
@@ -1157,7 +1188,7 @@ namespace Proyecto_Restaurante.Proceso
                         SELECT id_producto, nombre, precio_venta, imagen_ruta
                         FROM producto
                         WHERE estado = 1
-                          AND stock_actual > 0                                  -- ← ocultar sin stock
+                          AND stock_actual > 0
                           AND (@cat IS NULL OR id_categoria = @cat)
                           AND (@q = '' OR nombre LIKE '%'+@q+'%' OR ISNULL(descripcion,'') LIKE '%'+@q+'%')
                         ORDER BY nombre
@@ -1547,7 +1578,7 @@ namespace Proyecto_Restaurante.Proceso
                     foreach (var it in devolver)
                     {
                         DevolverStock(con, tx, it.p, it.c);
-                        // *** YA NO se registran movimientos aquí ***
+                        // No se asientan movimientos (esta orden no llegó a Guardar/Procesar)
                     }
                 }
 
