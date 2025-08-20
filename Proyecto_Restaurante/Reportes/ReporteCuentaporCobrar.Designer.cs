@@ -39,6 +39,7 @@ namespace Proyecto_Restaurante.Reportes
             btnCerrar = new FontAwesome.Sharp.IconButton();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
             label3 = new Label();
+            panel3 = new Panel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgCxC).BeginInit();
             Titulo.SuspendLayout();
@@ -46,23 +47,26 @@ namespace Proyecto_Restaurante.Reportes
             // 
             // panel1
             // 
+            panel1.Controls.Add(panel3);
             panel1.Controls.Add(txtNombre);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(pdf);
             panel1.Controls.Add(dtgCxC);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(989, 764);
+            panel1.Size = new Size(791, 611);
             panel1.TabIndex = 0;
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(281, 126);
-            txtNombre.Margin = new Padding(4);
+            txtNombre.BackColor = Color.FromArgb(255, 161, 43);
+            txtNombre.BorderStyle = BorderStyle.None;
+            txtNombre.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNombre.ForeColor = Color.White;
+            txtNombre.Location = new Point(225, 107);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(155, 31);
+            txtNombre.Size = new Size(158, 21);
             txtNombre.TabIndex = 9;
             txtNombre.TextChanged += txtNombre_TextChanged;
             // 
@@ -71,10 +75,9 @@ namespace Proyecto_Restaurante.Reportes
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(62, 129);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(50, 103);
             label1.Name = "label1";
-            label1.Size = new Size(213, 29);
+            label1.Size = new Size(179, 25);
             label1.TabIndex = 8;
             label1.Text = "Buscar Cliente ";
             // 
@@ -85,29 +88,32 @@ namespace Proyecto_Restaurante.Reportes
             pdf.FlatStyle = FlatStyle.Flat;
             pdf.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             pdf.ForeColor = Color.White;
-            pdf.IconChar = FontAwesome.Sharp.IconChar.None;
-            pdf.IconColor = Color.Black;
+            pdf.IconChar = FontAwesome.Sharp.IconChar.FileText;
+            pdf.IconColor = Color.White;
             pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            pdf.Location = new Point(791, 684);
-            pdf.Margin = new Padding(4);
+            pdf.IconSize = 35;
+            pdf.ImageAlign = ContentAlignment.MiddleLeft;
+            pdf.Location = new Point(618, 538);
             pdf.Name = "pdf";
-            pdf.Size = new Size(122, 65);
+            pdf.Size = new Size(113, 52);
             pdf.TabIndex = 4;
-            pdf.Text = "PDF";
+            pdf.Text = "    PDF";
             pdf.UseVisualStyleBackColor = true;
             pdf.Click += pdf_Click;
             // 
             // dtgCxC
             // 
+            dtgCxC.AllowUserToAddRows = false;
+            dtgCxC.AllowUserToDeleteRows = false;
             dtgCxC.AllowUserToResizeColumns = false;
             dtgCxC.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dtgCxC.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dtgCxC.BackgroundColor = Color.White;
             dtgCxC.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgCxC.Location = new Point(62, 172);
-            dtgCxC.Margin = new Padding(4);
+            dtgCxC.Location = new Point(50, 152);
             dtgCxC.Name = "dtgCxC";
             dtgCxC.RowHeadersWidth = 51;
-            dtgCxC.Size = new Size(851, 460);
+            dtgCxC.Size = new Size(681, 368);
             dtgCxC.TabIndex = 0;
             // 
             // Titulo
@@ -119,9 +125,8 @@ namespace Proyecto_Restaurante.Reportes
             Titulo.Controls.Add(label3);
             Titulo.Dock = DockStyle.Top;
             Titulo.Location = new Point(0, 0);
-            Titulo.Margin = new Padding(4);
             Titulo.Name = "Titulo";
-            Titulo.Size = new Size(989, 68);
+            Titulo.Size = new Size(791, 54);
             Titulo.TabIndex = 1;
             Titulo.MouseDown += Titulo_MouseDown_2;
             // 
@@ -135,10 +140,10 @@ namespace Proyecto_Restaurante.Reportes
             btnMaximizar.IconColor = Color.OldLace;
             btnMaximizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizar.IconSize = 20;
-            btnMaximizar.Location = new Point(904, 0);
+            btnMaximizar.Location = new Point(723, 0);
             btnMaximizar.Margin = new Padding(2);
             btnMaximizar.Name = "btnMaximizar";
-            btnMaximizar.Size = new Size(45, 25);
+            btnMaximizar.Size = new Size(36, 20);
             btnMaximizar.TabIndex = 18;
             btnMaximizar.UseVisualStyleBackColor = false;
             btnMaximizar.Click += btnMaximizar_Click;
@@ -153,10 +158,10 @@ namespace Proyecto_Restaurante.Reportes
             btnCerrar.IconColor = Color.OldLace;
             btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrar.IconSize = 20;
-            btnCerrar.Location = new Point(944, 0);
+            btnCerrar.Location = new Point(755, 0);
             btnCerrar.Margin = new Padding(2);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(45, 25);
+            btnCerrar.Size = new Size(36, 20);
             btnCerrar.TabIndex = 19;
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
@@ -171,10 +176,10 @@ namespace Proyecto_Restaurante.Reportes
             btnMinimizar.IconColor = Color.OldLace;
             btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizar.IconSize = 20;
-            btnMinimizar.Location = new Point(860, 0);
+            btnMinimizar.Location = new Point(688, 0);
             btnMinimizar.Margin = new Padding(2);
             btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(45, 25);
+            btnMinimizar.Size = new Size(36, 20);
             btnMinimizar.TabIndex = 17;
             btnMinimizar.UseVisualStyleBackColor = false;
             btnMinimizar.Click += btnMinimizar_Click;
@@ -184,22 +189,29 @@ namespace Proyecto_Restaurante.Reportes
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.FromArgb(255, 161, 43);
-            label3.Location = new Point(15, 11);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(12, 9);
             label3.Name = "label3";
-            label3.Size = new Size(726, 44);
+            label3.Size = new Size(603, 36);
             label3.TabIndex = 3;
             label3.Text = "REPORTE DE CUENTA POR COBRAR";
             // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.ForeColor = Color.White;
+            panel3.Location = new Point(225, 130);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(158, 2);
+            panel3.TabIndex = 32;
+            // 
             // ReporteCuentaporCobrar
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(989, 764);
+            ClientSize = new Size(791, 611);
             Controls.Add(Titulo);
             Controls.Add(panel1);
-            Margin = new Padding(4);
             Name = "ReporteCuentaporCobrar";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ReporteCuentaporCobrar";
@@ -228,5 +240,6 @@ namespace Proyecto_Restaurante.Reportes
         private FontAwesome.Sharp.IconButton btnMaximizar;
         private FontAwesome.Sharp.IconButton btnCerrar;
         private FontAwesome.Sharp.IconButton btnMinimizar;
+        private Panel panel3;
     }
 }
