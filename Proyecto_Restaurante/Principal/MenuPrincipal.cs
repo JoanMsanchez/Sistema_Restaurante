@@ -475,5 +475,17 @@ namespace Proyecto_Restaurante.Mantenimiento
             ReporteEntradaySalida reporteEntradaySalida = new ReporteEntradaySalida();
             reporteEntradaySalida.Show();
         }
+
+        private void CXC_Click(object sender, EventArgs e)
+        {
+            ReporteCuentaporCobrar rpcxc = new ReporteCuentaporCobrar();
+            rpcxc.Show();
+        }
+
+        private void EstadodeCuentaCXC_Click(object sender, EventArgs e)
+        {
+            ReporteEstadoCuenta rec = new ReporteEstadoCuenta();
+            rec.Show();
+        }
     }
 }

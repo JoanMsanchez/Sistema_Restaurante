@@ -53,8 +53,6 @@
             MantenimientoSala = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoMesas = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoEmpleados = new FontAwesome.Sharp.IconMenuItem();
-            procesosRestaurante = new FontAwesome.Sharp.IconMenuItem();
-            FacturacionRestaurante = new FontAwesome.Sharp.IconMenuItem();
             DropMenu_inventario = new ContextMenuStrip(components);
             MantenimientoInventario = new FontAwesome.Sharp.IconMenuItem();
             MantenimientoProductos = new FontAwesome.Sharp.IconMenuItem();
@@ -381,9 +379,9 @@
             // DropMenu_restaurante
             // 
             DropMenu_restaurante.ImageScalingSize = new Size(24, 24);
-            DropMenu_restaurante.Items.AddRange(new ToolStripItem[] { MantenimientoRestaurante, procesosRestaurante });
+            DropMenu_restaurante.Items.AddRange(new ToolStripItem[] { MantenimientoRestaurante });
             DropMenu_restaurante.Name = "DropMenu_restaurante";
-            DropMenu_restaurante.Size = new Size(272, 68);
+            DropMenu_restaurante.Size = new Size(272, 36);
             // 
             // MantenimientoRestaurante
             // 
@@ -433,31 +431,6 @@
             MantenimientoEmpleados.Size = new Size(236, 34);
             MantenimientoEmpleados.Text = "Empleados";
             MantenimientoEmpleados.Click += MantenimientoEmpleados_Click;
-            // 
-            // procesosRestaurante
-            // 
-            procesosRestaurante.BackColor = Color.Orange;
-            procesosRestaurante.DropDownItems.AddRange(new ToolStripItem[] { FacturacionRestaurante });
-            procesosRestaurante.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            procesosRestaurante.ForeColor = SystemColors.ButtonHighlight;
-            procesosRestaurante.IconChar = FontAwesome.Sharp.IconChar.Newspaper;
-            procesosRestaurante.IconColor = Color.White;
-            procesosRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            procesosRestaurante.Name = "procesosRestaurante";
-            procesosRestaurante.Size = new Size(271, 32);
-            procesosRestaurante.Text = "Procesos";
-            // 
-            // FacturacionRestaurante
-            // 
-            FacturacionRestaurante.BackColor = Color.DarkOrange;
-            FacturacionRestaurante.ForeColor = SystemColors.ButtonHighlight;
-            FacturacionRestaurante.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
-            FacturacionRestaurante.IconColor = Color.White;
-            FacturacionRestaurante.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            FacturacionRestaurante.Name = "FacturacionRestaurante";
-            FacturacionRestaurante.Size = new Size(245, 34);
-            FacturacionRestaurante.Text = "Facturacion";
-            FacturacionRestaurante.Click += FacturacionRestaurante_Click;
             // 
             // DropMenu_inventario
             // 
@@ -768,6 +741,7 @@
             CXC.Name = "CXC";
             CXC.Size = new Size(455, 34);
             CXC.Text = "Cuentas por Cobrar";
+            CXC.Click += CXC_Click;
             // 
             // EstadodeCuentaCXC
             // 
@@ -779,6 +753,7 @@
             EstadodeCuentaCXC.Name = "EstadodeCuentaCXC";
             EstadodeCuentaCXC.Size = new Size(455, 34);
             EstadodeCuentaCXC.Text = "Estado de Cuenta";
+            EstadodeCuentaCXC.Click += EstadodeCuentaCXC_Click;
             // 
             // CuentasVencidasCXC
             // 
@@ -847,8 +822,6 @@
         private FontAwesome.Sharp.IconButton btnMaximizar;
         private FontAwesome.Sharp.IconButton btnInventario;
         private ContextMenuStrip DropMenu_restaurante;
-        private FontAwesome.Sharp.IconMenuItem procesosRestaurante;
-        private FontAwesome.Sharp.IconMenuItem FacturacionRestaurante;
         private FontAwesome.Sharp.IconMenuItem MantenimientoRestaurante;
         private FontAwesome.Sharp.IconMenuItem MantenimientoMesas;
         private FontAwesome.Sharp.IconMenuItem MantenimientoEmpleados;
