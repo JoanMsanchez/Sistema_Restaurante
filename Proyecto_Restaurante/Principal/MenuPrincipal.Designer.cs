@@ -765,6 +765,7 @@
             CuentasVencidasCXC.Name = "CuentasVencidasCXC";
             CuentasVencidasCXC.Size = new Size(455, 34);
             CuentasVencidasCXC.Text = "Cuentas Vencidas";
+            CuentasVencidasCXC.Click += CuentasVencidasCXC_Click;
             // 
             // ResumendeDeudaporCliente
             // 
@@ -776,6 +777,7 @@
             ResumendeDeudaporCliente.Name = "ResumendeDeudaporCliente";
             ResumendeDeudaporCliente.Size = new Size(455, 34);
             ResumendeDeudaporCliente.Text = "Resumen de deuda por Cliente";
+            ResumendeDeudaporCliente.Click += ResumendeDeudaporCliente_Click;
             // 
             // MenuPrincipal
             // 

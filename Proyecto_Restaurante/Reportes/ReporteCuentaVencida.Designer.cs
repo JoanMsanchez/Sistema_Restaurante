@@ -31,25 +31,26 @@
             panel1 = new Panel();
             dgvCuentaVencida = new DataGridView();
             pdf = new FontAwesome.Sharp.IconButton();
-            panel2 = new Panel();
+            Titulo = new Panel();
             btnMaximizar = new FontAwesome.Sharp.IconButton();
             btnCerrar = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCuentaVencida).BeginInit();
-            panel2.SuspendLayout();
+            Titulo.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.Controls.Add(dgvCuentaVencida);
             panel1.Controls.Add(pdf);
-            panel1.Controls.Add(panel2);
+            panel1.Controls.Add(Titulo);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(765, 469);
+            panel1.Size = new Size(956, 586);
             panel1.TabIndex = 0;
             // 
             // dgvCuentaVencida
@@ -60,11 +61,12 @@
             dgvCuentaVencida.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCuentaVencida.BackgroundColor = Color.White;
             dgvCuentaVencida.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCuentaVencida.Location = new Point(44, 94);
+            dgvCuentaVencida.Location = new Point(55, 118);
+            dgvCuentaVencida.Margin = new Padding(4, 4, 4, 4);
             dgvCuentaVencida.Name = "dgvCuentaVencida";
             dgvCuentaVencida.RowHeadersVisible = false;
             dgvCuentaVencida.RowHeadersWidth = 51;
-            dgvCuentaVencida.Size = new Size(676, 279);
+            dgvCuentaVencida.Size = new Size(845, 349);
             dgvCuentaVencida.TabIndex = 7;
             // 
             // pdf
@@ -79,26 +81,29 @@
             pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
             pdf.IconSize = 35;
             pdf.ImageAlign = ContentAlignment.MiddleLeft;
-            pdf.Location = new Point(610, 394);
+            pdf.Location = new Point(762, 492);
+            pdf.Margin = new Padding(4, 4, 4, 4);
             pdf.Name = "pdf";
-            pdf.Size = new Size(110, 52);
+            pdf.Size = new Size(138, 65);
             pdf.TabIndex = 6;
             pdf.Text = "    PDF";
             pdf.UseVisualStyleBackColor = true;
             pdf.Click += pdf_Click;
             // 
-            // panel2
+            // Titulo
             // 
-            panel2.BackColor = Color.White;
-            panel2.Controls.Add(btnMaximizar);
-            panel2.Controls.Add(btnCerrar);
-            panel2.Controls.Add(label1);
-            panel2.Controls.Add(btnMinimizar);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(765, 54);
-            panel2.TabIndex = 0;
+            Titulo.BackColor = Color.White;
+            Titulo.Controls.Add(btnMaximizar);
+            Titulo.Controls.Add(btnCerrar);
+            Titulo.Controls.Add(label1);
+            Titulo.Controls.Add(btnMinimizar);
+            Titulo.Dock = DockStyle.Top;
+            Titulo.Location = new Point(0, 0);
+            Titulo.Margin = new Padding(4, 4, 4, 4);
+            Titulo.Name = "Titulo";
+            Titulo.Size = new Size(956, 68);
+            Titulo.TabIndex = 0;
+            Titulo.MouseDown += Titulo_MouseDown;
             // 
             // btnMaximizar
             // 
@@ -110,10 +115,10 @@
             btnMaximizar.IconColor = Color.OldLace;
             btnMaximizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizar.IconSize = 20;
-            btnMaximizar.Location = new Point(695, 2);
+            btnMaximizar.Location = new Point(869, 2);
             btnMaximizar.Margin = new Padding(2);
             btnMaximizar.Name = "btnMaximizar";
-            btnMaximizar.Size = new Size(36, 20);
+            btnMaximizar.Size = new Size(45, 25);
             btnMaximizar.TabIndex = 21;
             btnMaximizar.UseVisualStyleBackColor = false;
             btnMaximizar.Click += btnMaximizar_Click;
@@ -128,10 +133,10 @@
             btnCerrar.IconColor = Color.OldLace;
             btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrar.IconSize = 20;
-            btnCerrar.Location = new Point(727, 2);
+            btnCerrar.Location = new Point(909, 2);
             btnCerrar.Margin = new Padding(2);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(36, 20);
+            btnCerrar.Size = new Size(45, 25);
             btnCerrar.TabIndex = 22;
             btnCerrar.UseVisualStyleBackColor = false;
             btnCerrar.Click += btnCerrar_Click;
@@ -141,9 +146,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(255, 161, 43);
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(15, 11);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(537, 36);
+            label1.Size = new Size(648, 44);
             label1.TabIndex = 8;
             label1.Text = "REPORTE DE CUENTA VENCIDA";
             // 
@@ -157,35 +163,36 @@
             btnMinimizar.IconColor = Color.OldLace;
             btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizar.IconSize = 20;
-            btnMinimizar.Location = new Point(660, 2);
+            btnMinimizar.Location = new Point(825, 2);
             btnMinimizar.Margin = new Padding(2);
             btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(36, 20);
+            btnMinimizar.Size = new Size(45, 25);
             btnMinimizar.TabIndex = 20;
             btnMinimizar.UseVisualStyleBackColor = false;
             btnMinimizar.Click += btnMinimizar_Click;
             // 
             // ReporteCuentaVencida
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(765, 469);
+            ClientSize = new Size(956, 586);
             Controls.Add(panel1);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "ReporteCuentaVencida";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ReporteCuentaVencida";
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvCuentaVencida).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            Titulo.ResumeLayout(false);
+            Titulo.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel panel1;
-        private Panel panel2;
+        private Panel Titulo;
         private DataGridView dgvCuentaVencida;
         private FontAwesome.Sharp.IconButton pdf;
         private Label label1;

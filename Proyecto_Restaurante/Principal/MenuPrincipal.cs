@@ -487,5 +487,17 @@ namespace Proyecto_Restaurante.Mantenimiento
             ReporteEstadoCuenta rec = new ReporteEstadoCuenta();
             rec.Show();
         }
+
+        private void CuentasVencidasCXC_Click(object sender, EventArgs e)
+        {
+            ReporteCuentaVencida cuentaVencida = new ReporteCuentaVencida();
+            cuentaVencida.Show();
+        }
+
+        private void ResumendeDeudaporCliente_Click(object sender, EventArgs e)
+        {
+            ReporteResumenDeudaCliente rpdc = new ReporteResumenDeudaCliente();
+            rpdc.Show();
+        }
     }
 }
