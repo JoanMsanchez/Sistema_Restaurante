@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
@@ -34,6 +35,10 @@ namespace Proyecto_Restaurante.Proceso
         private int _idCondicionActual = -1;     // ID de condición actual (sin combo)
         private int _diasCreditoActual = 0;      // días de crédito de la condición
         private const decimal ITBIS_RATE = 0.18m; // 18%
+
+        // ---- Tipos de movimiento inventario (según tus tablas) ----
+        private const int TIPO_SALIDA_VENTA = 1;
+        private const int TIPO_DEVOLUCION_CLIENTE = 2; // ← antes 6
 
         // Scroll infinito catálogo
         private int _page = 0;
@@ -65,6 +70,75 @@ namespace Proyecto_Restaurante.Proceso
             this.Load += ProcesoFacturacion_Load;
             this.Shown += ProcesoFacturacion_Shown;
             this.FormClosing += ProcesoFacturacion_FormClosing;
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = Color.FromArgb(255, 161, 43);
+        }
+
+        //Fields
+        private int bordeSize = 2;
+
+        //Drag Form
+        [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("User32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void panelFacturacion_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        //Overridden methods
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCCALCSIZE = 0x0083;
+            if (m.Msg == WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
+            {
+                return;
+            }
+            base.WndProc(ref m);
+        }
+
+        //Event methods
+        private void Producto_Resize(object sender, EventArgs e)
+        {
+            AdjustForm();
+        }
+
+        //Private methods
+        private void AdjustForm()
+        {
+            switch (this.WindowState)
+            {
+                case FormWindowState.Maximized:
+                    this.Padding = new Padding(0, 8, 8, 0);
+                    break;
+                case FormWindowState.Normal:
+                    if (this.Padding.Top != bordeSize)
+                        this.Padding = new Padding(bordeSize);
+                    break;
+
+            }
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMaximizar_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+                this.WindowState = FormWindowState.Maximized;
+            else
+                this.WindowState = FormWindowState.Normal;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         // Si el Designer aún llama a este handler viejo, lo puenteamos:
@@ -350,6 +424,191 @@ namespace Proyecto_Restaurante.Proceso
             cmd.ExecuteNonQuery();
         }
 
+        // --------- NUEVO: soporte a proveedor + agrupación estable ----------
+        // Obtiene proveedor del producto si no se pasó (si tu tabla producto no tiene id_proveedor, este método devuelve null)
+        private int? GetProveedorDeProducto(SqlConnection con, SqlTransaction tx, int idProducto)
+        {
+            using var cmd = new SqlCommand("SELECT TOP 1 id_proveedor FROM producto WHERE id_producto=@p", con, tx);
+            cmd.Parameters.AddWithValue("@p", idProducto);
+            var o = cmd.ExecuteScalar();
+            return (o == null || o == DBNull.Value) ? (int?)null : Convert.ToInt32(o);
+        }
+
+        // AGRUPA por orden+producto+tipo usando una clave al inicio de 'observaciones'
+        private void RegistrarMovInventario(
+            SqlConnection con, SqlTransaction tx,
+            int idProducto, int idTipoMov, decimal cantidad,
+            string observaciones, int? idProveedor = null)
+        {
+            if (cantidad <= 0m) return;
+
+            // 1) Clave estable SIN corchetes (evita comodines de LIKE)
+            //    Ej: {ORD:123|P:45|T:1}
+            string clave = $"{{ORD:{_idOrden}|P:{idProducto}|T:{idTipoMov}}}";
+            string obsFinal = $"{clave} {observaciones ?? ""}".Trim();
+
+            // 2) Resolver proveedor si no viene
+            int? prov = idProveedor ?? GetProveedorDeProducto(con, tx, idProducto);
+
+            // 3) Buscar una fila existente cuyo INICIO sea exactamente la clave
+            int? idMov = null;
+            using (var sel = new SqlCommand(@"
+        SELECT TOP (1) id_movimiento
+          FROM movimiento_inventario WITH (UPDLOCK, HOLDLOCK)
+         WHERE id_producto = @p
+           AND id_tipo_mov = @t
+           AND estado = 1
+           AND LEFT(CAST(observaciones AS nvarchar(4000)), LEN(@pref)) = @pref;", con, tx))
+            {
+                sel.Parameters.Add("@p", SqlDbType.Int).Value = idProducto;
+                sel.Parameters.Add("@t", SqlDbType.Int).Value = idTipoMov;
+                sel.Parameters.Add("@pref", SqlDbType.NVarChar, 200).Value = clave;
+
+                var o = sel.ExecuteScalar();
+                if (o != null && o != DBNull.Value) idMov = Convert.ToInt32(o);
+            }
+
+            if (idMov.HasValue)
+            {
+                // 4) Acumular cantidad y completar proveedor si estaba nulo
+                using var up = new SqlCommand(@"
+            UPDATE movimiento_inventario
+               SET cantidad = cantidad + @c,
+                   id_proveedor = COALESCE(id_proveedor, @prov)
+             WHERE id_movimiento = @id;", con, tx);
+                up.Parameters.Add("@c", SqlDbType.Decimal).Value = cantidad;
+                up.Parameters.Add("@prov", SqlDbType.Int).Value = (object)prov ?? DBNull.Value;
+                up.Parameters.Add("@id", SqlDbType.Int).Value = idMov.Value;
+                up.ExecuteNonQuery();
+            }
+            else
+            {
+                // 5) Insert único (con la clave al inicio)
+                using var ins = new SqlCommand(@"
+            INSERT INTO movimiento_inventario
+                (id_producto, id_tipo_mov, cantidad, fecha, id_proveedor, observaciones, estado)
+            VALUES
+                (@p, @t, @c, GETDATE(), @prov, @obs, 1);", con, tx);
+                ins.Parameters.Add("@p", SqlDbType.Int).Value = idProducto;
+                ins.Parameters.Add("@t", SqlDbType.Int).Value = idTipoMov;
+                ins.Parameters.Add("@c", SqlDbType.Decimal).Value = cantidad;
+                ins.Parameters.Add("@prov", SqlDbType.Int).Value = (object)prov ?? DBNull.Value;
+                ins.Parameters.Add("@obs", SqlDbType.NVarChar, 4000).Value = obsFinal;
+                ins.ExecuteNonQuery();
+            }
+        }
+
+        // ====== NUEVO: posteo diferido por DELTA al Guardar/Procesar ======
+        /// <summary>
+        /// Registra solo la diferencia entre lo ya asentado (salidas - devoluciones)
+        /// y la cantidad actual del detalle por producto.
+        /// </summary>
+        private void PostearMovimientosDelta(SqlConnection con, SqlTransaction tx)
+        {
+            // 1) Cantidades actuales del detalle por producto
+            var actuales = new Dictionary<int, decimal>();
+            using (var cmd = new SqlCommand(@"
+                SELECT id_producto, SUM(cantidad)
+                  FROM detalle_orden
+                 WHERE id_orden=@o AND estado=1
+                 GROUP BY id_producto;", con, tx))
+            {
+                cmd.Parameters.AddWithValue("@o", _idOrden);
+                using var rd = cmd.ExecuteReader();
+                while (rd.Read()) actuales[rd.GetInt32(0)] = rd.GetDecimal(1);
+            }
+
+            // 2) Para cada producto del detalle: calcular neto ya registrado (salida - devolución)
+            foreach (var kv in actuales)
+            {
+                int idProd = kv.Key;
+                decimal cantDeseada = kv.Value;
+
+                string pref = $"{{ORD:{_idOrden}|P:{idProd}|";
+
+                decimal netoAsentado = 0m;
+                using (var cmd = new SqlCommand(@"
+                    SELECT
+                      COALESCE(SUM(CASE WHEN id_tipo_mov = @tOut THEN cantidad END), 0)
+                      - COALESCE(SUM(CASE WHEN id_tipo_mov = @tIn  THEN cantidad END), 0)
+                    FROM movimiento_inventario
+                    WHERE id_producto=@p AND estado=1
+                      AND LEFT(CAST(observaciones AS nvarchar(4000)), LEN(@pref)) = @pref;", con, tx))
+                {
+                    cmd.Parameters.AddWithValue("@tOut", TIPO_SALIDA_VENTA);
+                    cmd.Parameters.AddWithValue("@tIn", TIPO_DEVOLUCION_CLIENTE);
+                    cmd.Parameters.AddWithValue("@p", idProd);
+                    cmd.Parameters.AddWithValue("@pref", pref);
+                    var o = cmd.ExecuteScalar();
+                    if (o != null && o != DBNull.Value) netoAsentado = Convert.ToDecimal(o);
+                }
+
+                if (cantDeseada > netoAsentado)
+                {
+                    // faltan salidas
+                    decimal delta = cantDeseada - netoAsentado;
+                    RegistrarMovInventario(con, tx, idProd, TIPO_SALIDA_VENTA, delta,
+                        $"Salida por venta - Orden #{_idOrden}");
+                }
+                else if (cantDeseada < netoAsentado)
+                {
+                    // sobran salidas → devoluciones por la diferencia
+                    decimal delta = netoAsentado - cantDeseada;
+                    RegistrarMovInventario(con, tx, idProd, TIPO_DEVOLUCION_CLIENTE, delta,
+                        $"Devolución cliente (Guardar/Procesar) - Orden #{_idOrden}");
+                }
+            }
+
+            // 3) Productos con movimientos asentados que ya no están en el detalle → devolver todo el neto
+            using (var productosAsentados = new SqlCommand(@"
+                SELECT DISTINCT id_producto
+                  FROM movimiento_inventario
+                 WHERE estado=1
+                   AND (id_tipo_mov=@tOut OR id_tipo_mov=@tIn)
+                   AND LEFT(CAST(observaciones AS nvarchar(4000)), LEN(@prefOrden)) = @prefOrden;", con, tx))
+            {
+                string prefOrden = $"{{ORD:{_idOrden}|P:";
+                productosAsentados.Parameters.AddWithValue("@tOut", TIPO_SALIDA_VENTA);
+                productosAsentados.Parameters.AddWithValue("@tIn", TIPO_DEVOLUCION_CLIENTE);
+                productosAsentados.Parameters.AddWithValue("@prefOrden", prefOrden);
+
+                using var rd = productosAsentados.ExecuteReader();
+                var lista = new List<int>();
+                while (rd.Read()) lista.Add(rd.GetInt32(0));
+                rd.Close();
+
+                foreach (var idProd in lista)
+                {
+                    if (actuales.ContainsKey(idProd)) continue; // ya contemplado
+
+                    string pref = $"{{ORD:{_idOrden}|P:{idProd}|";
+                    decimal netoAsentado = 0m;
+                    using (var cmd = new SqlCommand(@"
+                        SELECT
+                          COALESCE(SUM(CASE WHEN id_tipo_mov = @tOut THEN cantidad END), 0)
+                          - COALESCE(SUM(CASE WHEN id_tipo_mov = @tIn  THEN cantidad END), 0)
+                        FROM movimiento_inventario
+                        WHERE id_producto=@p AND estado=1
+                          AND LEFT(CAST(observaciones AS nvarchar(4000)), LEN(@pref)) = @pref;", con, tx))
+                    {
+                        cmd.Parameters.AddWithValue("@tOut", TIPO_SALIDA_VENTA);
+                        cmd.Parameters.AddWithValue("@tIn", TIPO_DEVOLUCION_CLIENTE);
+                        cmd.Parameters.AddWithValue("@p", idProd);
+                        cmd.Parameters.AddWithValue("@pref", pref);
+                        var o = cmd.ExecuteScalar();
+                        if (o != null && o != DBNull.Value) netoAsentado = Convert.ToDecimal(o);
+                    }
+
+                    if (netoAsentado > 0m)
+                    {
+                        RegistrarMovInventario(con, tx, idProd, TIPO_DEVOLUCION_CLIENTE, netoAsentado,
+                            $"Devolución cliente (Guardar/Procesar) - Orden #{_idOrden}");
+                    }
+                }
+            }
+        }
+        // -------------------------------------------------------------------
+
         private void VerificarYNotificarStockBajo(int idProducto)
         {
             try
@@ -603,6 +862,8 @@ namespace Proyecto_Restaurante.Proceso
                         ins.ExecuteNonQuery();
                     }
 
+                    // *** YA NO se registran movimientos aquí ***
+
                     RecalcularTotalOrden(con, tx);
                     tx.Commit();
                 }
@@ -652,11 +913,18 @@ namespace Proyecto_Restaurante.Proceso
                 using (var con = new SqlConnection(CS))
                 {
                     con.Open();
-                    var up = new SqlCommand("UPDATE orden SET id_cliente=@cli, id_condicion=@con WHERE id_orden=@o", con);
+                    using var tx = con.BeginTransaction();
+
+                    var up = new SqlCommand("UPDATE orden SET id_cliente=@cli, id_condicion=@con WHERE id_orden=@o", con, tx);
                     up.Parameters.AddWithValue("@cli", GetClienteIdDesdeCombo());
                     up.Parameters.AddWithValue("@con", _idCondicionActual);
                     up.Parameters.AddWithValue("@o", _idOrden);
                     up.ExecuteNonQuery();
+
+                    // ← Asentar movimientos por DELTA SOLO al Guardar
+                    PostearMovimientosDelta(con, tx);
+
+                    tx.Commit();
                 }
 
                 MessageBox.Show("Orden guardada.");
@@ -756,6 +1024,9 @@ namespace Proyecto_Restaurante.Proceso
                     PersistirClienteYCondicion(con, tx);
                     RecalcularTotalOrden(con, tx);
 
+                    // ← Asentar movimientos por DELTA SOLO al Procesar
+                    PostearMovimientosDelta(con, tx);
+
                     if (_autopago)
                     {
                         if (cmbMetodoPago?.SelectedValue == null && cmbMetodoPago != null && cmbMetodoPago.Items.Count > 0)
@@ -832,7 +1103,11 @@ namespace Proyecto_Restaurante.Proceso
                     var devolver = new List<(int p, decimal c)>();
                     while (rd.Read()) devolver.Add((rd.GetInt32(0), rd.GetDecimal(1)));
                     rd.Close();
-                    foreach (var it in devolver) DevolverStock(con, tx, it.p, it.c);
+                    foreach (var it in devolver)
+                    {
+                        DevolverStock(con, tx, it.p, it.c);
+                        // *** YA NO se registran movimientos aquí ***
+                    }
                 }
 
                 using (var cmd = new SqlCommand("DELETE FROM detalle_orden WHERE id_orden=@o", con, tx))
@@ -1049,6 +1324,7 @@ namespace Proyecto_Restaurante.Proceso
                     "SELECT s.descripcion AS sala, m.descripcion AS mesa " +
                     "FROM mesa m JOIN sala s ON s.id_sala = m.id_sala WHERE m.id_mesa=@m", con);
                 cmd.Parameters.AddWithValue("@m", _idMesa);
+
                 using var rd = cmd.ExecuteReader();
                 if (rd.Read() && lbSalaMesa != null)
                 {
@@ -1196,6 +1472,8 @@ namespace Proyecto_Restaurante.Proceso
                     up.Parameters.AddWithValue("@d", idDetalle);
                     up.ExecuteNonQuery();
 
+                    // *** YA NO se registran movimientos aquí ***
+
                     RecalcularTotalOrden(con, tx);
                     tx.Commit();
 
@@ -1209,7 +1487,10 @@ namespace Proyecto_Restaurante.Proceso
                     if (nueva <= 0m)
                     {
                         // Quitar línea
-                        using var del = new SqlCommand("UPDATE detalle_orden SET estado=0 WHERE id_detalle=@d", con, tx);
+                        using var del = new SqlCommand(@"
+                            UPDATE detalle_orden
+                               SET estado=0
+                             WHERE id_detalle=@d;", con, tx);
                         del.Parameters.AddWithValue("@d", idDetalle);
                         del.ExecuteNonQuery();
                     }
@@ -1226,6 +1507,9 @@ namespace Proyecto_Restaurante.Proceso
                     }
 
                     DevolverStock(con, tx, idProd, devolver);
+
+                    // *** YA NO se registran movimientos aquí ***
+
                     RecalcularTotalOrden(con, tx);
                     tx.Commit();
                 }
@@ -1260,7 +1544,11 @@ namespace Proyecto_Restaurante.Proceso
                     var devolver = new List<(int p, decimal c)>();
                     while (rd.Read()) devolver.Add((rd.GetInt32(0), rd.GetDecimal(1)));
                     rd.Close();
-                    foreach (var it in devolver) DevolverStock(con, tx, it.p, it.c);
+                    foreach (var it in devolver)
+                    {
+                        DevolverStock(con, tx, it.p, it.c);
+                        // *** YA NO se registran movimientos aquí ***
+                    }
                 }
 
                 using (var cmd = new SqlCommand("DELETE FROM detalle_orden WHERE id_orden=@o", con, tx))
@@ -1279,6 +1567,5 @@ namespace Proyecto_Restaurante.Proceso
                 // no bloquear el cierre
             }
         }
-
     }
 }

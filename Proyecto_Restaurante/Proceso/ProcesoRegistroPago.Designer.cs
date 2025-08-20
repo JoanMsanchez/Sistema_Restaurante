@@ -54,7 +54,7 @@
             dgvDistribucion = new DataGridView();
             label10 = new Label();
             label7 = new Label();
-            Titulo = new Panel();
+            Cabecera = new Panel();
             txtNota = new TextBox();
             label4 = new Label();
             txtMontoTotal = new TextBox();
@@ -68,7 +68,7 @@
             label1 = new Label();
             btnBuscarCliente = new FontAwesome.Sharp.IconButton();
             cboClienteFiltro = new ComboBox();
-            panel1 = new Panel();
+            Titulo = new Panel();
             btnMaximizar = new FontAwesome.Sharp.IconButton();
             btnCerrar = new FontAwesome.Sharp.IconButton();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
@@ -79,8 +79,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvOrdenesPendientes).BeginInit();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDistribucion).BeginInit();
+            Cabecera.SuspendLayout();
             Titulo.SuspendLayout();
-            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -457,29 +457,29 @@
             label7.TabIndex = 25;
             label7.Text = "Dristribucion del pago";
             // 
-            // Titulo
+            // Cabecera
             // 
-            Titulo.BackColor = Color.FromArgb(255, 161, 43);
-            Titulo.BorderStyle = BorderStyle.Fixed3D;
-            Titulo.Controls.Add(txtNota);
-            Titulo.Controls.Add(label4);
-            Titulo.Controls.Add(txtMontoTotal);
-            Titulo.Controls.Add(label3);
-            Titulo.Controls.Add(label2);
-            Titulo.Controls.Add(cboMetodoPago);
-            Titulo.Controls.Add(label12);
-            Titulo.Controls.Add(txtEmpleado);
-            Titulo.Controls.Add(txtFechaPago);
-            Titulo.Controls.Add(label8);
-            Titulo.Controls.Add(label1);
-            Titulo.Controls.Add(btnBuscarCliente);
-            Titulo.Controls.Add(cboClienteFiltro);
-            Titulo.Controls.Add(panel1);
-            Titulo.Dock = DockStyle.Top;
-            Titulo.Location = new Point(0, 0);
-            Titulo.Name = "Titulo";
-            Titulo.Size = new Size(1731, 260);
-            Titulo.TabIndex = 1;
+            Cabecera.BackColor = Color.FromArgb(255, 161, 43);
+            Cabecera.BorderStyle = BorderStyle.Fixed3D;
+            Cabecera.Controls.Add(txtNota);
+            Cabecera.Controls.Add(label4);
+            Cabecera.Controls.Add(txtMontoTotal);
+            Cabecera.Controls.Add(label3);
+            Cabecera.Controls.Add(label2);
+            Cabecera.Controls.Add(cboMetodoPago);
+            Cabecera.Controls.Add(label12);
+            Cabecera.Controls.Add(txtEmpleado);
+            Cabecera.Controls.Add(txtFechaPago);
+            Cabecera.Controls.Add(label8);
+            Cabecera.Controls.Add(label1);
+            Cabecera.Controls.Add(btnBuscarCliente);
+            Cabecera.Controls.Add(cboClienteFiltro);
+            Cabecera.Controls.Add(Titulo);
+            Cabecera.Dock = DockStyle.Top;
+            Cabecera.Location = new Point(0, 0);
+            Cabecera.Name = "Cabecera";
+            Cabecera.Size = new Size(1731, 260);
+            Cabecera.TabIndex = 1;
             // 
             // txtNota
             // 
@@ -643,18 +643,19 @@
             cboClienteFiltro.Size = new Size(258, 33);
             cboClienteFiltro.TabIndex = 8;
             // 
-            // panel1
+            // Titulo
             // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(btnMaximizar);
-            panel1.Controls.Add(btnCerrar);
-            panel1.Controls.Add(btnMinimizar);
-            panel1.Controls.Add(label6);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1727, 70);
-            panel1.TabIndex = 0;
+            Titulo.BackColor = Color.White;
+            Titulo.Controls.Add(btnMaximizar);
+            Titulo.Controls.Add(btnCerrar);
+            Titulo.Controls.Add(btnMinimizar);
+            Titulo.Controls.Add(label6);
+            Titulo.Dock = DockStyle.Top;
+            Titulo.Location = new Point(0, 0);
+            Titulo.Name = "Titulo";
+            Titulo.Size = new Size(1727, 70);
+            Titulo.TabIndex = 0;
+            Titulo.MouseDown += Titulo_MouseDown;
             // 
             // btnMaximizar
             // 
@@ -672,6 +673,7 @@
             btnMaximizar.Size = new Size(45, 25);
             btnMaximizar.TabIndex = 15;
             btnMaximizar.UseVisualStyleBackColor = false;
+            btnMaximizar.Click += btnMaximizar_Click;
             // 
             // btnCerrar
             // 
@@ -689,6 +691,7 @@
             btnCerrar.Size = new Size(45, 25);
             btnCerrar.TabIndex = 16;
             btnCerrar.UseVisualStyleBackColor = false;
+            btnCerrar.Click += btnCerrar_Click;
             // 
             // btnMinimizar
             // 
@@ -706,6 +709,7 @@
             btnMinimizar.Size = new Size(45, 25);
             btnMinimizar.TabIndex = 14;
             btnMinimizar.UseVisualStyleBackColor = false;
+            btnMinimizar.Click += btnMinimizar_Click;
             // 
             // label6
             // 
@@ -724,7 +728,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1731, 879);
-            Controls.Add(Titulo);
+            Controls.Add(Cabecera);
             Controls.Add(tableLayoutPanel1);
             Name = "ProcesoRegistroPago";
             Text = "ProcesoRegistroPago";
@@ -737,18 +741,18 @@
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDistribucion).EndInit();
+            Cabecera.ResumeLayout(false);
+            Cabecera.PerformLayout();
             Titulo.ResumeLayout(false);
             Titulo.PerformLayout();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
+        private Panel Cabecera;
         private Panel Titulo;
-        private Panel panel1;
         private Label label6;
         private FontAwesome.Sharp.IconButton btnMaximizar;
         private FontAwesome.Sharp.IconButton btnCerrar;

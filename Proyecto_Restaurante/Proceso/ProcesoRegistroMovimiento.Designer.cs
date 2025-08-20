@@ -89,8 +89,9 @@ namespace Proyecto_Restaurante.Proceso
             panel2.Controls.Add(label1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(4, 4, 4, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(935, 692);
+            panel2.Size = new Size(1169, 865);
             panel2.TabIndex = 3;
             // 
             // dgvProductoselect
@@ -99,11 +100,12 @@ namespace Proyecto_Restaurante.Proceso
             dgvProductoselect.BackgroundColor = Color.White;
             dgvProductoselect.BorderStyle = BorderStyle.None;
             dgvProductoselect.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductoselect.Location = new Point(181, 384);
+            dgvProductoselect.Location = new Point(226, 480);
+            dgvProductoselect.Margin = new Padding(4, 4, 4, 4);
             dgvProductoselect.Name = "dgvProductoselect";
             dgvProductoselect.RowHeadersVisible = false;
             dgvProductoselect.RowHeadersWidth = 51;
-            dgvProductoselect.Size = new Size(619, 234);
+            dgvProductoselect.Size = new Size(774, 292);
             dgvProductoselect.TabIndex = 84;
             // 
             // label4
@@ -111,9 +113,10 @@ namespace Proyecto_Restaurante.Proceso
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(485, 212);
+            label4.Location = new Point(606, 265);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(128, 25);
+            label4.Size = new Size(152, 29);
             label4.TabIndex = 83;
             label4.Text = "Proveedor";
             // 
@@ -125,9 +128,10 @@ namespace Proyecto_Restaurante.Proceso
             comboProveedor.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboProveedor.ForeColor = Color.White;
             comboProveedor.FormattingEnabled = true;
-            comboProveedor.Location = new Point(619, 209);
+            comboProveedor.Location = new Point(774, 261);
+            comboProveedor.Margin = new Padding(4, 4, 4, 4);
             comboProveedor.Name = "comboProveedor";
-            comboProveedor.Size = new Size(171, 28);
+            comboProveedor.Size = new Size(213, 33);
             comboProveedor.TabIndex = 82;
             // 
             // label3
@@ -135,9 +139,10 @@ namespace Proyecto_Restaurante.Proceso
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(345, 338);
+            label3.Location = new Point(431, 422);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(268, 25);
+            label3.Size = new Size(317, 29);
             label3.TabIndex = 81;
             label3.Text = "Producto Seleccionado";
             // 
@@ -145,9 +150,10 @@ namespace Proyecto_Restaurante.Proceso
             // 
             panel3.BackColor = Color.White;
             panel3.ForeColor = Color.White;
-            panel3.Location = new Point(132, 115);
+            panel3.Location = new Point(165, 144);
+            panel3.Margin = new Padding(4, 4, 4, 4);
             panel3.Name = "panel3";
-            panel3.Size = new Size(189, 2);
+            panel3.Size = new Size(236, 2);
             panel3.TabIndex = 80;
             // 
             // buscar
@@ -156,9 +162,10 @@ namespace Proyecto_Restaurante.Proceso
             buscar.BorderStyle = BorderStyle.None;
             buscar.Font = new Font("Verdana", 10.2F);
             buscar.ForeColor = Color.White;
-            buscar.Location = new Point(132, 91);
+            buscar.Location = new Point(165, 114);
+            buscar.Margin = new Padding(4, 4, 4, 4);
             buscar.Name = "buscar";
-            buscar.Size = new Size(186, 21);
+            buscar.Size = new Size(232, 25);
             buscar.TabIndex = 79;
             buscar.TextChanged += buscar_TextChanged;
             // 
@@ -169,9 +176,11 @@ namespace Proyecto_Restaurante.Proceso
             listSugerencia.Font = new Font("Verdana", 10.2F);
             listSugerencia.ForeColor = Color.White;
             listSugerencia.FormattingEnabled = true;
-            listSugerencia.Location = new Point(132, 132);
+            listSugerencia.ItemHeight = 25;
+            listSugerencia.Location = new Point(165, 165);
+            listSugerencia.Margin = new Padding(4, 4, 4, 4);
             listSugerencia.Name = "listSugerencia";
-            listSugerencia.Size = new Size(186, 60);
+            listSugerencia.Size = new Size(232, 75);
             listSugerencia.TabIndex = 78;
             listSugerencia.MouseDoubleClick += listSugerencia_MouseDoubleClick;
             // 
@@ -187,10 +196,10 @@ namespace Proyecto_Restaurante.Proceso
             btnConsultaProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnConsultaProducto.IconSize = 30;
             btnConsultaProducto.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConsultaProducto.Location = new Point(326, 86);
+            btnConsultaProducto.Location = new Point(408, 108);
             btnConsultaProducto.Margin = new Padding(2);
             btnConsultaProducto.Name = "btnConsultaProducto";
-            btnConsultaProducto.Size = new Size(39, 36);
+            btnConsultaProducto.Size = new Size(49, 45);
             btnConsultaProducto.TabIndex = 77;
             btnConsultaProducto.UseVisualStyleBackColor = false;
             btnConsultaProducto.Click += btnConsultaProducto_Click;
@@ -198,9 +207,10 @@ namespace Proyecto_Restaurante.Proceso
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(792, 50);
+            pictureBox1.Location = new Point(990, 62);
+            pictureBox1.Margin = new Padding(4, 4, 4, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.Size = new Size(179, 120);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 70;
             pictureBox1.TabStop = false;
@@ -216,9 +226,10 @@ namespace Proyecto_Restaurante.Proceso
             btnLimpiar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnLimpiar.IconSize = 35;
             btnLimpiar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLimpiar.Location = new Point(162, 624);
+            btnLimpiar.Location = new Point(202, 780);
+            btnLimpiar.Margin = new Padding(4, 4, 4, 4);
             btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.Size = new Size(140, 56);
+            btnLimpiar.Size = new Size(175, 70);
             btnLimpiar.TabIndex = 69;
             btnLimpiar.Text = "     Limpiar";
             btnLimpiar.UseVisualStyleBackColor = true;
@@ -235,9 +246,10 @@ namespace Proyecto_Restaurante.Proceso
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnGuardar.IconSize = 35;
             btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGuardar.Location = new Point(11, 624);
+            btnGuardar.Location = new Point(14, 780);
+            btnGuardar.Margin = new Padding(4, 4, 4, 4);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(145, 56);
+            btnGuardar.Size = new Size(181, 70);
             btnGuardar.TabIndex = 68;
             btnGuardar.Text = "     Guardar";
             btnGuardar.UseVisualStyleBackColor = true;
@@ -248,9 +260,10 @@ namespace Proyecto_Restaurante.Proceso
             inactivo.AutoSize = true;
             inactivo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             inactivo.ForeColor = Color.White;
-            inactivo.Location = new Point(729, 300);
+            inactivo.Location = new Point(911, 375);
+            inactivo.Margin = new Padding(4, 4, 4, 4);
             inactivo.Name = "inactivo";
-            inactivo.Size = new Size(109, 24);
+            inactivo.Size = new Size(130, 29);
             inactivo.TabIndex = 67;
             inactivo.Text = "Inactivo";
             inactivo.UseVisualStyleBackColor = true;
@@ -261,9 +274,10 @@ namespace Proyecto_Restaurante.Proceso
             activo.Checked = true;
             activo.Font = new Font("Verdana", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             activo.ForeColor = Color.White;
-            activo.Location = new Point(729, 270);
+            activo.Location = new Point(911, 338);
+            activo.Margin = new Padding(4, 4, 4, 4);
             activo.Name = "activo";
-            activo.Size = new Size(90, 24);
+            activo.Size = new Size(108, 29);
             activo.TabIndex = 66;
             activo.TabStop = true;
             activo.Text = "Activo";
@@ -274,9 +288,10 @@ namespace Proyecto_Restaurante.Proceso
             label9.AutoSize = true;
             label9.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label9.ForeColor = Color.White;
-            label9.Location = new Point(635, 285);
+            label9.Location = new Point(794, 356);
+            label9.Margin = new Padding(4, 0, 4, 0);
             label9.Name = "label9";
-            label9.Size = new Size(88, 25);
+            label9.Size = new Size(103, 29);
             label9.TabIndex = 65;
             label9.Text = "Estado";
             // 
@@ -285,10 +300,11 @@ namespace Proyecto_Restaurante.Proceso
             observaciones.BackColor = Color.FromArgb(255, 161, 43);
             observaciones.Font = new Font("Verdana", 10.2F);
             observaciones.ForeColor = Color.White;
-            observaciones.Location = new Point(562, 86);
+            observaciones.Location = new Point(702, 108);
+            observaciones.Margin = new Padding(4, 4, 4, 4);
             observaciones.Multiline = true;
             observaciones.Name = "observaciones";
-            observaciones.Size = new Size(214, 80);
+            observaciones.Size = new Size(266, 99);
             observaciones.TabIndex = 14;
             // 
             // fecha
@@ -297,10 +313,11 @@ namespace Proyecto_Restaurante.Proceso
             fecha.BorderStyle = BorderStyle.None;
             fecha.Font = new Font("Verdana", 10.2F);
             fecha.ForeColor = Color.White;
-            fecha.Location = new Point(168, 313);
+            fecha.Location = new Point(210, 391);
+            fecha.Margin = new Padding(4, 4, 4, 4);
             fecha.Name = "fecha";
             fecha.ReadOnly = true;
-            fecha.Size = new Size(151, 21);
+            fecha.Size = new Size(189, 25);
             fecha.TabIndex = 13;
             // 
             // comboTipoMovimiento
@@ -311,9 +328,10 @@ namespace Proyecto_Restaurante.Proceso
             comboTipoMovimiento.Font = new Font("Verdana", 10.2F);
             comboTipoMovimiento.ForeColor = Color.White;
             comboTipoMovimiento.FormattingEnabled = true;
-            comboTipoMovimiento.Location = new Point(251, 209);
+            comboTipoMovimiento.Location = new Point(314, 261);
+            comboTipoMovimiento.Margin = new Padding(4, 4, 4, 4);
             comboTipoMovimiento.Name = "comboTipoMovimiento";
-            comboTipoMovimiento.Size = new Size(172, 28);
+            comboTipoMovimiento.Size = new Size(214, 33);
             comboTipoMovimiento.TabIndex = 8;
             // 
             // label8
@@ -321,9 +339,10 @@ namespace Proyecto_Restaurante.Proceso
             label8.AutoSize = true;
             label8.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label8.ForeColor = Color.White;
-            label8.Location = new Point(380, 92);
+            label8.Location = new Point(475, 115);
+            label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(176, 25);
+            label8.Size = new Size(209, 29);
             label8.TabIndex = 6;
             label8.Text = "Observaciones";
             // 
@@ -332,9 +351,10 @@ namespace Proyecto_Restaurante.Proceso
             label7.AutoSize = true;
             label7.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label7.ForeColor = Color.White;
-            label7.Location = new Point(181, 285);
+            label7.Location = new Point(226, 356);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(77, 25);
+            label7.Size = new Size(92, 29);
             label7.TabIndex = 5;
             label7.Text = "Fecha";
             // 
@@ -343,9 +363,10 @@ namespace Proyecto_Restaurante.Proceso
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(12, 212);
+            label2.Location = new Point(15, 265);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(233, 25);
+            label2.Size = new Size(275, 29);
             label2.TabIndex = 1;
             label2.Text = "Tipo de Movimiento";
             // 
@@ -354,9 +375,10 @@ namespace Proyecto_Restaurante.Proceso
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(12, 92);
+            label1.Location = new Point(15, 115);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(114, 25);
+            label1.Size = new Size(134, 29);
             label1.TabIndex = 0;
             label1.Text = "Producto";
             // 
@@ -371,17 +393,19 @@ namespace Proyecto_Restaurante.Proceso
             panelMovimiento.Location = new Point(0, 0);
             panelMovimiento.Margin = new Padding(2);
             panelMovimiento.Name = "panelMovimiento";
-            panelMovimiento.Size = new Size(935, 56);
+            panelMovimiento.Size = new Size(1169, 70);
             panelMovimiento.TabIndex = 4;
+            panelMovimiento.MouseDown += panelMovimiento_MouseDown;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = Color.FromArgb(255, 161, 43);
-            label6.Location = new Point(12, 10);
+            label6.Location = new Point(15, 12);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(656, 36);
+            label6.Size = new Size(798, 44);
             label6.TabIndex = 2;
             label6.Text = "REGISTRO MOVIMIENTO INVENTARIO";
             // 
@@ -395,12 +419,13 @@ namespace Proyecto_Restaurante.Proceso
             btnMaximizar.IconColor = Color.OldLace;
             btnMaximizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizar.IconSize = 20;
-            btnMaximizar.Location = new Point(868, 0);
+            btnMaximizar.Location = new Point(1085, 0);
             btnMaximizar.Margin = new Padding(2);
             btnMaximizar.Name = "btnMaximizar";
-            btnMaximizar.Size = new Size(36, 20);
+            btnMaximizar.Size = new Size(45, 25);
             btnMaximizar.TabIndex = 12;
             btnMaximizar.UseVisualStyleBackColor = false;
+            btnMaximizar.Click += btnMaximizar_Click;
             // 
             // btnCerrar
             // 
@@ -412,12 +437,13 @@ namespace Proyecto_Restaurante.Proceso
             btnCerrar.IconColor = Color.OldLace;
             btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrar.IconSize = 20;
-            btnCerrar.Location = new Point(898, 0);
+            btnCerrar.Location = new Point(1122, 0);
             btnCerrar.Margin = new Padding(2);
             btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(36, 20);
+            btnCerrar.Size = new Size(45, 25);
             btnCerrar.TabIndex = 13;
             btnCerrar.UseVisualStyleBackColor = false;
+            btnCerrar.Click += btnCerrar_Click;
             // 
             // btnMinimizar
             // 
@@ -429,20 +455,22 @@ namespace Proyecto_Restaurante.Proceso
             btnMinimizar.IconColor = Color.OldLace;
             btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizar.IconSize = 20;
-            btnMinimizar.Location = new Point(833, 0);
+            btnMinimizar.Location = new Point(1041, 0);
             btnMinimizar.Margin = new Padding(2);
             btnMinimizar.Name = "btnMinimizar";
-            btnMinimizar.Size = new Size(36, 20);
+            btnMinimizar.Size = new Size(45, 25);
             btnMinimizar.TabIndex = 11;
             btnMinimizar.UseVisualStyleBackColor = false;
+            btnMinimizar.Click += btnMinimizar_Click;
             // 
             // ProcesoRegistroMovimiento
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(935, 692);
+            ClientSize = new Size(1169, 865);
             Controls.Add(panelMovimiento);
             Controls.Add(panel2);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "ProcesoRegistroMovimiento";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ProcesoRegistroMovimiento";

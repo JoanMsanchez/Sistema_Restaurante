@@ -451,6 +451,7 @@ namespace Proyecto_Restaurante.Proceso
             panelFacturacion.Size = new Size(1675, 70);
             panelFacturacion.TabIndex = 16;
             panelFacturacion.Paint += panel1_Paint;
+            panelFacturacion.MouseDown += panelFacturacion_MouseDown;
             // 
             // label14
             // 
@@ -480,6 +481,7 @@ namespace Proyecto_Restaurante.Proceso
             btnMaximizar.Size = new Size(45, 25);
             btnMaximizar.TabIndex = 15;
             btnMaximizar.UseVisualStyleBackColor = false;
+            btnMaximizar.Click += btnMaximizar_Click;
             // 
             // btnCerrar
             // 
@@ -497,6 +499,7 @@ namespace Proyecto_Restaurante.Proceso
             btnCerrar.Size = new Size(45, 25);
             btnCerrar.TabIndex = 16;
             btnCerrar.UseVisualStyleBackColor = false;
+            btnCerrar.Click += btnCerrar_Click;
             // 
             // btnMinimizar
             // 
@@ -514,6 +517,7 @@ namespace Proyecto_Restaurante.Proceso
             btnMinimizar.Size = new Size(45, 25);
             btnMinimizar.TabIndex = 14;
             btnMinimizar.UseVisualStyleBackColor = false;
+            btnMinimizar.Click += btnMinimizar_Click;
             // 
             // label13
             // 
@@ -535,7 +539,7 @@ namespace Proyecto_Restaurante.Proceso
             lbSalaMesa.Location = new Point(355, 22);
             lbSalaMesa.Margin = new Padding(2, 0, 2, 0);
             lbSalaMesa.Name = "lbSalaMesa";
-            lbSalaMesa.Size = new Size(565, 38);
+            lbSalaMesa.Size = new Size(310, 38);
             lbSalaMesa.TabIndex = 0;
             // 
             // label12

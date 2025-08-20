@@ -11,7 +11,6 @@ namespace Proyecto_Restaurante.Consulta
 {
     public partial class ConsultaCliente : Form
     {
-        private int bordeSize = 2;
 
         // Cadena de conexión: usa la misma
         private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
@@ -33,12 +32,6 @@ namespace Proyecto_Restaurante.Consulta
             this._selectorMode = selectorMode;
             this.mantenimientoClienteForm = mantenimientoForm;
 
-            this.Padding = new Padding(bordeSize);
-            this.BackColor = Color.FromArgb(255, 161, 43);
-
-            // Eventos de UI (drag)
-            this.panelConsultaCliente.MouseDown += panelConsultaCliente_MouseDown;
-
             // Cargar datos
             llenar_tabla_datagridview();
 
@@ -47,9 +40,16 @@ namespace Proyecto_Restaurante.Consulta
             this.buscar.TextChanged += buscar_TextChanged;
             this.buscaNombre.CheckedChanged += buscaNombre_CheckedChanged;
             this.buscaCondicion.CheckedChanged += buscaCondicion_CheckedChanged;
+
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = Color.FromArgb(255, 161, 43);
         }
 
-        // Drag Form
+        //Fields
+        private int bordeSize = 2;
+
+
+        //Drag Form
         [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
 
@@ -60,6 +60,57 @@ namespace Proyecto_Restaurante.Consulta
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        //Overridden methods
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCCALCSIZE = 0x0083;
+            if (m.Msg == WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
+            {
+                return;
+            }
+            base.WndProc(ref m);
+        }
+
+        //Event methods
+        private void Producto_Resize(object sender, EventArgs e)
+        {
+            AdjustForm();
+        }
+
+        //Private methods
+        private void AdjustForm()
+        {
+            switch (this.WindowState)
+            {
+                case FormWindowState.Maximized:
+                    this.Padding = new Padding(0, 8, 8, 0);
+                    break;
+                case FormWindowState.Normal:
+                    if (this.Padding.Top != bordeSize)
+                        this.Padding = new Padding(bordeSize);
+                    break;
+
+            }
+        }
+
+        private void btnMinimizarCategoria_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMaximizarCategoria_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+                this.WindowState = FormWindowState.Maximized;
+            else
+                this.WindowState = FormWindowState.Normal;
+        }
+
+        private void btnCerrarCategoria_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         // ===== Datos =====
@@ -216,11 +267,5 @@ namespace Proyecto_Restaurante.Consulta
             mantenimientoClienteForm.CargarDatosCliente(idCliente, nombre, telefono, email, direccion, idCondicion, estado);
             this.Close();
         }
-
-        // Botones de la barra (si los tienes)
-        private void btnMinimizarCategoria_Click(object sender, EventArgs e) => this.WindowState = FormWindowState.Minimized;
-        private void btnMaximizarCategoria_Click(object sender, EventArgs e) =>
-            this.WindowState = (this.WindowState == FormWindowState.Normal) ? FormWindowState.Maximized : FormWindowState.Normal;
-        private void btnCerrarCategoria_Click(object sender, EventArgs e) => this.Close();
     }
 }

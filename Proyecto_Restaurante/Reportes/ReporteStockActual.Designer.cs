@@ -31,14 +31,14 @@
             dgvReporteProducto = new DataGridView();
             pdf = new FontAwesome.Sharp.IconButton();
             panel1 = new Panel();
-            panel2 = new Panel();
-            label1 = new Label();
+            Titulo = new Panel();
             btnMaximizarUnidadMedida = new FontAwesome.Sharp.IconButton();
             btnCerrarUnidadMedida = new FontAwesome.Sharp.IconButton();
             btnMinimizarUnidadMedida = new FontAwesome.Sharp.IconButton();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvReporteProducto).BeginInit();
             panel1.SuspendLayout();
-            panel2.SuspendLayout();
+            Titulo.SuspendLayout();
             SuspendLayout();
             // 
             // dgvReporteProducto
@@ -49,7 +49,7 @@
             dgvReporteProducto.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvReporteProducto.EnableHeadersVisualStyles = false;
             dgvReporteProducto.Location = new Point(78, 168);
-            dgvReporteProducto.Margin = new Padding(4, 4, 4, 4);
+            dgvReporteProducto.Margin = new Padding(4);
             dgvReporteProducto.Name = "dgvReporteProducto";
             dgvReporteProducto.ReadOnly = true;
             dgvReporteProducto.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -69,7 +69,7 @@
             pdf.IconColor = Color.Black;
             pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
             pdf.Location = new Point(842, 610);
-            pdf.Margin = new Padding(4, 4, 4, 4);
+            pdf.Margin = new Padding(4);
             pdf.Name = "pdf";
             pdf.Size = new Size(122, 65);
             pdf.TabIndex = 1;
@@ -83,35 +83,24 @@
             panel1.Controls.Add(pdf);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
             panel1.Size = new Size(1040, 698);
             panel1.TabIndex = 2;
             // 
-            // panel2
+            // Titulo
             // 
-            panel2.BackColor = Color.White;
-            panel2.Controls.Add(btnMaximizarUnidadMedida);
-            panel2.Controls.Add(btnCerrarUnidadMedida);
-            panel2.Controls.Add(btnMinimizarUnidadMedida);
-            panel2.Controls.Add(label1);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1040, 68);
-            panel2.TabIndex = 3;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.FromArgb(255, 161, 43);
-            label1.Location = new Point(13, 9);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(593, 44);
-            label1.TabIndex = 2;
-            label1.Text = "REPORTE DE STOCK ACTUAL";
+            Titulo.BackColor = Color.White;
+            Titulo.Controls.Add(btnMaximizarUnidadMedida);
+            Titulo.Controls.Add(btnCerrarUnidadMedida);
+            Titulo.Controls.Add(btnMinimizarUnidadMedida);
+            Titulo.Controls.Add(label1);
+            Titulo.Dock = DockStyle.Top;
+            Titulo.Location = new Point(0, 0);
+            Titulo.Name = "Titulo";
+            Titulo.Size = new Size(1040, 68);
+            Titulo.TabIndex = 3;
+            Titulo.MouseDown += Titulo_MouseDown;
             // 
             // btnMaximizarUnidadMedida
             // 
@@ -129,6 +118,7 @@
             btnMaximizarUnidadMedida.Size = new Size(45, 25);
             btnMaximizarUnidadMedida.TabIndex = 15;
             btnMaximizarUnidadMedida.UseVisualStyleBackColor = false;
+            btnMaximizarUnidadMedida.Click += btnMaximizarUnidadMedida_Click;
             // 
             // btnCerrarUnidadMedida
             // 
@@ -146,6 +136,7 @@
             btnCerrarUnidadMedida.Size = new Size(45, 25);
             btnCerrarUnidadMedida.TabIndex = 16;
             btnCerrarUnidadMedida.UseVisualStyleBackColor = false;
+            btnCerrarUnidadMedida.Click += btnCerrarUnidadMedida_Click;
             // 
             // btnMinimizarUnidadMedida
             // 
@@ -163,6 +154,19 @@
             btnMinimizarUnidadMedida.Size = new Size(45, 25);
             btnMinimizarUnidadMedida.TabIndex = 14;
             btnMinimizarUnidadMedida.UseVisualStyleBackColor = false;
+            btnMinimizarUnidadMedida.Click += btnMinimizarUnidadMedida_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Verdana", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(255, 161, 43);
+            label1.Location = new Point(13, 9);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(593, 44);
+            label1.TabIndex = 2;
+            label1.Text = "REPORTE DE STOCK ACTUAL";
             // 
             // ReporteStockActual
             // 
@@ -170,16 +174,16 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
             ClientSize = new Size(1040, 698);
-            Controls.Add(panel2);
+            Controls.Add(Titulo);
             Controls.Add(panel1);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "ReporteStockActual";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ReporteStockActual";
             ((System.ComponentModel.ISupportInitialize)dgvReporteProducto).EndInit();
             panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            Titulo.ResumeLayout(false);
+            Titulo.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -188,7 +192,7 @@
         private DataGridView dgvReporteProducto;
         private FontAwesome.Sharp.IconButton pdf;
         private Panel panel1;
-        private Panel panel2;
+        private Panel Titulo;
         private Label label1;
         private FontAwesome.Sharp.IconButton btnMaximizarUnidadMedida;
         private FontAwesome.Sharp.IconButton btnCerrarUnidadMedida;

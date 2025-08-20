@@ -38,14 +38,14 @@
             rbEntrada = new RadioButton();
             dgvReporteEntradaySalida = new DataGridView();
             pdf = new FontAwesome.Sharp.IconButton();
-            panel2 = new Panel();
+            Titulo = new Panel();
+            btnMaximizar = new FontAwesome.Sharp.IconButton();
+            btnCerrar = new FontAwesome.Sharp.IconButton();
+            btnMinimizar = new FontAwesome.Sharp.IconButton();
             label3 = new Label();
-            btnMaximizarUnidadMedida = new FontAwesome.Sharp.IconButton();
-            btnCerrarUnidadMedida = new FontAwesome.Sharp.IconButton();
-            btnMinimizarUnidadMedida = new FontAwesome.Sharp.IconButton();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReporteEntradaySalida).BeginInit();
-            panel2.SuspendLayout();
+            Titulo.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -61,7 +61,7 @@
             panel1.Controls.Add(pdf);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
             panel1.Size = new Size(1116, 893);
             panel1.TabIndex = 0;
@@ -73,7 +73,7 @@
             rbTodo.Font = new Font("Verdana", 12F, FontStyle.Bold);
             rbTodo.ForeColor = Color.White;
             rbTodo.Location = new Point(708, 179);
-            rbTodo.Margin = new Padding(4, 4, 4, 4);
+            rbTodo.Margin = new Padding(4);
             rbTodo.Name = "rbTodo";
             rbTodo.Size = new Size(103, 33);
             rbTodo.TabIndex = 10;
@@ -97,7 +97,7 @@
             // 
             dtpHasta.CalendarFont = new Font("Verdana", 10.2F);
             dtpHasta.Location = new Point(275, 269);
-            dtpHasta.Margin = new Padding(4, 4, 4, 4);
+            dtpHasta.Margin = new Padding(4);
             dtpHasta.Name = "dtpHasta";
             dtpHasta.Size = new Size(362, 31);
             dtpHasta.TabIndex = 8;
@@ -118,7 +118,7 @@
             // 
             dtpDesde.CalendarFont = new Font("Verdana", 10.2F);
             dtpDesde.Location = new Point(275, 179);
-            dtpDesde.Margin = new Padding(4, 4, 4, 4);
+            dtpDesde.Margin = new Padding(4);
             dtpDesde.Name = "dtpDesde";
             dtpDesde.Size = new Size(362, 31);
             dtpDesde.TabIndex = 6;
@@ -129,7 +129,7 @@
             rbSalida.Font = new Font("Verdana", 12F, FontStyle.Bold);
             rbSalida.ForeColor = Color.White;
             rbSalida.Location = new Point(708, 267);
-            rbSalida.Margin = new Padding(4, 4, 4, 4);
+            rbSalida.Margin = new Padding(4);
             rbSalida.Name = "rbSalida";
             rbSalida.Size = new Size(120, 33);
             rbSalida.TabIndex = 5;
@@ -143,7 +143,7 @@
             rbEntrada.Font = new Font("Verdana", 12F, FontStyle.Bold);
             rbEntrada.ForeColor = Color.White;
             rbEntrada.Location = new Point(708, 223);
-            rbEntrada.Margin = new Padding(4, 4, 4, 4);
+            rbEntrada.Margin = new Padding(4);
             rbEntrada.Name = "rbEntrada";
             rbEntrada.Size = new Size(143, 33);
             rbEntrada.TabIndex = 4;
@@ -159,7 +159,7 @@
             dgvReporteEntradaySalida.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvReporteEntradaySalida.EnableHeadersVisualStyles = false;
             dgvReporteEntradaySalida.Location = new Point(49, 339);
-            dgvReporteEntradaySalida.Margin = new Padding(4, 4, 4, 4);
+            dgvReporteEntradaySalida.Margin = new Padding(4);
             dgvReporteEntradaySalida.Name = "dgvReporteEntradaySalida";
             dgvReporteEntradaySalida.ReadOnly = true;
             dgvReporteEntradaySalida.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -179,7 +179,7 @@
             pdf.IconColor = Color.Black;
             pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
             pdf.Location = new Point(939, 815);
-            pdf.Margin = new Padding(4, 4, 4, 4);
+            pdf.Margin = new Padding(4);
             pdf.Name = "pdf";
             pdf.Size = new Size(122, 65);
             pdf.TabIndex = 3;
@@ -187,18 +187,73 @@
             pdf.UseVisualStyleBackColor = true;
             pdf.Click += pdf_Click_1;
             // 
-            // panel2
+            // Titulo
             // 
-            panel2.BackColor = Color.White;
-            panel2.Controls.Add(btnMaximizarUnidadMedida);
-            panel2.Controls.Add(btnCerrarUnidadMedida);
-            panel2.Controls.Add(btnMinimizarUnidadMedida);
-            panel2.Controls.Add(label3);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1116, 68);
-            panel2.TabIndex = 1;
+            Titulo.BackColor = Color.White;
+            Titulo.Controls.Add(btnMaximizar);
+            Titulo.Controls.Add(btnCerrar);
+            Titulo.Controls.Add(btnMinimizar);
+            Titulo.Controls.Add(label3);
+            Titulo.Dock = DockStyle.Top;
+            Titulo.Location = new Point(0, 0);
+            Titulo.Name = "Titulo";
+            Titulo.Size = new Size(1116, 68);
+            Titulo.TabIndex = 1;
+            Titulo.MouseDown += Titulo_MouseDown;
+            // 
+            // btnMaximizar
+            // 
+            btnMaximizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximizar.BackColor = Color.CornflowerBlue;
+            btnMaximizar.FlatAppearance.BorderSize = 0;
+            btnMaximizar.FlatStyle = FlatStyle.Flat;
+            btnMaximizar.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+            btnMaximizar.IconColor = Color.OldLace;
+            btnMaximizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMaximizar.IconSize = 20;
+            btnMaximizar.Location = new Point(1029, 2);
+            btnMaximizar.Margin = new Padding(2);
+            btnMaximizar.Name = "btnMaximizar";
+            btnMaximizar.Size = new Size(45, 25);
+            btnMaximizar.TabIndex = 15;
+            btnMaximizar.UseVisualStyleBackColor = false;
+            btnMaximizar.Click += btnMaximizar_Click;
+            // 
+            // btnCerrar
+            // 
+            btnCerrar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCerrar.BackColor = Color.Tomato;
+            btnCerrar.FlatAppearance.BorderSize = 0;
+            btnCerrar.FlatStyle = FlatStyle.Flat;
+            btnCerrar.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnCerrar.IconColor = Color.OldLace;
+            btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            btnCerrar.IconSize = 20;
+            btnCerrar.Location = new Point(1069, 2);
+            btnCerrar.Margin = new Padding(2);
+            btnCerrar.Name = "btnCerrar";
+            btnCerrar.Size = new Size(45, 25);
+            btnCerrar.TabIndex = 16;
+            btnCerrar.UseVisualStyleBackColor = false;
+            btnCerrar.Click += btnCerrar_Click;
+            // 
+            // btnMinimizar
+            // 
+            btnMinimizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimizar.BackColor = Color.Turquoise;
+            btnMinimizar.FlatAppearance.BorderSize = 0;
+            btnMinimizar.FlatStyle = FlatStyle.Flat;
+            btnMinimizar.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            btnMinimizar.IconColor = Color.OldLace;
+            btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMinimizar.IconSize = 20;
+            btnMinimizar.Location = new Point(985, 2);
+            btnMinimizar.Margin = new Padding(2);
+            btnMinimizar.Name = "btnMinimizar";
+            btnMinimizar.Size = new Size(45, 25);
+            btnMinimizar.TabIndex = 14;
+            btnMinimizar.UseVisualStyleBackColor = false;
+            btnMinimizar.Click += btnMinimizar_Click;
             // 
             // label3
             // 
@@ -212,73 +267,22 @@
             label3.TabIndex = 2;
             label3.Text = "REPORTE DE ENTRADA Y SALIDA";
             // 
-            // btnMaximizarUnidadMedida
-            // 
-            btnMaximizarUnidadMedida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMaximizarUnidadMedida.BackColor = Color.CornflowerBlue;
-            btnMaximizarUnidadMedida.FlatAppearance.BorderSize = 0;
-            btnMaximizarUnidadMedida.FlatStyle = FlatStyle.Flat;
-            btnMaximizarUnidadMedida.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
-            btnMaximizarUnidadMedida.IconColor = Color.OldLace;
-            btnMaximizarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnMaximizarUnidadMedida.IconSize = 20;
-            btnMaximizarUnidadMedida.Location = new Point(1029, 2);
-            btnMaximizarUnidadMedida.Margin = new Padding(2);
-            btnMaximizarUnidadMedida.Name = "btnMaximizarUnidadMedida";
-            btnMaximizarUnidadMedida.Size = new Size(45, 25);
-            btnMaximizarUnidadMedida.TabIndex = 15;
-            btnMaximizarUnidadMedida.UseVisualStyleBackColor = false;
-            // 
-            // btnCerrarUnidadMedida
-            // 
-            btnCerrarUnidadMedida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCerrarUnidadMedida.BackColor = Color.Tomato;
-            btnCerrarUnidadMedida.FlatAppearance.BorderSize = 0;
-            btnCerrarUnidadMedida.FlatStyle = FlatStyle.Flat;
-            btnCerrarUnidadMedida.IconChar = FontAwesome.Sharp.IconChar.X;
-            btnCerrarUnidadMedida.IconColor = Color.OldLace;
-            btnCerrarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            btnCerrarUnidadMedida.IconSize = 20;
-            btnCerrarUnidadMedida.Location = new Point(1069, 2);
-            btnCerrarUnidadMedida.Margin = new Padding(2);
-            btnCerrarUnidadMedida.Name = "btnCerrarUnidadMedida";
-            btnCerrarUnidadMedida.Size = new Size(45, 25);
-            btnCerrarUnidadMedida.TabIndex = 16;
-            btnCerrarUnidadMedida.UseVisualStyleBackColor = false;
-            // 
-            // btnMinimizarUnidadMedida
-            // 
-            btnMinimizarUnidadMedida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnMinimizarUnidadMedida.BackColor = Color.Turquoise;
-            btnMinimizarUnidadMedida.FlatAppearance.BorderSize = 0;
-            btnMinimizarUnidadMedida.FlatStyle = FlatStyle.Flat;
-            btnMinimizarUnidadMedida.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
-            btnMinimizarUnidadMedida.IconColor = Color.OldLace;
-            btnMinimizarUnidadMedida.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btnMinimizarUnidadMedida.IconSize = 20;
-            btnMinimizarUnidadMedida.Location = new Point(985, 2);
-            btnMinimizarUnidadMedida.Margin = new Padding(2);
-            btnMinimizarUnidadMedida.Name = "btnMinimizarUnidadMedida";
-            btnMinimizarUnidadMedida.Size = new Size(45, 25);
-            btnMinimizarUnidadMedida.TabIndex = 14;
-            btnMinimizarUnidadMedida.UseVisualStyleBackColor = false;
-            // 
             // ReporteEntradaySalida
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
             ClientSize = new Size(1116, 893);
-            Controls.Add(panel2);
+            Controls.Add(Titulo);
             Controls.Add(panel1);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "ReporteEntradaySalida";
             Text = "ReporteEntradaySalida";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReporteEntradaySalida).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            Titulo.ResumeLayout(false);
+            Titulo.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -294,10 +298,10 @@
         private RadioButton rbSalida;
         private RadioButton rbEntrada;
         private RadioButton rbTodo;
-        private Panel panel2;
+        private Panel Titulo;
         private Label label3;
-        private FontAwesome.Sharp.IconButton btnMaximizarUnidadMedida;
-        private FontAwesome.Sharp.IconButton btnCerrarUnidadMedida;
-        private FontAwesome.Sharp.IconButton btnMinimizarUnidadMedida;
+        private FontAwesome.Sharp.IconButton btnMaximizar;
+        private FontAwesome.Sharp.IconButton btnCerrar;
+        private FontAwesome.Sharp.IconButton btnMinimizar;
     }
 }

@@ -16,17 +16,81 @@ namespace Proyecto_Restaurante.Proceso
         // ===== Tablas =====
         private readonly DataTable dtLineas = new DataTable();   // datasource del GridMovimiento
         private readonly DataTable dtProveedores = new DataTable(); // catálogo proveedores
-
-        // ===== Drag opcional =====
-        [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")] private static extern void ReleaseCapture();
-        [DllImport("User32.DLL", EntryPoint = "SendMessage")] private static extern void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        private void panelTitulo_MouseDown(object s, MouseEventArgs e) { ReleaseCapture(); SendMessage(this.Handle, 0x112, 0xf012, 0); }
-
+    
         public ProcesoRegistroMovimiento()
         {
             InitializeComponent();
-
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = Color.FromArgb(255, 161, 43);
             // NO suscribo Load aquí; usa el del Designer si ya lo tienes.
+        }
+
+        //Fields
+        private int bordeSize = 2;
+
+
+        //Drag Form
+        [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("User32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void panelMovimiento_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        //Overridden methods
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCCALCSIZE = 0x0083;
+            if (m.Msg == WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
+            {
+                return;
+            }
+            base.WndProc(ref m);
+        }
+
+        //Event methods
+        private void Producto_Resize(object sender, EventArgs e)
+        {
+            AdjustForm();
+        }
+
+        //Private methods
+        private void AdjustForm()
+        {
+            switch (this.WindowState)
+            {
+                case FormWindowState.Maximized:
+                    this.Padding = new Padding(0, 8, 8, 0);
+                    break;
+                case FormWindowState.Normal:
+                    if (this.Padding.Top != bordeSize)
+                        this.Padding = new Padding(bordeSize);
+                    break;
+
+            }
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMaximizar_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+                this.WindowState = FormWindowState.Maximized;
+            else
+                this.WindowState = FormWindowState.Normal;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         // ==================== LOAD ====================
@@ -454,35 +518,3 @@ namespace Proyecto_Restaurante.Proceso
         }
     }
 }
-
-
-
-
-
-
-
-
-//comboProducto_MouseDoubleClick
-//private void panelMovimiento_MouseDown(object sender, MouseEventArgs e)
-//{
-//    ReleaseCapture();
-//    SendMessage(this.Handle, 0x112, 0xf012, 0);
-//}
-
-//private void btnMinimizar_Click(object sender, EventArgs e)
-//{
-//    this.WindowState = FormWindowState.Minimized;
-//}
-
-//private void btnMaximizar_Click(object sender, EventArgs e)
-//{
-//    if (this.WindowState == FormWindowState.Normal)
-//        this.WindowState = FormWindowState.Maximized;
-//    else
-//        this.WindowState = FormWindowState.Normal;
-//}
-
-//private void btnCerrar_Click(object sender, EventArgs e)
-//{
-//    this.Close();
-//}
