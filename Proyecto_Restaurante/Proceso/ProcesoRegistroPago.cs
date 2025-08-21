@@ -137,7 +137,7 @@ namespace Proyecto_Restaurante.Proceso
 
             if (dgvOrdenesPendientes.Columns.Count == 0)
             {
-                dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDP_IdOrden", HeaderText = "No. Orden", DataPropertyName = "id_orden", FillWeight = 12, ReadOnly = true });
+                dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_IdOrden", HeaderText = "No. Orden", DataPropertyName = "id_orden", FillWeight = 12, ReadOnly = true });
                 dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Cliente", HeaderText = "Cliente", DataPropertyName = "cliente", FillWeight = 28, ReadOnly = true });
                 dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Fecha", HeaderText = "Fecha", DataPropertyName = "fecha_hora", FillWeight = 16, ReadOnly = true });
                 dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Vence", HeaderText = "Vence", DataPropertyName = "fecha_vencimiento", FillWeight = 16, ReadOnly = true });
@@ -146,7 +146,7 @@ namespace Proyecto_Restaurante.Proceso
             }
             else
             {
-                SetDataProperty(dgvOrdenesPendientes, "colDP_IdOrden", "id_orden");
+                SetDataProperty(dgvOrdenesPendientes, "colOP_IdOrden", "id_orden");
                 SetDataProperty(dgvOrdenesPendientes, "colOP_Cliente", "cliente");
                 SetDataProperty(dgvOrdenesPendientes, "colOP_Fecha", "fecha_hora");
                 SetDataProperty(dgvOrdenesPendientes, "colOP_Vence", "fecha_vencimiento");

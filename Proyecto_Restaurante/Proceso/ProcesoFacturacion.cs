@@ -1054,7 +1054,7 @@ namespace Proyecto_Restaurante.Proceso
             }
         }
 
-        private void Procesar()
+        /*private void Procesar()
         {
             try
             {
@@ -1135,7 +1135,105 @@ namespace Proyecto_Restaurante.Proceso
                     catch
                     {
                         // Fallback (NET Framework clásico)
-                        try { Process.Start(pdfPath); } catch { /* ignorar */ }
+                        try { Process.Start(pdfPath); } catch { /* ignorar -- }
+                    }
+                }
+                catch (Exception exPdf)
+                {
+                    MessageBox.Show("La orden se procesó, pero no se pudo generar/abrir la factura PDF.\n\nDetalle: " + exPdf.Message,
+                        "Factura PDF", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                MessageBox.Show("Orden procesada. ¡Mesa libre!");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex) { MessageBox.Show("Error al procesar: " + ex.Message); }
+        }*/
+
+        private void Procesar()
+        {
+            // ===== VALIDACIÓN previa =====
+            if (dgvDetalle == null || dgvDetalle.Rows.Count == 0 || dgvDetalle.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar al menos un producto antes de procesar la orden.",
+                    "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                using (var con = new SqlConnection(CS))
+                {
+                    con.Open();
+                    using var tx = con.BeginTransaction();
+
+                    PersistirClienteYCondicion(con, tx);
+                    RecalcularTotalOrden(con, tx);
+
+                    // ← Asentar movimientos por DELTA SOLO al Procesar
+                    PostearMovimientosDelta(con, tx);
+
+                    if (_autopago)
+                    {
+                        if (cmbMetodoPago?.SelectedValue == null && cmbMetodoPago != null && cmbMetodoPago.Items.Count > 0)
+                            cmbMetodoPago.SelectedIndex = 0;
+
+                        if (cmbMetodoPago?.SelectedValue == null)
+                            throw new Exception("Seleccione el método de pago.");
+
+                        decimal total;
+                        using (var cmdT = new SqlCommand("SELECT total FROM orden WHERE id_orden=@o", con, tx))
+                        { cmdT.Parameters.AddWithValue("@o", _idOrden); total = Convert.ToDecimal(cmdT.ExecuteScalar()); }
+
+                        var pago = new SqlCommand(
+                            "INSERT INTO pago(fecha_pago,monto_total,id_metodo_pago,nota,estado) " +
+                            "VALUES (GETDATE(),@m,@mp,'Pago automático de orden',1); " +
+                            "SELECT CAST(SCOPE_IDENTITY() AS int);", con, tx);
+                        pago.Parameters.AddWithValue("@m", total);
+                        pago.Parameters.AddWithValue("@mp", (int)cmbMetodoPago.SelectedValue);
+                        int idPago = (int)pago.ExecuteScalar();
+
+                        var dp = new SqlCommand("INSERT INTO detalle_pago(id_pago,id_orden,monto_aplicado) VALUES (@p,@o,@m)", con, tx);
+                        dp.Parameters.AddWithValue("@p", idPago);
+                        dp.Parameters.AddWithValue("@o", _idOrden);
+                        dp.Parameters.AddWithValue("@m", total);
+                        dp.ExecuteNonQuery();
+
+                        var up = new SqlCommand("UPDATE orden SET saldo_pendiente=0, procesada=1 WHERE id_orden=@o", con, tx);
+                        up.Parameters.AddWithValue("@o", _idOrden);
+                        up.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        var up = new SqlCommand(@"
+                            UPDATE orden
+                               SET fecha_vencimiento = CAST(DATEADD(day,@d,GETDATE()) AS date),
+                                   saldo_pendiente   = total,
+                                   procesada         = 1
+                             WHERE id_orden=@o;", con, tx);
+                        up.Parameters.AddWithValue("@d", _diasCreditoActual);
+                        up.Parameters.AddWithValue("@o", _idOrden);
+                        up.ExecuteNonQuery();
+                    }
+
+                    tx.Commit();
+                }
+
+                _ordenProcesadaEstaSesion = true;
+
+                // ===== Generar y ABRIR la factura PDF =====
+                try
+                {
+                    string pdfPath = CrearFacturaPdfParaOrdenActual();
+                    try
+                    {
+                        var psi = new ProcessStartInfo { FileName = pdfPath, UseShellExecute = true };
+                        Process.Start(psi);
+                    }
+                    catch
+                    {
+                        try { Process.Start(pdfPath); } catch { }
                     }
                 }
                 catch (Exception exPdf)
@@ -1310,200 +1408,6 @@ namespace Proyecto_Restaurante.Proceso
             renderer.PdfDocument.Save(file);
             return file;
         }
-
-        // ====== Generación de FACTURA en PDF ======
-        /*private string CrearFacturaPdfParaOrdenActual()
-        {
-            // ===== Datos de cabecera (mismos que la precuenta) =====
-            string cliente = (cmbCliente?.Text ?? "Consumidor Final").Trim();
-            string condicion = (txtCondicionPago?.Text ?? "").Trim();
-            string empleado = (lbEmpleado?.Text ?? "").Trim();
-            string salaMesa = (lbSalaMesa?.Text ?? $"Mesa #{_idMesa}").Trim();
-            string fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-            string metodo = _autopago ? (cmbMetodoPago?.Text ?? "") : "Crédito / a plazo";
-
-            decimal sub = _lineas.Sum(l => l.Subtotal);
-            decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
-            decimal tot = sub + itbis;
-
-            // ===== Documento =====
-            var doc = new Document();
-            doc.Info.Title = $"Factura - Orden #{_idOrden}";
-            doc.UseCmykColor = false;
-
-            // Estilos básicos
-            var normal = doc.Styles["Normal"];
-            normal.Font.Name = "Arial";
-            normal.Font.Size = 10;
-
-            var styleH1 = doc.Styles.AddStyle("H1", "Normal");
-            styleH1.Font.Size = 16;
-            styleH1.Font.Bold = true;
-            styleH1.ParagraphFormat.SpaceAfter = 6;
-
-            var styleSmall = doc.Styles.AddStyle("Small", "Normal");
-            styleSmall.Font.Size = 9;
-            styleSmall.ParagraphFormat.SpaceAfter = 1.5;
-
-            var sec = doc.AddSection();
-            sec.PageSetup.PageFormat = PageFormat.Letter;
-            sec.PageSetup.LeftMargin = Unit.FromCentimeter(1.6);
-            sec.PageSetup.RightMargin = Unit.FromCentimeter(1.6);
-            sec.PageSetup.TopMargin = Unit.FromCentimeter(1.6);
-            sec.PageSetup.BottomMargin = Unit.FromCentimeter(1.6);
-
-            // ===== Encabezado (título IZQ + logo DER más grande) =====
-            string logoPath = @"C:\imagen\LOGONEGRO.png";
-            if (!File.Exists(logoPath))
-                logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logo_precuenta.png");
-
-            var head = sec.AddTable();
-            head.Borders.Visible = false;
-            head.AddColumn(Unit.FromCentimeter(12.5)); // Texto IZQ
-            head.AddColumn(Unit.FromCentimeter(5.0));  // Logo DER
-
-            var hr = head.AddRow();
-
-            // Texto (izquierda)
-            var pTitle = hr.Cells[0].AddParagraph("Factura");
-            pTitle.Style = "H1";
-            var pSub = hr.Cells[0].AddParagraph($"Orden #{_idOrden} • {salaMesa} • {fecha}");
-            pSub.Style = "Small";
-
-            // Logo (derecha)
-            if (File.Exists(logoPath))
-            {
-                var pLogo = hr.Cells[1].AddParagraph();
-                pLogo.Format.Alignment = ParagraphAlignment.Right;
-                var img = pLogo.AddImage(logoPath);
-                img.LockAspectRatio = true;
-                img.Height = Unit.FromCentimeter(3.2);
-            }
-
-            sec.AddParagraph().AddLineBreak();
-
-            // ===== Meta info =====
-            var meta = sec.AddTable();
-            meta.Borders.Visible = false;
-            meta.AddColumn(Unit.FromCentimeter(8.5));
-            meta.AddColumn(Unit.FromCentimeter(9.0));
-            var mr = meta.AddRow();
-            mr.Cells[0].AddParagraph($"Cliente: {cliente}");
-            mr.Cells[0].AddParagraph($"Condición: {condicion}");
-            mr.Cells[1].AddParagraph($"Atendido por: {empleado}");
-            mr.Cells[1].AddParagraph($"ITBIS: {(ITBIS_RATE * 100):N0}%");
-            if (!string.IsNullOrWhiteSpace(metodo))
-                mr.Cells[1].AddParagraph($"Método de pago: {metodo}");
-
-            sec.AddParagraph().AddLineBreak();
-
-            // ===== Detalle =====
-            var tbl = sec.AddTable();
-            tbl.Borders.Color = Colors.Gainsboro;
-            tbl.Borders.Width = 0.75;
-            tbl.Rows.LeftIndent = 0;
-
-            // Anchos para no exceder el ancho útil
-            tbl.AddColumn(Unit.FromCentimeter(1.1)); // #
-            tbl.AddColumn(Unit.FromCentimeter(8.8)); // Producto
-            tbl.AddColumn(Unit.FromCentimeter(2.2)); // Cant.
-            tbl.AddColumn(Unit.FromCentimeter(3.0)); // Precio
-            tbl.AddColumn(Unit.FromCentimeter(3.0)); // Importe
-
-            var h = tbl.AddRow();
-            h.Shading.Color = Colors.WhiteSmoke;
-            h.HeadingFormat = true;
-            h.Format.Font.Bold = true;
-            h.Cells[0].AddParagraph("#").Format.Alignment = ParagraphAlignment.Center;
-            h.Cells[1].AddParagraph("Producto");
-            h.Cells[2].AddParagraph("Cant.").Format.Alignment = ParagraphAlignment.Center;
-            h.Cells[3].AddParagraph("Precio").Format.Alignment = ParagraphAlignment.Right;
-            h.Cells[4].AddParagraph("Importe").Format.Alignment = ParagraphAlignment.Right;
-
-            int idx = 1;
-            foreach (var l in _lineas)
-            {
-                var r = tbl.AddRow();
-                r.Cells[0].AddParagraph(idx.ToString()).Format.Alignment = ParagraphAlignment.Center;
-                r.Cells[1].AddParagraph(l.Nombre);
-                r.Cells[2].AddParagraph(l.Cantidad.ToString("N2")).Format.Alignment = ParagraphAlignment.Center;
-                r.Cells[3].AddParagraph(l.Precio.ToString("C2")).Format.Alignment = ParagraphAlignment.Right;
-                r.Cells[4].AddParagraph(l.Subtotal.ToString("C2")).Format.Alignment = ParagraphAlignment.Right;
-                idx++;
-            }
-
-            sec.AddParagraph().AddLineBreak();
-
-            // ===== Observaciones + Totales (lado a lado) =====
-            var two = sec.AddTable();
-            two.Borders.Visible = false;
-            two.AddColumn(Unit.FromCentimeter(10.5));
-            two.AddColumn(Unit.FromCentimeter(6.0));
-
-            var row2 = two.AddRow();
-
-            // Observaciones
-            //var cObs = row2.Cells[0];
-            //cObs.Borders.Color = Colors.Gainsboro;
-            //cObs.Borders.Width = 0.75;
-            //cObs.Shading.Color = Colors.White;
-            //var pObsT = cObs.AddParagraph("Observaciones");
-            //pObsT.Format.Font.Bold = true;
-            //pObsT.Format.SpaceAfter = 2;
-            //cObs.AddParagraph("Revise su pedido antes de procesar el pago. Los precios incluyen impuestos según aplique.")
-            //.Format.Font.Size = 9;
-
-            // Totales
-            var cTot = row2.Cells[1];
-            cTot.Borders.Color = Colors.Gainsboro;
-            cTot.Borders.Width = 0.75;
-            cTot.Shading.Color = Colors.White;
-
-            var padTop = cTot.AddParagraph(" ");
-            padTop.Format.SpaceAfter = 2;
-
-            Unit anchoCaja = cTot.Column.Width;
-            var tabRight = anchoCaja - Unit.FromMillimeter(2);
-            var indent = Unit.FromMillimeter(2);
-
-            Paragraph p1 = cTot.AddParagraph();
-            p1.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
-            p1.Format.LeftIndent = indent;
-            p1.Format.RightIndent = indent;
-            p1.AddText("Sub-Total:"); p1.AddTab(); p1.AddText(sub.ToString("C2"));
-
-            Paragraph p2 = cTot.AddParagraph();
-            p2.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
-            p2.Format.LeftIndent = indent;
-            p2.Format.RightIndent = indent;
-            p2.AddText($"ITBIS {(ITBIS_RATE * 100):N0}%:"); p2.AddTab(); p2.AddText(itbis.ToString("C2"));
-
-            Paragraph p3 = cTot.AddParagraph();
-            p3.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
-            p3.Format.LeftIndent = indent;
-            p3.Format.RightIndent = indent;
-            p3.Format.SpaceBefore = 3;
-            p3.Format.Font.Bold = true;
-            p3.AddText("Total:"); p3.AddTab(); p3.AddText(tot.ToString("C2"));
-
-            var padBottom = cTot.AddParagraph(" ");
-            padBottom.Format.SpaceBefore = 2;
-
-            // ===== Render y guardado =====
-            var renderer = new PdfDocumentRenderer(true); // unicode = true
-            renderer.Document = doc;
-            renderer.RenderDocument();
-
-            // >>>>> Carpeta destino solicitada <<<<<
-            string folder = @"C:\imagen\PDF";
-            Directory.CreateDirectory(folder);
-
-            string file = Path.Combine(folder, $"Factura_Orden_{_idOrden}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
-            renderer.PdfDocument.Save(file);
-            return file;
-        }*/
-
-
 
         // ===== Cancelar todo (botón) =====
         private void BtnCancelar_Click(object sender, EventArgs e)
@@ -2039,7 +1943,7 @@ namespace Proyecto_Restaurante.Proceso
 
         private void btnPrecuenta_Click(object sender, EventArgs e)
         {
-            // Construir las líneas que van a la precuenta
+            /*// Construir las líneas que van a la precuenta
             var lineasPre = _lineas
                 .Select((l, i) => new PrecuentaLinea
                 {
@@ -2063,6 +1967,48 @@ namespace Proyecto_Restaurante.Proceso
                 Atendido = lbEmpleado?.Text ?? "",
                 Fecha = DateTime.Now,
                 ItbisRate = ITBIS_RATE,           // ej. 0.18m
+                Lineas = lineasPre
+            };
+
+            // Mostrar la precuenta
+            using (var f = new PreCuenta(data))
+            {
+                f.ShowDialog(this);
+            }*/
+
+            // === VALIDACIÓN: debe haber datos en el detalle ===
+            bool hayLineas = _lineas != null && _lineas.Count > 0;
+            if (!hayLineas)
+            {
+                MessageBox.Show("No hay productos en la orden. Agregue al menos uno antes de abrir la Pre-Cuenta.",
+                                "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Construir las líneas que van a la precuenta
+            var lineasPre = _lineas
+                .Select((l, i) => new PrecuentaLinea
+                {
+                    Nro = i + 1,
+                    Nombre = l.Nombre,
+                    Cantidad = l.Cantidad,
+                    Precio = l.Precio
+                })
+                .ToList();
+
+            // Sala + Mesa
+            string salaMesa = lbSalaMesa?.Text ?? $"Mesa #{_idMesa}";
+
+            // Empaquetar todo
+            var data = new PrecuentaData
+            {
+                IdOrden = _idOrden,
+                SalaMesa = salaMesa,
+                Cliente = cmbCliente?.Text ?? "Consumidor Final",
+                Condicion = txtCondicionPago?.Text ?? "",
+                Atendido = lbEmpleado?.Text ?? "",
+                Fecha = DateTime.Now,
+                ItbisRate = ITBIS_RATE,
                 Lineas = lineasPre
             };
 
