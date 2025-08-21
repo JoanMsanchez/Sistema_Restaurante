@@ -31,6 +31,7 @@ namespace Proyecto_Restaurante.Reportes
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteCuentaporCobrar));
             panel1 = new Panel();
+            pictureBox1 = new PictureBox();
             panel3 = new Panel();
             txtNombre = new TextBox();
             label1 = new Label();
@@ -41,11 +42,10 @@ namespace Proyecto_Restaurante.Reportes
             btnCerrar = new FontAwesome.Sharp.IconButton();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
             label3 = new Label();
-            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dtgCxC).BeginInit();
             Titulo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -61,6 +61,16 @@ namespace Proyecto_Restaurante.Reportes
             panel1.Name = "panel1";
             panel1.Size = new Size(791, 637);
             panel1.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(648, 50);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 28;
+            pictureBox1.TabStop = false;
             // 
             // panel3
             // 
@@ -82,6 +92,7 @@ namespace Proyecto_Restaurante.Reportes
             txtNombre.Size = new Size(158, 21);
             txtNombre.TabIndex = 9;
             txtNombre.TextChanged += txtNombre_TextChanged;
+            txtNombre.KeyPress += txtNombre_KeyPress;
             // 
             // label1
             // 
@@ -208,16 +219,6 @@ namespace Proyecto_Restaurante.Reportes
             label3.TabIndex = 3;
             label3.Text = "REPORTE DE CUENTA POR COBRAR";
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(648, 50);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 28;
-            pictureBox1.TabStop = false;
-            // 
             // ReporteCuentaporCobrar
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -231,10 +232,10 @@ namespace Proyecto_Restaurante.Reportes
             Text = "ReporteCuentaporCobrar";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dtgCxC).EndInit();
             Titulo.ResumeLayout(false);
             Titulo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 

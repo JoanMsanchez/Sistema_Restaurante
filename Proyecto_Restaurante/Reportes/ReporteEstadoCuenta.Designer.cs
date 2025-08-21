@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteEstadoCuenta));
             panel1 = new Panel();
-            pictureBox1 = new PictureBox();
             panel3 = new Panel();
             txtNombre = new TextBox();
             label1 = new Label();
@@ -41,10 +40,11 @@
             btnCerrar = new FontAwesome.Sharp.IconButton();
             label3 = new Label();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dtgEstadoCuenta).BeginInit();
             Titulo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -61,16 +61,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(917, 621);
             panel1.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(772, 52);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 28;
-            pictureBox1.TabStop = false;
             // 
             // panel3
             // 
@@ -92,6 +82,7 @@
             txtNombre.Size = new Size(158, 21);
             txtNombre.TabIndex = 7;
             txtNombre.TextChanged += txtNombre_TextChanged;
+            txtNombre.KeyPress += txtNombre_KeyPress;
             // 
             // label1
             // 
@@ -218,6 +209,16 @@
             btnMinimizar.UseVisualStyleBackColor = false;
             btnMinimizar.Click += btnMinimizar_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(772, 52);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 28;
+            pictureBox1.TabStop = false;
+            // 
             // ReporteEstadoCuenta
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -230,10 +231,10 @@
             Text = "ReporteEstadoCuenta";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dtgEstadoCuenta).EndInit();
             Titulo.ResumeLayout(false);
             Titulo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 

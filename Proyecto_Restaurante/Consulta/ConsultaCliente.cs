@@ -18,7 +18,7 @@ namespace Proyecto_Restaurante.Consulta
 
 
         // === MODO INTEGRADO ===
-        private readonly bool _selectorMode = false;            
+        private readonly bool _selectorMode = false;
         private MantenimientoCliente mantenimientoClienteForm;
 
         // Valores devueltos en modo selector
@@ -266,6 +266,15 @@ namespace Proyecto_Restaurante.Consulta
             mantenimientoClienteForm.BringToFront();
             mantenimientoClienteForm.CargarDatosCliente(idCliente, nombre, telefono, email, direccion, idCondicion, estado);
             this.Close();
+        }
+
+        private void buscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten letras.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

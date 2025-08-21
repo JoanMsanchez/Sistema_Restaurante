@@ -50,6 +50,7 @@
             txtOrden = new TextBox();
             label14 = new Label();
             label13 = new Label();
+            pdf = new FontAwesome.Sharp.IconButton();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPreCuenta).BeginInit();
             panel2.SuspendLayout();
@@ -57,6 +58,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(pdf);
             panel1.Controls.Add(textBox1);
             panel1.Controls.Add(txtFecha);
             panel1.Controls.Add(label7);
@@ -77,7 +79,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(907, 658);
+            panel1.Size = new Size(907, 676);
             panel1.TabIndex = 0;
             // 
             // textBox1
@@ -325,12 +327,32 @@
             label13.TabIndex = 18;
             label13.Text = "PRECUENTA ";
             // 
+            // pdf
+            // 
+            pdf.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            pdf.FlatAppearance.BorderSize = 0;
+            pdf.FlatStyle = FlatStyle.Flat;
+            pdf.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            pdf.ForeColor = Color.White;
+            pdf.IconChar = FontAwesome.Sharp.IconChar.FileText;
+            pdf.IconColor = Color.White;
+            pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            pdf.IconSize = 35;
+            pdf.ImageAlign = ContentAlignment.MiddleLeft;
+            pdf.Location = new Point(38, 612);
+            pdf.Name = "pdf";
+            pdf.Size = new Size(110, 52);
+            pdf.TabIndex = 7;
+            pdf.Text = "    PDF";
+            pdf.UseVisualStyleBackColor = true;
+            pdf.Click += pdf_Click;
+            // 
             // PreCuenta
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(907, 658);
+            ClientSize = new Size(907, 676);
             Controls.Add(panel1);
             Name = "PreCuenta";
             StartPosition = FormStartPosition.CenterScreen;
@@ -367,5 +389,6 @@
         private Label label14;
         private Label label13;
         private TextBox textBox1;
+        private FontAwesome.Sharp.IconButton pdf;
     }
 }

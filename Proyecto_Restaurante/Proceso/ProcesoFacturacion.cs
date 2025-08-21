@@ -1024,246 +1024,6 @@ namespace Proyecto_Restaurante.Proceso
             }
         }
 
-        /*private void MostrarPrecuenta()
-        {
-            try
-            {
-                string html = ConstruirHtmlPrecuenta();
-
-                using (var frm = new Form())
-                {
-                    frm.Text = "Precuenta / Vista previa";
-                    frm.StartPosition = FormStartPosition.CenterParent;
-                    frm.Width = 820;
-                    frm.Height = 1000;
-                    frm.MinimizeBox = false;
-                    frm.MaximizeBox = true;
-
-                    // Sin barra de herramientas: solo vista previa
-                    var wb = new WebBrowser
-                    {
-                        Dock = DockStyle.Fill,
-                        AllowWebBrowserDrop = false,
-                        ScriptErrorsSuppressed = true
-                    };
-                    wb.DocumentText = html;
-
-                    frm.Controls.Add(wb);
-                    frm.ShowDialog(this);
-                }
-            }
-            catch
-            {
-                // Fallback: tu precuenta original
-                var lineas = string.Join(Environment.NewLine,
-                    _lineas.Select(l => $"{l.Nombre} x {l.Cantidad:N2} = {l.Subtotal:C2}"));
-
-                decimal sub = _lineas.Sum(l => l.Subtotal);
-                decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
-                decimal tot = sub + itbis;
-
-                MessageBox.Show(
-                    lineas + Environment.NewLine + Environment.NewLine +
-                    $"Subtotal: {sub:C2}" + Environment.NewLine +
-                    $"ITBIS (18%): {itbis:C2}" + Environment.NewLine +
-                    $"Total: {tot:C2}",
-                    "Precuenta");
-            }
-        }
-
-           private string ConstruirHtmlPrecuenta()
-        {
-            // Datos de cabecera
-            string cliente = (cmbCliente?.Text ?? "Consumidor Final").Trim();
-            string condicion = (txtCondicionPago?.Text ?? "").Trim();
-            string empleado = (lbEmpleado?.Text ?? "").Trim();
-            string salaMesa = (lbSalaMesa?.Text ?? $"Mesa #{_idMesa}").Trim();
-            string fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-
-            // Totales
-            decimal sub = _lineas.Sum(l => l.Subtotal);
-            decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
-            decimal tot = sub + itbis;
-
-            // Logo opcional
-            string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logo_precuenta.png");
-            string logoTag = "";
-            if (File.Exists(logoPath))
-            {
-                var b64 = Convert.ToBase64String(File.ReadAllBytes(logoPath));
-                logoTag = $"<img src=\"data:image/png;base64,{b64}\" style=\"height:60px;object-fit:contain;\" />";
-            }
-
-            // Filas de detalle
-            var sbRows = new StringBuilder();
-            int i = 1;
-            foreach (var l in _lineas)
-            {
-                sbRows.Append("<tr>")
-                      .Append($"<td style='text-align:center'>{i++}</td>")
-                      .Append($"<td>{HtmlEncode(l.Nombre)}</td>")
-                      .Append($"<td style='text-align:center'>{l.Cantidad:N2}</td>")
-                      .Append($"<td style='text-align:right'>{l.Precio:C2}</td>")
-                      .Append($"<td style='text-align:right'>{l.Subtotal:C2}</td>")
-                      .Append("</tr>");
-            }
-
-            // HTML (sin botones y con totales separados)
-            var html = $@"
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8' />
-<title>Precuenta - Orden {_idOrden}</title>
-<style>
-    * {{ box-sizing: border-box; }}
-    body {{
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: #f4f6f8;
-        color: #1f2937;
-    }}
-    .ticket {{
-        max-width: 760px;
-        margin: 24px auto;
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-        overflow: hidden;
-    }}
-    .header {{
-        padding: 18px 22px;
-        background: #fff3e6;
-        border-bottom: 1px solid #f1f5f9;
-    }}
-    .title {{ font-weight: 700; font-size: 20px; color: #111827; }}
-    .sub {{ color: #6b7280; font-size: 12px; margin-top: 2px; }}
-    .meta {{
-        padding: 16px 22px 0 22px;
-        font-size: 13px; color: #374151;
-    }}
-    .meta b {{ color: #111827; }}
-    .meta .row {{ margin: 2px 0; }}
-    .badge {{
-        display: inline-block; padding: 2px 8px; border-radius: 999px;
-        background: #fff7ed; color: #9a3412; font-size: 11px; border: 1px solid #fed7aa;
-        margin-left: 8px; vertical-align: middle;
-    }}
-    .logo-wrap {{ float:left; margin-right: 16px; }}
-    .head-text {{ overflow:hidden; }}
-    .table-wrap {{ padding: 8px 22px 22px 22px; clear:both; }}
-    table.items {{
-        width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;
-    }}
-    table.items thead th {{
-        background: #f9fafb; color: #111827; font-weight: 700; font-size: 13px;
-        text-align: left; padding: 10px 12px; border-bottom: 1px solid #e5e7eb;
-    }}
-    table.items tbody td {{
-        font-size: 13px; padding: 10px 12px; border-bottom: 1px solid #f3f4f6;
-    }}
-    table.items tbody tr:nth-child(even) {{ background: #fcfcfd; }}
-
-    table.two-col {{ width: 100%; border-collapse: separate; border-spacing: 18px 0; }}
-    table.two-col td {{ vertical-align: top; }}
-
-    .box {{
-        border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; background: #ffffff;
-    }}
-    .box h4 {{ margin: 0 0 6px 0; font-size: 16px; }}
-    .muted {{ font-size:12px; color:#6b7280; }}
-
-    table.totals {{ width:100%; border-collapse: collapse; }}
-    table.totals td {{ padding: 6px 0; font-size: 14px; color: #111827; }}
-    table.totals td.num {{ text-align: right; white-space: nowrap; }}
-    table.totals tr.grand td {{ font-weight: 800; font-size: 16px; border-top: 1px solid #e5e7eb; padding-top: 10px; }}
-
-    .footnote {{ padding: 10px 22px 18px 22px; color: #6b7280; font-size: 12px; border-top: 1px dashed #e5e7eb; }}
-</style>
-</head>
-<body>
-    <div class='ticket'>
-        <div class='header'>
-            <div class='logo-wrap'>{logoTag}</div>
-            <div class='head-text'>
-                <div class='title'>Precuenta <span class='badge'>Documento no fiscal</span></div>
-                <div class='sub'>Orden #{_idOrden} &nbsp;•&nbsp; {HtmlEncode(salaMesa)} &nbsp;•&nbsp; {fecha}</div>
-            </div>
-            <div style='clear:both'></div>
-        </div>
-
-        <div class='meta'>
-            <div class='row'><b>Cliente:</b> {HtmlEncode(cliente)}</div>
-            <div class='row'><b>Condición:</b> {HtmlEncode(condicion)}</div>
-            <div class='row'><b>Atendido por:</b> {HtmlEncode(empleado)}</div>
-            <div class='row'><b>ITBIS:</b> {(ITBIS_RATE * 100):N0}%</div>
-        </div>
-
-        <div class='table-wrap'>
-            <table class='items'>
-                <thead>
-                    <tr>
-                        <th style='width:52px;text-align:center'>#</th>
-                        <th>Producto</th>
-                        <th style='width:90px;text-align:center'>Cant.</th>
-                        <th style='width:110px;text-align:right'>Precio</th>
-                        <th style='width:120px;text-align:right'>Importe</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {(sbRows.Length > 0 ? sbRows.ToString() : "<tr><td colspan='5' style='text-align:center;color:#6b7280'>Sin artículos</td></tr>")}
-                </tbody>
-            </table>
-        </div>
-
-        <table class='two-col'>
-            <colgroup>
-                <col />
-                <col style='width:280px' />
-            </colgroup>
-            <tr>
-                <td>
-                    <div class='box'>
-                        <h4>Observaciones</h4>
-                        <div class='muted'>Revise su pedido antes de procesar el pago. Los precios incluyen impuestos según aplique.</div>
-                    </div>
-                </td>
-                <td>
-                    <div class='box'>
-                        <table class='totals'>
-                            <tr>
-                                <td>Sub-Total:</td>
-                                <td class='num'>{sub:C2}</td>
-                            </tr>
-                            <tr>
-                                <td>ITBIS {(ITBIS_RATE * 100):N0}%:</td>
-                                <td class='num'>{itbis:C2}</td>
-                            </tr>
-                            <tr class='grand'>
-                                <td>Total:</td>
-                                <td class='num'>{tot:C2}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-        </table>
-
-        <div class='footnote'>
-            Esta es una precuenta de cortesía. Para factura final, solicítela al camarero(a).
-        </div>
-    </div>
-</body>
-</html>";
-
-            return html;
-        }
-
-        private static string HtmlEncode(string s)
-            => string.IsNullOrEmpty(s) ? "" : s.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "&quot;");
-        */
-
         // ===== Persistir cabecera dentro de la transacción de Procesar =====
         private void PersistirClienteYCondicion(SqlConnection con, SqlTransaction tx)
         {
@@ -1391,8 +1151,168 @@ namespace Proyecto_Restaurante.Proceso
             catch (Exception ex) { MessageBox.Show("Error al procesar: " + ex.Message); }
         }
 
-        // ====== Generación de FACTURA en PDF ======
+
         private string CrearFacturaPdfParaOrdenActual()
+        {
+            // ===== Datos de cabecera =====
+            string cliente = (cmbCliente?.Text ?? "Consumidor Final").Trim();
+            string condicion = (txtCondicionPago?.Text ?? "").Trim();
+            string empleado = (lbEmpleado?.Text ?? "").Trim();
+            string salaMesa = (lbSalaMesa?.Text ?? $"Mesa #{_idMesa}").Trim();
+            string fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+            string metodo = _autopago ? (cmbMetodoPago?.Text ?? "") : "Crédito / a plazo";
+
+            decimal sub = _lineas.Sum(l => l.Subtotal);
+            decimal itbis = Math.Round(sub * ITBIS_RATE, 2);
+            decimal tot = sub + itbis;
+
+            // ===== Documento =====
+            var doc = new MigraDoc.DocumentObjectModel.Document();
+            doc.Info.Title = $"Factura - Orden #{_idOrden}";
+            doc.UseCmykColor = false;
+
+            // Estilos
+            var normal = doc.Styles["Normal"];
+            normal.Font.Name = "Arial";
+            normal.Font.Size = 10;
+
+            var sec = doc.AddSection();
+            sec.PageSetup.PageFormat = MigraDoc.DocumentObjectModel.PageFormat.Letter;
+            sec.PageSetup.LeftMargin = MigraDoc.DocumentObjectModel.Unit.FromCentimeter(1.6);
+            sec.PageSetup.RightMargin = MigraDoc.DocumentObjectModel.Unit.FromCentimeter(1.6);
+            sec.PageSetup.TopMargin = MigraDoc.DocumentObjectModel.Unit.FromCentimeter(1.6);
+            sec.PageSetup.BottomMargin = MigraDoc.DocumentObjectModel.Unit.FromCentimeter(1.6);
+
+            // ===== TÍTULO PRINCIPAL (como la precuenta) =====
+            var titulo = sec.AddParagraph(" FACTURA ");
+            titulo.Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Center;
+            titulo.Format.Font.Size = 34;
+            titulo.Format.Font.Bold = true;
+            titulo.Format.SpaceAfter = MigraDoc.DocumentObjectModel.Unit.FromCentimeter(0.7);
+
+            // ===== Empresa / lema / fecha (izquierda) + logo (derecha) =====
+            string logoPath = @"C:\imagen\LOGONEGRO.png";
+            if (!System.IO.File.Exists(logoPath))
+                logoPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logo_precuenta.png");
+
+            var head = sec.AddTable();
+            head.Borders.Visible = false;
+            head.AddColumn(MigraDoc.DocumentObjectModel.Unit.FromCentimeter(12.5)); // texto
+            head.AddColumn(MigraDoc.DocumentObjectModel.Unit.FromCentimeter(5.0));  // logo
+
+            var hr = head.AddRow();
+
+            var pEmpresa = hr.Cells[0].AddParagraph("LA ESQUINITA");
+            pEmpresa.Format.Font.Size = 14;
+            pEmpresa.Format.Font.Bold = true;
+
+            var pLema = hr.Cells[0].AddParagraph("EL GUSTO COMIENZA EN LA ESQUINA");
+            pLema.Format.Font.Size = 10;
+            pLema.Format.Font.Italic = true;
+
+            var pFecha = hr.Cells[0].AddParagraph($"Orden #{_idOrden} • {salaMesa} • {fecha}");
+            pFecha.Format.Font.Size = 9;
+            pFecha.Format.SpaceAfter = 3;
+
+            if (System.IO.File.Exists(logoPath))
+            {
+                var pLogo = hr.Cells[1].AddParagraph();
+                pLogo.Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Right;
+                var img = pLogo.AddImage(logoPath);
+                img.LockAspectRatio = true;
+                img.Height = MigraDoc.DocumentObjectModel.Unit.FromCentimeter(3.2);
+            }
+
+            sec.AddParagraph().AddLineBreak();
+
+            // ===== Cabecera (dos columnas como la precuenta) =====
+            var cab = sec.AddTable();
+            cab.Borders.Visible = false;
+            cab.AddColumn(MigraDoc.DocumentObjectModel.Unit.FromCentimeter(3.2));
+            cab.AddColumn(MigraDoc.DocumentObjectModel.Unit.FromCentimeter(12.5));
+
+            void CabRow(string lbl, string val)
+            {
+                var r = cab.AddRow();
+                r.Cells[0].AddParagraph(lbl).Format.Font.Bold = true;
+                r.Cells[1].AddParagraph(val ?? "");
+            }
+
+            CabRow("Cliente", cliente);
+            CabRow("Condición", condicion);
+            CabRow("Fecha", fecha);
+            CabRow("Atendido por", empleado);
+            if (!string.IsNullOrWhiteSpace(metodo)) CabRow("Método de pago", metodo);
+
+            sec.AddParagraph().AddLineBreak();
+
+            // ===== Detalle (mismo ancho/encabezado gris) =====
+            var tbl = sec.AddTable();
+            tbl.Borders.Color = MigraDoc.DocumentObjectModel.Colors.Gainsboro;
+            tbl.Borders.Width = 0.75;
+            tbl.Rows.LeftIndent = 0;
+
+            double[] widths = { 1.2, 7.0, 2.5, 3.0, 3.5 }; // #, Producto, Cant, Precio, Importe
+            foreach (var w in widths)
+                tbl.AddColumn(MigraDoc.DocumentObjectModel.Unit.FromCentimeter(w));
+
+            var h = tbl.AddRow();
+            h.HeadingFormat = true;
+            h.Format.Font.Bold = true;
+            h.Shading.Color = MigraDoc.DocumentObjectModel.Colors.WhiteSmoke;
+            h.Cells[0].AddParagraph("No").Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Center;
+            h.Cells[1].AddParagraph("Producto");
+            h.Cells[2].AddParagraph("Cant").Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Center;
+            h.Cells[3].AddParagraph("Precio").Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Right;
+            h.Cells[4].AddParagraph("Importe").Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Right;
+
+            int idx = 1;
+            foreach (var l in _lineas)
+            {
+                var r = tbl.AddRow();
+                r.Cells[0].AddParagraph(idx.ToString()).Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Center;
+                r.Cells[1].AddParagraph(l.Nombre);
+                r.Cells[2].AddParagraph(l.Cantidad.ToString("N2")).Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Center;
+                r.Cells[3].AddParagraph(l.Precio.ToString("N2")).Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Right;   // N2 como precuenta
+                r.Cells[4].AddParagraph(l.Subtotal.ToString("N2")).Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Right;   // N2 como precuenta
+                idx++;
+            }
+
+            sec.AddParagraph().AddLineBreak();
+
+            // ===== Totales (caja a la derecha como precuenta) =====
+            var totTbl = sec.AddTable();
+            totTbl.Borders.Visible = false;
+            totTbl.AddColumn(MigraDoc.DocumentObjectModel.Unit.FromCentimeter(12.0));
+            totTbl.AddColumn(MigraDoc.DocumentObjectModel.Unit.FromCentimeter(4.2));
+
+            void TotRow(string lbl, string val, bool bold = false)
+            {
+                var tr = totTbl.AddRow();
+                tr.Cells[0].AddParagraph(lbl).Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Right;
+                tr.Cells[0].Format.Font.Bold = true;
+                var p = tr.Cells[1].AddParagraph(val ?? "0.00");
+                p.Format.Alignment = MigraDoc.DocumentObjectModel.ParagraphAlignment.Right;
+                if (bold) p.Format.Font.Bold = true;
+            }
+
+            TotRow("SubTotal:", sub.ToString("N2"));
+            TotRow($"ITBIS {(ITBIS_RATE * 100):N0}%:", itbis.ToString("N2"));
+            TotRow("Total:", tot.ToString("N2"), bold: true);
+
+            // ===== Render y guardado =====
+            var renderer = new MigraDoc.Rendering.PdfDocumentRenderer(true) { Document = doc };
+            renderer.RenderDocument();
+
+            string folder = @"C:\imagen\PDF";
+            System.IO.Directory.CreateDirectory(folder);
+            string file = System.IO.Path.Combine(folder, $"Factura_Orden_{_idOrden}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
+            renderer.PdfDocument.Save(file);
+            return file;
+        }
+
+        // ====== Generación de FACTURA en PDF ======
+        /*private string CrearFacturaPdfParaOrdenActual()
         {
             // ===== Datos de cabecera (mismos que la precuenta) =====
             string cliente = (cmbCliente?.Text ?? "Consumidor Final").Trim();
@@ -1581,7 +1501,7 @@ namespace Proyecto_Restaurante.Proceso
             string file = Path.Combine(folder, $"Factura_Orden_{_idOrden}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
             renderer.PdfDocument.Save(file);
             return file;
-        }
+        }*/
 
 
 

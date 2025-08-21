@@ -137,16 +137,16 @@ namespace Proyecto_Restaurante.Proceso
 
             if (dgvOrdenesPendientes.Columns.Count == 0)
             {
-                dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_IdOrden", HeaderText = "ID Orden", DataPropertyName = "id_orden", FillWeight = 12, ReadOnly = true });
+                dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDP_IdOrden", HeaderText = "No. Orden", DataPropertyName = "id_orden", FillWeight = 12, ReadOnly = true });
                 dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Cliente", HeaderText = "Cliente", DataPropertyName = "cliente", FillWeight = 28, ReadOnly = true });
                 dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Fecha", HeaderText = "Fecha", DataPropertyName = "fecha_hora", FillWeight = 16, ReadOnly = true });
                 dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Vence", HeaderText = "Vence", DataPropertyName = "fecha_vencimiento", FillWeight = 16, ReadOnly = true });
                 dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Total", HeaderText = "Total", DataPropertyName = "total", FillWeight = 14, ReadOnly = true, DefaultCellStyle = { Format = "N2", Alignment = DataGridViewContentAlignment.MiddleRight } });
-                dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Saldo", HeaderText = "Saldo", DataPropertyName = "saldo_pendiente", FillWeight = 14, ReadOnly = true, DefaultCellStyle = { Format = "N2", Alignment = DataGridViewContentAlignment.MiddleRight } });
+                dgvOrdenesPendientes.Columns.Add(new DataGridViewTextBoxColumn { Name = "colOP_Saldo", HeaderText = "Saldo Pendiente", DataPropertyName = "saldo_pendiente", FillWeight = 14, ReadOnly = true, DefaultCellStyle = { Format = "N2", Alignment = DataGridViewContentAlignment.MiddleRight } });
             }
             else
             {
-                SetDataProperty(dgvOrdenesPendientes, "colOP_IdOrden", "id_orden");
+                SetDataProperty(dgvOrdenesPendientes, "colDP_IdOrden", "id_orden");
                 SetDataProperty(dgvOrdenesPendientes, "colOP_Cliente", "cliente");
                 SetDataProperty(dgvOrdenesPendientes, "colOP_Fecha", "fecha_hora");
                 SetDataProperty(dgvOrdenesPendientes, "colOP_Vence", "fecha_vencimiento");
@@ -164,8 +164,8 @@ namespace Proyecto_Restaurante.Proceso
             dgvDistribucion.AutoGenerateColumns = false;
             if (dgvDistribucion.Columns.Count == 0)
             {
-                dgvDistribucion.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDP_IdOrden", HeaderText = "ID Orden", DataPropertyName = "id_orden", FillWeight = 12, ReadOnly = true });
-                dgvDistribucion.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDP_SaldoPend", HeaderText = "Saldo Pend.", DataPropertyName = "saldo_pendiente", FillWeight = 20, ReadOnly = true, DefaultCellStyle = { Format = "N2", Alignment = DataGridViewContentAlignment.MiddleRight } });
+                dgvDistribucion.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDP_IdOrden", HeaderText = "No. Orden", DataPropertyName = "id_orden", FillWeight = 12, ReadOnly = true });
+                dgvDistribucion.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDP_SaldoPend", HeaderText = "Saldo Pendiente", DataPropertyName = "saldo_pendiente", FillWeight = 20, ReadOnly = true, DefaultCellStyle = { Format = "N2", Alignment = DataGridViewContentAlignment.MiddleRight } });
                 dgvDistribucion.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDP_MontoAplicar", HeaderText = "Monto a aplicar", DataPropertyName = "monto_aplicar", FillWeight = 22, ReadOnly = false, DefaultCellStyle = { Format = "N2", Alignment = DataGridViewContentAlignment.MiddleRight } });
                 dgvDistribucion.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDP_NuevoSaldo", HeaderText = "Nuevo saldo", DataPropertyName = "nuevo_saldo", FillWeight = 20, ReadOnly = true, DefaultCellStyle = { Format = "N2", Alignment = DataGridViewContentAlignment.MiddleRight } });
             }

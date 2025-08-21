@@ -186,6 +186,7 @@
             busca.Size = new Size(153, 19);
             busca.TabIndex = 30;
             busca.TextChanged += busca_TextChanged;
+            busca.KeyPress += busca_KeyPress;
             // 
             // DGVProveedor
             // 

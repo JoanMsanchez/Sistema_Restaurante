@@ -28,19 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultaProductos));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultaProductos));
             panelConsultaProducto = new Panel();
             btnMaximizarConsultaProducto = new FontAwesome.Sharp.IconButton();
             btnCerrarConsultaProducto = new FontAwesome.Sharp.IconButton();
             btnMinimizarConsultaProducto = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
             panel2 = new Panel();
-            pictureBox1 = new PictureBox();
             unidadproducto = new RadioButton();
             categoriaproducto = new RadioButton();
             nombreproducto = new RadioButton();
@@ -48,10 +47,11 @@
             panel6 = new Panel();
             buscar = new TextBox();
             label3 = new Label();
+            pictureBox1 = new PictureBox();
             panelConsultaProducto.SuspendLayout();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panelConsultaProducto
@@ -150,16 +150,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1286, 454);
             panel2.TabIndex = 1;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(1143, -6);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 28;
-            pictureBox1.TabStop = false;
             // 
             // unidadproducto
             // 
@@ -279,6 +269,7 @@
             buscar.Size = new Size(130, 19);
             buscar.TabIndex = 25;
             buscar.TextChanged += buscar_TextChanged;
+            buscar.KeyPress += buscar_KeyPress;
             // 
             // label3
             // 
@@ -290,6 +281,16 @@
             label3.Size = new Size(197, 25);
             label3.TabIndex = 6;
             label3.Text = "Buscar Producto";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(1143, -6);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 28;
+            pictureBox1.TabStop = false;
             // 
             // ConsultaProductos
             // 
@@ -307,8 +308,8 @@
             panelConsultaProducto.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 

@@ -28,28 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultaCliente));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultaCliente));
             panel1 = new Panel();
-            pictureBox1 = new PictureBox();
             buscaCondicion = new RadioButton();
             buscaNombre = new RadioButton();
             panel6 = new Panel();
             buscar = new TextBox();
             label3 = new Label();
             DGVConsultaCliente = new DataGridView();
+            pictureBox1 = new PictureBox();
             panelConsultaCliente = new Panel();
             btnMaximizarCategoria = new FontAwesome.Sharp.IconButton();
             btnCerrarCategoria = new FontAwesome.Sharp.IconButton();
             btnMinimizarCategoria = new FontAwesome.Sharp.IconButton();
             label6 = new Label();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DGVConsultaCliente).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelConsultaCliente.SuspendLayout();
             SuspendLayout();
             // 
@@ -67,16 +67,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(844, 507);
             panel1.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(708, 50);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(143, 96);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 34;
-            pictureBox1.TabStop = false;
             // 
             // buscaCondicion
             // 
@@ -126,6 +116,7 @@
             buscar.Size = new Size(130, 19);
             buscar.TabIndex = 31;
             buscar.TextChanged += buscar_TextChanged;
+            buscar.KeyPress += buscar_KeyPress;
             // 
             // label3
             // 
@@ -190,6 +181,16 @@
             DGVConsultaCliente.Size = new Size(765, 287);
             DGVConsultaCliente.TabIndex = 0;
             DGVConsultaCliente.CellMouseDoubleClick += DGVConsultaCliente_CellMouseDoubleClick;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(708, 50);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 34;
+            pictureBox1.TabStop = false;
             // 
             // panelConsultaCliente
             // 
@@ -284,8 +285,8 @@
             Text = "ConcultaCliente";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)DGVConsultaCliente).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelConsultaCliente.ResumeLayout(false);
             panelConsultaCliente.PerformLayout();
             ResumeLayout(false);
