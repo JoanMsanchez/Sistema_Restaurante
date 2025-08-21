@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultaProductos));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -39,6 +40,7 @@
             btnMinimizarConsultaProducto = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
             panel2 = new Panel();
+            pictureBox1 = new PictureBox();
             unidadproducto = new RadioButton();
             categoriaproducto = new RadioButton();
             nombreproducto = new RadioButton();
@@ -48,6 +50,7 @@
             label3 = new Label();
             panelConsultaProducto.SuspendLayout();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -140,6 +143,7 @@
             panel2.Controls.Add(panel6);
             panel2.Controls.Add(buscar);
             panel2.Controls.Add(label3);
+            panel2.Controls.Add(pictureBox1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 58);
             panel2.Margin = new Padding(2);
@@ -147,12 +151,22 @@
             panel2.Size = new Size(1286, 454);
             panel2.TabIndex = 1;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(1143, -6);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 28;
+            pictureBox1.TabStop = false;
+            // 
             // unidadproducto
             // 
             unidadproducto.AutoSize = true;
             unidadproducto.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             unidadproducto.ForeColor = Color.White;
-            unidadproducto.Location = new Point(849, 49);
+            unidadproducto.Location = new Point(850, 63);
             unidadproducto.Name = "unidadproducto";
             unidadproducto.Size = new Size(202, 24);
             unidadproducto.TabIndex = 29;
@@ -166,7 +180,7 @@
             categoriaproducto.AutoSize = true;
             categoriaproducto.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             categoriaproducto.ForeColor = Color.White;
-            categoriaproducto.Location = new Point(722, 49);
+            categoriaproducto.Location = new Point(723, 63);
             categoriaproducto.Name = "categoriaproducto";
             categoriaproducto.Size = new Size(121, 24);
             categoriaproducto.TabIndex = 28;
@@ -180,7 +194,7 @@
             nombreproducto.AutoSize = true;
             nombreproducto.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             nombreproducto.ForeColor = Color.White;
-            nombreproducto.Location = new Point(611, 49);
+            nombreproducto.Location = new Point(612, 63);
             nombreproducto.Name = "nombreproducto";
             nombreproducto.Size = new Size(105, 24);
             nombreproducto.TabIndex = 27;
@@ -221,7 +235,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.Location = new Point(11, 124);
+            dataGridView1.Location = new Point(11, 114);
             dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
@@ -249,7 +263,7 @@
             // 
             panel6.BackColor = Color.White;
             panel6.ForeColor = Color.White;
-            panel6.Location = new Point(431, 74);
+            panel6.Location = new Point(432, 88);
             panel6.Name = "panel6";
             panel6.Size = new Size(135, 2);
             panel6.TabIndex = 24;
@@ -260,7 +274,7 @@
             buscar.BorderStyle = BorderStyle.None;
             buscar.Font = new Font("Verdana", 9F, FontStyle.Bold);
             buscar.ForeColor = Color.White;
-            buscar.Location = new Point(436, 49);
+            buscar.Location = new Point(437, 63);
             buscar.Name = "buscar";
             buscar.Size = new Size(130, 19);
             buscar.TabIndex = 25;
@@ -271,7 +285,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(228, 43);
+            label3.Location = new Point(229, 57);
             label3.Name = "label3";
             label3.Size = new Size(197, 25);
             label3.TabIndex = 6;
@@ -293,6 +307,7 @@
             panelConsultaProducto.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
@@ -312,5 +327,6 @@
         private RadioButton unidadproducto;
         private RadioButton categoriaproducto;
         private RadioButton nombreproducto;
+        private PictureBox pictureBox1;
     }
 }

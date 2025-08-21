@@ -10,8 +10,8 @@ namespace Proyecto_Restaurante.Proceso
     public partial class ProcesoRegistroMovimiento : Form
     {
         // ===== Conexión =====
-        SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
-        //SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
+        //SqlConnection conexion = new SqlConnection(@"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true");
+        SqlConnection conexion = new SqlConnection(@"server=MSI; database=SistemaRestauranteDB1; integrated security=true");
 
         // ===== Tablas =====
         private readonly DataTable dtLineas = new DataTable();   // datasource del GridMovimiento
@@ -116,8 +116,8 @@ namespace Proyecto_Restaurante.Proceso
 
             //comboProveedor.SelectedIndexChanged += comboProveedor_SelectedIndexChanged;
 
-            btnGuardar.Click += btnGuardar_Click;
-            btnLimpiar.Click += (s, ev) => Limpiar();
+            //btnGuardar.Click += btnGuardar_Click;
+            //btnLimpiar.Click += (s, ev) => Limpiar();
 
             // Primera pintura (vacía pero con estructura/headers como a ti te gusta)
             Llenar_GridMovimiento();
@@ -159,7 +159,7 @@ namespace Proyecto_Restaurante.Proceso
             if (!dgvProductoselect.Columns.Contains("cantidad"))
                 dgvProductoselect.Columns.Add(new DataGridViewTextBoxColumn { Name = "cantidad", DataPropertyName = "cantidad", Width = 90, DefaultCellStyle = { Format = "N2" } });
             if (!dgvProductoselect.Columns.Contains("Quitar"))
-                dgvProductoselect.Columns.Add(new DataGridViewButtonColumn { Name = "Quitar", HeaderText = "", Text = "Quitar", UseColumnTextForButtonValue = true, Width = 70 });
+                dgvProductoselect.Columns.Add(new DataGridViewButtonColumn { Name = "Quitar", HeaderText = "", Text = "X", UseColumnTextForButtonValue = true, Width = 70 });
 
             // 5) Ocultar IDs y nombrar headers (igual que tu llenar_tabla_datagridview)
             if (dgvProductoselect.Columns.Contains("id_producto")) dgvProductoselect.Columns["id_producto"].Visible = false;
@@ -355,7 +355,8 @@ namespace Proyecto_Restaurante.Proceso
             if (e.KeyChar == '.' && (yaPunto || tb.SelectionStart == 0)) e.Handled = true;
         }
 
-        // ==================== GUARDAR ====================
+
+        // ==================== GUARDAR ===================
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             if (comboTipoMovimiento.SelectedIndex < 0) { MessageBox.Show("Seleccione el tipo de movimiento."); return; }

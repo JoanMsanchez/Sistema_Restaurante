@@ -18,8 +18,8 @@ namespace Proyecto_Restaurante.Reportes
 {
     public partial class ReporteEstadoCuenta : Form
     {
-        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
         public ReporteEstadoCuenta()
         {

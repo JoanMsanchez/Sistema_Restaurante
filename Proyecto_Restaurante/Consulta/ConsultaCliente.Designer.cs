@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultaCliente));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             panel1 = new Panel();
+            pictureBox1 = new PictureBox();
             buscaCondicion = new RadioButton();
             buscaNombre = new RadioButton();
             panel6 = new Panel();
@@ -46,6 +48,7 @@
             btnMinimizarCategoria = new FontAwesome.Sharp.IconButton();
             label6 = new Label();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DGVConsultaCliente).BeginInit();
             panelConsultaCliente.SuspendLayout();
             SuspendLayout();
@@ -58,18 +61,29 @@
             panel1.Controls.Add(buscar);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(DGVConsultaCliente);
+            panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 451);
+            panel1.Size = new Size(844, 507);
             panel1.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(708, 50);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 34;
+            pictureBox1.TabStop = false;
             // 
             // buscaCondicion
             // 
             buscaCondicion.AutoSize = true;
             buscaCondicion.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             buscaCondicion.ForeColor = Color.White;
-            buscaCondicion.Location = new Point(555, 84);
+            buscaCondicion.Location = new Point(457, 122);
             buscaCondicion.Name = "buscaCondicion";
             buscaCondicion.Size = new Size(206, 24);
             buscaCondicion.TabIndex = 33;
@@ -83,7 +97,7 @@
             buscaNombre.AutoSize = true;
             buscaNombre.Font = new Font("Verdana", 10.2F, FontStyle.Bold);
             buscaNombre.ForeColor = Color.White;
-            buscaNombre.Location = new Point(444, 84);
+            buscaNombre.Location = new Point(346, 122);
             buscaNombre.Name = "buscaNombre";
             buscaNombre.Size = new Size(105, 24);
             buscaNombre.TabIndex = 32;
@@ -96,7 +110,7 @@
             // 
             panel6.BackColor = Color.White;
             panel6.ForeColor = Color.White;
-            panel6.Location = new Point(295, 109);
+            panel6.Location = new Point(197, 147);
             panel6.Name = "panel6";
             panel6.Size = new Size(135, 2);
             panel6.TabIndex = 30;
@@ -107,7 +121,7 @@
             buscar.BorderStyle = BorderStyle.None;
             buscar.Font = new Font("Verdana", 9F, FontStyle.Bold);
             buscar.ForeColor = Color.White;
-            buscar.Location = new Point(300, 89);
+            buscar.Location = new Point(202, 127);
             buscar.Name = "buscar";
             buscar.Size = new Size(130, 19);
             buscar.TabIndex = 31;
@@ -118,7 +132,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(117, 82);
+            label3.Location = new Point(19, 120);
             label3.Name = "label3";
             label3.Size = new Size(172, 25);
             label3.TabIndex = 29;
@@ -135,7 +149,6 @@
             DGVConsultaCliente.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DGVConsultaCliente.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DGVConsultaCliente.BackgroundColor = Color.FromArgb(255, 161, 43);
-            DGVConsultaCliente.BorderStyle = BorderStyle.None;
             DGVConsultaCliente.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 161, 43);
@@ -156,7 +169,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVConsultaCliente.DefaultCellStyle = dataGridViewCellStyle3;
             DGVConsultaCliente.EnableHeadersVisualStyles = false;
-            DGVConsultaCliente.Location = new Point(23, 134);
+            DGVConsultaCliente.Location = new Point(19, 164);
             DGVConsultaCliente.Name = "DGVConsultaCliente";
             DGVConsultaCliente.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -189,7 +202,7 @@
             panelConsultaCliente.Location = new Point(0, 0);
             panelConsultaCliente.Margin = new Padding(2);
             panelConsultaCliente.Name = "panelConsultaCliente";
-            panelConsultaCliente.Size = new Size(800, 54);
+            panelConsultaCliente.Size = new Size(844, 54);
             panelConsultaCliente.TabIndex = 1;
             panelConsultaCliente.MouseDown += panelConsultaCliente_MouseDown;
             // 
@@ -203,7 +216,7 @@
             btnMaximizarCategoria.IconColor = Color.OldLace;
             btnMaximizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMaximizarCategoria.IconSize = 20;
-            btnMaximizarCategoria.Location = new Point(732, 0);
+            btnMaximizarCategoria.Location = new Point(776, 0);
             btnMaximizarCategoria.Margin = new Padding(2);
             btnMaximizarCategoria.Name = "btnMaximizarCategoria";
             btnMaximizarCategoria.Size = new Size(36, 20);
@@ -221,7 +234,7 @@
             btnCerrarCategoria.IconColor = Color.OldLace;
             btnCerrarCategoria.IconFont = FontAwesome.Sharp.IconFont.Solid;
             btnCerrarCategoria.IconSize = 20;
-            btnCerrarCategoria.Location = new Point(764, 0);
+            btnCerrarCategoria.Location = new Point(808, 0);
             btnCerrarCategoria.Margin = new Padding(2);
             btnCerrarCategoria.Name = "btnCerrarCategoria";
             btnCerrarCategoria.Size = new Size(36, 20);
@@ -239,7 +252,7 @@
             btnMinimizarCategoria.IconColor = Color.OldLace;
             btnMinimizarCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnMinimizarCategoria.IconSize = 20;
-            btnMinimizarCategoria.Location = new Point(698, 0);
+            btnMinimizarCategoria.Location = new Point(742, 0);
             btnMinimizarCategoria.Margin = new Padding(2);
             btnMinimizarCategoria.Name = "btnMinimizarCategoria";
             btnMinimizarCategoria.Size = new Size(36, 20);
@@ -263,7 +276,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(800, 451);
+            ClientSize = new Size(844, 507);
             Controls.Add(panelConsultaCliente);
             Controls.Add(panel1);
             Name = "ConsultaCliente";
@@ -271,6 +284,7 @@
             Text = "ConcultaCliente";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)DGVConsultaCliente).EndInit();
             panelConsultaCliente.ResumeLayout(false);
             panelConsultaCliente.PerformLayout();
@@ -291,5 +305,6 @@
         private FontAwesome.Sharp.IconButton btnMaximizarCategoria;
         private FontAwesome.Sharp.IconButton btnCerrarCategoria;
         private FontAwesome.Sharp.IconButton btnMinimizarCategoria;
+        private PictureBox pictureBox1;
     }
 }

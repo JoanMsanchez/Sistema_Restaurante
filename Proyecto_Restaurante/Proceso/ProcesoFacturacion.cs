@@ -25,9 +25,32 @@ namespace Proyecto_Restaurante.Proceso
 {
     public partial class ProcesoFacturacion : Form
     {
+
+        public class PrecuentaLinea
+        {
+            public int Nro { get; set; }
+            public string Nombre { get; set; }
+            public decimal Cantidad { get; set; }
+            public decimal Precio { get; set; }
+            public decimal Importe => Math.Round(Cantidad * Precio, 2);
+        }
+
+        public class PrecuentaData
+        {
+            public int IdOrden { get; set; }
+            public string SalaMesa { get; set; }
+            public string Cliente { get; set; }
+            public string Condicion { get; set; }
+            public string Atendido { get; set; }
+            public DateTime Fecha { get; set; }
+            public decimal ItbisRate { get; set; }           // ej. 0.18m
+            public List<PrecuentaLinea> Lineas { get; set; } = new();
+        }
+
+
         // Connection string
-        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
         private readonly MenuPrincipal _menu;
 
@@ -182,7 +205,7 @@ namespace Proyecto_Restaurante.Proceso
             };
 
             if (btnGuardar != null) btnGuardar.Click += (_, __) => GuardarCabecera();
-            if (btnPrecuenta != null) btnPrecuenta.Click += (_, __) => MostrarPrecuenta();
+            //if (btnPrecuenta != null) btnPrecuenta.Click += (_, __) => MostrarPrecuenta();
             if (btnProcesar != null) btnProcesar.Click += (_, __) => Procesar();
             if (btnCancelar != null) btnCancelar.Click += BtnCancelar_Click;
 
@@ -1001,7 +1024,7 @@ namespace Proyecto_Restaurante.Proceso
             }
         }
 
-        private void MostrarPrecuenta()
+        /*private void MostrarPrecuenta()
         {
             try
             {
@@ -1048,7 +1071,7 @@ namespace Proyecto_Restaurante.Proceso
             }
         }
 
-        private string ConstruirHtmlPrecuenta()
+           private string ConstruirHtmlPrecuenta()
         {
             // Datos de cabecera
             string cliente = (cmbCliente?.Text ?? "Consumidor Final").Trim();
@@ -1228,7 +1251,7 @@ namespace Proyecto_Restaurante.Proceso
         </table>
 
         <div class='footnote'>
-            Esta es una precuenta de cortesía y no constituye comprobante fiscal. Para factura final, solicítela al camarero(a).
+            Esta es una precuenta de cortesía. Para factura final, solicítela al camarero(a).
         </div>
     </div>
 </body>
@@ -1239,6 +1262,7 @@ namespace Proyecto_Restaurante.Proceso
 
         private static string HtmlEncode(string s)
             => string.IsNullOrEmpty(s) ? "" : s.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "&quot;");
+        */
 
         // ===== Persistir cabecera dentro de la transacción de Procesar =====
         private void PersistirClienteYCondicion(SqlConnection con, SqlTransaction tx)
@@ -1499,15 +1523,15 @@ namespace Proyecto_Restaurante.Proceso
             var row2 = two.AddRow();
 
             // Observaciones
-            var cObs = row2.Cells[0];
-            cObs.Borders.Color = Colors.Gainsboro;
-            cObs.Borders.Width = 0.75;
-            cObs.Shading.Color = Colors.White;
-            var pObsT = cObs.AddParagraph("Observaciones");
-            pObsT.Format.Font.Bold = true;
-            pObsT.Format.SpaceAfter = 2;
-            cObs.AddParagraph("Revise su pedido antes de procesar el pago. Los precios incluyen impuestos según aplique.")
-                .Format.Font.Size = 9;
+            //var cObs = row2.Cells[0];
+            //cObs.Borders.Color = Colors.Gainsboro;
+            //cObs.Borders.Width = 0.75;
+            //cObs.Shading.Color = Colors.White;
+            //var pObsT = cObs.AddParagraph("Observaciones");
+            //pObsT.Format.Font.Bold = true;
+            //pObsT.Format.SpaceAfter = 2;
+            //cObs.AddParagraph("Revise su pedido antes de procesar el pago. Los precios incluyen impuestos según aplique.")
+            //.Format.Font.Size = 9;
 
             // Totales
             var cTot = row2.Cells[1];
@@ -1915,16 +1939,28 @@ namespace Proyecto_Restaurante.Proceso
 
         private void CambiarCantidad(int idDetalle, decimal delta)
         {
+            var g = dgvDetalle;
+
+            // 1) Guardar estado visual (scroll/foco)
+            int first = g.FirstDisplayedScrollingRowIndex >= 0 ? g.FirstDisplayedScrollingRowIndex : 0;
+            int colCantIdx = g.Columns["colCant"].Index;
+
+            // 2) Variables para saber qué pasó en DB
+            bool removed = false;
+            decimal newQty = 0m;
+            int idProd = 0;
+            decimal cantActual = 0m, precio = 0m;
+
             try
             {
                 using var con = new SqlConnection(CS);
                 con.Open();
                 using var tx = con.BeginTransaction();
 
-                // Leer producto, cantidad y precio actuales
-                int idProd;
-                decimal cantActual, precio;
-                using (var cmd = new SqlCommand("SELECT id_producto, cantidad, precio_unitario FROM detalle_orden WHERE id_detalle=@d AND estado=1", con, tx))
+                // Leer línea actual
+                using (var cmd = new SqlCommand(
+                    "SELECT id_producto, cantidad, precio_unitario FROM detalle_orden WHERE id_detalle=@d AND estado=1",
+                    con, tx))
                 {
                     cmd.Parameters.AddWithValue("@d", idDetalle);
                     using var rd = cmd.ExecuteReader();
@@ -1934,28 +1970,27 @@ namespace Proyecto_Restaurante.Proceso
                     precio = rd.GetDecimal(2);
                 }
 
-                var nueva = cantActual + delta;
+                newQty = cantActual + delta;
 
                 if (delta > 0m)
                 {
-                    // Aumentar cantidad → requiere descontar stock = delta
+                    // Aumentar cantidad → descontar 'delta' del stock
                     if (!TryDescontarStock(con, tx, idProd, delta, out decimal restante, out decimal min, out string nombre))
                     {
                         tx.Rollback();
-                        MessageBox.Show($"No hay stock suficiente de \"{nombre}\". Disponible: {restante:N2}.", "Sin stock", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"No hay stock suficiente de \"{nombre}\". Disponible: {restante:N2}.",
+                                        "Sin stock", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
 
                     using var up = new SqlCommand(@"
-                        UPDATE detalle_orden
-                           SET cantidad=@c, subtotal = ROUND(@c * @p, 2)
-                         WHERE id_detalle=@d;", con, tx);
-                    up.Parameters.AddWithValue("@c", nueva);
+                UPDATE detalle_orden
+                   SET cantidad=@c, subtotal = ROUND(@c * @p, 2)
+                 WHERE id_detalle=@d;", con, tx);
+                    up.Parameters.AddWithValue("@c", newQty);
                     up.Parameters.AddWithValue("@p", precio);
                     up.Parameters.AddWithValue("@d", idDetalle);
                     up.ExecuteNonQuery();
-
-                    // *** YA NO se registran movimientos aquí ***
 
                     RecalcularTotalOrden(con, tx);
                     tx.Commit();
@@ -1965,34 +2000,30 @@ namespace Proyecto_Restaurante.Proceso
                 }
                 else
                 {
-                    // Disminuir cantidad → devolver stock
-                    decimal devolver = Math.Min(cantActual, -delta); // si delta=-999999 devuelve cantActual
-                    if (nueva <= 0m)
+                    // Disminuir cantidad → devolver stock (hasta quitar la línea)
+                    decimal devolver = Math.Min(cantActual, -delta);
+
+                    if (newQty <= 0m)
                     {
-                        // Quitar línea
-                        using var del = new SqlCommand(@"
-                            UPDATE detalle_orden
-                               SET estado=0
-                             WHERE id_detalle=@d;", con, tx);
+                        using var del = new SqlCommand(
+                            "UPDATE detalle_orden SET estado=0 WHERE id_detalle=@d;", con, tx);
                         del.Parameters.AddWithValue("@d", idDetalle);
                         del.ExecuteNonQuery();
+                        removed = true;
                     }
                     else
                     {
                         using var up = new SqlCommand(@"
-                            UPDATE detalle_orden
-                               SET cantidad=@c, subtotal = ROUND(@c * @p, 2)
-                             WHERE id_detalle=@d;", con, tx);
-                        up.Parameters.AddWithValue("@c", nueva);
+                    UPDATE detalle_orden
+                       SET cantidad=@c, subtotal = ROUND(@c * @p, 2)
+                     WHERE id_detalle=@d;", con, tx);
+                        up.Parameters.AddWithValue("@c", newQty);
                         up.Parameters.AddWithValue("@p", precio);
                         up.Parameters.AddWithValue("@d", idDetalle);
                         up.ExecuteNonQuery();
                     }
 
                     DevolverStock(con, tx, idProd, devolver);
-
-                    // *** YA NO se registran movimientos aquí ***
-
                     RecalcularTotalOrden(con, tx);
                     tx.Commit();
                 }
@@ -2000,9 +2031,44 @@ namespace Proyecto_Restaurante.Proceso
             catch (Exception ex)
             {
                 MessageBox.Show("No se pudo cambiar la cantidad: " + ex.Message);
+                return;
             }
 
-            CargarDetalle();
+            // 3) --- Actualizar SOLO la fila en memoria (sin recargar todo) ---
+            var item = _lineas.FirstOrDefault(x => x.IdDetalle == idDetalle);
+            if (item == null)
+            {
+                // Si por alguna razón no está sincronizado, recarga como fallback
+                CargarDetalle();
+            }
+            else
+            {
+                if (removed)
+                {
+                    int pos = _lineas.IndexOf(item);
+                    _lineas.RemoveAt(pos);
+
+                    if (g.Rows.Count > 0)
+                    {
+                        int next = Math.Min(pos, g.Rows.Count - 1);
+                        g.CurrentCell = g.Rows[next].Cells[colCantIdx];
+                    }
+                }
+                else
+                {
+                    item.Cantidad = newQty;
+                    int pos = _lineas.IndexOf(item);
+                    _lineas.ResetItem(pos);                 // refresca esa fila (Subtotal incluido)
+                    if (g.Rows.Count > 0)
+                        g.CurrentCell = g.Rows[pos].Cells[colCantIdx];
+                }
+
+                // Restaurar scroll y totales
+                if (g.Rows.Count > 0 && first >= 0 && first < g.Rows.Count)
+                    g.FirstDisplayedScrollingRowIndex = first;
+
+                RecalcularTotales();
+            }
         }
 
         private void ProcesoFacturacion_FormClosing(object sender, FormClosingEventArgs e)
@@ -2048,6 +2114,51 @@ namespace Proyecto_Restaurante.Proceso
             catch
             {
                 // no bloquear el cierre
+            }
+        }
+
+        private void btnPrecuenta_Click(object sender, EventArgs e)
+        {
+            // Construir las líneas que van a la precuenta
+            var lineasPre = _lineas
+                .Select((l, i) => new PrecuentaLinea
+                {
+                    Nro = i + 1,
+                    Nombre = l.Nombre,
+                    Cantidad = l.Cantidad,
+                    Precio = l.Precio
+                })
+                .ToList();
+
+            // Sala + Mesa (usa lo que ya muestras en tu UI)
+            string salaMesa = lbSalaMesa?.Text ?? $"Mesa #{_idMesa}";
+
+            // Empaquetar todo
+            var data = new PrecuentaData
+            {
+                IdOrden = _idOrden,
+                SalaMesa = salaMesa,             // ← aquí va “Sala X - Mesa Y” o como lo manejes
+                Cliente = cmbCliente?.Text ?? "Consumidor Final",
+                Condicion = txtCondicionPago?.Text ?? "",
+                Atendido = lbEmpleado?.Text ?? "",
+                Fecha = DateTime.Now,
+                ItbisRate = ITBIS_RATE,           // ej. 0.18m
+                Lineas = lineasPre
+            };
+
+            // Mostrar la precuenta
+            using (var f = new PreCuenta(data))
+            {
+                f.ShowDialog(this);
+            }
+        }
+
+        private void txtBuscarProd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Solo se permiten letras en el buscar de producto .", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

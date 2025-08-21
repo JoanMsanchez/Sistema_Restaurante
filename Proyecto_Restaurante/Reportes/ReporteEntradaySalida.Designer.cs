@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteEntradaySalida));
             panel1 = new Panel();
             rbTodo = new RadioButton();
             label2 = new Label();
@@ -43,13 +44,16 @@
             btnCerrar = new FontAwesome.Sharp.IconButton();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
             label3 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReporteEntradaySalida).BeginInit();
             Titulo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(rbTodo);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(dtpHasta);
@@ -261,6 +265,16 @@
             label3.TabIndex = 2;
             label3.Text = "REPORTE DE ENTRADA Y SALIDA";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(750, 52);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 103);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 28;
+            pictureBox1.TabStop = false;
+            // 
             // ReporteEntradaySalida
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -277,6 +291,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvReporteEntradaySalida).EndInit();
             Titulo.ResumeLayout(false);
             Titulo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -297,5 +312,6 @@
         private FontAwesome.Sharp.IconButton btnMaximizar;
         private FontAwesome.Sharp.IconButton btnCerrar;
         private FontAwesome.Sharp.IconButton btnMinimizar;
+        private PictureBox pictureBox1;
     }
 }

@@ -13,13 +13,15 @@ using System.Drawing;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
+using System.Text.RegularExpressions;
 
 namespace Proyecto_Restaurante.Proceso
 {
     public partial class ProcesoRegistroPago : Form
     {
-        private const string CS =
-            @"Server=DESKTOP-HUHR9O6\SQLEXPRESS;Database=SistemaRestauranteDB1;Integrated Security=True;TrustServerCertificate=True;Connect Timeout=15";
+        //private const string CS = @"Server=DESKTOP-HUHR9O6\SQLEXPRESS;Database=SistemaRestauranteDB1;Integrated Security=True;TrustServerCertificate=True;Connect Timeout=15";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+
 
         private const int CMD_TIMEOUT = 30;
         private const int ACTIVO = 1;
@@ -409,6 +411,10 @@ namespace Proyecto_Restaurante.Proceso
         {
             ((DataTable)dgvDistribucion.DataSource).Rows.Clear();
             RecalcularTotales();
+
+            txtMontoTotal.Clear();
+            txtNota.Clear();
+            observaciones.Clear(); 
         }
 
         private void DgvDistribucion_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -667,7 +673,7 @@ namespace Proyecto_Restaurante.Proceso
             DateTime fechaPago = DateTime.Now;
             decimal montoTotal = 0m;
             string metodoDesc = "(Sin método)";
-            string nota = "";
+            string notadb = "";
 
             var detalle = new System.Collections.Generic.List<(int idOrden, string cliente, decimal aplicado, decimal saldoRestante)>();
 
@@ -689,7 +695,7 @@ namespace Proyecto_Restaurante.Proceso
 
                     fechaPago = rd.GetDateTime(0);
                     montoTotal = rd.GetDecimal(1);
-                    nota = rd.IsDBNull(2) ? "" : rd.GetString(2);
+                    notadb = rd.IsDBNull(2) ? "" : rd.GetString(2);
                     metodoDesc = rd.IsDBNull(3) ? "(Sin método)" : rd.GetString(3);
                 }
 
@@ -727,6 +733,9 @@ namespace Proyecto_Restaurante.Proceso
 
             string usuario = FindControl<TextBox>("txtEmpleado")?.Text?.Trim();
             if (string.IsNullOrWhiteSpace(usuario)) usuario = Environment.UserName;
+
+            string notaMostrar = txtNota?.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(notaMostrar)) notaMostrar = null;
 
             // ===== 2) Documento PDF (MigraDoc) =====
             var doc = new Document();
@@ -786,8 +795,8 @@ namespace Proyecto_Restaurante.Proceso
             // Izquierda
             mr.Cells[0].AddParagraph($"Cliente: {clienteMostrar}");
             mr.Cells[0].AddParagraph($"Método de pago: {metodoDesc}");
-            if (!string.IsNullOrWhiteSpace(nota))
-                mr.Cells[0].AddParagraph($"Nota: {nota}");
+            if (!string.IsNullOrWhiteSpace(notaMostrar))
+                mr.Cells[0].AddParagraph($"Nota: {notaMostrar}");
 
             // Derecha (totales con tab stop a la derecha)
             var cTot = mr.Cells[1];
@@ -803,14 +812,16 @@ namespace Proyecto_Restaurante.Proceso
             Paragraph t2 = cTot.AddParagraph();
             t2.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
             t2.Format.LeftIndent = indent; t2.Format.RightIndent = indent;
-            t2.AddText("Aplicado:"); t2.AddTab(); t2.AddText(RD(aplicadoTotal));
+            t2.AddText("Monto Aplicado:"); t2.AddTab(); t2.AddText(RD(aplicadoTotal));
 
-            Paragraph t3 = cTot.AddParagraph();
-            t3.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
-            t3.Format.LeftIndent = indent; t3.Format.RightIndent = indent;
-            t3.Format.Font.Bold = true; t3.Format.SpaceBefore = 2;
-            t3.AddText("Sobrante (cambio):"); t3.AddTab(); t3.AddText(RD(sobrante));
-
+            if (sobrante > 0m)
+            {
+                Paragraph t3 = cTot.AddParagraph();
+                t3.Format.TabStops.AddTabStop(tabRight, MigraDoc.DocumentObjectModel.TabAlignment.Right);
+                t3.Format.LeftIndent = indent; t3.Format.RightIndent = indent;
+                t3.Format.Font.Bold = true; t3.Format.SpaceBefore = 2;
+                t3.AddText("Sobrante (cambio):"); t3.AddTab(); t3.AddText(RD(sobrante));
+            }
             sec.AddParagraph().AddLineBreak();
 
             // ===== Tabla de detalle por orden =====

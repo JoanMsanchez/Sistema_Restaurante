@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteStockActual));
             dgvReporteProducto = new DataGridView();
             pdf = new FontAwesome.Sharp.IconButton();
             panel1 = new Panel();
@@ -36,9 +37,11 @@
             btnCerrarUnidadMedida = new FontAwesome.Sharp.IconButton();
             btnMinimizarUnidadMedida = new FontAwesome.Sharp.IconButton();
             label1 = new Label();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)dgvReporteProducto).BeginInit();
             panel1.SuspendLayout();
             Titulo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // dgvReporteProducto
@@ -50,13 +53,13 @@
             dgvReporteProducto.BackgroundColor = Color.White;
             dgvReporteProducto.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvReporteProducto.EnableHeadersVisualStyles = false;
-            dgvReporteProducto.Location = new Point(62, 86);
+            dgvReporteProducto.Location = new Point(62, 167);
             dgvReporteProducto.Name = "dgvReporteProducto";
             dgvReporteProducto.ReadOnly = true;
             dgvReporteProducto.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dgvReporteProducto.RowHeadersVisible = false;
             dgvReporteProducto.RowHeadersWidth = 51;
-            dgvReporteProducto.Size = new Size(709, 325);
+            dgvReporteProducto.Size = new Size(709, 366);
             dgvReporteProducto.TabIndex = 0;
             // 
             // pdf
@@ -71,7 +74,7 @@
             pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
             pdf.IconSize = 35;
             pdf.ImageAlign = ContentAlignment.MiddleLeft;
-            pdf.Location = new Point(665, 430);
+            pdf.Location = new Point(665, 552);
             pdf.Name = "pdf";
             pdf.Size = new Size(106, 52);
             pdf.TabIndex = 1;
@@ -81,12 +84,13 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(dgvReporteProducto);
             panel1.Controls.Add(pdf);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(832, 508);
+            panel1.Size = new Size(832, 630);
             panel1.TabIndex = 2;
             // 
             // Titulo
@@ -98,7 +102,7 @@
             Titulo.Controls.Add(label1);
             Titulo.Dock = DockStyle.Top;
             Titulo.Location = new Point(0, 0);
-            Titulo.Margin = new Padding(2, 2, 2, 2);
+            Titulo.Margin = new Padding(2);
             Titulo.Name = "Titulo";
             Titulo.Size = new Size(832, 54);
             Titulo.TabIndex = 3;
@@ -169,12 +173,22 @@
             label1.TabIndex = 2;
             label1.Text = "REPORTE DE STOCK ACTUAL";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(689, 49);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 28;
+            pictureBox1.TabStop = false;
+            // 
             // ReporteStockActual
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(832, 508);
+            ClientSize = new Size(832, 630);
             Controls.Add(Titulo);
             Controls.Add(panel1);
             Name = "ReporteStockActual";
@@ -184,6 +198,7 @@
             panel1.ResumeLayout(false);
             Titulo.ResumeLayout(false);
             Titulo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -197,5 +212,6 @@
         private FontAwesome.Sharp.IconButton btnMaximizarUnidadMedida;
         private FontAwesome.Sharp.IconButton btnCerrarUnidadMedida;
         private FontAwesome.Sharp.IconButton btnMinimizarUnidadMedida;
+        private PictureBox pictureBox1;
     }
 }

@@ -13,13 +13,13 @@ namespace Proyecto_Restaurante.Consulta
     {
 
         // Cadena de conexión: usa la misma
-        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
 
         // === MODO INTEGRADO ===
-        private readonly bool _selectorMode = false;             // true → devuelve SelectedId/SelectedCondicionId (para ProcesoFacturacion)
-        private MantenimientoCliente mantenimientoClienteForm;    // para modo mantenimiento
+        private readonly bool _selectorMode = false;            
+        private MantenimientoCliente mantenimientoClienteForm;
 
         // Valores devueltos en modo selector
         public int SelectedId { get; private set; } = -1;

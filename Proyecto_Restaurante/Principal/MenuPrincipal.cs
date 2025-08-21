@@ -26,8 +26,8 @@ namespace Proyecto_Restaurante.Mantenimiento
 
         // Usa el mismo connection string que usas en tus mantenimientos
 
-        private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
-        //private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
+        //private const string CS = @"server=DESKTOP-HUHR9O6\SQLEXPRESS; database=SistemaRestauranteDB1; integrated security=true";
+        private const string CS = @"server=MSI; database=SistemaRestauranteDB1; integrated security=true";
 
         // Método público para iniciar/recargar el plano de salas
         public void InicializarPlanoSalas()

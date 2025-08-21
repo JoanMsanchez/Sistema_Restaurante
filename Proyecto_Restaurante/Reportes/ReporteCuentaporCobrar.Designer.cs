@@ -29,7 +29,9 @@ namespace Proyecto_Restaurante.Reportes
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteCuentaporCobrar));
             panel1 = new Panel();
+            panel3 = new Panel();
             txtNombre = new TextBox();
             label1 = new Label();
             pdf = new FontAwesome.Sharp.IconButton();
@@ -39,14 +41,16 @@ namespace Proyecto_Restaurante.Reportes
             btnCerrar = new FontAwesome.Sharp.IconButton();
             btnMinimizar = new FontAwesome.Sharp.IconButton();
             label3 = new Label();
-            panel3 = new Panel();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgCxC).BeginInit();
             Titulo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(txtNombre);
             panel1.Controls.Add(label1);
@@ -55,8 +59,17 @@ namespace Proyecto_Restaurante.Reportes
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(791, 611);
+            panel1.Size = new Size(791, 637);
             panel1.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.ForeColor = Color.White;
+            panel3.Location = new Point(259, 148);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(158, 2);
+            panel3.TabIndex = 32;
             // 
             // txtNombre
             // 
@@ -64,7 +77,7 @@ namespace Proyecto_Restaurante.Reportes
             txtNombre.BorderStyle = BorderStyle.None;
             txtNombre.Font = new Font("Verdana", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNombre.ForeColor = Color.White;
-            txtNombre.Location = new Point(225, 107);
+            txtNombre.Location = new Point(259, 125);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(158, 21);
             txtNombre.TabIndex = 9;
@@ -75,7 +88,7 @@ namespace Proyecto_Restaurante.Reportes
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(50, 103);
+            label1.Location = new Point(84, 121);
             label1.Name = "label1";
             label1.Size = new Size(179, 25);
             label1.TabIndex = 8;
@@ -93,7 +106,7 @@ namespace Proyecto_Restaurante.Reportes
             pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
             pdf.IconSize = 35;
             pdf.ImageAlign = ContentAlignment.MiddleLeft;
-            pdf.Location = new Point(618, 538);
+            pdf.Location = new Point(618, 564);
             pdf.Name = "pdf";
             pdf.Size = new Size(113, 52);
             pdf.TabIndex = 4;
@@ -110,10 +123,10 @@ namespace Proyecto_Restaurante.Reportes
             dtgCxC.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dtgCxC.BackgroundColor = Color.White;
             dtgCxC.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgCxC.Location = new Point(50, 152);
+            dtgCxC.Location = new Point(50, 171);
             dtgCxC.Name = "dtgCxC";
             dtgCxC.RowHeadersWidth = 51;
-            dtgCxC.Size = new Size(681, 368);
+            dtgCxC.Size = new Size(681, 375);
             dtgCxC.TabIndex = 0;
             // 
             // Titulo
@@ -195,21 +208,22 @@ namespace Proyecto_Restaurante.Reportes
             label3.TabIndex = 3;
             label3.Text = "REPORTE DE CUENTA POR COBRAR";
             // 
-            // panel3
+            // pictureBox1
             // 
-            panel3.BackColor = Color.White;
-            panel3.ForeColor = Color.White;
-            panel3.Location = new Point(225, 130);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(158, 2);
-            panel3.TabIndex = 32;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(648, 50);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 28;
+            pictureBox1.TabStop = false;
             // 
             // ReporteCuentaporCobrar
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(791, 611);
+            ClientSize = new Size(791, 637);
             Controls.Add(Titulo);
             Controls.Add(panel1);
             Name = "ReporteCuentaporCobrar";
@@ -220,6 +234,7 @@ namespace Proyecto_Restaurante.Reportes
             ((System.ComponentModel.ISupportInitialize)dtgCxC).EndInit();
             Titulo.ResumeLayout(false);
             Titulo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -241,5 +256,6 @@ namespace Proyecto_Restaurante.Reportes
         private FontAwesome.Sharp.IconButton btnCerrar;
         private FontAwesome.Sharp.IconButton btnMinimizar;
         private Panel panel3;
+        private PictureBox pictureBox1;
     }
 }

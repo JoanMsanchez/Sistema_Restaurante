@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultaProveedor));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -38,12 +39,14 @@
             btnMinimizarProveedor = new FontAwesome.Sharp.IconButton();
             label8 = new Label();
             panel2 = new Panel();
+            pictureBox1 = new PictureBox();
             panel1 = new Panel();
             label2 = new Label();
             busca = new TextBox();
             DGVProveedor = new DataGridView();
             panelConsultaProveedor.SuspendLayout();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DGVProveedor).BeginInit();
             SuspendLayout();
             // 
@@ -129,6 +132,7 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(panel1);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(busca);
@@ -137,14 +141,24 @@
             panel2.Location = new Point(0, 58);
             panel2.Margin = new Padding(2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(853, 422);
+            panel2.Size = new Size(853, 429);
             panel2.TabIndex = 1;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(710, -1);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(143, 96);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 32;
+            pictureBox1.TabStop = false;
             // 
             // panel1
             // 
             panel1.BackColor = Color.White;
             panel1.ForeColor = Color.White;
-            panel1.Location = new Point(483, 64);
+            panel1.Location = new Point(472, 94);
             panel1.Name = "panel1";
             panel1.Size = new Size(158, 2);
             panel1.TabIndex = 31;
@@ -154,11 +168,12 @@
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Bold);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(256, 41);
+            label2.Location = new Point(245, 71);
             label2.Name = "label2";
             label2.Size = new Size(226, 25);
             label2.TabIndex = 29;
             label2.Text = "Buscar por nombre";
+            label2.Click += label2_Click;
             // 
             // busca
             // 
@@ -166,7 +181,7 @@
             busca.BorderStyle = BorderStyle.None;
             busca.Font = new Font("Verdana", 9F, FontStyle.Bold);
             busca.ForeColor = Color.White;
-            busca.Location = new Point(488, 46);
+            busca.Location = new Point(477, 76);
             busca.Name = "busca";
             busca.Size = new Size(153, 19);
             busca.TabIndex = 30;
@@ -204,7 +219,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DGVProveedor.DefaultCellStyle = dataGridViewCellStyle3;
             DGVProveedor.EnableHeadersVisualStyles = false;
-            DGVProveedor.Location = new Point(66, 110);
+            DGVProveedor.Location = new Point(66, 119);
             DGVProveedor.Name = "DGVProveedor";
             DGVProveedor.ReadOnly = true;
             DGVProveedor.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -227,7 +242,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 161, 43);
-            ClientSize = new Size(853, 480);
+            ClientSize = new Size(853, 487);
             Controls.Add(panel2);
             Controls.Add(panelConsultaProveedor);
             Margin = new Padding(2);
@@ -239,6 +254,7 @@
             panelConsultaProveedor.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)DGVProveedor).EndInit();
             ResumeLayout(false);
         }
@@ -255,5 +271,6 @@
         private Panel panel1;
         protected Label label2;
         protected TextBox busca;
+        private PictureBox pictureBox1;
     }
 }
