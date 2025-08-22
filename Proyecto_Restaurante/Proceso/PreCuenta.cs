@@ -12,6 +12,7 @@ using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using static Proyecto_Restaurante.Proceso.ProcesoFacturacion;
+using System.Runtime.InteropServices;
 
 namespace Proyecto_Restaurante.Proceso
 {
@@ -24,7 +25,75 @@ namespace Proyecto_Restaurante.Proceso
             InitializeComponent();
             txtOrden.TabStop = false;
             txtSalaMesa.TabStop = false;
+            this.Padding = new Padding(bordeSize);
+            this.BackColor = System.Drawing.Color.FromArgb(255, 161, 43);
 
+        }
+
+        private int bordeSize = 2;
+
+
+        //Drag Form
+        [DllImport("User32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("User32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void Titulo_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        //Overridden methods
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCCALCSIZE = 0x0083;
+            if (m.Msg == WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
+            {
+                return;
+            }
+            base.WndProc(ref m);
+        }
+
+        //Event methods
+        private void Producto_Resize(object sender, EventArgs e)
+        {
+            AdjustForm();
+        }
+
+        //Private methods
+        private void AdjustForm()
+        {
+            switch (this.WindowState)
+            {
+                case FormWindowState.Maximized:
+                    this.Padding = new Padding(0, 8, 8, 0);
+                    break;
+                case FormWindowState.Normal:
+                    if (this.Padding.Top != bordeSize)
+                        this.Padding = new Padding(bordeSize);
+                    break;
+
+            }
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMaximizar_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+                this.WindowState = FormWindowState.Maximized;
+            else
+                this.WindowState = FormWindowState.Normal;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         public PreCuenta(PrecuentaData data) : this()
@@ -277,6 +346,12 @@ namespace Proyecto_Restaurante.Proceso
                 if (decimal.TryParse(Convert.ToString(val), out var d)) return d.ToString("N2");
                 return Convert.ToString(val);
             }
+        }
+
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            pdf = new FontAwesome.Sharp.IconButton();
             textBox1 = new TextBox();
             txtFecha = new TextBox();
             label7 = new Label();
@@ -46,11 +47,13 @@
             label1 = new Label();
             dgvPreCuenta = new DataGridView();
             panel2 = new Panel();
+            btnMaximizar = new FontAwesome.Sharp.IconButton();
+            btnCerrar = new FontAwesome.Sharp.IconButton();
             txtSalaMesa = new TextBox();
+            btnMinimizar = new FontAwesome.Sharp.IconButton();
             txtOrden = new TextBox();
             label14 = new Label();
             label13 = new Label();
-            pdf = new FontAwesome.Sharp.IconButton();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPreCuenta).BeginInit();
             panel2.SuspendLayout();
@@ -81,6 +84,26 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(907, 676);
             panel1.TabIndex = 0;
+            // 
+            // pdf
+            // 
+            pdf.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            pdf.FlatAppearance.BorderSize = 0;
+            pdf.FlatStyle = FlatStyle.Flat;
+            pdf.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            pdf.ForeColor = Color.White;
+            pdf.IconChar = FontAwesome.Sharp.IconChar.FileText;
+            pdf.IconColor = Color.White;
+            pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            pdf.IconSize = 35;
+            pdf.ImageAlign = ContentAlignment.MiddleLeft;
+            pdf.Location = new Point(38, 612);
+            pdf.Name = "pdf";
+            pdf.Size = new Size(110, 52);
+            pdf.TabIndex = 7;
+            pdf.Text = "    PDF";
+            pdf.UseVisualStyleBackColor = true;
+            pdf.Click += pdf_Click;
             // 
             // textBox1
             // 
@@ -269,7 +292,10 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(btnMaximizar);
+            panel2.Controls.Add(btnCerrar);
             panel2.Controls.Add(txtSalaMesa);
+            panel2.Controls.Add(btnMinimizar);
             panel2.Controls.Add(txtOrden);
             panel2.Controls.Add(label14);
             panel2.Controls.Add(label13);
@@ -278,6 +304,43 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(907, 54);
             panel2.TabIndex = 0;
+            panel2.MouseDown += panel2_MouseDown;
+            // 
+            // btnMaximizar
+            // 
+            btnMaximizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMaximizar.BackColor = Color.CornflowerBlue;
+            btnMaximizar.FlatAppearance.BorderSize = 0;
+            btnMaximizar.FlatStyle = FlatStyle.Flat;
+            btnMaximizar.IconChar = FontAwesome.Sharp.IconChar.WindowRestore;
+            btnMaximizar.IconColor = Color.OldLace;
+            btnMaximizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMaximizar.IconSize = 20;
+            btnMaximizar.Location = new Point(836, 2);
+            btnMaximizar.Margin = new Padding(2);
+            btnMaximizar.Name = "btnMaximizar";
+            btnMaximizar.Size = new Size(36, 20);
+            btnMaximizar.TabIndex = 24;
+            btnMaximizar.UseVisualStyleBackColor = false;
+            btnMaximizar.Click += btnMaximizar_Click;
+            // 
+            // btnCerrar
+            // 
+            btnCerrar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCerrar.BackColor = Color.Tomato;
+            btnCerrar.FlatAppearance.BorderSize = 0;
+            btnCerrar.FlatStyle = FlatStyle.Flat;
+            btnCerrar.IconChar = FontAwesome.Sharp.IconChar.X;
+            btnCerrar.IconColor = Color.OldLace;
+            btnCerrar.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            btnCerrar.IconSize = 20;
+            btnCerrar.Location = new Point(868, 2);
+            btnCerrar.Margin = new Padding(2);
+            btnCerrar.Name = "btnCerrar";
+            btnCerrar.Size = new Size(36, 20);
+            btnCerrar.TabIndex = 25;
+            btnCerrar.UseVisualStyleBackColor = false;
+            btnCerrar.Click += btnCerrar_Click;
             // 
             // txtSalaMesa
             // 
@@ -290,6 +353,24 @@
             txtSalaMesa.ReadOnly = true;
             txtSalaMesa.Size = new Size(159, 21);
             txtSalaMesa.TabIndex = 21;
+            // 
+            // btnMinimizar
+            // 
+            btnMinimizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnMinimizar.BackColor = Color.Turquoise;
+            btnMinimizar.FlatAppearance.BorderSize = 0;
+            btnMinimizar.FlatStyle = FlatStyle.Flat;
+            btnMinimizar.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            btnMinimizar.IconColor = Color.OldLace;
+            btnMinimizar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btnMinimizar.IconSize = 20;
+            btnMinimizar.Location = new Point(801, 2);
+            btnMinimizar.Margin = new Padding(2);
+            btnMinimizar.Name = "btnMinimizar";
+            btnMinimizar.Size = new Size(36, 20);
+            btnMinimizar.TabIndex = 23;
+            btnMinimizar.UseVisualStyleBackColor = false;
+            btnMinimizar.Click += btnMinimizar_Click;
             // 
             // txtOrden
             // 
@@ -326,26 +407,6 @@
             label13.Size = new Size(226, 36);
             label13.TabIndex = 18;
             label13.Text = "PRECUENTA ";
-            // 
-            // pdf
-            // 
-            pdf.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            pdf.FlatAppearance.BorderSize = 0;
-            pdf.FlatStyle = FlatStyle.Flat;
-            pdf.Font = new Font("Verdana", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            pdf.ForeColor = Color.White;
-            pdf.IconChar = FontAwesome.Sharp.IconChar.FileText;
-            pdf.IconColor = Color.White;
-            pdf.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            pdf.IconSize = 35;
-            pdf.ImageAlign = ContentAlignment.MiddleLeft;
-            pdf.Location = new Point(38, 612);
-            pdf.Name = "pdf";
-            pdf.Size = new Size(110, 52);
-            pdf.TabIndex = 7;
-            pdf.Text = "    PDF";
-            pdf.UseVisualStyleBackColor = true;
-            pdf.Click += pdf_Click;
             // 
             // PreCuenta
             // 
@@ -390,5 +451,8 @@
         private Label label13;
         private TextBox textBox1;
         private FontAwesome.Sharp.IconButton pdf;
+        private FontAwesome.Sharp.IconButton btnMaximizar;
+        private FontAwesome.Sharp.IconButton btnCerrar;
+        private FontAwesome.Sharp.IconButton btnMinimizar;
     }
 }
